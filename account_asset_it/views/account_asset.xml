@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_account_move_asset_form">
+        <field name="name">account.asset.form.asset</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <field name="invoice_id_it"/>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='depreciation_move_ids']/tree/field[@name='state']" position="after">
+                <field name="glosa" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--record id="view_account_asset_sale_tree_inherit" model="ir.ui.view">
+		<field name="name">account.asset.sale.tree.inherit</field>
+		<field name="model">account.asset</field>
+		<field name="inherit_id" ref="account_asset.view_account_asset_sale_tree"/>
+		<field name="arch" type="xml">
+			<field name="value_residual" position="before">
+                <field name="original_value" widget="monetary"/>
+			</field>
+		</field>
+	</record-->
+
+</odoo>

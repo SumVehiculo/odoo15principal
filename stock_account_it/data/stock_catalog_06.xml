@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='stock.catalog.06'><field name='code'>4A</field><field name='name'>BOBINAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>BJ</field><field name='name'>BALDE</field></record>
+		<record model='stock.catalog.06'><field name='code'>BLL</field><field name='name'>BARRILES</field></record>
+		<record model='stock.catalog.06'><field name='code'>BG</field><field name='name'>BOLSA</field></record>
+		<record model='stock.catalog.06'><field name='code'>BO</field><field name='name'>BOTELLAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>BX</field><field name='name'>CAJA</field></record>
+		<record model='stock.catalog.06'><field name='code'>CT</field><field name='name'>CARTONES</field></record>
+		<record model='stock.catalog.06'><field name='code'>CMK</field><field name='name'>CENTIMETRO CUADRADO</field></record>
+		<record model='stock.catalog.06'><field name='code'>CMQ</field><field name='name'>CENTIMETRO CUBICO</field></record>
+		<record model='stock.catalog.06'><field name='code'>CMT</field><field name='name'>CENTIMETRO LINEAL</field></record>
+		<record model='stock.catalog.06'><field name='code'>CEN</field><field name='name'>CIENTO DE UNIDADES</field></record>
+		<record model='stock.catalog.06'><field name='code'>CY</field><field name='name'>CILINDRO</field></record>
+		<record model='stock.catalog.06'><field name='code'>CJ</field><field name='name'>CONOS</field></record>
+		<record model='stock.catalog.06'><field name='code'>DZN</field><field name='name'>DOCENA</field></record>
+		<record model='stock.catalog.06'><field name='code'>DZP</field><field name='name'>DOCENA POR 10**6</field></record>
+		<record model='stock.catalog.06'><field name='code'>BE</field><field name='name'>FARDO</field></record>
+		<record model='stock.catalog.06'><field name='code'>GLI</field><field name='name'>GALON INGLES (4,545956L)</field></record>
+		<record model='stock.catalog.06'><field name='code'>GRM</field><field name='name'>GRAMO</field></record>
+		<record model='stock.catalog.06'><field name='code'>GRO</field><field name='name'>GRUESA</field></record>
+		<record model='stock.catalog.06'><field name='code'>HLT</field><field name='name'>HECTOLITRO</field></record>
+		<record model='stock.catalog.06'><field name='code'>LEF</field><field name='name'>HOJA</field></record>
+		<record model='stock.catalog.06'><field name='code'>SET</field><field name='name'>JUEGO</field></record>
+		<record model='stock.catalog.06'><field name='code'>KGM</field><field name='name'>KILOGRAMO</field></record>
+		<record model='stock.catalog.06'><field name='code'>KTM</field><field name='name'>KILOMETRO</field></record>
+		<record model='stock.catalog.06'><field name='code'>KWH</field><field name='name'>KILOVATIO HORA</field></record>
+		<record model='stock.catalog.06'><field name='code'>KT</field><field name='name'>KIT</field></record>
+		<record model='stock.catalog.06'><field name='code'>CA</field><field name='name'>LATAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>LBR</field><field name='name'>LIBRAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>LTR</field><field name='name'>LITRO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MWH</field><field name='name'>MEGAWATT HORA</field></record>
+		<record model='stock.catalog.06'><field name='code'>MTR</field><field name='name'>METRO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MTK</field><field name='name'>METRO CUADRADO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MTQ</field><field name='name'>METRO CUBICO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MGM</field><field name='name'>MILIGRAMOS</field></record>
+		<record model='stock.catalog.06'><field name='code'>MLT</field><field name='name'>MILILITRO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MMT</field><field name='name'>MILIMETRO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MMK</field><field name='name'>MILIMETRO CUADRADO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MMQ</field><field name='name'>MILIMETRO CUBICO</field></record>
+		<record model='stock.catalog.06'><field name='code'>MLL</field><field name='name'>MILLARES</field></record>
+		<record model='stock.catalog.06'><field name='code'>UM</field><field name='name'>MILLON DE UNIDADES</field></record>
+		<record model='stock.catalog.06'><field name='code'>ONZ</field><field name='name'>ONZAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>PF</field><field name='name'>PALETAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>PK</field><field name='name'>PAQUETE</field></record>
+		<record model='stock.catalog.06'><field name='code'>PR</field><field name='name'>PAR</field></record>
+		<record model='stock.catalog.06'><field name='code'>FOT</field><field name='name'>PIES</field></record>
+		<record model='stock.catalog.06'><field name='code'>FTK</field><field name='name'>PIES CUADRADOS</field></record>
+		<record model='stock.catalog.06'><field name='code'>FTQ</field><field name='name'>PIES CUBICOS</field></record>
+		<record model='stock.catalog.06'><field name='code'>C62</field><field name='name'>PIEZAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>PG</field><field name='name'>PLACAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>ST</field><field name='name'>PLIEGO</field></record>
+		<record model='stock.catalog.06'><field name='code'>INH</field><field name='name'>PULGADAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>RM</field><field name='name'>RESMA</field></record>
+		<record model='stock.catalog.06'><field name='code'>DR</field><field name='name'>TAMBOR</field></record>
+		<record model='stock.catalog.06'><field name='code'>STN</field><field name='name'>TONELADA CORTA</field></record>
+		<record model='stock.catalog.06'><field name='code'>LTN</field><field name='name'>TONELADA LARGA</field></record>
+		<record model='stock.catalog.06'><field name='code'>TNE</field><field name='name'>TONELADAS</field></record>
+		<record model='stock.catalog.06'><field name='code'>TU</field><field name='name'>TUBOS</field></record>
+		<record model='stock.catalog.06'><field name='code'>NIU</field><field name='name'>UNIDAD (BIENES)</field></record>
+		<record model='stock.catalog.06'><field name='code'>ZZ</field><field name='name'>UNIDAD (SERVICIOS)</field></record>
+		<record model='stock.catalog.06'><field name='code'>GLL</field><field name='name'>US GALON (3,7843 L)</field></record>
+		<record model='stock.catalog.06'><field name='code'>YRD</field><field name='name'>YARDA</field></record>
+		<record model='stock.catalog.06'><field name='code'>YDK</field><field name='name'>YARDA CUADRADA</field></record>
+	</data>
+</odoo>

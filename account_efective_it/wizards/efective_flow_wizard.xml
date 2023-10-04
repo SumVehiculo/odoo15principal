@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_efective_flow_wizard_form">
+			<field name="name">efective.flow.wizard.form</field>
+			<field name="model">efective.flow.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Flujo Efectivo">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_ini" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							<field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							<field name="period_to" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="efective_flow_action" model="ir.actions.act_window">
+			<field name="name">Flujo Efectivo</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">efective.flow.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="efective_flow_action" 
+				id="menu_efective_flow_wizard" 
+				parent="account_report_menu_it.menu_account_worksheet" 
+				sequence="7" 
+				groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

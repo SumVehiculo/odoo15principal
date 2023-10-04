@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_f2_register_tree">
+			<field name="name">f2.register.tree</field>
+			<field name="model">f2.register</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="mayor"/>
+					<field name="cuenta"/>
+					<field name="nomenclatura"/>
+					<field name="si_debe"/>
+					<field name="si_haber"/>
+					<field name="debe"/>
+					<field name="haber"/>
+					<field name="saldo_deudor"/>
+					<field name="saldo_acreedor"/>
+					<field name="activo"/>
+					<field name="pasivo"/>
+					<field name="perdinat"/>
+					<field name="ganannat"/>
+					<field name="perdifun"/>
+					<field name="gananfun"/>
+					<button name="view_detail" icon="fa-eye" type="object" attrs="{'invisible':[('nomenclatura', 'in', ['UTILIDAD O PERDIDA','SUMAS'])]}"/>
+				</tree>
+			</field>
+		</record>
+	</data>
+</odoo>

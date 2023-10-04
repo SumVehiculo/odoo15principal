@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_get_invoices_multipayment_wizard_inherit" model="ir.ui.view">
+		<field name="name">get.invoices.multipayment.wizard.inherit</field>
+		<field name="model">get.invoices.multipayment.wizard</field>
+		<field name="inherit_id" ref="account_multipayment_advance_it.view_get_invoices_multipayment_wizard"/>
+		<field name="arch" type="xml">
+			<data>
+                <xpath expr="//field[@name='company_id']" position="after">
+					<field name="partner_cash_id" readonly="1"/>
+				</xpath>
+                <xpath expr="//field[@name='invoices']" position="attributes">
+        			<field name="domain">[('display_type','=',False),('parent_state','=','posted'),('partner_id','=',partner_cash_id),('type_document_id','!=',False),('account_internal_type','in',['payable','receivable']),('amount_residual','!=',0),('reconciled','=',False),('account_internal_type', '=', type_selection),('company_id','=',company_id)] if partner_cash_id else [('display_type','=',False),('parent_state','=','posted'),('partner_id','!=',False),('type_document_id','!=',False),('account_internal_type','in',['payable','receivable']),('amount_residual','!=',0),('reconciled','=',False),('account_internal_type', '=', type_selection),('company_id','=',company_id)]</field>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

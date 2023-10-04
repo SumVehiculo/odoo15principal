@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+
+	<record id="view_import_xml_invoice_it_form" model="ir.ui.view">
+		<field name="name">import.xml.invoice.it.form</field>
+		<field name="model">import.xml.invoice.it</field>
+		<field name="priority">1</field>
+		<field name="arch" type="xml">
+			<form string="Importar XML Facturas">
+				<header>
+					<button string="Importar" name="import_file" type="object" states="draft" class="oe_highlight" />
+					<button string="Eliminar Importados" name="action_cancel" confirm="Se eliminarán las facturas importadas. ¿Desea continuar?" states="import" type="object" class="oe_highlight" />
+					<button string="Regresar Borrador" name="action_draft" states="cancel" type="object" class="oe_highlight" />
+					<field name="state" widget="statusbar" />               
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" string="Facturas Importadas" name="open_entries"  type="object" icon="fa-list" attrs="{'invisible': [('state','!=','import')]}"/>
+						<button class="oe_stat_button" string="Lineas Importadas" name="open_line_entries"  type="object" icon="fa-list" attrs="{'invisible': [('state','!=','import')]}"/>
+					</div>
+					<div class="oe_title">
+						<h1>
+							<field name="name" class="oe_inline" readonly="1"/>
+						</h1>
+					</div>
+					<group>
+						<group>
+							<field name="type" widget="radio"/>
+							<field name="journal_id"/>
+							<field name="date" readonly="1" attrs="{'invisible': [('state','!=','import')]}"/>
+						</group>
+						<group>
+							<field name="expense_account_id" attrs="{'invisible': [('type', 'not in', ['in_invoice','in_refund'])]}"/>
+							<field name="income_account_id" attrs="{'invisible': [('type', 'not in', ['out_invoice','out_refund'])]}" />
+							<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+						</group>
+					</group>
+					<group>
+						<field name="lineas" widget="many2many_binary" string="Seleciona tu(s) archivo(s)" nolabel="1" colspan="2"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="import_invoice_it_tree" model="ir.ui.view">
+		<field name="name">import.xml.invoice.it.tree</field>
+		<field name="model">import.xml.invoice.it</field>
+		<field name="arch" type="xml">
+			<tree string="Importar XML Facturas">
+				<field name="name"/>
+				<field name="date"/>
+				<field name="journal_id"/>
+				<field name="state"/>
+				<field name="company_id" groups="base.group_multi_company"/>  
+			</tree>
+		</field>
+	</record>
+
+	<record id="import_xml_invoice_it_action" model="ir.actions.act_window">
+		<field name="name">Importar Facturas desde XML </field>
+		<field name="res_model">import.xml.invoice.it</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				No existe ninguna importacion de Factura XML
+			</p>
+		</field>
+	</record>
+
+	<menuitem action="import_xml_invoice_it_action" 
+				id="menu_import_xml_invoice_it" 
+				parent="account_base_import_it.menu_import_imports_invoices" 
+				sequence="12"/>
+
+  </data>
+</odoo>

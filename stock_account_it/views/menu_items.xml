@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem id="menu_stock_base_it" name="Tablas" parent="stock.menu_stock_config_settings" sequence="10" groups="account_base_it.group_account_tables_user">
+		<menuitem action="stock_account_it.action_stock_catalog_05_form" id="menu_action_stock_catalog_05_form" sequence="3"/>
+		<menuitem action="stock_account_it.action_stock_catalog_06_form" id="menu_action_stock_catalog_06_form" sequence="6"/>
+	</menuitem>
+</odoo>

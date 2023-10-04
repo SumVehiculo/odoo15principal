@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--	VISTA DE LIQUIDACION-->
+	<record id="hr_liquidation_form_inherit" model="ir.ui.view">
+		<field name="name">hr.liquidation.form.inherit</field>
+		<field name="model">hr.liquidation</field>
+		<field name="inherit_id" ref="hr_social_benefits.hr_liquidation_form"/>
+		<field name="arch" type="xml">
+			<button name="export_liquidation" position="before">
+				<button name="import_advances" string="Importar Adelantos" type="object" class="oe_highlight" states="draft"/>
+				<button name="import_loans" string="Importar Prestamos" type="object" class="oe_highlight" states="draft"/>
+			</button>
+		</field>
+	</record>
+
+</odoo>

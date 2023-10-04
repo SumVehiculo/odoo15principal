@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.actions.server" id="ver_destinos_account_move">
+			<field name="name">Ver Destinos</field>
+			<field name="model_id" ref="account.model_account_move"/>
+			<field name="binding_model_id" ref="account.model_account_move" />
+			<field name="binding_view_types">form</field>
+			<field name="state">code</field>
+			<field name="code">action = records.ver_destinos()</field>
+		</record>
+	</data>
+</odoo>

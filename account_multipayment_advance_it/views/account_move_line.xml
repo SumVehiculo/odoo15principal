@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+        <record id="view_move_line_tree_multipayment" model="ir.ui.view">
+            <field name="name">account.move.line.tree.multipayment</field>
+            <field name="model">account.move.line</field>
+            <field name="arch" type="xml">
+                <tree string="Journal Items" edit="false">
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="type_document_id"/>
+                    <field name="nro_comp"/>
+                    <field name="acc_number_partner_id_book" string="N° de Cuenta"/>
+                    <field name="bank_id_book" string="Banco"/>
+                    <field name="currency_id_book" string="Moneda"/>
+                    <field name="amount_residual_currency" sum="amount_residual_currency" string="Saldo ME"/>
+                    <field name="amount_residual" sum="amount_residual" string="Saldo MN"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

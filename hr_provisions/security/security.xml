@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="group_hr_provisions_root" model="res.groups">
+		<field name="name">Provisiones de B.S.</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+	</record>
+	<record model="ir.rule" id="hr_provisions_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Provisions</field>
+		<field name="model_id" ref="hr_provisions.model_hr_provisiones"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+</odoo>

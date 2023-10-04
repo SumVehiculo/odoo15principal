@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_cts_form_inherit" model="ir.ui.view">
+		<field name="name">hr.cts.form.inherit</field>
+		<field name="model">hr.cts</field>
+		<field name="inherit_id" ref="hr_social_benefits.hr_cts_form"/>
+		<field name="arch" type="xml">
+			<button name="export_cts" position="before">
+				<button name="import_advances" string="Importar Adelantos" type="object" class="oe_highlight" states="draft"/>
+				<button name="import_loans" string="Importar Prestamos" type="object" class="oe_highlight" states="draft"/>
+			</button>
+		</field>
+	</record>
+
+	<record id="hr_cts_line_tree_inherit" model="ir.ui.view">
+		<field name="name">hr.cts.line.tree.inherit</field>
+		<field name="model">hr.cts.line</field>
+		<field name="inherit_id" ref="hr_social_benefits.hr_cts_line_tree"/>
+		<field name="arch" type="xml">
+			<field name="total_cts" position="after">
+				<field name="advance_amount" sum="advance_amount" optional="hide"/>
+				<field name="loan_amount" sum="loan_amount" optional="hide"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="hr_cts_line_form_inherit" model="ir.ui.view">
+		<field name="name">hr.cts.line.form.inherit</field>
+		<field name="model">hr.cts.line</field>
+		<field name="inherit_id" ref="hr_social_benefits.hr_cts_line_form"/>
+		<field name="arch" type="xml">
+			<field name="total_cts" position="after">
+				<field name="advance_amount" attrs="{'invisible':[('cessation_date', '!=', False)]}"/>
+				<field name="loan_amount" attrs="{'invisible':[('cessation_date', '!=', False)]}"/>
+			</field>
+		</field>
+	</record>
+</odoo>

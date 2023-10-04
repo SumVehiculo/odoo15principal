@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="multipayment_advance_it_form_view_inherit" model="ir.ui.view">
+		<field name="name">multipayment.advance.it.reten.inherit</field>
+		<field name="model">multipayment.advance.it</field>
+		<field name="inherit_id" ref="account_multipayment_advance_it.multipayment_advance_it_form_view"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//field[@name='payment_date']" position="after">
+					<field name="account_date"/>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

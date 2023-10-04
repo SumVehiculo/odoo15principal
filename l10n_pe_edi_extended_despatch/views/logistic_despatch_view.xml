@@ -1,0 +1,111 @@
+<odoo>
+    <record id="view_logistic_despatch_form_edi" model="ir.ui.view">
+        <field name="name">view.logistic.despatch.form.edi</field>
+        <field name="model">logistic.despatch</field>
+        <field name="inherit_id" ref="logistic.view_logistic_despatch_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <div class="alert alert-warning" role="alert" attrs="{'invisible':['|','|',('l10n_pe_dte_status_response','=',False),('l10n_pe_dte_status_response','=',''),('l10n_pe_dte_is_einvoice','=',False)]}">
+                    <strong><field style="display:inline" name="l10n_pe_dte_status_response"/></strong> <button string="Verify Again" name="l10n_pe_dte_action_check" type="object" class="btn-link" />
+                </div>
+            </xpath>
+            <field name="type" position="after">
+                <field name="l10n_latam_country_code" invisible="1" />
+            </field>
+            <field name="partner_id" position="after">
+                <field name="l10n_pe_dte_shipment_reason"/>
+                <field name="l10n_pe_dte_transport_mode"/>
+            </field>
+            <field name="journal_id" position="after">
+                <field name="l10n_pe_dte_invoice_number"/>
+            </field>
+            <field name="carrier_id" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_pe_dte_transport_mode','=','01')]}</attribute>
+            </field>
+            <field name="driver_id" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_pe_dte_transport_mode','=','02')]}</attribute>
+            </field>
+            <field name="vehicle_id" position="attributes">
+                <attribute name="attrs">{'required': [('l10n_pe_dte_transport_mode','=','02')]}</attribute>
+            </field>
+            <field name="vehicle_id" position="after">
+                <field name="l10n_pe_dte_vehicle_2"/>
+                <field name="l10n_pe_dte_vehicle_3"/>
+            </field>
+            <field name="origin_address_id" position="before">
+                <field name="l10n_pe_dte_origin_branch_code"/>
+            </field>
+            <field name="delivery_address_id" position="before">
+                <field name="l10n_pe_dte_delivery_branch_code"/>
+            </field>
+            <field name="carrier_id" position="before">
+                <field name="l10n_pe_dte_seller_supplier_id"/>
+                <field name="l10n_pe_dte_buyer_id"/>
+            </field>
+            <field name="carrier_id" position="after">
+                <field name="l10n_pe_dte_mtc_authorization"/>
+            </field>
+            <div class="oe_button_box" position="inside">
+                <button type="object" class="oe_stat_button" name="l10n_pe_dte_action_send" icon="fa-cloud-upload" attrs="{'invisible':['|',('l10n_pe_dte_status','!=','not_sent'),('state','not in',['open'])]}">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Send to</span>
+                        <span class="o_stat_text">SUNAT</span>
+                    </div>
+                </button>
+                <button type="object" class="text-danger" name="l10n_pe_dte_action_check" icon="fa-refresh" attrs="{'invisible':['&amp;','|',('l10n_latam_country_code', '!=', 'PE'),('l10n_pe_dte_status','!=','ask_for_status'),('l10n_pe_dte_void_status','!=','ask_for_status')]}">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Check</span>
+                        <span class="o_stat_text">Status</span>
+                    </div>
+                </button>
+                <button class="text-success" icon="fa-check" attrs="{'invisible':['|',('l10n_pe_dte_status','!=','accepted'), ('l10n_latam_country_code', '!=', 'PE')]}">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Accepted by</span>
+                        <span class="o_stat_text">SUNAT</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="after">
+                <field name="l10n_pe_dam_ds_code"/>
+            </xpath>
+            <notebook position="inside">
+                <page string="Documentos relacionados" name="pe_related_documents">
+                    <field name="l10n_pe_dte_reference_ids">
+                        <tree editable="bottom">
+                            <field name="partner_id"/>
+                            <field name="l10n_latam_document_type_id"/>
+                            <field name="l10n_latam_document_number"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Informacion Extra">
+                    <group>
+                        <field name="l10n_pe_dte_is_vehicle_m1_l"/>
+                        <field name="l10n_pe_dte_is_return_with_empty_packages"/>
+                        <field name="l10n_pe_dte_is_empty_vehicle_return"/>
+                        <field name="l10n_pe_dte_is_transport_total_dam_ds"/>
+                        <field name="l10n_pe_dte_is_carrier_vehicle_and_driver"/>
+                        <field name="l10n_pe_dte_transport_event_type"/>
+                    </group>
+                </page>
+                <page string="Electronic Despatch" name="pe_electronic_invoice" attrs="{'invisible':['|', ('l10n_pe_dte_status', '=', False), ('l10n_latam_country_code', '!=', 'PE')]}">
+                    <group>
+                        <field name="l10n_pe_dte_is_einvoice" invisible="1"/>
+                        <label for="l10n_pe_dte_status"/>
+                        <div name="l10n_pe_dte_status_container">
+                            <field name="l10n_pe_dte_status" class="oe_inline" readonly="1"/>
+                        </div>
+                        <field name="l10n_pe_dte_void_status" readonly="1" attrs="{'invisible':[('state','!=','cancel')]}"/>
+                        <field name="l10n_pe_dte_cancel_reason" readonly="1" attrs="{'invisible':[('state','!=','cancel')]}"/>
+                        <field name="l10n_pe_dte_partner_status" readonly="1"/>
+                        <field name="l10n_pe_dte_file_link" widget="url" readonly="1"/>
+                        <field name="l10n_pe_dte_hash" readonly="1"/>
+                        <field name="l10n_pe_dte_pdf_file_link" widget="url" readonly="1"/>
+                        <field name="l10n_pe_dte_cdr_file_link" widget="url" readonly="1"/>
+                        <field name="l10n_pe_dte_cdr_void_file_link" widget="url" readonly="1" attrs="{'invisible':[('state','!=','cancel')]}"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

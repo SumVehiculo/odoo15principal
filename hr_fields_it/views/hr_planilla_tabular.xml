@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_hr_planilla_tabular_pivot" model="ir.ui.view">
+        <field name="name">hr.planilla.tabular.pivot</field>
+        <field name="model">hr.planilla.tabular</field>
+        <field name="arch" type="xml">
+            <pivot string="Planilla Tabular" disable_linking="true">
+                <field name="employee_id" type="row" />
+                <field name="salary_rule_id" type="col" />
+                <field name="amount" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+</odoo>

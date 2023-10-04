@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_book_purchase_view_group_user,account.book.purchase.view.group.user,account_book_purchase_it.model_account_book_purchase_view,account_base_it.group_account_tables_user,1,1,1,1
+access_account_book_purchase_wizard_group_user,account.book.purchase.wizard.group.user,account_book_purchase_it.model_account_book_purchase_wizard,account_base_it.group_account_tables_user,1,1,1,1

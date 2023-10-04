@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="sample_instructions_xls" model="ir.attachment">
+            <field name="name">instructions.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="upload_config_account/intructions/instructions.xlsx"/>
+        </record>
+    </data>
+</odoo>

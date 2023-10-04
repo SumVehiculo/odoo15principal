@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_add_doc_invoice_relac_wizard_group_user,add.doc.invoice.relac.wizard.group.user,model_add_doc_invoice_relac_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_update_journal_entry_it_group_user,update.journal.entry.it.group.user,model_update_journal_entry_it,account_base_it.group_account_tables_user,1,1,1,1

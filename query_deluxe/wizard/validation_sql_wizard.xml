@@ -1,0 +1,30 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_validation_sql_wizard_form">
+			<field name="name">validation.sql.wizard.form</field>
+			<field name="model">validation.sql.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ingresar PIN">
+					<group>
+						<group>
+							<field name="pin" required="1" password="True" widget="password_meter"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Validar" name="validate" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="validation_sql_wizard_action" model="ir.actions.act_window">
+			<field name="name">Ingresar PIN</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">validation.sql.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

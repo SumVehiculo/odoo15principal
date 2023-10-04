@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_payment_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.payment.form.inherit</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//sheet" position="inside">
+						<notebook>
+							<page string="Datos Principales">
+								<group>
+									<group name="group1">
+										<field name="is_internal_transfer" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+										<field name="payment_type" widget="radio" options="{'horizontal': True}"
+												attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+										<field name="partner_id" context="{'default_is_company': True}" string="Customer"
+											attrs="{'readonly':[('state', '!=', 'draft')],
+													'invisible':['|', ('partner_type','!=','customer'), ('is_internal_transfer', '=', True)]}"/>
+										<field name="partner_id" context="{'default_is_company': True}" string="Vendor"
+											attrs="{'readonly':[('state', '!=', 'draft')],
+													'invisible':['|', ('partner_type','!=','supplier'), ('is_internal_transfer', '=', True)]}"/>
+										<label for="amount"/>
+										<div name="amount_div" class="o_row">
+											<field name="amount"
+												attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+											<field name="currency_id"
+												options="{'no_create': True, 'no_open': True}"
+												required="1"
+												attrs="{'readonly': [('state', '!=', 'draft')]}"
+												groups="base.group_multi_currency"/>
+										</div>
+										<field name="date"
+											attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+										<field name="ref" string="Memo"/>
+									</group>
+									<group name="group2">
+										<field name="journal_id"
+											domain="[('type', 'in', ('bank', 'cash'))]"
+											attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+										<field name="payment_method_line_id" required="1" options="{'no_create': True, 'no_open': True}"
+											attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('hide_payment_method_line', '=', True)]}"/>
+
+										<field name="partner_bank_id" context="{'default_partner_id': partner_id}" string="Customer Bank Account"
+												attrs="{
+													'invisible': ['|', '|', ('show_partner_bank_account', '=', False), ('partner_type','!=','customer'), ('is_internal_transfer', '=', True)],
+													'required': [('require_partner_bank_account', '=', True), ('is_internal_transfer', '=', False)],
+													'readonly': [('state', '!=', 'draft')]
+												}"/>
+
+										<field name="partner_bank_id" context="{'default_partner_id': partner_id}" string="Vendor Bank Account"
+												attrs="{
+													'invisible': ['|', '|', ('show_partner_bank_account', '=', False), ('partner_type','!=','supplier'), ('is_internal_transfer', '=', True)],
+													'required': [('require_partner_bank_account', '=', True), ('is_internal_transfer', '=', False)],
+													'readonly': [('state', '!=', 'draft')]
+												}"/>
+										<field name="destination_journal_id" context="{'default_partner_id': partner_id}"
+											attrs="{'invisible': [('is_internal_transfer', '=', False)],
+											'readonly': [('state', '!=', 'draft')], 'required': [('is_internal_transfer', '=', True),('state', '=', 'draft')]}"/>
+									</group>
+									<group>
+										<field name="qr_code" invisible="1"/>
+										<div attrs="{'invisible': [('qr_code', '=', False)]}" colspan="2" class="text-center">
+											<field name="qr_code" widget="html"/>
+										</div>
+									</group>
+								</group>
+							</page>
+							<page string="Datos Adicionales">
+								<group>
+									<group>
+										<field name="manual_batch_payment_id"/>
+										<field name="cash_flow_id"/>
+										<field name="catalog_payment_id"/>
+										<field name="type_doc_cash_id"/>
+										<field name="cash_nro_comp"/>
+									</group>
+									<group>
+										<field name="type_document_id"/>
+										<field name="nro_comp"/>
+										<field name="is_personalized_change" attrs="{'invisible':[('is_internal_transfer','=',False)]}"/>
+										<field name="type_change" attrs="{'readonly':[('is_personalized_change','=',False)]}" force_save="1"/>
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</xpath>
+					<xpath expr="//sheet/group" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_account_payment_register_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.payment.register.form.inherit</field>
+			<field name="model">account.payment.register</field>
+			<field name="inherit_id" ref="account.view_account_payment_register_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//form/group" position="after">
+						<notebook>
+							<page string="Datos Principales">
+								<group>
+									<group name="group1">
+										<field name="journal_id" options="{'no_open': True, 'no_create': True}" required="1"/>
+										<field name="payment_method_line_id"
+											required="1"  options="{'no_create': True, 'no_open': True}"
+											attrs="{'invisible': [('hide_payment_method_line', '=', True)]}"/>
+										<field name="partner_bank_id"
+											attrs="{'invisible': ['|', ('show_partner_bank_account', '=', False), '|', ('can_edit_wizard', '=', False), '&amp;', ('can_group_payments', '=', True), ('group_payment', '=', False)],
+													'required': [('require_partner_bank_account', '=', True), ('can_edit_wizard', '=', True), '|', ('can_group_payments', '=', False), ('group_payment', '=', False)]}"/>
+										<field name="group_payment"
+											attrs="{'invisible': [('can_group_payments', '=', False)]}"/>
+									</group>
+									<group name="group2">
+										<label for="amount"
+											attrs="{'invisible': ['|', ('can_edit_wizard', '=', False), '&amp;', ('can_group_payments', '=', True), ('group_payment', '=', False)]}"/>
+										<div name="amount_div" class="o_row"
+											attrs="{'invisible': ['|', ('can_edit_wizard', '=', False), '&amp;', ('can_group_payments', '=', True), ('group_payment', '=', False)]}">
+											<field name="amount"/>
+											<field name="currency_id"
+												options="{'no_create': True, 'no_open': True}"
+												groups="base.group_multi_currency"/>
+										</div>
+										<field name="payment_date"/>
+										<field name="communication"
+											attrs="{'invisible': ['|', ('can_edit_wizard', '=', False), '&amp;', ('can_group_payments', '=', True), ('group_payment', '=', False)]}"/>
+									</group>
+									<group name="group3"
+										attrs="{'invisible': ['|', ('payment_difference', '=', 0.0), '|', ('can_edit_wizard', '=', False), '&amp;', ('can_group_payments', '=', True), ('group_payment', '=', False)]}"
+										groups="account.group_account_readonly">
+										<label for="payment_difference"/>
+										<div>
+											<field name="payment_difference"/>
+											<field name="payment_difference_handling" widget="radio" nolabel="1"/>
+											<div attrs="{'invisible': [('payment_difference_handling','=','open')]}">
+												<label for="writeoff_account_id" string="Post Difference In" class="oe_edit_only"/>
+												<field name="writeoff_account_id"
+													string="Post Difference In"
+													options="{'no_create': True}"
+													attrs="{'required': [('payment_difference_handling', '=', 'reconcile')]}"/>
+												<label for="writeoff_label" class="oe_edit_only" string="Label"/>
+												<field name="writeoff_label" attrs="{'required': [('payment_difference_handling', '=', 'reconcile')]}"/>
+											</div>
+										</div>
+									</group>
+								</group>
+							</page>
+							<page string="Datos Adicionales" attrs="{'invisible': ['|', ('can_edit_wizard', '=', False), '&amp;', ('can_group_payments', '=', True), ('group_payment', '=', False)]}">
+								<group>
+									<group>
+										<field name="manual_batch_payment_id"/>
+										<field name="cash_flow_id"/>
+										<field name="catalog_payment_id"/>
+										<field name="type_doc_cash_id"/>
+										<field name="cash_nro_comp"/>
+									</group>
+									<group>
+										<field name="type_document_id" readonly="1"/>
+										<field name="nro_comp" readonly="1"/>
+										<field name="type_change" readonly="1" force_save="1"/>
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</xpath>
+					<xpath expr="//form/group" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

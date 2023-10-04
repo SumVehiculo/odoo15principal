@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- Top menu item -->
+		<menuitem name="EEFF USD"
+            id="menu_eeff_usd"
+            groups="group_eeff_usd_menu"
+            web_icon="account_amount_currency_dolars_it,static/description/icon.png"
+            sequence="36"/>
+
+		<menuitem id="menu_eeff_usd_tables" 
+				name="Tablas" 
+				parent="menu_eeff_usd" 
+				sequence="1"/>
+		
+		<menuitem action="l10n_pe_currency_rate.view_base_currency_rate_form_it" 
+				  id="menu_action_currency_rate_list_eeff" 
+				  parent="menu_eeff_usd_tables"
+				  sequence="1"/>
+
+		<menuitem id="menu_eeff_usd_reports" 
+				name="Informes" 
+				parent="menu_eeff_usd" 
+				sequence="3"/>
+
+		<menuitem id="menu_eeff_usd_utilities" 
+				name="Utilitarios" 
+				parent="menu_eeff_usd" 
+				sequence="6"/>
+		
+		<menuitem action="exchange_diff_config_it.view_exchange_diff_config_action" 
+				  id="menu_view_exchange_diff_config_action_eeff" 
+				  parent="menu_eeff_usd_utilities"
+				  sequence="18"/>
+		
+		<menuitem id="menu_eeff_usd_consistencias" 
+				name="Consistencias" 
+				parent="menu_eeff_usd" 
+				sequence="9"/>
+	</data>
+</odoo>

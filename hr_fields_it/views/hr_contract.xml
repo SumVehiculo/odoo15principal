@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_contract_form_inherit" model="ir.ui.view">
+		<field name="name">hr.contract.form.inherit</field>
+		<field name="model">hr.contract</field>
+		<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+		<field name="arch" type="xml">
+			<field name="date_start" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="date_end" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="structure_type_id" position="attributes">
+				<attribute name="string">Tipo de Planilla</attribute>
+			</field>
+			<field name="hr_responsible_id" position="attributes">
+				<attribute name="required">0</attribute>
+			</field>
+			<field name="structure_type_id" position="after">
+<!--				<field name="structure_id" domain="[('type_id', '=', structure_type_id)]"/>-->
+				<field name="structure_id" />
+			</field>
+			<xpath expr="//label[@for='resource_calendar_id']" position="attributes">
+				<attribute name="string">Horario de Trabajo</attribute>
+			</xpath>
+			<xpath expr="//group[@name='contract_details']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//group[@name='contract_details']" position="before">
+				<group name="duration_group" string="Terminos del Contrato">
+					<field name="worker_type_id"/>
+					<field name="date_start" string="Fecha de Inicio"/>
+					<label for="date_end" string="Fecha Final"/>
+					<div class="o_row">
+						<field name="date_end" nolabel="1"/>
+						<span class="text-muted">(Fecha de Cese o Final del Contrato)</span>
+					</div>
+				</group>
+			</xpath>
+
+			<xpath expr="//page[@name='information']" position="after">
+				<page name="labor_data" string="Datos Laborales">
+					<group name="data" string="Datos">
+						<group>
+							<field name="membership_id"/>
+							<field name="is_afp" invisible="1"/>
+							<field name="commision_type" attrs="{'invisible': [('is_afp', '=', False)],'required':[('is_afp', '!=', False)]}"/>
+							<field name="cuspp" attrs="{'invisible': [('is_afp', '=', False)],'required':[('is_afp', '!=', False)]}"/>
+							<field name="social_insurance_id"/>
+							<field name="distribution_id"/>
+							<field name="workday_id"/>
+						</group>
+						<group>
+							<field name="situation_id"/>
+							<field name="situation_code" invisible="1"/>
+							<field name="situation_reason_id" attrs="{'invisible': [('situation_code', '!=', '0')]}"/>
+							<field name="labor_regime"/>
+							<field name="less_than_four" widget="boolean_toggle"/>
+							<field name="other_employers"/>
+							<field name="sctr_id"/>
+						</group>
+					</group>
+					<group name="afp_net" string="AFP NET">
+						<group>
+							<field name="exception"/>
+							<field name="is_older" widget="boolean_toggle"/>
+						</group>
+						<group>
+							<field name="work_type"/>
+						</group>
+					</group>
+				</page>
+				<page name="work_suspension" string="Suspension Laboral">
+					<field name="work_suspension_ids">
+						<tree editable="bottom">
+							<field name="suspension_type_id"/>
+							<field name="reason"/>
+							<field name="days"/>
+							<field name="payslip_run_id"/>
+						</tree>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_hr_contract_history_form_inherit" model="ir.ui.view">
+		<field name="name">hr.contract.history.form.inherit</field>
+		<field name="model">hr.contract.history</field>
+		<field name="inherit_id" ref="hr_contract.hr_contract_history_view_form"/>
+		<field name="arch" type="xml">
+			<field name="resource_calendar_id" position="attributes">
+				<attribute name="string">Horario de Trabajo</attribute>
+			</field>
+			<field name="structure_type_id" position="attributes">
+				<attribute name="string">Tipo de Planilla</attribute>
+			</field>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="get_import_wd_wizard_hr_payslip" model="ir.actions.server">
+		<field name="name">Importar WD o Inputs</field>
+		<field name="model_id" ref="hr_importers_it.model_hr_payslip"/>
+		<field name="binding_model_id" ref="hr_importers_it.model_hr_payslip"/>
+		<field name="state">code</field>
+		<field name="code">action = records.get_import_wd_wizard()</field>
+	</record>
+</odoo>

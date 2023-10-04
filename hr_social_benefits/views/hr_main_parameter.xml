@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_inherit" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.inherit</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_base_it.hr_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='voucher']" position="after">
+				<page name="gratification" string="Gratificacion">
+					<group>
+						<group>
+							<field name="gratification_input_id"/>
+							<field name="bonus_sr_ids" widget="many2many_tags"/>
+							<field name="commission_sr_ids" widget="many2many_tags"/>
+							<field name="extra_hours_sr_id"/>
+							<field name="basic_sr_id"/>
+						</group>
+						<group>
+							<field name="household_allowance_sr_id"/>
+							<field name="bonus_nine_input_id"/>
+							<field name="lack_wd_id"/>
+							<field name="working_wd_ids" widget="many2many_tags"/>
+						</group>
+					</group>
+				</page>
+				<page name="cts" string="CTS">
+					<group>
+						<group>
+							<field name="cts_input_id"/>
+							<field name="bonus_sr_ids" widget="many2many_tags"/>
+							<field name="commission_sr_ids" widget="many2many_tags"/>
+							<field name="extra_hours_sr_id"/>
+							<field name="basic_sr_id"/>
+						</group>
+						<group>
+							<field name="employee_in_charge_id"/>
+							<field name="household_allowance_sr_id"/>
+							<field name="lack_wd_id"/>
+							<field name="medical_rest_wd_ids" widget="many2many_tags"/>
+							<field name="working_wd_ids" widget="many2many_tags"/>
+						</group>
+					</group>
+				</page>
+				<page name="liquidation" string="Liquidacion">
+					<group>
+						<group>
+							<field name="gratification_input_id"/>
+							<field name="truncated_gratification_input_id"/>
+							<field name="bonus_nine_input_id"/>
+							<field name="truncated_bonus_nine_input_id"/>
+						</group>
+						<group>
+							<field name="vacation_input_id"/>
+							<field name="truncated_vacation_input_id"/>
+							<field name="cts_input_id"/>
+							<field name="truncated_cts_input_id"/>
+<!--							<field name="indemnification_id"/>-->
+						</group>
+					</group>
+					<group string="Version Impresa">
+						<field name="type_liquidation"/>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

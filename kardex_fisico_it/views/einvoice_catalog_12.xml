@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_type_operation_kardex_form" model="ir.ui.view">
+		<field name="name">type.operation.kardex.form</field>
+		<field name="model">type.operation.kardex</field>
+		<field name="arch" type="xml">
+			<form string="Einvoice Catalog 12">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+						</group>
+						<group>
+							<field name="code" required="1"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_type_operation_kardex_list" model="ir.ui.view">
+		<field name="name">type.operation.kardex.list</field>
+		<field name="model">type.operation.kardex</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="code" optional="show"/>
+				<field name="name" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_type_operation_kardex_form" model="ir.actions.act_window">
+		<field name="name">Catalogo 12 - Tipos de Operacion Inventario</field>
+		<field name="res_model">type.operation.kardex</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_type_operation_kardex_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Catalogo 12 aqui
+		  </p>
+		</field>
+	</record>
+
+    <menuitem action="action_type_operation_kardex_form" 
+              id="menu_action_type_operation_kardex_form"               
+              sequence="10" 
+              />
+</odoo>

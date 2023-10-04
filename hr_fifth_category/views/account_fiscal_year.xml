@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="action_account_fiscal_year_form_inherit" model="ir.ui.view">
+		<field name="name">account.fiscal.year.form.inherit</field>
+		<field name="model">account.fiscal.year</field>
+		<field name="inherit_id" ref="account_accountant.action_account_fiscal_year_form"/>
+		<field name="arch" type="xml">
+			<field name="date_to" position="after">
+				<field name="uit"/>
+			</field>
+		</field>
+	</record>
+	<record id="action_account_fiscal_year_tree" model="ir.ui.view">
+		<field name="name">account.fiscal.year.tree.inherit</field>
+		<field name="model">account.fiscal.year</field>
+		<field name="inherit_id" ref="account_accountant.action_account_fiscal_year_tree"/>
+		<field name="arch" type="xml">
+			<field name="date_to" position="after">
+				<field name="uit"/>
+			</field>
+		</field>
+	</record>
+</odoo>

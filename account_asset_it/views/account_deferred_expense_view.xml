@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_deferred_expense_view_tree" model="ir.ui.view">
+            <field name="name">account.deferred.expense.view.tree</field>
+            <field name="model">account.deferred.expense.view</field>
+            <field name="arch" type="xml">
+                <tree string="Gastos Diferidos" create="false">
+                    <field name="invoice_date"/>
+                    <field name="partner"/>
+                    <field name="acquisition_date"/>
+                    <field name="diario"/>
+                    <field name="asiento"/>
+                    <field name="estado"/>
+                    <field name="glosa"/>
+                    <field name="ref"/>
+                    <field name="date"/>
+                    <field name="amount_total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_deferred_expense_view_pivot" model="ir.ui.view">
+            <field name="name">account.deferred.expense.view.pivot</field>
+            <field name="model">account.deferred.expense.view</field>
+            <field name="arch" type="xml">
+                <pivot string="Gastos Diferidos">
+                    <field name="amount_total" type="measure"/>
+                    <field name="asiento" type="row"/>
+                    <field name="date" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="account_deferred_expense_view_search" model="ir.ui.view">
+            <field name="name">account.deferred.expense.view.search</field>
+            <field name="model">account.deferred.expense.view</field>
+            <field name="arch" type="xml">
+                <search string="Gastos Diferidos">
+                    <field name="diario"/>
+                    <field name="asiento"/>
+                    <field name="partner"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Libro" name="diario" icon="terp-partner" context="{'group_by':'diario'}"/>
+                        <filter string="Voucher" name="asiento" icon="terp-partner" context="{'group_by':'asiento'}"/>
+                        <filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_deferred_expense_view_it" model="ir.actions.act_window">
+            <field name="name">Gastos Diferidos</field>
+            <field name="res_model">account.deferred.expense.view</field>
+            <field name="view_id" ref="view_account_deferred_expense_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="search_view_id" ref="account_deferred_expense_view_search"/>
+        </record>
+
+    </data>
+</odoo>

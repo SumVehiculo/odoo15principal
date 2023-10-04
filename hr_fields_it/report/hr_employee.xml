@@ -1,0 +1,230 @@
+<odoo>
+
+<!--	<report-->
+<!--		id="report_employee"-->
+<!--		model="hr.employee"-->
+<!--		string="Imprimir Datos del Empleado"-->
+<!--		name="hr_fields_it.report_employee_view"-->
+<!--		file="hr.report_employee_view"-->
+<!--		report_type="qweb-pdf"/>-->
+
+	<record id="report_employee" model="ir.actions.report">
+		<field name="name">Imprimir Datos del Empleado</field>
+		<field name="model">hr.employee</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hr_fields_it.report_employee_view</field>
+		<field name="report_file">hr.report_employee_view</field>
+		<field name="print_report_name">'Empleado - %s' % (object.name)</field>
+		<field name="binding_model_id" ref="model_hr_employee"/>
+		<field name="binding_type">report</field>
+	</record>
+
+	<template id="report_employee_view">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<div class="col-xs-3">
+							<img t-att-src="'/hr_fields_it/static/img/foto.jpg'"/>
+						</div>
+						<center><h2>Reporte de Datos del Empleado</h2></center>
+						<center><h2><span t-field="doc.names"/> <span t-field="doc.last_name"/> <span t-field="doc.m_last_name"/></h2></center>
+						<hr/>
+						<center><h3>INFORMACION PUBLICA</h3></center>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Informacion de Contacto</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label>Direccion :</label> <span t-field="doc.address_id.street"/>
+									</td>
+									<td>
+										<label>Movil del Trabajo :</label> <span t-field="doc.mobile_phone"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Telefono del Trabajo :</label> <span t-field="doc.work_phone"/>
+									</td>
+									<td>
+										<label>Correo del Trabajo :</label> <span t-field="doc.work_email"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Cargo</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label>Departamento :</label> <span t-field="doc.department_id.name"/>
+									</td>
+									<td>
+										<label>Puesto de trabajo :</label> <span t-field="doc.job_id.name"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Gerente :</label> <span t-field="doc.parent_id.name"/>
+									</td>
+									<td>
+										<label>Jefe de Area :</label> <span t-field="doc.coach_id.name"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Horas Laborales :</label> <span t-field="doc.resource_calendar_id.name"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr/>
+						<center><h3>INFORMACION PERSONAL</h3></center>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Ciudadania e Informacion adicional</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label>Nacionalidad(Pais) :</label> <span t-field="doc.country_id.name"/>
+									</td>
+									<td>
+										<label>Tipo Documento :</label> <span t-field="doc.type_document_id.description"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Nro. Identificacion :</label> <span t-field="doc.identification_id"/>
+									</td>
+									<td>
+										<label>Nro. Pasaporte :</label> <span t-field="doc.passport_id"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Informacion de Contacto</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label>Direccion particular :</label> <span t-field="doc.address_home_id.street"/>
+									</td>
+									<td>
+										<label>Condicion :</label> <span t-field="doc.condition"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Correo Personal :</label> <span t-field="doc.private_email"/>
+									</td>
+									<td>
+										<label>Contacto de Emergencia :</label> <span t-field="doc.emergency_contact"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Estado</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label>Sexo :</label> <span t-field="doc.gender"/>
+									</td>
+									<td>
+										<label>Estado Civil :</label> <span t-field="doc.marital"/>
+									</td>
+									<td>
+										<label>Nro. de Hijos :</label> <span t-field="doc.children"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Fecha de Nacimiento</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label>Fecha de Nacimiento :</label> <span t-field="doc.birthday"/>
+									</td>
+									<td>
+										<label>Lugar de Nacimiento :</label> <span t-field="doc.place_of_birth"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr/>
+						<center><h3>CUENTAS BANCARIAS</h3></center>
+						<t t-if="doc.wage_bank_account_id">
+							<table class="table">
+								<thead>
+									<tr class="table-info">
+										<th><h4>Cuenta Sueldo</h4></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<label>Numero de Cuenta :</label> <span t-field="doc.wage_bank_account_id.acc_number"/>
+										</td>
+										<td>
+											<label>Banco :</label> <span t-field="doc.wage_bank_account_id.bank_id.name"/>
+										</td>
+										<td>
+											<label>Moneda :</label> <span t-field="doc.wage_bank_account_id.currency_id.name"/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</t>
+						<t t-if="doc.cts_bank_account_id">
+							<table class="table">
+								<thead>
+									<tr class="table-info">
+										<th><h4>Cuenta CTS</h4></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<label>Numero de Cuenta :</label> <span t-field="doc.cts_bank_account_id.acc_number"/>
+										</td>
+										<td>
+											<label>Banco :</label> <span t-field="doc.cts_bank_account_id.bank_id.name"/>
+										</td>
+										<td>
+											<label>Moneda :</label> <span t-field="doc.cts_bank_account_id.currency_id.name"/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</t>
+						<hr/>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_hr_period_form" model="ir.ui.view">
+		<field name="name">hr.period.form</field>
+		<field name="model">hr.period</field>
+		<field name="arch" type="xml">
+			<form string="Periodos">
+				<sheet>
+					<group>
+						<group>
+							<field name="code" required="1"/>
+							<field name="name" required="1"/>
+							<field name="fiscal_year_id" required="1"/>
+						</group>
+						<group>
+							<field name="date_start"/>
+							<field name="date_end"/>
+						</group>
+					</group>
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers"/>
+					<field name="message_ids" widget="mail_thread"/>
+				</div>
+			</form>
+		</field>
+	</record>
+
+	<record id="view_hr_period_list" model="ir.ui.view">
+		<field name="name">hr.period.list</field>
+		<field name="model">hr.period</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="code" optional="show"/>
+				<field name="name" optional="show"/>
+				<field name="fiscal_year_id" optional="show"/>
+				<field name="date_start" optional="show"/>
+				<field name="date_end" optional="show"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_hr_period" model="ir.actions.act_window">
+		<field name="name">Periodos</field>
+		<field name="res_model">hr.period</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_hr_period_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Periodos para Nominas aqui
+		  </p>
+		</field>
+	</record>
+</odoo>

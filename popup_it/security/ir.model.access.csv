@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_popup_it_group_user,popup.it.group.user,popup_it.model_popup_it,group_popup_it,1,1,1,1

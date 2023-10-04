@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_book_perception_group_user,account.book.perception.group.user,model_account_book_perception,account_base_it.group_account_tables_user,1,1,1,1
+access_account_book_perception_sp_group_user,account.book.perception.sp.group.user,model_account_book_perception_sp,account_base_it.group_account_tables_user,1,1,1,1
+access_account_book_perception_wizard_group_user,account.book.perception.wizard.group.user,model_account_book_perception_wizard,account_base_it.group_account_tables_user,1,1,1,1

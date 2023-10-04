@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_make_kardex_valorado_formato_sunat,make.kardex.valorado.formato.sunat,kardex_formato_sunat_it.model_make_kardex_valorado_formato_sunat,,1,1,1,1
+access_existence_type_user,existence.type.user,kardex_formato_sunat_it.model_existence_type,group_account_tables_userrrs,1,1,1,1
+access_einvoice_catalog_25_user,einvoice.catalog.25.user,kardex_formato_sunat_it.model_einvoice_catalog_25,group_account_tables_userrrs,1,1,1,1
+access_einvoice_catalog_13_user,einvoice.catalog.13.user,kardex_formato_sunat_it.model_einvoice_catalog_13,group_account_tables_userrrs,1,1,1,1

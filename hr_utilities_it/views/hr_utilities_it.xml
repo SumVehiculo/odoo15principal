@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="view_hr_utilities_it_form" model="ir.ui.view">
+			<field name="name">hr.utilities.it.form</field>
+			<field name="model">hr.utilities.it</field>
+			<field name="arch" type="xml">
+				<form string="Utilidades">
+					<header>
+						<button string="Calcular" type="object" name="calculate" states="draft" class="oe_highlight"/>
+						<button string="Exportar Utilidades" type="object" name="export_utilities" states="calculate" class="oe_highlight" confirm="¿Esta seguro que desea exportar los montos de Utilidades a su respectivo Lote de Nominas?"/>
+						<button name="get_excel_utilidades" string="Generar Excel" type="object" class="oe_highlight"/>
+						<button string="Cancelar" type="object" name="cancel" states="calculate"/>
+						<button string="Cambiar a borrador" type="object" name="change_draft" states="cancel"/>
+						<field name="state" widget="statusbar" readonly="1"/>
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<h1>
+								<field name="fiscal_year_id" class="oe_inline" required="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+							</h1>
+						</div>
+						<group>
+							<group>                            
+								<field name="annual_rent" required="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+								<label for="percentage"/>
+								<div class="o_row" name="percentage">
+									<field name="percentage" string="Porcentaje" required="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+									<span>%</span>
+								</div>
+								<field name="distribution" readonly="1"/>
+								<field name="distribution" invisible="1"/>
+								<field name="hr_payslip_run_id" attrs="{'readonly':[('state','not in',['draft'])]}"/>
+							</group>
+							<group>
+								<field name="sum_salary_year"/>
+								<field name="sum_number_of_days_year"/>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>                    
+							</group>
+						</group>
+						<group>
+							<field name="utilities_line_ids" nolabel="1">
+								<tree editable="bottom" create="false" edit="false" delete="false">
+									<field name="employee_document"/>
+									<field name="employee"/>
+									<field name="distribution_id"/>
+									<field name="salary" sum="salary"/>
+									<field name="number_of_days" sum="number_of_days"/>
+									<field name="for_salary" sum="for_salary"/>
+									<field name="for_number_of_days" sum="for_number_of_days"/>
+									<field name="total_utilities" sum="total_utilities"/>
+								</tree>
+							</field>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_hr_utilities_it_tree" model="ir.ui.view">
+			<field name="name">hr.utilities.it.tree</field>
+			<field name="model">hr.utilities.it</field>
+			<field name="arch" type="xml">
+				<tree string="Utilidades" >
+					<field name="fiscal_year_id"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_hr_utilities_it" model="ir.actions.act_window">
+			<field name="name">Utilidades</field>
+			<field name="res_model">hr.utilities.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_hr_utilities_it_tree"/>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Utilidades aqui
+			</p>
+			</field>
+		</record>
+
+		<record model="ir.actions.server" id="action_print_hr_utilities_it">
+			<field name="name">Imprimir Utilidades</field>
+			<field name="model_id" ref="hr_utilities_it.model_hr_utilities_it"/>
+			<field name="binding_model_id" ref="hr_utilities_it.model_hr_utilities_it" />
+			<field name="state">code</field>
+			<field name="code">action = records.action_print()</field>
+		</record>
+
+		<menuitem id="menu_hr_utilities_it" name="Utilidades"
+				  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+				  action="action_hr_utilities_it"
+				  sequence="80"/>
+	</data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_surrender_free_wizard_form">
+			<field name="name">surrender.free.wizard.form</field>
+			<field name="model">surrender.free.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Entregas Gratuitas">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="period"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Generar Asiento" name="make_invoice" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="surrender_free_wizard_action" model="ir.actions.act_window">
+			<field name="name">Entregas Gratuitas</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">surrender.free.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="surrender_free_wizard_action" 
+				  id="menu_action_surrender_free_wizard" 
+				  parent="kardex_fisico_it.kardex_main_menu"
+				  sequence="80"/>
+	</data>
+</odoo>

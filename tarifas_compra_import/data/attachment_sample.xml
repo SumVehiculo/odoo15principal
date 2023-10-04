@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="tarifa_purchase_import_template_xls" model="ir.attachment">
+            <field name="name">tarifa_purchase_import_template.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="tarifas_compra_import/sample_import_file/tarifa_purchase_import_template.xlsx"/>
+        </record>
+    </data>
+</odoo>

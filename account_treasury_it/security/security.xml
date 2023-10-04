@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record model="ir.module.category" id="module_treasury_hidden">
+            <field name="name">Tesoreria</field>
+            <field name="sequence">61</field>
+            <field name="visible" eval="0" />
+        </record>
+
+		<record id="group_treasury_bank_statement_it" model="res.groups">
+			<field name="name">Tesoreria: Extractos Bancarios</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+		<record id="group_treasury_efective_it" model="res.groups">
+			<field name="name">Tesoreria: Caja Chica</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+		<record id="group_treasury_surrender_it" model="res.groups">
+			<field name="name">Tesoreria: Rendiciones</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+		<record id="group_treasury_supplier_payment_it" model="res.groups">
+			<field name="name">Tesoreria: Pagos a Proveedores</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+		<record id="group_treasury_customer_payment_it" model="res.groups">
+			<field name="name">Tesoreria: Pagos a Clientes</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+		<record id="group_treasury_transfer_it" model="res.groups">
+			<field name="name">Tesoreria: Transferencias</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+		<record id="group_treasury_batch_payment_it" model="res.groups">
+			<field name="name">Tesoreria: Lotes de Pago</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+	</data>
+</odoo>

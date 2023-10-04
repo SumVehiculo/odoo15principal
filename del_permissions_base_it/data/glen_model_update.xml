@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data noupdate="1">
+		<function model="glen.model_update" name="function_remove_permissions_it"/>
+	</data>
+</odoo>

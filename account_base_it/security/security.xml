@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="group_account_tables_user" model="res.groups">
+			<field name="name">Show Full Accounting Tables</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+
+		<record id="account_main_parameter_comp_rule" model="ir.rule">
+			<field name="name">Parametros Contabilidad multi-company</field>
+			<field name="model_id" ref="model_account_main_parameter"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="it_invoice_serie_comp_rule" model="ir.rule">
+			<field name="name">Series de Factura multi-company</field>
+			<field name="model_id" ref="model_it_invoice_serie"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_certificate_wizard_view_form" model="ir.ui.view">
+        <field name="name">hr.certificate.wizard.view.form</field>
+        <field name="model">hr.certificate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Certificado de Trabajo">
+                <group>
+                    <group col='2'>
+                        <field name="employee_id" />
+                        <field name="des_empl" />
+                        <field name="city" />
+                    </group>
+                    <group col='2'>
+                        <field name="date_ini" />
+                        <field name="date_fin" />
+                        <field name="main_parameter_id" invisible="1"/>
+                    </group>
+                </group>
+                <center>
+                    <footer>
+                        <button string="EXPORTAR" name="export_certificate" type="object" class="oe_highlight" />
+                        <button string="CANCELAR" class="oe_link" special="cancel"/>
+                    </footer>
+                </center>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_certificate_wizard_action" model="ir.actions.act_window">
+        <field name="name">Certificado de Trabajo</field>
+        <field name="res_model">hr.certificate.wizard</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="get_certificate_employee" model="ir.actions.server">
+        <field name="name">Certificado de Trabajo</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">action = records.open_wizard_certificate()</field>
+    </record>
+
+</odoo>

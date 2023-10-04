@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+    <data>
+        <record id="account_move_inherit_form_cuentas_perso" model="ir.ui.view">
+            <field name="name">account.move.inherit.form.cuentas.perso</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@id='header_left_group']" position="inside">
+                    <field name="cuneta_p_p"  attrs="{'invisible': [('move_type', 'not in', ['out_invoice','in_invoice'])]}"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="cuentas_personalizadas" string="Cuenta Personalizada" attrs="{'invisible': [('cuneta_p_p', '=', False)]}"> 
+                        <group>
+                            <group>
+                                <field name="personalizadas_id" domain="[('p_type', '=', 'receivable')] if move_type == 'out_invoice' else [('p_type', '=', 'payable')]"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>          
+    </data>
+</odoo>

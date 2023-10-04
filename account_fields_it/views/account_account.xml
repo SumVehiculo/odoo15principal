@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_form_inherit" model="ir.ui.view">
+			<field name="name">account.form.inherit</field>
+			<field name="model">account.account</field>
+			<field name="inherit_id" ref="account.view_account_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//notebook" position="inside">
+					<page string="ITGRUPO">
+						<group>
+							<group>
+								<field name="code_sunat"/>
+								<field name="m_close" invisible="1"/>
+								<field name="account_close_id" invisible="1"/>
+								<field name="account_type_it_id"/>
+								<field name="account_type_cash_id"/>
+								<field name="patrimony_id" widget="selection"/>
+								<field name="type_adquisition"/>
+								<field name="check_moorage"/>
+							</group>
+							<group>
+								<field name="a_debit"/>
+								<field name="a_credit"/>
+								<field name="is_document_an"/>
+								<field name="dif_cambio_type"/>
+								<field name="financial_entity"/>
+								<field name="code_bank"/>
+								<field name="account_number"/>
+								<field name="clasification_sheet"/>
+							</group>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

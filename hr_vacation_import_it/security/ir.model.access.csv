@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_rest_import_root,hr_rest_import_root,model_hr_rest_import,hr_vacations_it.group_hr_vacation_root,1,1,1,0

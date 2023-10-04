@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_sale_book_usd_tree" model="ir.ui.view">
+            <field name="name">account.sale.book.usd.tree</field>
+            <field name="model">account.sale.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Registro de Ventas" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha_cont"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_e"/>
+                    <field name="fecha_v"/>
+                    <field name="td"/>
+                    <field name="serie"/>
+                    <field name="anio"/>
+                    <field name="numero"/>
+                    <field name="tdp"/>
+                    <field name="docp"/>
+                    <field name="namep"/>
+                    <field name="exp" sum="exp"/>
+                    <field name="venta_g" sum="venta_g"/>
+                    <field name="inaf" sum="inaf"/>
+                    <field name="exo" sum="exo"/>
+                    <field name="isc_v" sum="isc_v"/>
+                    <field name="icbper" sum="icbper"/>
+                    <field name="otros_v" sum="otros_v"/>
+                    <field name="igv_v" sum="igv_v"/>
+                    <field name="total" sum="total"/>
+                    <field name="name"/>
+                    <field name="currency_rate"/>
+                    <field name="fecha_det"/>
+                    <field name="comp_det"/>
+                    <field name="f_doc_m"/>
+                    <field name="td_doc_m"/>
+                    <field name="serie_m"/>
+                    <field name="numero_m"/>
+                    <field name="glosa"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

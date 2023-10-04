@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_cash_flow_book_tree" model="ir.ui.view">
+            <field name="name">account.cash.flow.book.tree</field>
+            <field name="model">account.cash.flow.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Reporte Flujo de Caja" create="false">
+                    <field name="grupo"/>
+                    <field name="concepto"/>
+                    <field name="account_id"/>
+                    <field name="fecha"/>
+                    <field name="amount" sum="amount"/>
+                    <field name="semana"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_cash_flow_book_pivot" model="ir.ui.view">
+            <field name="name">account.cash.flow.book.pivot</field>
+            <field name="model">account.cash.flow.book</field>
+            <field name="arch" type="xml">
+                <pivot string="Reporte Flujo de Caja">
+                    <field name="amount" type="measure"/>
+                    <field name="grupo" type="row"/>
+                    <field name="concepto" type="row"/>
+                    <field name="semana" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_account_cash_flow_book_graph" model="ir.ui.view">
+            <field name="name">account.cash.flow.book.graph</field>
+            <field name="model">account.cash.flow.book</field>
+            <field name="arch" type="xml">
+                <graph string="Reporte Flujo de Caja" type="bar" stacked="1">
+                    <field name="grupo"/>
+                    <field name="concepto"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_account_cash_flow_book_it" model="ir.actions.act_window">
+            <field name="name">Reporte Flujo de Caja</field>
+            <field name="res_model">account.cash.flow.book</field>
+            <field name="view_id" ref="view_account_cash_flow_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,pivot,graph</field>
+        </record>
+
+    </data>
+</odoo>

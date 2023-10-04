@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_net_patrimony_wizard_form">
+			<field name="name">net.patrimony.wizard.form</field>
+			<field name="model">net.patrimony.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Flujo Efectivo">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+							<field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							<field name="period_to" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="net_patrimony_action" model="ir.actions.act_window">
+			<field name="name">Patrimonio Neto</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">net.patrimony.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="menu_net_patrimony_wizard" 
+				  action="net_patrimony_action" 
+				  parent="account_report_menu_it.menu_account_worksheet" 
+				  sequence="8" 
+				  groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

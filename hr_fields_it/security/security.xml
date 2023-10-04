@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="group_hr_manager" model="res.groups">
+		<field name="name">Reabrir/Cerrar Planillas</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+	</record>
+	<record id="hr_payroll.ir_rule_hr_payroll_structure_multi_company" model="ir.rule">
+		<field name="domain_force">[('company_id', 'in', company_ids)]</field>
+	</record>
+	<record id="hr_payroll.ir_rule_hr_payslip_input_type_multi_company" model="ir.rule">
+		<field name="domain_force">[('company_id', 'in', company_ids)]</field>
+	</record>
+	<record id="hr_salary_rule_not_shared_multi_company_rule" model="ir.rule">
+		<field name="name">Non Shared Records: Salary Rule</field>
+		<field name="model_id" ref="hr_fields_it.model_hr_salary_rule"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">[('company_id', 'in', company_ids)]</field>
+	</record>
+</odoo>

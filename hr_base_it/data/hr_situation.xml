@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.situation' id="situation_0">
+			<field name='code'>0</field>
+			<field name='description'>BAJA</field>
+			<field name='name'>BAJA</field>
+		</record>
+		<record model='hr.situation' id="situation_1">
+			<field name='code'>1</field>
+			<field name='description'>ACTIVO O SUBSIDIADO</field>
+			<field name='name'>ACTIVO O SUBSIDIADO</field>
+		</record>
+		<record model='hr.situation' id="situation_2">
+			<field name='code'>2</field>
+			<field name='description'>SIN VINCULO LABORAL CON CONCEPTOS PENDIENTE DE LIQUIDAR</field>
+			<field name='name'>SIN VINC. LAB. CON CONC PEND POR LIQUIDAR</field>
+		</record>
+		<record model='hr.situation' id="situation_3">
+			<field name='code'>3</field>
+			<field name='description'>SUSPENSION PERFECTA DE LABORES</field>
+			<field name='name'>SUSPENSION PERFECTA DE LABORES</field>
+		</record>
+	</data>
+</odoo>

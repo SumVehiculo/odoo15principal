@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_f1_register_group_root,f1.register.group.root,account_htf1_report.model_f1_register,account_base_it.group_account_tables_user,1,1,1,1
+access_f1_balance_group_root,f1.balance.group.root,account_htf1_report.model_f1_balance,account_base_it.group_account_tables_user,1,1,1,1
+access_worksheet_f1_wizard_group_root,worksheet.f1.wizard.group.root,account_htf1_report.model_worksheet_f1_wizard,account_base_it.group_account_tables_user,1,1,1,1

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.suspension.type' id="suspension_01">
+			<field name='code'>01</field>
+			<field name='description'>S.P. SANCION DISCIPLINARIA</field>
+			<field name='name'>S.P. SANCION DISCIPLINARIA</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_02">
+			<field name='code'>02</field>
+			<field name='description'>S.P. EJERCICIO DEL DERECHO DE HUELGA</field>
+			<field name='name'>S.P. EJERCICIO DERECHO HUELGA</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_03">
+			<field name='code'>03</field>
+			<field name='description'>S.P. DETENCIÓN DEL TRABAJADOR, SALVO EL CASO DE CONDENA PRIVATIVA DE LA LIBERTAD</field>
+			<field name='name'>S.P. DETENCIÓN DEL TRABAJADOR</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_04">
+			<field name='code'>04</field>
+			<field name='description'>S.P. INHABILITACIÓN ADMINISTRATIVA, JUDICIAL  O PENA PRIVATIVA DE LA LIBERTAD EFECTIVA POR DELITO CULPOSO, POR PERIODO NO SUPERIOR A TRES MESES</field>
+			<field name='name'>S.P. INHAB. ADMINIST., JUDICIAL O PENA PRIVATIVA</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_05">
+			<field name='code'>05</field>
+			<field name='description'>S.P. PERMISO, LICENCIA U OTROS MOTIVOS SIN GOCE DE HABER</field>
+			<field name='name'>S.P. PERMISO, LICENCIA U OTROS SIN GOCE DE HABER</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_06">
+			<field name='code'>06</field>
+			<field name='description'>S.P. CASO FORTUITO O FUERZA MAYOR</field>
+			<field name='name'>S.P. CASO FORTUITO O FUERZA MAYOR</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_07">
+			<field name='code'>07</field>
+			<field name='description'>S.P. FALTA NO JUSTIFICADA</field>
+			<field name='name'>S.P. FALTA NO JUSTIFICADA</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_08">
+			<field name='code'>08</field>
+			<field name='description'>S.P. POR TEMPORADA O INTERMITENTE</field>
+			<field name='name'>S.P. POR TEMPORADA O INTERMITENTE</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_09">
+			<field name='code'>09</field>
+			<field name='description'>S.P. MATERNIDAD DURANTE EL DESCANSO PRE Y POST NATAL</field>
+			<field name='name'>S.P. MATERNIDAD - PRE Y POST NATAL</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_10">
+			<field name='code'>10</field>
+			<field name='description'>S.P. SENTENCIA DE PRIMERA INSTANCIA POR DELITOS DE TERRORISMO, NARCOTRÁFICO, CORRUPCIÓN O VIOLACIÓN DE LA LIBERTAD SEXUAL.</field>
+			<field name='name'>S.P. SENTENCIA TERR, NARC,CORRUP Y VIOLAC.</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_11">
+			<field name='code'>11</field>
+			<field name='description'>S.P. IMPOSICIÓN DE MEDIDA CAUTELAR.</field>
+			<field name='name'>S.P. IMPOSICIÓN MEDIDA CAUTELAR</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_12">
+			<field name='code'>12</field>
+			<field name='description'>S.P. ENFERMEDAD GRAVE DEL PADRE, CÓNYUGE, CONVIVIENTE RECONOCIDO JUDICIALMENTE O HIJOS.</field>
+			<field name='name'>S.P. ENFERM. PADRE, CÓNYUGE O CONVIVIENTE</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_20">
+			<field name='code'>20</field>
+			<field name='description'>S.I. ENFERMEDAD O ACCIDENTE (PRIMEROS VEINTE DÍAS)</field>
+			<field name='name'>S.I. ENFERMEDAD O ACCIDENTE (PRIMEROS VEINTE DÍAS)</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_21">
+			<field name='code'>21</field>
+			<field name='description'>S.I. INCAPACIDAD TEMPORAL (INVALIDEZ, ENFERMEDAD Y ACCIDENTES)</field>
+			<field name='name'>S.I. INCAPACIDAD TEMPORAL (INVALIDEZ, ENFERMEDAD Y ACCIDENTES)</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_22">
+			<field name='code'>22</field>
+			<field name='description'>S.I. MATERNIDAD DURANTE EL DESCANSO PRE Y POST NATAL</field>
+			<field name='name'>S.I. MATERNIDAD - PRE Y POST NATAL</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_23">
+			<field name='code'>23</field>
+			<field name='description'>S.I. DESCANSO VACACIONAL</field>
+			<field name='name'>S.I. DESCANSO VACACIONAL</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_24">
+			<field name='code'>24</field>
+			<field name='description'>S.I. LICENCIA PARA DESEMPEÑAR CARGO CÍVICO Y PARA CUMPLIR CON EL SERVICIO MILITAR OBLIGATORIO</field>
+			<field name='name'>S.I. LIC  DESEMP CARGO CÍVICO Y PARA SMO</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_25">
+			<field name='code'>25</field>
+			<field name='description'>S.I. PERMISO Y LICENCIA PARA EL DESEMPEÑO DE CARGOS SINDICALES</field>
+			<field name='name'>S.I. LIC DESEMPEÑO CARGOS SINDICALES</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_26">
+			<field name='code'>26</field>
+			<field name='description'>S.I. LICENCIA U OTROS MOTIVOS CON GOCE DE HABER</field>
+			<field name='name'>S.I. LICENCIA U OTROS MOTIVOS CON GOCE DE HABER</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_27">
+			<field name='code'>27</field>
+			<field name='description'>S.I. DÍAS COMPENSADOS POR HORAS TRABAJADAS EN SOBRETIEMPO</field>
+			<field name='name'>S.I. DÍAS COMPENS POR HORAS DE SOBRETIEMPO</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_28">
+			<field name='code'>28</field>
+			<field name='description'>S.I. DÍAS LICENCIA POR PATERNIDAD</field>
+			<field name='name'>S.I. DÍAS LICENCIA POR PATERNIDAD</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_29">
+			<field name='code'>29</field>
+			<field name='description'>S.I. DIAS LICENCIA POR ADOPCIÓN</field>
+			<field name='name'>S.I. DIAS LICENCIA POR ADOPCIÓN </field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_30">
+			<field name='code'>30</field>
+			<field name='description'>S.I. IMPOSICIÓN DE MEDIDA CAUTELAR</field>
+			<field name='name'>S.I. IMPOSICIÓN DE MEDIDA CAUTELAR</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_31">
+			<field name='code'>31</field>
+			<field name='description'>S.I. CITACIÓN EXPRESA JUDICIAL, MILITAR, POLICIAL U OTRAS CITACIONES DERIVADAS DE ACTOS DE ADMINISTRACIÓN INTERNA</field>
+			<field name='name'>S.I. CITAC. JUDICIAL, MILITAR, POLICIAL O ADMINIST.</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_32">
+			<field name='code'>32</field>
+			<field name='description'>S.I. FALLECIMIENTO DE PADRES, CÓNYUGE O HIJOS</field>
+			<field name='name'>S.I. FALLECIMIENTO PADRES, CÓNYUGE O HIJOS</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_33">
+			<field name='code'>33</field>
+			<field name='description'>S.I. ASUMIR REPRESENTACIÓN OFICIAL DEL ESTADO PERUANO EN EVENTOS CIENTÍFICOS, EDUCATIVOS, CULTURALES Y DEPORTIVOS</field>
+			<field name='name'>S.I. REPRESENT. DEL ESTADO EN EVENTOS</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_34">
+			<field name='code'>34</field>
+			<field name='description'>S.I. DESC VACACIONAL - LICENCIA ASIST MÉDICA O TERAPIA DE REHABIL DE DEPEND CON DISCAPACIDAD</field>
+			<field name='name'>S.I. DESC VACAC LIC POR ASISTE MÉDICA O TERAP REHAB</field>
+		</record>
+		<record model='hr.suspension.type' id="suspension_35">
+			<field name='code'>35</field>
+			<field name='description'>S.I.ENFERMEDAD GRAVE O TERMINAL O ACCIDENTE GRAVE DE FAMILIARES DIRECTOS</field>
+			<field name='name'>S.I. ENFERM. GRAVE O TERMINAL O ACCIDENTE GRAVE DE FAM DIRECTO</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_asset_71_book_tree" model="ir.ui.view">
+            <field name="name">account.asset.71.book.tree</field>
+            <field name="model">account.asset.71.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Formato 7.1" create="false">
+                    <field name="campo1"/>
+                    <field name="campo2"/>
+                    <field name="campo3"/>
+                    <field name="campo4"/>
+                    <field name="campo5"/>
+                    <field name="campo6"/>
+                    <field name="campo7"/>
+                    <field name="campo8"/>
+                    <field name="campo9"/>
+                    <field name="campo10"/>
+                    <field name="campo11"/>
+                    <field name="campo12"/>
+                    <field name="campo13"/>
+                    <field name="campo14"/>
+                    <field name="campo15"/>
+                    <field name="campo16"/>
+                    <field name="campo17"/>
+                    <field name="campo18"/>
+                    <field name="campo19"/>
+                    <field name="campo20"/>
+                    <field name="campo21"/>
+                    <field name="campo22"/>
+                    <field name="campo23"/>
+                    <field name="campo24"/>
+                    <field name="campo25"/>
+                    <field name="campo26"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_asset_71_book_search" model="ir.ui.view">
+            <field name="name">account.asset.71.book.search</field>
+            <field name="model">account.asset.71.book</field>
+            <field name="arch" type="xml">
+                <search string="Formato 7.1">
+                    <field name="campo3"/>
+                    <field name="campo2"/>
+                    <field name="campo1"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_asset_71_book_it" model="ir.actions.act_window">
+            <field name="name">Formato 7.1</field>
+            <field name="res_model">account.asset.71.book</field>
+            <field name="view_id" ref="view_account_asset_71_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_asset_71_book_search"/>
+        </record>
+
+    </data>
+</odoo>

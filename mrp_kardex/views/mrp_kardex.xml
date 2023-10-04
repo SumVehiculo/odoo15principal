@@ -1,0 +1,70 @@
+<odoo>
+	<data>
+
+
+		<record model="ir.ui.view" id="move_line_fecha_kardex">
+			<field name="name">stock.move.line.form</field>
+			<field name="model">stock.move.line</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="kardex_date" readonly="0" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="move_line_no_mostrar">
+			<field name="name">stock.move.line.form</field>
+			<field name="model">stock.move.line</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="no_mostrar" readonly="0" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_move_line_tree">
+			<field name="name">stock.move.line.tree.inherit</field>
+			<field name="model">stock.move.line</field>
+			<field name="inherit_id" ref="stock.view_move_line_tree"/>
+			<field name="arch" type="xml">
+				<field name="location_dest_id" position="after">
+					<field name="kardex_date" readonly="1"/>
+					<button name="edit_kardex_date" type="object" string="Fecha" groups="kardex_fisico_it.group_modificar_kardex_fecha"/>
+					<field name="no_mostrar" readonly="1"/>
+					<button name="edit_mostrar_no" type="object" string="Mostrar" groups="kardex_fisico_it.group_modificar_no_mostrar_kardex" />
+				</field>
+			</field>
+		</record>
+		
+
+		<!--<record model="ir.ui.view" id="mrp_production_form_view_inherit">
+			<field name="name">mrp.production.form.view.inherit</field>
+			<field name="model">mrp.production</field>
+			<field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='use_create_components_lots'][1]" position="after">
+					<field name="kardex_date" readonly="1" />
+					<field name="no_mostrar" invisible="1" />
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="mrp_kardex_form_view_inherit">
+			<field name="name">mrp.kardex.form.view.inherit</field>
+			<field name="model">mrp.production</field>
+			<field name="inherit_id" ref="mrp_kardex.mrp_production_form_view_inherit"/>
+			<field name="groups_id" eval="[(6, 0, [ref('mrp_kardex.edit_kardex_date')])]"/>
+			<field name="arch" type="xml">
+				<field name="kardex_date" position="attributes">
+					<attribute name="readonly">0</attribute>
+				</field>
+			</field>
+		</record>-->
+	</data>
+</odoo>

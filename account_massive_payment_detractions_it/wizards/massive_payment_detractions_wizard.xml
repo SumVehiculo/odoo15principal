@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_massive_payment_detractions_wizard_form">
+			<field name="name">massive.payment.detractions.wizard.form</field>
+			<field name="model">massive.payment.detractions.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Pago Masivo de Detracciones">
+                    <group>
+                        <group>
+                            <field name="type" required="1" widget="radio"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Obtener TXT" name="get_txt" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_massive_payment_detractions_wizard" model="ir.actions.act_window">
+			<field name="name">Pago Masivo de Detracciones</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">massive.payment.detractions.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+	</data>
+</odoo>

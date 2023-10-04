@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_accoun_ple_purchase_wizard_form">
+			<field name="name">account.ple.purchase.wizard.form</field>
+			<field name="model">account.ple.purchase.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Corrector PLE Compras">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_ple_purchase_wizard_action" model="ir.actions.act_window">
+			<field name="name">Corrector PLE Compras</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.ple.purchase.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem
+			name="Corrector PLE"
+			id="menu_main_fix_ple"
+			parent="account_base_sunat_it.menu_finance_sunat"
+			groups="account_base_it.group_account_tables_user"
+			sequence="10"/>
+
+		<menuitem
+			id="menu_main_fix_ple_purchase"
+			action="account_ple_purchase_wizard_action"
+			parent="menu_main_fix_ple"
+			groups="account_base_it.group_account_tables_user"
+			sequence="1"/>
+
+	</data>
+</odoo>

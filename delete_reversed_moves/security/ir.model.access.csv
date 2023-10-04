@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delete_reversed_move_group_user,delete.reversed.move.group.user,model_delete_reversed_move,account_base_it.group_account_tables_user,1,1,1,1

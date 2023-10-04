@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="view_hr_leave_type_it_filter" model="ir.ui.view">
+        <field name="name">hr.leave.type.it.filter</field>
+        <field name="model">hr.leave.type.it</field>
+        <field name="arch" type="xml">
+            <search string="Tipo de Ausencia">
+                <field name="name" string="Tipo de Ausencia"/>
+                <separator/>
+                <filter string="Archivados" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hr_leave_type_it_form" model="ir.ui.view">
+        <field name="name">hr.leave.type.it.form</field>
+        <field name="model">hr.leave.type.it</field>
+        <field name="arch" type="xml">
+            <form string="Tipo de Ausencia">
+                <sheet>
+                    <widget name="web_ribbon" title="Archivado" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group name="leave_validation" id="time_off_requests">
+                            <h2>Peticiones de Ausencia</h2>
+                            <field name="active" invisible="1"/>
+                            <field name="leave_validation_type" string="Tipo de Validacion" widget="radio"/>
+                            <field name="responsible_id" domain="[('share', '=', False)]"
+                                attrs="{'invisible': [('leave_validation_type', 'in', ['no_validation', 'manager'])]}"/>
+<!--                            <field name="request_unit" widget="radio-inline"/>-->
+                            <field name="support_document" />
+<!--                            <field name="time_type" required="1"/>-->
+                        </group>
+                        <group>
+                            <field name="suspension_type_id"/>
+                            <field name="ausencia_wd_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group name="visual" id="visual" >
+                        <group colspan="4">
+                            <h2>Mostrar Opcion</h2>
+                        </group>
+                        <group colspan="4">
+                            <field name="color" widget="color_picker" />
+                            <field class="d-flex flex-wrap" name="icon_id" widget="radio_image" options="{'horizontal': true}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_leave_type_it_tree" model="ir.ui.view">
+        <field name="name">hr.leave.type.it.tree</field>
+        <field name="model">hr.leave.type.it</field>
+        <field name="arch" type="xml">
+            <tree string="Tipo de Ausencia">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="suspension_type_id"/>
+                <field name="ausencia_wd_id"/>
+                <field name="leave_validation_type" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hr_leave_type_it" model="ir.actions.act_window">
+        <field name="name">Tipo de Ausencias</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.leave.type.it</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

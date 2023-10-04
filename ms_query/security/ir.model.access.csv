@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ms_query_admin,ms_query admin,model_ms_query,base.group_system,1,1,1,1
+access_login_sql_wizard_admin,login.sql.wizard.admin,model_login_sql_wizard,base.group_system,1,1,1,1

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_account_tag_form_inherit" model="ir.ui.view">
+			<field name="name">account.account.tag.form.inherit</field>
+			<field name="model">account.account.tag</field>
+			<field name="inherit_id" ref="account.account_tag_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='tax_report_line_ids']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//group['0']" position="after">
+					<group>
+						<notebook  attrs="{'invisible': [('applicability', '!=', 'taxes')]}">
+							<page string="Tax Report Lines">
+									<field name="tax_report_line_ids"/>
+							</page>
+							<page string="ITGRUPO">
+								<group>
+									<group>
+										<field name="sequence"/>
+										<field name="record_shop"/>
+										<field name="col_pdb"/>
+									</group>
+									<group>
+										<field name="record_sale"/>
+										<field name="record_fees"/>
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</group>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_tag_tree_inherit" model="ir.ui.view">
+			<field name="name">account.tag.tree.inherit</field>
+			<field name="model">account.account.tag</field>
+			<field name="inherit_id" ref="account.account_tag_view_tree"/>
+			<field name="arch" type="xml">
+				<field name="applicability" position="after">
+					<field name="sequence" optional="show"/>
+					<field name="record_shop" optional="show"/>
+					<field name="record_sale" optional="show"/>
+					<field name="record_fees" optional="show"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

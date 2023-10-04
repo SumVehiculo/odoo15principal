@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_sunat_asset_71_wizard_form">
+			<field name="name">account.sunat.asset.71.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE 7.1">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Generar TXT" name="get_ple_asset_71" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_asset_74_wizard_form">
+			<field name="name">account.sunat.asset.74.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE 7.1">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Generar TXT" name="get_ple_asset_74" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_sunat_asset_71_wizard_action" model="ir.actions.act_window">
+			<field name="name">PLE 7.1</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_asset_71_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_asset_74_wizard_action" model="ir.actions.act_window">
+			<field name="name">PLE 7.4</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_asset_74_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_sunat_asset_71_wizard_action" 
+				id="menu_account_sunat_asset_71_wizard_action" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="12"
+				groups="account_base_it.group_account_tables_user"/>
+		
+		<menuitem action="account_sunat_asset_74_wizard_action" 
+				id="menu_account_sunat_asset_74_wizard_action" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="15"
+				groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_nature_result_usd_wizard_form">
+			<field name="name">nature.result.usd.wizard.form</field>
+			<field name="model">nature.result.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Resultado por Naturaleza">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							<field name="period_to" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+							<field name="currency" readonly="1"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="nature_result_usd_action" model="ir.actions.act_window">
+			<field name="name">Resultado por Naturaleza</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">nature.result.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_nature_result_usd_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="context">{'default_currency':'usd','default_type_show':'excel'}</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="nature_result_usd_action" 
+			id="menu_nature_result_usd_action" 
+			parent="account_amount_currency_dolars_it.menu_eeff_usd_reports" 
+			sequence="27" 
+			groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="view_product_landed_cost_it_form" model="ir.ui.view">
+            <field name="name">product.template.landed.cost.it.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <group name="bill" position="after">
+                    <div>
+                        <group string="Rendiciones" name="surrender_it">
+                            <field name="surrender_ok"/>
+                        </group>
+                    </div>
+                </group>
+            </field>
+        </record>
+
+	<record id="surrender_product_template_search_view" model="ir.ui.view">
+		<field name="name">product.template.search.inherit.surrender</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_search_view"/>
+		<field name="arch" type="xml">
+		<xpath expr="//filter[@name='filter_to_purchase']" position="after">
+			<filter string="Sirve para Rendiciones" name="filter_to_surrender" domain="[('surrender_ok', '=', True)]"/>
+		</xpath>
+		</field>
+	</record>
+
+  	<record id="product_product_action_surrender" model="ir.actions.act_window">
+		<field name="name">Productos</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.template</field>
+		<field name="view_mode">kanban,tree,form,activity</field>
+		<field name="context">{'search_default_filter_to_surrender': 1,'default_surrender_ok': True}</field>
+		<field name="view_id" ref="account.product_template_view_tree"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crear un nuevo producto para Rendiciones
+			</p>
+		</field>
+	</record>
+
+</odoo>

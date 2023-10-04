@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_book_honorary_view_group_user,account.book.honorary.view.group.user,account_book_honorary_it.model_account_book_honorary_view,account_base_it.group_account_tables_user,1,1,1,1
+access_account_book_honorary_wizard_group_user,account.book.honorary.wizard.group.user,account_book_honorary_it.model_account_book_honorary_wizard,account_base_it.group_account_tables_user,1,1,1,1

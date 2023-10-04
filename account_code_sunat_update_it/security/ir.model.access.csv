@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_code_sunat_table_group_user,account.code.sunat.table.user,model_account_code_sunat_table,account_base_it.group_account_tables_user,1,1,1,1
+access_account_code_sunat_update_group_user,wizard.code.sunat.update.user,model_code_sunat_update,account_base_it.group_account_tables_user,1,1,1,1

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_purchase_rep_usd_form">
+			<field name="name">account.purchase.rep.usd.form</field>
+			<field name="model">account.purchase.rep</field>
+			<field name="arch" type="xml">
+				<form string="Registro de Compras">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="exercise"/>
+								<field name="date_ini"/>
+								<field name="date_end"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+								<field name="currency" readonly="1"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_purchase_rep_usd_action" model="ir.actions.act_window">
+			<field name="name">Registro de Compras</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.purchase.rep</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_purchase_rep_usd_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="context">{'default_currency':'usd'}</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_purchase_rep_usd_action" 
+			id="menu_account_purchase_rep_usd_action" 
+			parent="account_amount_currency_dolars_it.menu_eeff_usd_reports"  
+			sequence="15" 
+			groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

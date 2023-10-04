@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_financial_situation_group_root,finantial.situation.group.root,account_financial_situation_it.model_financial_situation,account_base_it.group_account_tables_user,1,1,1,1
+access_financial_situation_wizard_group_root,financial.situation.wizard.group.root,account_financial_situation_it.model_financial_situation_wizard,account_base_it.group_account_tables_user,1,1,1,1

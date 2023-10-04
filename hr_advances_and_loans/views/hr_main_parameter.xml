@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_inherit_loans" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.inherit.loans</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_leave_it.hr_main_parameter_leave_form"/>
+		<field name="arch" type="xml">
+			<page name="gratification" position="inside">
+				<group name="advance_loan_gra" string="Adelatos y Prestamos">
+					<group>
+						<field name="grat_advance_id"/>
+					</group>
+					<group>
+						<field name="grat_loan_id"/>
+					</group>
+				</group>
+			</page>
+			<page name="cts" position="inside">
+				<group name="advance_loan_cts" string="Adelatos y Prestamos">
+					<group>
+						<field name="cts_advance_id"/>
+					</group>
+					<group>
+						<field name="cts_loan_id"/>
+					</group>
+				</group>
+			</page>
+			<page name="liquidation" position="inside">
+				<group name="advance_loan_liq" string="Adelatos y Prestamos">
+					<group>
+						<field name="liqui_advance_id"/>
+					</group>
+					<group>
+						<field name="liqui_loan_id"/>
+					</group>
+				</group>
+			</page>
+			<page name="vacation" position="inside">
+				<group name="advance_loan_vac" string="Adelatos y Prestamos">
+					<group>
+						<field name="vaca_advance_id"/>
+					</group>
+					<group>
+						<field name="vaca_loan_id"/>
+					</group>
+				</group>
+			</page>
+		</field>
+	</record>
+</odoo>

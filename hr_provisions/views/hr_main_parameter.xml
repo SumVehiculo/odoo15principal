@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_inherit" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.inherit</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_base_it.hr_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='liquidation']" position="after">
+				<page name="provisions" string="Provisiones B.S.">
+					<group string="Contabilidad">
+						<group>
+							<field name="provision_journal_id"/>
+							<field name="type_doc_prov"/>
+						</group>
+						<group>
+							<field name="detallar_provision"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

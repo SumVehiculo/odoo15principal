@@ -1,0 +1,55 @@
+<odoo>
+	<data noupdate="1">
+		<function model="hr.salary.rule.category" name="store_salary_rules_categories"/>
+		<!--Categories-->
+		<record model='hr.salary.rule.category' id='ING'>
+			<field name='name'>INGRESOS</field>
+			<field name='code'>ING</field>
+			<field name='sequence'>1</field>
+			<field name='type'>in</field>
+			<field name='appears_on_payslip'>True</field>
+		</record>
+		<record model='hr.salary.rule.category' id='APOR_TRA'>
+			<field name='name'>APORTES TRABAJADOR</field>
+			<field name='code'>APOR_TRA</field>
+			<field name='sequence'>2</field>
+			<field name='type'>out</field>
+			<field name='appears_on_payslip'>True</field>
+		</record>
+		<record model='hr.salary.rule.category' id='DES_NET'>
+			<field name='name'>DESCUENTOS AL NETO</field>
+			<field name='code'>DES_NET</field>
+			<field name='sequence'>3</field>
+			<field name='type'>out</field>
+			<field name='appears_on_payslip'>True</field>
+		</record>
+		<record model='hr.salary.rule.category' id='DES_AFE'>
+			<field name='name'>DESCUENTOS AFECTOS</field>
+			<field name='code'>DES_AFE</field>
+			<field name='sequence'>4</field>
+			<field name='type'>out</field>
+			<field name='appears_on_payslip'>False</field>
+		</record>
+		<record model='hr.salary.rule.category' id='POR'>
+			<field name='name'>PORCENTAJES</field>
+			<field name='code'>POR</field>
+			<field name='sequence'>5</field>
+			<field name='type'>out</field>
+			<field name='appears_on_payslip'>False</field>
+		</record>
+		<record model='hr.salary.rule.category' id='SUB'>
+			<field name='name'>SUBTOTALES</field>
+			<field name='code'>SUB</field>
+			<field name='sequence'>6</field>
+			<field name='type'>out</field>
+			<field name='appears_on_payslip'>False</field>
+		</record>
+		<record model='hr.salary.rule.category' id='APOR_EMP'>
+			<field name='name'>APORTES EMPLEADOR</field>
+			<field name='code'>APOR_EMP</field>
+			<field name='sequence'>7</field>
+			<field name='type'>out</field>
+			<field name='appears_on_payslip'>True</field>
+		</record>
+	</data>
+</odoo>

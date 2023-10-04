@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_des_detail_rep_form">
+			<field name="name">account.des.detail.rep.form</field>
+			<field name="model">account.des.detail.rep</field>
+			<field name="arch" type="xml">
+				<form string="Detalle Destinos">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							<field name="period_to" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_des_detail_rep_action" model="ir.actions.act_window">
+			<field name="name">Detalle Destinos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.des.detail.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_des_summary_rep_form">
+			<field name="name">account.des.summary.rep.form</field>
+			<field name="model">account.des.summary.rep</field>
+			<field name="arch" type="xml">
+				<form string="Resumen Destinos">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="fiscal_year_id"/>
+								<field name="period" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_des_summary_rep_action" model="ir.actions.act_window">
+			<field name="name">Resumen Destinos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.des.summary.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_des_generate_rep_form">
+			<field name="name">account.des.generate.rep.form</field>
+			<field name="model">account.des.generate.rep</field>
+			<field name="arch" type="xml">
+				<form string="Generar Asientos">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="fiscal_year_id"/>
+								<field name="period" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							</group>
+							<group>
+								<field name="date_generate"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Ver Preliminar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Generar" name="generate_as" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_des_generate_rep_action" model="ir.actions.act_window">
+			<field name="name">Generar Asientos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.des.generate.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_des_consistency_rep_form">
+			<field name="name">account.des.consistency.rep.form</field>
+			<field name="model">account.des.consistency.rep</field>
+			<field name="arch" type="xml">
+				<form string="Consistencia Destinos">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_des_consistency_rep_action" model="ir.actions.act_window">
+			<field name="name">Consistencia Destinos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.des.consistency.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+		<menuitem id="menu_account_destinos_analytic_report" 
+						name="Analisis Destinos" 
+						parent="account.menu_finance_reports" 
+						sequence="104" 
+						groups="account_base_it.group_account_tables_user"/>
+
+		<menuitem action="account_destinos_rep_it.account_des_detail_rep_action" 
+				id="menu_action_account_des_detail_rep" 
+				parent="account_destinos_rep_it.menu_account_destinos_analytic_report" 
+				sequence="1" 
+				groups="account_base_it.group_account_tables_user"/>
+
+		<menuitem action="account_destinos_rep_it.account_des_summary_rep_action" 
+				id="menu_action_account_des_summary_rep" 
+				parent="account_destinos_rep_it.menu_account_destinos_analytic_report" 
+				sequence="2" 
+				groups="account_base_it.group_account_tables_user"/>
+
+		<menuitem action="account_destinos_rep_it.account_des_generate_rep_action" 
+				id="menu_action_account_des_generate_rep" 
+				parent="account_destinos_rep_it.menu_account_destinos_analytic_report" 
+				sequence="3" 
+				groups="account_base_it.group_account_tables_user"/>
+
+		<menuitem action="account_destinos_rep_it.account_des_consistency_rep_action" 
+				id="menu_action_account_des_consistency_rep" 
+				parent="account_consistencia_rep_it.menu_account_consistency_report" 
+				sequence="4" 
+				groups="account_base_it.group_account_tables_user"/>
+		
+	</data>
+</odoo>

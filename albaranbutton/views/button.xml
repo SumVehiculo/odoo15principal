@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_balance_report_tree_inherit_stock_balance_report" model="ir.ui.view">
+        <field name="name">stock.balance.report.view.list.inherit</field>
+        <field name="model">stock.balance.report</field>
+        <field name="inherit_id" ref="stock_balance_report.view_stock_balance_report_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <button string="Reservas" name="action_name" type="object" class="oe_highlight"/>
+                <button string="Pedidos" name="action_so_name" type="object" class="oe_highlight"/>                
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_balance_report_tree_lote" model="ir.ui.view">
+        <field name="name">stock.balance.report.lote.view.list.inherit</field>
+        <field name="model">stock.balance.report.lote</field>
+        <field name="inherit_id" ref="stock_balance_report_lote.view_stock_balance_report_tree_lote"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <button string="Reservas" name="action_name" type="object" class="oe_highlight"/>
+                <button string="Pedidos" name="action_so_name" type="object" class="oe_highlight"/>                
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

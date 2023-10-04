@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_sunat_balance_inventory_rep_form">
+			<field name="name">account.sunat.balance.inventory.rep.form</field>
+			<field name="model">account.sunat.balance.inventory.rep</field>
+			<field name="arch" type="xml">
+				<form string="PLE Libro Inventarios y Balances">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+							<group>
+								<field name="cc" widget="radio"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar PLEs" name="get_balance_inventory" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_sunat_balance_inventory_rep_action" model="ir.actions.act_window">
+			<field name="name">Libro Inventarios y Balances</field>
+			<field name="res_model">account.sunat.balance.inventory.rep</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_balance_inventory_rep_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_sunat_balance_inventory_rep_action" 
+				id="menu_finance_sunat_balance_inventory" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="10"/>
+
+</data>
+</odoo>

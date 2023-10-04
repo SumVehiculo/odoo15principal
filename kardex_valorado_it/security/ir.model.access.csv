@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_make_kardex_valorado,make_kardex_valorado,kardex_valorado_it.model_make_kardex_valorado,,1,1,1,1

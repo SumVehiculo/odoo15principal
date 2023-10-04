@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="view_move_form_inherit_purchase">
+        <field name="name">account.move.inherit.purchase.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="purchase.view_move_form_inherit_purchase"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='purchase_order_id']" position="replace">
+            </xpath>
+        </field>
+    </record>
+</odoo>

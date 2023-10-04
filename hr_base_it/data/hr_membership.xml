@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.membership' id="membership_AFP_HABIAT">
+			<field name='name'>AFP HABITAT</field>
+			<field name='fixed_commision'>1.47</field>
+			<field name='mixed_commision'>0</field>
+			<field name='prima_insurance'>1.84</field>
+			<field name='retirement_fund'>10</field>
+			<field name='insurable_remuneration'>11713.96</field>
+			<field name='is_afp'>True</field>
+		</record>
+		<record model='hr.membership' id="membership_AFP_INTEGRA">
+			<field name='name'>AFP INTEGRA</field>
+			<field name='fixed_commision'>1.55</field>
+			<field name='mixed_commision'>0</field>
+			<field name='prima_insurance'>1.84</field>
+			<field name='retirement_fund'>10</field>
+			<field name='insurable_remuneration'>11713.96</field>
+			<field name='is_afp'>True</field>
+		</record>
+		<record model='hr.membership' id="membership_AFP_PRIMA">
+			<field name='name'>AFP PRIMA</field>
+			<field name='fixed_commision'>1.6</field>
+			<field name='mixed_commision'>0</field>
+			<field name='prima_insurance'>1.84</field>
+			<field name='retirement_fund'>10</field>
+			<field name='insurable_remuneration'>11713.96</field>
+			<field name='is_afp'>True</field>
+		</record>
+		<record model='hr.membership' id="membership_AFP_PROFUTURO">
+			<field name='name'>AFP PROFUTURO</field>
+			<field name='fixed_commision'>1.69</field>
+			<field name='mixed_commision'>0</field>
+			<field name='prima_insurance'>1.84</field>
+			<field name='retirement_fund'>10</field>
+			<field name='insurable_remuneration'>11713.96</field>
+			<field name='is_afp'>True</field>
+		</record>
+		<record model='hr.membership' id="membership_ONP">
+			<field name='name'>ONP</field>
+			<field name='fixed_commision'>0</field>
+			<field name='mixed_commision'>0</field>
+			<field name='prima_insurance'>0</field>
+			<field name='retirement_fund'>13</field>
+			<field name='insurable_remuneration'>0</field>
+			<field name='is_afp'>False</field>
+		</record>
+		<record model='hr.membership' id="membership_SIN_REGIMEN">
+			<field name='name'>SIN REGIMEN</field>
+			<field name='fixed_commision'>0</field>
+			<field name='mixed_commision'>0</field>
+			<field name='prima_insurance'>0</field>
+			<field name='retirement_fund'>0</field>
+			<field name='insurable_remuneration'>0</field>
+			<field name='is_afp'>False</field>
+		</record>
+		<record model='hr.membership' id="membership_JUB_PROFUT_TRANSITO">
+			<field name='name'>JUB PROFUT TRANSITO</field>
+			<field name='fixed_commision'>0</field>
+			<field name='mixed_commision'>0</field>
+			<field name='prima_insurance'>0</field>
+			<field name='retirement_fund'>0</field>
+			<field name='insurable_remuneration'>0</field>
+			<field name='is_afp'>True</field>
+		</record>
+	</data>
+</odoo>

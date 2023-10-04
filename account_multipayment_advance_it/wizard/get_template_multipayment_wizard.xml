@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_get_template_multipayment_wizard" model="ir.ui.view">
+            <field name="name">get.template.multipayment.wizard.form</field>
+            <field name="model">get.template.multipayment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Get Template Wizard">
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="template" nolabel="1" options="{'no_create': True}"
+                            context="{'tree_view_ref' : 'account_multipayment_advance_it.account_template_multipayment_view_tree'}"/>
+                    </group>
+                    <footer>
+                        <button string="Agregar" name="insert" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

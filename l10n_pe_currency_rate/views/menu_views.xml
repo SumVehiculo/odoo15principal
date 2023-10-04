@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<menuitem id="menu_account_sunat_currency_rate" name="Diferencias de Cambio" parent="account.menu_finance_entries" sequence="20">
+		<menuitem action="view_base_currency_rate_form_it" id="menu_action_currency_rate_list" sequence="1"/>
+        <menuitem action="action_currency_rate_update_now" id="action_currency_rate_update_now_menu" sequence="2"/>
+        <menuitem action="action_pe_currency_rate_update_wizard" id="action_pe_currency_rate_update_wizard_menu" sequence="3"/>
+	</menuitem>
+</odoo>

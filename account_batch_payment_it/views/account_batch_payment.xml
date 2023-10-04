@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="view_batch_payment_form_inherit" model="ir.ui.view">
+		<field name="name">view.batch.payment.form.inherit</field>
+		<field name="model">account.batch.payment</field>
+		<field name="inherit_id" ref="account_batch_payment.view_batch_payment_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header" position="inside">
+				<button name="set_draft" string="Volver a Borrador" type="object" states="sent"/>
+				<!--button name="add_payments" string="Añadir Pagos" type="object" states="draft"/-->
+			</xpath>
+			<xpath expr="//notebook/page/field[@name='payment_ids']/tree/field[@name='amount_signed']" position="replace">
+				<field name="amount_mn" optional="show" sum="amount_mn"/>
+				<field name="amount_me" optional="show" sum="amount_me"/>
+				<field name="state" invisible="1"/>
+			</xpath>
+			<xpath expr="//notebook/page/field[@name='payment_ids']" position="attributes">
+				<attribute name="domain">[('manual_batch_payment_id','=',id),('state', '=', 'posted'), ('is_move_sent', '=', False), ('payment_method_id', '=', payment_method_id), ('journal_id', '=', journal_id), ('payment_type','=',batch_type)]</attribute>
+			</xpath>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_company_branch_address_form" model="ir.ui.view">
+            <field name="name">company.branch.address.form</field>
+            <field name="model">res.company.branch.address</field>
+            <field name="arch" type="xml">
+                <form string="Establecimiento Anexo">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                        <field name="partner_id"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_company_branch_address_tree" model="ir.ui.view">
+            <field name="name">company.branch.address.tree</field>
+            <field name="model">res.company.branch.address</field>
+            <field name="arch" type="xml">
+                <tree string="Establecimiento Anexo">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_company_branch_address_search" model="ir.ui.view">
+            <field name="name">company.branch.address.search</field>
+            <field name="model">res.company.branch.address</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Establecimiento Anexo">
+                    <field name="name" string="Establecimiento"/>
+                    <field name="code" string="Codigo"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_company_branch_address_tree" model="ir.actions.act_window">
+            <field name="name">Establecimientos anexos</field>
+            <field name="res_model">res.company.branch.address</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new Company Branch.
+              </p>
+            </field>
+        </record>
+
+       <menuitem action="action_company_branch_address_tree"
+                 id="menu_action_company_branch_address_tree"
+                 parent="base.menu_users"
+                 groups="company_branch_address.group_multi_company_branch_address"/>
+    </data>
+</odoo>

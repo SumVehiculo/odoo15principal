@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--ACTIONS-->
+
+		<record id="account_sunat_it.account_sunat_cuenta10_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.2 Caja y Bancos</field>
+		</record>
+		<record id="view_account_sunat_cuenta10_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta10.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta10_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_2" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_sunat_it.account_sunat_cuenta12_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.3 Clientes</field>
+		</record>		
+		<record id="view_account_sunat_cuenta12_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta12.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta12_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_3" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_sunat_it.account_sunat_cuenta14_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.4 Accionistas (o socios) y Persona</field>
+		</record>
+		<record id="view_account_sunat_cuenta14_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta14.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta14_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>					
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_4" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_sunat_it.account_sunat_cuenta16_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.5 Cuentas por cobrar diversas</field>
+		</record>
+		<record id="view_account_sunat_cuenta16_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta16.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta16_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_5" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_sunat_it.account_sunat_cuenta19_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.6 Provisión para cuentas de cobranza dudosa</field>
+		</record>
+		<record id="view_account_sunat_cuenta19_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta19.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta19_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_6" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_sunat_it.account_sunat_cuenta40_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.10 Tributos por pagar</field>
+		</record>
+
+		<record id="view_account_sunat_cuenta40_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta40.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta40_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_10" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_sunat_it.account_sunat_cuenta41_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.11 Remuneraciones por pagar</field>
+		</record>
+		<record id="view_account_sunat_cuenta41_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta41.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta41_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_11" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="account_sunat_it.account_sunat_cuenta42_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.12 Proveedores</field>
+		</record>		
+		<record id="view_account_sunat_cuenta42_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta42.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta42_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_12" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_sunat_it.account_sunat_cuenta46_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.13 Cuentas por pagar diversas</field>
+		</record>
+		<record id="view_account_sunat_cuenta46_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta46.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta46_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_13" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_sunat_it.account_sunat_cuenta47_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.14 Beneficios sociales de los trabajadores</field>
+		</record>
+		<record id="view_account_sunat_cuenta47_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta47.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta47_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_14" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_sunat_it.account_sunat_cuenta49_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.15 Ganacias Diferidas</field>
+		</record>
+		<record id="view_account_sunat_cuenta49_report_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.sunat.cuenta49.report.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_sunat_cuenta49_report_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group/group" position="after">
+					<group>
+						<field name="type_show_inventory_balance"/>
+					</group>
+				</xpath>
+				<xpath expr="//footer/button[1]" position="replace">
+					<button string="Generar" name="get_report_3_15" type="object" class="oe_highlight"/>
+				</xpath>
+			</field>
+		</record>
+	<!---->
+	
+        <record model="ir.ui.view" id="view_account_sunat_format_31_report_form">
+			<field name="name">account.sunat.format.31.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Inventario y Balance General">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_1" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+        <record id="account_sunat_format_31_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.1 Balance General</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_format_31_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+		
+        <!--##################################################-->
+		<record model="ir.ui.view" id="account_sunat_report_mercaderia_form">
+			<field name="name">account.sunat.wizardort.mercaderia.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Formato 3.7 Mercaderias y Productos Terminados">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_7" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_sunat_report_action_mercaderia" model="ir.actions.act_window">
+			<field name="name">Formato 3.7 Mercaderias y Productos Terminados</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('account_sunat_report_mercaderia_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_sunat_report_valores_form">
+			<field name="name">account.sunat.wizardort.valores.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Formato 3.8 Valores">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_8" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="account_sunat_report_action_valores" model="ir.actions.act_window">
+			<field name="name">Formato 3.8 Valores</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('account_sunat_report_valores_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+		
+		<record model="ir.ui.view" id="account_sunat_report_intangibles_form">
+			<field name="name">account.sunat.wizardort.intangibles.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Formato 3.9 Intangibles">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_9" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="account_sunat_report_action_intangigles" model="ir.actions.act_window">
+			<field name="name">Formato 3.9 Intangibles</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('account_sunat_report_intangibles_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!--##################################################-->
+
+        <record model="ir.ui.view" id="view_account_sunat_format_316_report_form">
+			<field name="name">account.sunat.format.316.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Detalle de la Cuenta 50">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_16" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+        <record id="account_sunat_format_316_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.16 Capital </field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_format_316_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+        
+
+        <!--##################################################-->
+		<record model="ir.ui.view" id="account_sunat_report_comprobacion_form">
+			<field name="name">account.sunat.wizardort.comprobacion.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Formato 3.17 Balance de Comprobación">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_17" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="account_sunat_report_action_comprobacion" model="ir.actions.act_window">
+			<field name="name">Formato 3.17 Balance de Comprobación</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('account_sunat_report_comprobacion_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!--##################################################-->
+
+        <record model="ir.ui.view" id="view_account_sunat_format_318_report_form">
+			<field name="name">account.sunat.format.318.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Detalle de Flujo de Efectivo">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_18" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+        <record id="account_sunat_format_318_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.18 Estado Flujo de Efectivo </field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_format_318_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+		
+        <!--##################################################-->
+
+        <record model="ir.ui.view" id="view_account_sunat_format_319_report_form">
+			<field name="name">account.sunat.format.319.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Detalle de Patrimonio Neto">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_19" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+        <record id="account_sunat_format_319_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.19 Estado cambios en el Patrimonio Neto </field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_format_319_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+		
+		<!--##################################################-->
+
+        <record model="ir.ui.view" id="view_account_sunat_format_320_report_form">
+			<field name="name">account.sunat.format.320.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Detalle de Patrimonio Neto">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show_inventory_balance"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_report_3_20" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+        <record id="account_sunat_format_320_report_action" model="ir.actions.act_window">
+			<field name="name">Formato 3.20 Estado de Ganancias y Perdidas por Funcion </field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_format_320_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+        <menuitem action="account_sunat_format_31_report_action" 
+				id="menu_account_sunat_format_31_report_action" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="3"/>
+		
+		<menuitem
+				action="account_sunat_it.account_sunat_cuenta10_report_action"  
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta10" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="6"/>
+
+		<menuitem action="account_sunat_it.account_sunat_cuenta12_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta12" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="9"/>		
+
+		<menuitem action="account_sunat_it.account_sunat_cuenta14_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta14" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="12"/>
+
+		<menuitem action="account_sunat_it.account_sunat_cuenta16_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta16" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="15"/>
+
+		<menuitem action="account_sunat_it.account_sunat_cuenta19_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta19" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="18"/>
+
+		
+		
+		<menuitem action="account_sunat_report_action_mercaderia" 
+				id = "menu_reports_sunat_reports_mercaderia" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="21"/>
+
+		<menuitem action="account_sunat_report_action_valores" 
+				id = "menu_reports_sunat_reports_valores" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="24"/>
+		
+		<menuitem action="account_sunat_report_action_intangigles" 
+				id = "menu_reports_sunat_reports_intangigles" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="27"/>	
+
+		<menuitem action="account_sunat_it.account_sunat_cuenta40_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta40" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="30"/>
+		
+		<menuitem action="account_sunat_it.account_sunat_cuenta41_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta41" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="33"/>
+		
+		<menuitem action="account_sunat_it.account_sunat_cuenta42_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta42" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="36"/>		
+		
+		<menuitem action="account_sunat_it.account_sunat_cuenta46_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta46" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="39"/>
+		
+		<menuitem action="account_sunat_it.account_sunat_cuenta47_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta47" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="42"/>
+
+
+		<menuitem action="account_sunat_it.account_sunat_cuenta49_report_action" 
+				id="account_sunat_it.menu_reports_sunat_reports_cuenta49" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="45"/>
+
+		<menuitem action="account_sunat_format_316_report_action" 
+				id="menu_account_sunat_format_316_report_action" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="48"/>
+				
+		<menuitem action="account_sunat_report_action_comprobacion" 
+				id = "menu_reports_sunat_reports_comprobacion" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="51"/>
+
+		<menuitem action="account_sunat_format_318_report_action" 
+				id="menu_account_sunat_format_318_report_action" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="54"/>
+
+		<menuitem action="account_sunat_format_319_report_action" 
+				id="menu_account_sunat_format_319_report_action" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="57"/>
+
+		<menuitem action="account_sunat_format_320_report_action" 
+				id="menu_account_sunat_format_320_report_action" 
+				parent="account_base_sunat_balance_inventory_v2.menu_reports_inventarios_balances_gl" 
+				sequence="60"/>
+		
+</odoo>

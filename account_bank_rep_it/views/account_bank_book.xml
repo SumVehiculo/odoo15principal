@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_bank_book_tree" model="ir.ui.view">
+            <field name="name">account.bank.book.tree</field>
+            <field name="model">account.bank.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Auxiliar de Bancos" create="false">
+                    <field name="fecha" />
+                    <field name="partner" />
+                    <field name="documento" />
+                    <field name="glosa" />
+                    <field name="cargomn" />
+                    <field name="abonomn" />
+                    <field name="saldomn" />
+                    <field name="cargome" />
+                    <field name="abonome" />
+                    <field name="saldome" />
+                    <field name="asiento" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_bank_book_search" model="ir.ui.view">
+            <field name="name">account.bank.book.search</field>
+            <field name="model">account.bank.book</field>
+            <field name="arch" type="xml">
+                <search string="Auxiliar de Bancos">
+                    <field name="partner"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_bank_book_it" model="ir.actions.act_window">
+            <field name="name">Auxiliar de Bancos</field>
+            <field name="res_model">account.bank.book</field>
+            <field name="view_id" ref="view_account_bank_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_bank_book_search"/>
+        </record>
+
+    </data>
+</odoo>

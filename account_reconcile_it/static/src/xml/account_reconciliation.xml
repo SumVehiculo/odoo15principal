@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+<t t-inherit="account_accountant.reconciliation.line.mv_line" t-inherit-mode="extension">
+    <xpath expr="//t[@t-esc='line.ref']" position="replace">
+        <t t-esc="line.nro_comp"/>
+    </xpath>
+</t>
+
+</templates>

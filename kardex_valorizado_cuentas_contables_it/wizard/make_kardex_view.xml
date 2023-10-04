@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+
+        <record id="view_make_kardex_valorado" model="ir.ui.view">
+            <field name="name">make.kardex.valorado.form</field>
+            <field name="model">make.kardex.valorado</field>
+            <field name="inherit_id" ref="kardex_valorado_it.view_make_kardex_valorado"/>
+            <field name="arch" type="xml">
+            	<field name="check_fecha" position="after">    
+                        <field name="moneda" required="1"/> 
+                        <field name="check_account"/>        		
+            	</field>
+             </field>
+        </record>
+
+
+    </data>
+</odoo>

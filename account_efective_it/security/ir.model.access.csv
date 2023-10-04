@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_efective_flow_group_root,nature.result.group.root,model_efective_flow,account_base_it.group_account_tables_user,1,1,1,1
+access_efective_flow_wizard_group_root,efective.flow.wizard.group.root,model_efective_flow_wizard,account_base_it.group_account_tables_user,1,1,1,1

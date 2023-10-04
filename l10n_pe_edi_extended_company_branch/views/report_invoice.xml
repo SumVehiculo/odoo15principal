@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_einvoice_document" inherit_id="l10n_pe_edi_extended.report_einvoice_document">
+        <xpath expr="//div[@class='page']" position="before">
+            <div class="row">
+                <div style="font-size:11px;" class="col-9" name="company_branch_address">
+                    Establecimiento anexo: <span class="text" t-esc="o.company_branch_address_id.partner_id.street_name or ''"/> 
+                    <span class="text" t-esc="o.company_branch_address_id.partner_id.street_number or ''"/> 
+                    <span class="text" t-esc="o.company_branch_address_id.partner_id.street_number2 or ''"/> 
+                    <span class="text" t-esc="o.company_branch_address_id.partner_id.street2 or ''"/>
+                    <t t-if="o.company_branch_address_id.partner_id.l10n_pe_district">
+                        , <span class="text" t-esc="o.company_branch_address_id.partner_id.l10n_pe_district.name or ''"/>
+                    </t>
+                    <t t-if="o.company_branch_address_id.partner_id.city_id">
+                        , <span class="text-nowrap" t-esc="o.company_branch_address_id.partner_id.city_id.name or ''"/>
+                    </t>
+                    <t t-if="o.company_branch_address_id.partner_id.state_id">
+                        , <span class="text-nowrap" t-esc="o.company_branch_address_id.partner_id.state_id.name or ''"/>
+                    </t>
+                    <t t-if="o.company_branch_address_id.partner_id.country_id">
+                        , <span class="text-nowrap" t-esc="o.company_branch_address_id.partner_id.country_id.name or ''"/>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

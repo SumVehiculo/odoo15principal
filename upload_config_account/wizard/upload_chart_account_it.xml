@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_upload_chart_account_it_form" model="ir.ui.view">
+        <field name="name">upload.chart.account.it.form</field>
+        <field name="model">upload.chart.account.it</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Este Wizard cargará la Configuracion Contable necesario para la Localizacion Contable de la Compañia en la que se encuentra.</p>
+                <group>
+                    <group>
+                        <field name="upload_account_tax"/>
+                        <field name="upload_account_journal"/>
+                        <field name="upload_account_parameter"/>
+                        <field name="direct_file" attrs="{'invisible':[('upload_account_parameter','=',False)]}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="download_template" string="Instrucciones" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+                    <button name="upload_chart" string="Cargar" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_upload_chart_account_it" model="ir.actions.act_window">
+        <field name="name">Cargar Configuraciones</field>
+        <field name="res_model">upload.chart.account.it</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_upload_chart_account_it"
+              parent="account_menu_other_configurations.menu_other_configurations"
+              action="action_upload_chart_account_it"
+              groups="account.group_account_manager"
+              sequence="3"/>
+</odoo>

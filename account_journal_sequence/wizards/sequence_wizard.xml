@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="sequence_wizard_view" model="ir.ui.view">
+			<field name="name">sequence_wizard_view</field>
+			<field name="model">sequence.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Secuencia de Diario">
+					<group>
+						<field name="fiscal_id" required="1"/>
+					</group>
+					<footer>
+						<button name="generar_secuencia" string="Generar Secuencia" type="object" class="oe_highlight"/>
+						o
+						<button string="Cancelar" class="oe_link" special="cancel"/>
+					</footer>
+				 </form>
+			 </field>
+		</record>
+	</data>
+</odoo>

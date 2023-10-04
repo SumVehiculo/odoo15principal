@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_partner_form_inherit_ruc" model="ir.ui.view">
+			<field name="name">res.partner.form.inherit.ruc</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				
+				<xpath expr="//form/sheet" position="before">
+					<header class="oe_edit_only">
+						<field name="related_identification" invisible="1"/>
+						<button string="Consultar RUC" name="verify_ruc" type="object" class="oe_highlight" attrs="{'invisible': [('related_identification', '!=', '6')]}"/>
+						<button string="Consultar DNI" name="verify_dni" type="object" class="oe_highlight" attrs="{'invisible': [('related_identification', '!=', '1')]}" /> 
+					</header>
+				</xpath>
+				<!--field name="category_id" position="after">
+					<field name="direccion_complete_it"
+						   groups="query_ruc_dni.group_show_adreess_complete"  />
+					<field name="direccion_complete_ubigeo_it"
+					       groups="query_ruc_dni.group_show_adreess_complete" />
+				</field-->
+				<xpath expr="//page[@name='sales_purchases']" position="before">
+					<page name="ficha_ruc" string="Ficha RUC">
+                            <group>
+                                <group  >
+                                    <field name="ruc_state" readonly="1"/>
+					                <field name="ruc_condition" readonly="1"/>
+									<field name="n2_dir_fiscal" invisible="1"/>
+									<field name="n2_nom_comer" readonly="1"/>
+									<field name="n2_sis_contab" readonly="1"/>
+									<field name="n2_see" readonly="1"/>
+									<field name="is_partner_retencion" />
+                                </group>
+                                <group >
+                                    <field name="n2_actv_econ" readonly="1"/>
+									<field name="n2_actv_econ_1" readonly="1"/>
+									<field name="n2_actv_econ_2" readonly="1" />
+									<field name="n2_actv_econ_3" readonly="1" />
+					                <field name="n2_init_actv" readonly="1"  />
+									<field name="n2_act_com_ext" readonly="1" invisible="1"  />
+									<field name="n2_afi_ple" readonly="1"/>
+									<field name="n2_cp_auto" readonly="1" invisible="1" />
+									<field name="n2_padrones" readonly="1"  />
+									<field name="n2_tipo_contr" readonly="1"/>
+
+                                </group>
+                            </group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+		<record id="pe_partner_address_form_inherit" model="ir.ui.view">
+			<field name="name">pe.res.partner.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="l10n_pe.pe_partner_address_form"/>
+			<field name="arch" type="xml">
+				<field name="street" position="attributes">
+					<attribute name="placeholder">Calle</attribute>
+				</field>
+				<!--field name="street_number" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				<field name="street_number2" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field-->
+				<field name="l10n_pe_district" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				<field name="city" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				<!--field name="city_id" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field-->
+				<field name="state_id" position="attributes">
+					<attribute name="placeholder">Departamento</attribute>
+					<attribute name="class">o_address_street</attribute>
+					<attribute name="domain">[('country_id','=',country_id),('state_id', '=', False),('province_id','=', False)]</attribute>
+					<attribute name="options">{"no_open": True, "no_create": True}</attribute>
+				</field>
+				<field name="country_id" position="attributes">
+					<attribute name="placeholder">Pais</attribute>
+				</field>
+				<!--xpath expr="//div[@class='o_address_format']/div[@class='o_row']" position="replace"/-->
+				<xpath expr="//div[@class='o_address_format']/field[@name='state_id']" position="after">
+					<field name="province_id" placeholder="Provincia" class="o_address_street" options='{"no_open": True, "no_create": True}' domain="[('country_id','=',country_id),('state_id', '=', state_id),('province_id','=', False)]"/>
+					<field name="district_id" placeholder="Distrito" class="o_address_street" options='{"no_open": True, "no_create": True}' domain="[('country_id','=',country_id),('state_id', '=', state_id),('province_id','=', province_id)]"/>
+				</xpath>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_form_inherit">
+			<field name="name">view.partner.form.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="query_ruc_dni.pe_partner_address_form_inherit"/>
+			<field name="arch" type="xml">				
+				<xpath expr="//div[@class='o_address_format']/field[@name='city']" position="replace">
+          		<group style="display: none !important;background-color:red !important">
+				  <field name="city" />
+				  </group>
+				</xpath>
+			</field>
+		</record>
+		<record id="multiple_verify_ruc" model="ir.actions.server">
+			<field name="name">Consulta RUC multiple</field>
+			<field name="model_id" ref="base.model_res_partner"/>
+			<field name="binding_model_id" ref="base.model_res_partner"/>
+			<field name="state">code</field>
+			<field name="code">action = records.verify_ruc()</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_import_recxhon_wizard_form">
+			<field name="name">import.recxhon.wizard.form</field>
+			<field name="model">import.recxhon.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button string="Importar" name="import_invoices" type="object" states="draft" class="oe_highlight" />
+						<button string="Eliminar Importados" name="action_cancel" confirm="Se eliminarán los recibos importados. ¿Desea continuar?" states="import" type="object" class="oe_highlight" />
+						<button string="Regresar Borrador" name="action_draft" states="cancel" type="object" class="oe_highlight" />
+						<field name="state" widget="statusbar" />               
+					</header>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button class="oe_stat_button" string="Recibos Importados" name="open_entries"  type="object" icon="fa-list" attrs="{'invisible': [('state','!=','import')]}"/>
+							<button class="oe_stat_button" string="Lineas Importadas" name="open_line_entries"  type="object" icon="fa-list" attrs="{'invisible': [('state','!=','import')]}"/>
+						</div>
+						<div class="oe_title">
+							<h1>
+								<field name="name" class="oe_inline" readonly="1"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="name_file" invisible="1"/>
+								<field name="document_file" filename="name_file" string="Archivo"/>
+							</group>
+							<group>
+								<field name="account_id" />
+								<field name="journal_id"/>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="import_recxhon_wizard_action" model="ir.actions.act_window">
+			<field name="name">Importar Recibos de Honorarios</field>
+			<field name="res_model">import.recxhon.wizard</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face">
+					No existe ninguna importacion de Recibo x Hon
+				</p>
+			</field>
+		</record>
+
+		<menuitem action="import_recxhon_wizard_action" 
+				  id="menu_import_recxhon_wizard_action" 
+				  parent="account_base_import_it.menu_import_imports_invoices" 
+				  sequence="15"/>
+	</data>
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_membership_form" model="ir.ui.view">
+		<field name="name">hr.membership.form</field>
+		<field name="model">hr.membership</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="fixed_commision" attrs="{'invisible' : [('is_afp', '=', False)]}"/>
+							<field name="mixed_commision" attrs="{'invisible' : [('is_afp', '=', False)]}"/>
+							<field name="prima_insurance" attrs="{'invisible' : [('is_afp', '=', False)]}"/>
+							<field name="retirement_fund"/>
+						</group>
+						<group>
+							<field name="insurable_remuneration" attrs="{'invisible' : [('is_afp', '=', False)]}"/>
+							<field name="account_id" attrs="{'invisible' : [('is_afp', '=', False)]}"/>
+							<field name="is_afp"/>
+							<field name="company_id" groups="base.group_multi_company"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_membership_tree" model="ir.ui.view">
+		<field name="name">hr.membership.tree</field>
+		<field name="model">hr.membership</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" optional="show"/>
+				<field name="fixed_commision" optional="show"/>
+				<field name="mixed_commision" optional="show"/>
+				<field name="prima_insurance" optional="show"/>
+				<field name="retirement_fund" optional="show"/>
+				<field name="insurable_remuneration" optional="show"/>
+				<field name="account_id" optional="show"/>
+				<field name="is_afp" optional="show"/>
+				<field name="company_id" groups="base.group_multi_company"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_membership" model="ir.actions.act_window">
+		<field name="name">Afiliacion</field>
+		<field name="res_model">hr.membership</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Afiliacion aqui
+			</p>
+		</field>
+	</record>
+
+<!--	DUPLICAR POR COMPAÑIA-->
+	<record id="get_membership_wizard" model="ir.actions.server">
+		<field name="name">Duplicar por Compañia</field>
+		<field name="model_id" ref="hr_base_it.model_hr_membership"/>
+		<field name="binding_model_id" ref="hr_base_it.model_hr_membership"/>
+		<field name="state">code</field>
+		<field name="code">action = records.get_membership_wizard()</field>
+	</record>
+	<record id="get_membership_wizard_edit" model="ir.actions.server">
+		<field name="name">Editar por Compañia</field>
+		<field name="model_id" ref="hr_base_it.model_hr_membership"/>
+		<field name="binding_model_id" ref="hr_base_it.model_hr_membership"/>
+		<field name="state">code</field>
+		<field name="code">action = records.get_membership_wizard_edit()</field>
+	</record>
+</odoo>

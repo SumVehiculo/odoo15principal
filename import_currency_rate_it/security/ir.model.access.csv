@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_import_currency_rate_wizard_group_manager,import.currency.rate.wizard.group.manager,model_import_currency_rate_wizard,account_base_import_it.group_import_it_accounting_menu,1,1,1,1

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_journal_usd_rep_form">
+			<field name="name">account.journal.usd.rep.form</field>
+			<field name="model">account.journal.usd.rep</field>
+			<field name="arch" type="xml">
+				<form string="Libro Diario">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_from_id" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							<field name="period_to_id" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report_diario" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_journal_usd_rep_action" model="ir.actions.act_window">
+			<field name="name">Libro Diario</field>
+			<field name="res_model">account.journal.usd.rep</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_journal_usd_rep_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_journal_usd_rep_action" 
+				id="menu_action_account_journal_usd_rep" 
+				parent="account_amount_currency_dolars_it.menu_eeff_usd_reports" 
+				sequence="3"/>
+		
+		<record model="ir.ui.view" id="view_account_higher_usd_rep_form">
+			<field name="name">account.higher.usd.rep.form</field>
+			<field name="model">account.journal.usd.rep</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_from_id" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							<field name="period_to_id" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report_mayor" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_higher_usd_rep_action" model="ir.actions.act_window">
+			<field name="name">Libro Mayor Analitico</field>
+			<field name="res_model">account.journal.usd.rep</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_higher_usd_rep_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_higher_usd_rep_action" 
+				id="menu_action_account_higher_usd_rep" 
+				parent="account_amount_currency_dolars_it.menu_eeff_usd_reports" 
+				sequence="6"/>
+		
+		<record model="ir.ui.view" id="view_account_htf1_usd_rep_form">
+			<field name="name">account.htf1.usd.rep.form</field>
+			<field name="model">account.journal.usd.rep</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_from_id" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							<field name="period_to_id" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+							<field name="level"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report_htf1" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_htf1_usd_rep_action" model="ir.actions.act_window">
+			<field name="name">Hoja de Trabajo</field>
+			<field name="res_model">account.journal.usd.rep</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_htf1_usd_rep_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_htf1_usd_rep_action" 
+				id="menu_action_account_htf1_usd_rep" 
+				parent="account_amount_currency_dolars_it.menu_eeff_usd_reports" 
+				sequence="9"/>
+
+	</data>
+</odoo>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem action="logistic.action_logistic_despatch_tree" id="menu_action_logistic_despatch_tree" parent="logistic.logistic_operations"/>
+</odoo>

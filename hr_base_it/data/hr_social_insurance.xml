@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.social.insurance' id="insurance_ESSALUD">
+			<field name='name'>EsSalud</field>
+			<field name='percent'>9.00</field>
+		</record>
+		<record model='hr.social.insurance' id="insurance_EPS">
+			<field name='name'>EPS</field>
+			<field name='percent'>6.75</field>
+		</record>
+	</data>
+</odoo>

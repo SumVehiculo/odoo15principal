@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="view_stock_balance_report_tree_lote">
+		<field name="name">stock.balance.report.lote.tree</field>
+		<field name="model">stock.balance.report.lote</field>
+		<field name="arch" type="xml">
+			<tree create="0" edit="0" delete="0">
+				<field name="producto"/>
+				<field name="lote"/>
+				<field name="codigo"/>
+				<field name="unidad"/>
+				<field name="categoria_1"/>
+				<field name="categoria_2"/>
+				<field name="categoria_3"/>
+				<field name="almacen"/>
+				<field name="entrada" sum="entrada"/>
+				<field name="reservado" sum="reservado"/>
+				<field name="saldo" sum="saldo"/>
+			</tree>
+		</field>
+	</record>
+
+
+
+	<record id="stock_balance_report_filter_lote" model="ir.ui.view">
+		<field name="name">stock.balance.report.lote.filter</field>
+		<field name="model">stock.balance.report.lote</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="producto"/>
+				<field name="lote"/>
+				<field name="almacen"/>
+				<field name="codigo"/>
+				<field name="unidad"/>
+				<group expand="0" string="Group By">
+					<filter string="Producto" name="producto" domain="[]" context="{'group_by': 'producto'}"/>
+					<filter string="Almacen" name="almacen" domain="[]" context="{'group_by': 'almacen'}"/>
+					<filter string="Codigo" name="codigo" domain="[]" context="{'group_by': 'codigo'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="stock_balance_report_pivot_lote" model="ir.ui.view">
+		<field name="name">stock.balance.report.lote.pivot</field>
+		<field name="model">stock.balance.report.lote</field>
+		<field name="arch" type="xml">
+			<pivot string="Reporte Saldos">
+				<field name="almacen" type="row"/>
+				<field name="producto" type="col"/>
+				<field name="lote" type="col"/>
+				<field name="saldo" type="measure"/>
+			</pivot>
+		</field>
+	</record>
+	
+	<record id="stock_balance_report_graph_lote" model="ir.ui.view">
+		<field name="name">stock.balance.report.lote.graph</field>
+		<field name="model">stock.balance.report.lote</field>
+		<field name="arch" type="xml">
+			<graph string="Grafico Saldos" type="line">
+				<field name="almacen" type="col"/>
+				<field name="saldo" type="measure"/>
+			</graph>
+		</field>
+	</record>
+
+
+		<record model="ir.ui.view" id="view_stock_balance_report_lote_wizard">
+			<field name="name">stock.balance.report.lote.wizard.form</field>
+			<field name="model">stock.balance.report.lote.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Saldos x Lote">
+					<group>
+						<group>
+							<h1>Desea generar Saldos por Lotes?</h1>
+						</group>
+					</group>
+					<footer>
+						<button string="Generar" name="get_stock_lote" type="object" class="oe_highlight" onlyRead="1"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+
+
+		<record id="action_balance_report_lote" model="ir.actions.act_window">
+			<field name="name">Saldos x Lote</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.balance.report.lote.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+
+
+
+	<menuitem id="menu_balance_report_lote"
+			action="action_balance_report_lote"
+			parent="stock.menu_stock_warehouse_mgmt"
+			sequence="4"/>
+
+	<menuitem id="menu_balance_report_sale_lote"
+			action="action_balance_report_lote"
+			parent="sale.menu_sale_report"
+			sequence="4"/>
+
+
+
+<!-- #reporte nativo de odoo -->
+
+
+
+		<record id="action_balance_report_lote_nativo_odoo" model="ir.actions.act_window">
+			<field name="name">Saldos x Lote Odoo</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.quant</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('location_id.usage','=','internal')]</field>
+		</record>
+
+
+
+
+
+	<menuitem id="menu_balance_report_lote_nativo_odoo"
+			action="action_balance_report_lote_nativo_odoo"
+			parent="stock.menu_stock_warehouse_mgmt"
+			sequence="4"/>
+
+</odoo>

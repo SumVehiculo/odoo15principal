@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_bank_statement_surrender_atlan_tree_inherit" model="ir.ui.view">
+		<field name="name">account.bank.statement.surrender.atlan.inherit</field>
+		<field name="model">account.bank.statement</field>
+		<field name="inherit_id" ref="account_treasury_it.view_bank_statement_surrender_tree"/>
+		<field name="arch" type="xml">
+            <field name="balance_end_real" position="replace">
+                <field name="saldo_final" optional="show" string="Saldo"/>
+			</field>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_sequence_journal_wizard_group_user,account.sequence.journal.wizard.user,model_account_sequence_journal_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_sequence_wizard_group_user,sequence.wizard.user,model_sequence_wizard,account_base_it.group_account_tables_user,1,1,1,1

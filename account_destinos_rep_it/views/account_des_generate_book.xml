@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_des_generate_book_tree" model="ir.ui.view">
+            <field name="name">account.des.generate.book.tree</field>
+            <field name="model">account.des.generate.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Asientos Destino" create="false">
+                    <field name="periodo"/>
+                    <field name="glosa"/>
+                    <field name="cuenta"/>
+                    <field name="name"/>
+                    <field name="debe" sum="debe"/>
+                    <field name="haber" sum="haber"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_des_generate_book_search" model="ir.ui.view">
+            <field name="name">account.des.generate.book.search</field>
+            <field name="model">account.des.generate.book</field>
+            <field name="arch" type="xml">
+                <search string="Asientos Destino">
+                    <field name="cuenta"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_des_generate_book_it" model="ir.actions.act_window">
+            <field name="name">Asientos Destino</field>
+            <field name="res_model">account.des.generate.book</field>
+            <field name="view_id" ref="view_account_des_generate_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_des_generate_book_search"/>
+        </record>
+
+    </data>
+</odoo>

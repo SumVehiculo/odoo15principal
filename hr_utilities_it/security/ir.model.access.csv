@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_utilities_it_manager,hr.utilities.it.group,model_hr_utilities_it,group_hr_utilities_it_root,1,1,1,1
+access_hr_utilities_it_line_manager,hr.utilities.it.line.group,model_hr_utilities_it_line,group_hr_utilities_it_root,1,1,1,1
+access_hr_utilities_print_wizard_manager,hr.utilities.print.wizard.group,model_hr_utilities_print_wizard,group_hr_utilities_it_root,1,1,1,0

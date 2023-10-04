@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="group_eeff_usd_menu" model="res.groups">
+        <field name="name">EEFF USD (Contabilidad)</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <record id="adjustment_account_account_comp_rule" model="ir.rule">
+        <field name="name">Cuentas Ajustes DC multi-company</field>
+        <field name="model_id" ref="model_adjustment_account_account"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

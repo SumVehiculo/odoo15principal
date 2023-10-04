@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_des_summary_book_tree" model="ir.ui.view">
+            <field name="name">account.des.summary.book.tree</field>
+            <field name="model">account.des.summary.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Resumen Destinos" create="false">
+                    <field name="cuenta"/>
+                    <field name="balance"/>
+                    <field name="cta20"/>
+                    <field name="cta24"/>
+                    <field name="cta25"/>
+                    <field name="cta26"/>
+                    <field name="cta90"/>
+                    <field name="cta91"/>
+                    <field name="cta92"/>
+                    <field name="cta93"/>
+                    <field name="cta94"/>
+                    <field name="cta95"/>
+                    <field name="cta96"/>
+                    <field name="cta97"/>
+                    <field name="cta98"/>
+                    <field name="cta99"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_des_summary_book_search" model="ir.ui.view">
+            <field name="name">account.des.summary.book.search</field>
+            <field name="model">account.des.summary.book</field>
+            <field name="arch" type="xml">
+                <search string="Resumen Destinos">
+                    <field name="cuenta"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_account_des_summary_book_it" model="ir.actions.act_window">
+            <field name="name">Resumen Destinos</field>
+            <field name="res_model">account.des.summary.book</field>
+            <field name="view_id" ref="view_account_des_summary_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_des_summary_book_search"/>
+        </record>
+
+    </data>
+</odoo>

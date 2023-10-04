@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>	
+
+	<record id="sh_import_sol_wizard" model="ir.ui.view">
+		<field name="name">sh.import.sol.wizard</field>
+		<field name="model">import.sol.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Importar líneas de orden de venta">
+				<group>				
+					<field name="import_type" invisible="1"/>
+					<field name="product_by" widget="radio"/>
+					<field name="file"/>
+				</group>				
+			<footer>
+				<button name="import_sol_apply" string="Aplicar" type="object" class="btn-primary" />
+				<button string="Cancelar" class="btn-default" special="cancel" />
+			
+				<div style="float:right;">
+					<strong>Descargar muestra:  </strong>
+					<button name="download_template" string="Descargar Plantilla" style="font-size: 12px;line-height: 1.5;border-radius: 3px;padding: 8px 10px;color: #FFFFFF;" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+				</div>	
+							
+			</footer>
+			</form>
+		</field>
+	</record>
+
+	  <record id="sh_import_sol_action" model="ir.actions.act_window">
+	  	<field name="name">Importar líneas de orden de venta</field>
+	  	<field name="res_model">import.sol.wizard</field>
+	  	<field name="view_mode">form</field>
+	  	<field name="view_id" ref="sh_import_sol_wizard"/>
+	  	<field name="target">new</field>
+	  </record>
+	
+</data>	
+</odoo>

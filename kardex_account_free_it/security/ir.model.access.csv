@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_surrender_free_book_group_user,surrender.free.book.group.user,model_surrender_free_book,account_base_it.group_account_tables_user,1,1,1,1
+access_surrender_free_it_group_user,surrender.free.it.group.user,model_surrender_free_it,account_base_it.group_account_tables_user,1,1,1,1
+access_surrender_free_concepts_group_user,surrender.free.concepts.group.user,model_surrender_free_concepts,account_base_it.group_account_tables_user,1,1,1,1
+access_surrender_free_wizard_group_user,surrender.free.wizard.group.user,model_surrender_free_wizard,account_base_it.group_account_tables_user,1,1,1,1

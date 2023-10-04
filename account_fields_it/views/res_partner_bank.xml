@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_partner_bank_form_inherit_detraction" model="ir.ui.view">
+			<field name="name">res.partner.bank.inherit.detraction</field>
+			<field name="model">res.partner.bank</field>
+			<field name="inherit_id" ref="base.view_partner_bank_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='currency_id']" position="before">
+					<field name="is_detraction_account"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

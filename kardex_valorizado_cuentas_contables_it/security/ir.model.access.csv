@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_guardado_kardex_company_line,guardado_kardex_company_line,model_guardado_kardex_company_line,,1,1,1,1
+access_kardex_parameter_guardar_anio,kardex_parameter_guardar_anio,model_kardex_parameter_guardar_anio,,1,1,1,1

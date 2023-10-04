@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_payment_form_currency" model="ir.ui.view">
+			<field name="name">view.account.payment.form.currency</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//form//header" position="inside">
+						<button name="personalize_currency_rate" class="oe_highlight" type="object" string="TC Personalizado" 
+						attrs="{'invisible': ['|','|',('is_internal_transfer','=', False),('state','not in',['posted']),('is_personalized_change','=',False)]}"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

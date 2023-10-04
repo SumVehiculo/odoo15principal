@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="wiz_hr_rest_import_views" model="ir.ui.view">
+            <field name="name">hr.rest.import.wizard </field>
+            <field name="model">hr.rest.import</field>
+            <field name="arch" type="xml">
+                <form string="Importar Saldo de Vacaciones">
+                    <group>
+                        <field name="file" filename="name"/>
+<!--                        <field name="year"/>-->
+                    </group>
+                    <footer>
+                        <button class="fa fa-download btn-primary"  name="download_template" string=" Descargar Plantilla" type="object"/>
+                        <button class="fa fa-upload btn-primary"  name="hr_vacation_import" string=" Importar" type="object"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wiz_hr_rest_import" model="ir.actions.act_window">
+            <field name="name">Importar Saldos de Vacaciones</field>
+            <field name="res_model">hr.rest.import</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_wiz_hr_rest_import"
+                  action="action_wiz_hr_rest_import"
+                  parent="hr_vacations_it.menu_hr_vacation"
+                  sequence="5"
+                  />
+    </data>
+</odoo>
+ 

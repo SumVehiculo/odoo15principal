@@ -1,0 +1,33 @@
+<odoo>
+	<data>
+		<record id="view_hr_planilla_tabular_salary_wizard_form" model="ir.ui.view">
+			<field name="name">hr.planilla.tabular.salary.wizard.form</field>
+			<field name="model">hr.planilla.tabular.salary.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Generar Planilla Tabular">
+					<group>
+						<group>
+							<field name="payslip_run_id" readonly="1"/>
+							<field name="allemployees"/>
+						</group>
+						<group>
+							<field name="company_id"/>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<notebook>
+                        <page string="Empleados" attrs="{'invisible':[('allemployees', '=', True)]}">
+                            <field name="employees_ids" nolabel="True" />
+                        </page>
+                    </notebook>
+					<footer>
+						<button string="Mostrar" name="get_journals" type="object" class="oe_highlight" attrs="{'invisible':[('allemployees', '=', True)]}"/>
+                        <button string="Mostrar Todo" name="get_all" type="object" class="oe_highlight" attrs="{'invisible':[('allemployees', '=', False)]}"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

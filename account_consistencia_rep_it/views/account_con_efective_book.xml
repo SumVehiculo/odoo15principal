@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_con_efective_book_tree" model="ir.ui.view">
+            <field name="name">account.con.efective.book.tree</field>
+            <field name="model">account.con.efective.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Consistencia Flujo Efectivo" create="false">
+                    <field name="account_code"/>
+                    <field name="account_efective_type_name"/>
+                    <field name="ingreso" sum="ingreso"/>
+                    <field name="egreso" sum="egreso"/>
+                    <field name="balance" sum="balance"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_con_efective_book_search" model="ir.ui.view">
+            <field name="name">account.con.efective.book.search</field>
+            <field name="model">account.con.efective.book</field>
+            <field name="arch" type="xml">
+                <search string="Consistencia Flujo Efectivo">
+                    <field name="account_efective_type_name"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Tipo Flujo de Efectivo" name="account_efective_type_name" icon="terp-partner" context="{'group_by':'account_efective_type_name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_con_efective_book_it" model="ir.actions.act_window">
+            <field name="name">Consistencia Flujo Efectivo</field>
+            <field name="res_model">account.con.efective.book</field>
+            <field name="view_id" ref="view_account_con_efective_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_con_efective_book_search"/>
+        </record>
+
+    </data>
+</odoo>

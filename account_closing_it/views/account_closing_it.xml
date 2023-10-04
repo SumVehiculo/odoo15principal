@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_closing_it_form">
+			<field name="name">account.closing.it.form</field>
+			<field name="model">account.closing.it</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+                        <!--button name="cierre_contable_0" type="object" states="draft" string="GENERAR BALANCE COMPROBACION" class="oe_highlight"/>
+                        <button name="cierre_contable_1" type="object" states="0" string="COSTO DE VENTAS" class="oe_highlight"/>
+                        <button name="cierre_contable_2" type="object" states="1" string="CIERRE CLASE 9" class="oe_highlight"/>
+                        <button name="cierre_contable_3" type="object" states="2" string="CIERRE CUENTAS RESULTADOS" class="oe_highlight"/>
+                        <button name="cierre_contable_4" type="object" states="3" string="CIERRE ACTIVO Y PASIVO" class="oe_highlight"/>
+                        <button name="cancelar" states="0,1,2,3,4" string="Regresar" type="object" />
+                        <field name="state" widget="statusbar"  readonly="1"/-->
+						<button name="cierre_contable_oficial" type="object" string="GENERAR CIERRE" class="oe_highlight"/>
+						<button string="Vista Preliminar" type="object" name="preview_closing" />
+                    </header>
+					<sheet>
+						<div class="oe_title">
+                            <h1>
+                                <field name="fiscal_year_id" class="oe_inline" required="1"/>
+                            </h1>
+                        </div>
+						<group>
+							<group>
+								<field name="period" required="1" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+								<field name="account_move_id" readonly="1" attrs="{'invisible':[('account_move_id','=',False)]}"/>
+							</group>
+							<group>
+								<field name="journal_id" required="1"/>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+							</group>
+						</group>
+						<!--notebook>
+							<page string="Resumen de Cierre">
+								<group>
+									<group>
+										<field name="diff_res" readonly="1"/>
+										<field name="diff_res" invisible="1"/>
+									</group>
+									<group>
+										<field name="diff_ap" readonly="1"/>
+										<field name="diff_ap" invisible="1"/>
+									</group>
+								</group>
+							</page>
+							<page string="Asientos Generados">
+								<group>
+									<group>
+										<field name="asiento_1" readonly="1"/>
+										<field name="asiento_2" readonly="1"/>
+										<field name="asiento_3" readonly="1"/>
+									</group>
+									<group>
+										<field name="asiento_4" readonly="1"/>
+										<field name="asiento_5" readonly="1"/>
+									</group>
+								</group>
+							</page>
+						</notebook-->
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_closing_it_tree">
+			<field name="name">account.closing.it.tree</field>
+			<field name="model">account.closing.it</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" string="Nombre"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_account_closing_it_action" model="ir.actions.act_window">
+			<field name="name">Cierre Contable</field>
+			<field name="res_model">account.closing.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_closing_it_tree"/>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Cierre Contable aqui
+			</p>
+			</field>
+		</record>
+		
+		<menuitem id='menu_account_closing_it' 
+				  parent='account.menu_finance_entries_actions' 
+				  action="view_account_closing_it_action"
+				  sequence="100"
+				  groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

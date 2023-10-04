@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <record id="view_landed_cost_it_stock_receivable_form" model="ir.ui.view">
+            <field name="name">landed.cost.it.form.inherit.stock.receivable</field>
+            <field name="model">landed.cost.it</field>
+            <field name="inherit_id" ref="landed_cost_it.view_landed_cost_it_form"/>
+            <field name="arch" type="xml">
+                <field name="total_flete" position="before">
+                    <field name="use_existences"/>
+                    <field name="visible_button" invisible="1"/>
+                </field>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Existencias por Recibir" name="existences" attrs="{'invisible':[('use_existences', '=', False)]}">
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object"
+                            name="action_view_delivery"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('count_picking_receivable_ids', '=', 0)]}">
+                            <field name="count_picking_receivable_ids" widget="statinfo" string="Transferencias"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <button
+                            name="create_picking" type="object" string="Generar Ingreso Existencias"
+                            attrs="{'invisible':[('visible_button', '=', False)]}" class="oe_highlight"/>
+                        </group>
+                        <group>
+                            <button
+                            name="create_account_move" type="object" string="Generar Asiento"
+                            attrs="{'invisible':['|','|',('move_id', '!=', False),('state', '=', 'draft'),('use_existences','=',False)]}" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="picking_type_id" attrs="{'required' : [('use_existences', '=', True)]}"/>
+                            <field name="location_id" force_save="1" attrs="{'required' : [('use_existences', '=', True)]}"/>
+                            <field name="location_dest_id" force_save="1" attrs="{'required' : [('use_existences', '=', True)]}"/>
+                            <field name="receivable_date" attrs="{'required' : [('use_existences', '=', True)]}"/>
+                        </group>
+                        <group>
+                            <field name="move_id" readonly="1"/>
+                        </group>
+                    </group>
+                    </page>
+				</xpath>
+            </field>
+        </record>
+
+        <record id="view_landed_cost_it_search_inherit" model="ir.ui.view">
+			<field name="name">landed.cost.it.search.inherit</field>
+			<field name="inherit_id" ref="landed_cost_it.view_landed_cost_it_search"/>
+			<field name="model">landed.cost.it</field>
+			<field name="arch" type="xml">
+				<xpath expr="/search/filter[@name='done']" position="after">
+                    <separator/>
+					<filter name="pending_stock" string="Pendiente por recibir" domain="[('visible_button', '=', True)]"/>
+					<filter name="pending_move" string="Pendiente de Contabilizar" domain="[('move_id', '=', False),('use_existences','=',True)]"/>
+					
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

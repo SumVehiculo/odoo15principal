@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_consumption_analysis_wizard_form">
+			<field name="name">consumption.analysis.wizard.form</field>
+			<field name="model">consumption.analysis.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Analisis de Consumo">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="period"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Generar Asiento" name="make_invoice" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="consumption_analysis_wizard_action" model="ir.actions.act_window">
+			<field name="name">Analisis de Consumo</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">consumption.analysis.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="consumption_analysis_wizard_action" 
+				  id="menu_action_consumption_analysis_wizard" 
+				  parent="kardex_fisico_it.kardex_main_menu"
+				  sequence="50"/>
+	</data>
+</odoo>

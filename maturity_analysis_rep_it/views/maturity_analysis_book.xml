@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_maturity_analysis_book_tree" model="ir.ui.view">
+            <field name="name">maturity.analysis.book.tree</field>
+            <field name="model">maturity.analysis.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Analisis de Vencimiento" create="false">
+                    <field name="fecha_emi"/>
+                    <field name="fecha_ven"/>
+                    <field name="cuenta"/>
+                    <field name="divisa"/>
+                    <field name="tdp"/>
+                    <field name="doc_partner"/>
+                    <field name="partner"/>
+                    <field name="td_sunat"/>
+                    <field name="nro_comprobante"/>
+                    <field name="saldo_mn" sum="saldo_mn"/>
+                    <field name="saldo_me" sum="saldo_me"/>
+                    <field name="cero_treinta" sum="cero_treinta"/>
+                    <field name="treinta1_sesenta" sum="treinta1_sesenta"/>
+                    <field name="sesenta1_noventa" sum="sesenta1_noventa"/>
+                    <field name="noventa1_ciento20" sum="noventa1_ciento20"/>
+                    <field name="ciento21_ciento50" sum="ciento21_ciento50"/>
+                    <field name="ciento51_ciento80" sum="ciento51_ciento80"/>
+                    <field name="ciento81_mas" sum="ciento81_mas"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="maturity_analysis_book_search" model="ir.ui.view">
+            <field name="name">maturity.analysis.book.search</field>
+            <field name="model">maturity.analysis.book</field>
+            <field name="arch" type="xml">
+                <search string="Analisis de Vencimiento">
+                    <field name="cuenta"/>
+                    <field name="partner"/>
+                    <field name="doc_partner"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                        <filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+                        <filter string="RUC" name="doc_partner" icon="terp-partner" context="{'group_by':'doc_partner'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_maturity_analysis_book_it" model="ir.actions.act_window">
+            <field name="name">Analisis de Vencimiento</field>
+            <field name="res_model">maturity.analysis.book</field>
+            <field name="view_id" ref="view_maturity_analysis_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="maturity_analysis_book_search"/>
+        </record>
+
+    </data>
+</odoo>

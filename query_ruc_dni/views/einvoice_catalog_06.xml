@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_einvoice_catalog_06_form_query" model="ir.ui.view">
+		<field name="name">einvoice.catalog.06.form.query</field>
+		<field name="model">l10n_latam.identification.type</field>
+		<field name="arch" type="xml">
+			<form string="Catalogo 06 - Tipo de Documento">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="description"/>
+							<field name="country_id"/>
+						</group>
+						<group>
+							<field name="code_sunat"/>
+							<field name="sequence"/>
+							<field name="active"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_einvoice_catalog_06_list_query" model="ir.ui.view">
+		<field name="name">einvoice.catalog.06.list.query</field>
+		<field name="model">l10n_latam.identification.type</field>
+		<field name="arch" type="xml">
+			<tree create="true">
+				<field name="name" optional="show"/>
+				<field name="description" optional="show"/>
+				<field name="country_id" optional="show"/>
+				<field name="code_sunat" optional="show"/>
+				<field name="active" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_einvoice_catalog_06_form_query" model="ir.actions.act_window">
+		<field name="name">Tipos de Identificación </field>
+		<field name="res_model">l10n_latam.identification.type</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_einvoice_catalog_06_list_query"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primer registo de Identificacion
+		  </p>
+		</field>
+	</record>
+	
+
+</odoo>

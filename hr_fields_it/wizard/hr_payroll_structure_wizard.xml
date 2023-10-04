@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_payroll_structure_wizard_form_inherit" model="ir.ui.view">
+		<field name="name">hr.payroll.structure.wizard.form.inherit</field>
+		<field name="model">hr.payroll.structure.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Generacion de Estructura Salarial">
+				<group>
+					<group>
+						<field name="company_ids" widget="many2many_tags" required="1"/>
+					</group>
+				</group>
+				<footer>
+					<button string="Generar" name="generate_structures" type="object" class="oe_highlight"/>
+					<button string="Cancelar" class="oe_link" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

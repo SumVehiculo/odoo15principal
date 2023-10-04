@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_product_category_form_inherit" model="ir.ui.view">
+			<field name="name">product.category.inherit</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view"/>
+			<field name="arch" type="xml">
+				<data>
+					<field name="property_account_expense_categ_id" position="after">
+						<field name="code"/>
+						<field name="existence_type_id"/>
+					</field>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

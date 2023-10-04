@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_asset_category_multi_company_rule" model="ir.rule">
+            <field name="name">Account Asset Category multi-company</field>
+            <field name="model_id" ref="model_account_asset_category" />
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="account_asset_asset_multi_company_rule" model="ir.rule">
+            <field name="name">Account Asset multi-company</field>
+            <field name="model_id" ref="model_account_asset_asset"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="account_asset_move_it_multi_company_rule" model="ir.rule">
+            <field name="name">Account Asset Move multi-company</field>
+            <field name="model_id" ref="model_account_asset_move_it"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="group_account_asset_it_user" model="res.groups">
+			<field name="name">Activos Fijos</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+
+    </data>
+</odoo>

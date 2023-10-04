@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_kardex_in" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit2</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="kardex_account_journal_entry.view_account_main_parameter_form_inherit_kardex"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook/page[@name='kardex']/group[@name='params']" position="replace">
+				<group string="Detalle Ingresos/Salidas" name="params">
+					<group>
+						<field name="type_operation_outproduction"/>
+						<field name="type_operation_gv"/>
+						<field name="type_operation_inproduction"/>
+					</group>
+				</group>
+			</xpath>
+		</field>
+	</record>
+</odoo>

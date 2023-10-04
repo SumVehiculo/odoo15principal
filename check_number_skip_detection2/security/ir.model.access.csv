@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_check_voucher_skip_detection2_wizard_group_user,check.voucher.skip.detection2.wizard.group.user,model_check_voucher_skip_detection2_wizard,account_base_it.group_account_tables_user,1,1,1,1

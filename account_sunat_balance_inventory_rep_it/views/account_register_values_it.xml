@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_register_values_it_form" model="ir.ui.view">
+		<field name="name">account.register.values.it.form</field>
+		<field name="model">account.register.values.it</field>
+		<field name="arch" type="xml">
+			<form string="Registro de Valores">
+				<header>
+					<button string="Crear Asiento" type="object" name="crear_asiento" class="oe_highlight"/>
+				</header>
+				<group>
+					<group>
+						<field name="code" required="1"/>
+						<field name="name" required="1"/>
+						<field name="date"/>
+						<field name="qty"/>
+						<field name="costo"/>
+					</group>
+					<group>
+						<field name="partner_id"/>
+						<field name="move_id" readonly="1"/>
+						<field name="provision"/>
+						<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/> 
+					</group>
+				</group>
+			</form>
+		</field>
+	</record>
+	<record id="view_account_register_values_it_list" model="ir.ui.view">
+		<field name="name">account.register.values.it.list</field>
+		<field name="model">account.register.values.it</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="code" optional="show"/>
+				<field name="name" optional="show"/>
+				<field name="partner_id" optional="show"/>
+				<field name="move_id" optional="show"/>
+				<field name="company_id" groups="base.group_multi_company"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_account_register_values_it_form" model="ir.actions.act_window">
+		<field name="name">Registro de Valores</field>
+		<field name="res_model">account.register.values.it</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_account_register_values_it_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Registro de Valores aqui
+		  </p>
+		</field>
+	</record>
+
+	<menuitem id='menu_action_account_register_values_it_form' 
+				  parent='account_sunat_balance_inventory_rep_it.menu_tables_sunat' 
+				  action="action_account_register_values_it_form"
+				  sequence="30"/>
+</odoo>

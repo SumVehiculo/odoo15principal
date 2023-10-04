@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_con_efective_rep_form">
+			<field name="name">account.con.efective.rep.form</field>
+			<field name="model">account.con.efective.rep</field>
+			<field name="arch" type="xml">
+				<form string="Consistencia Flujo Efectivo">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="fiscal_year_id"/>
+								<field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+								<field name="period_to" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_con_efective_rep_action" model="ir.actions.act_window">
+			<field name="name">Consistencia Flujo Efectivo</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.con.efective.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="menu_account_consistency_report" 
+						name="Consistencias" 
+						parent="account.menu_finance_reports" 
+						sequence="105" 
+						groups="account_base_it.group_account_tables_user"/>
+
+		<menuitem action="account_con_efective_rep_action" 
+				id="menu_action_account_con_efective_rep" 
+				parent="menu_account_consistency_report" 
+				sequence="1" 
+				groups="account_base_it.group_account_tables_user"/>
+		
+	</data>
+</odoo>

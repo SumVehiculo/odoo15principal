@@ -1,0 +1,6 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_querydeluxe,querydeluxe access,query_deluxe.model_querydeluxe,query_deluxe.group_query_deluxe,1,1,1,1
+access_pdforientation,pdforientation access,query_deluxe.model_pdforientation,query_deluxe.group_query_deluxe,1,1,1,1
+access_tipsqueries,tipsqueries access,query_deluxe.model_tipsqueries,query_deluxe.group_query_deluxe,1,1,1,1
+access_validation_sql_wizard_group_user,validation.sql.wizard.group.user,model_validation_sql_wizard,query_deluxe.group_query_deluxe,1,1,1,1

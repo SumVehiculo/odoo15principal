@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_bank_statement_form_extend" model="ir.ui.view">
+			<field name="name">bank.statement.form.extend</field>
+			<field name="model">account.bank.statement</field>
+			<field name="inherit_id" ref="account.view_bank_statement_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='button_post']" position="replace">
+					<field name="check_approve" invisible="1" force_save="1"/>
+					<button string="Publicar" class="oe_highlight" name="button_post" type="object" attrs="{'invisible': [('check_approve','=',False),('journal_type','=','cash'),('state', '=', 'open')]}"/>
+						<button string="Aprobar" name="get_approve" type="object" class="oe_highlight" groups="account_bank_statement_sum.group_caja_chica_aprobacion" 	attrs="{'invisible':['|','|',('state', '!=', 'open'),('check_approve','=',True),('journal_type','!=','cash')]}"/>
+				</xpath>
+				
+				<xpath expr="//sheet/group/group[2]/div[2]" position="after">
+					<field name="employee_en_id" attrs="{'invisible': [('journal_type','!=','cash')]}"/>
+				</xpath>
+				<field name="company_id" position="after">
+					<field name="on_limit" attrs="{'invisible': [('journal_type','!=','cash')]}"/>
+				</field>
+			</field>
+		</record>
+		<record id="view_account_journal_form_extend" model="ir.ui.view">
+			<field name="name">view.account.journal.form.extend</field>
+			<field name="model">account.journal</field>
+			<field name="inherit_id" ref="account_fields_it.view_account_journal_form_inherit"/>
+			<field name="arch" type="xml">
+				<data>
+					<field name="check_surrender" position="after">
+						<field name="amount_max"/>
+					</field>					
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

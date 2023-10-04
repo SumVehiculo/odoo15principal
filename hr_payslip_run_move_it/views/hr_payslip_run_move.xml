@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_hr_payslip_run_move_tree">
+			<field name="name">hr.payslip.run.move.tree</field>
+			<field name="model">hr.payslip.run.move</field>
+			<field name="arch" type="xml">
+				<tree create="0" edit="0" delete="0">
+					<field name="sequence"/>
+					<field name="description"/>
+<!--					<field name="code"/>-->
+					<field name="analytic_account_id" invisible="context.get('with_analytic') == False"/>
+					<field name="account_id"/>
+					<field name="debit" sum="debit"/>
+					<field name="credit" sum="credit"/>
+				</tree>
+			</field>
+		</record>
+	</data>
+</odoo>

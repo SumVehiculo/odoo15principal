@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+<t t-name="LlikhaNotification" t-extend="Notification">
+    <t t-jquery=".o_notification_title > t" t-operation="replace">
+        <span  t-attf-class="link2event eid_{{widget.eid}}">
+            <t t-raw="widget.title"/>
+        </span>
+    </t>
+    <t t-jquery=".o_notification_buttons" t-operation="replace">
+        <div class="mt-2">
+            <button type="button" class="btn btn-primary link2showed oe_highlight oe_form oe_button"><span><t t-esc="widget.name_button"/></span></button>
+            <button type="button" class="btn btn-link link2close">Cerrar</button>
+        </div>
+    </t>
+</t>
+
+</template>

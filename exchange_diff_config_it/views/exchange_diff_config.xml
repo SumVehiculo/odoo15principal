@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_exchange_diff_config_form">
+			<field name="name">exchange.diff.config.form</field>
+			<field name="model">exchange.diff.config</field>
+			<field name="arch" type="xml">
+				<form string="exchange_diff_config" create="false" delete="false">
+					<sheet>
+						<group>
+							<field name="profit_account_id" required="1"/>
+							<field name="loss_account_id" required="1"/>
+						</group>
+						<group>
+							<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+						</group>
+						<notebook>
+							<page string="Periodos">
+								<field name="line_ids">
+									<tree editable="bottom">
+										<field name="period_id" string="Periodo" required="1"/>
+										<field name="compra" string="Tipo Compra" required="1"/>
+										<field name="venta" string="Tipo Venta" required="1"/>
+										<field name="move_id_global" readonly="1"/>
+										<field name="move_id_global" invisible="1"/>
+										<field name="move_id_document" readonly="1"/>
+										<field name="move_id_document" invisible="1"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_exchange_diff_config_tree">
+			<field name="name">exchange.diff.config.tree</field>
+			<field name="model">exchange.diff.config</field>
+			<field name="arch" type="xml">
+				<tree string="exchange_diff_config">
+					<field name="name"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_exchange_diff_config_action" model="ir.actions.act_window">
+			<field name="name">Tipos de Cambio Cierre</field>
+			<field name="res_model">exchange.diff.config</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_exchange_diff_config_tree"/>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Tipos de Cambio Cierre aqui
+			</p>
+			</field>
+		</record>
+		
+		<menuitem id='menu_exchange_diff_config' 
+				  parent='account.account_account_menu' 
+				  action="view_exchange_diff_config_action"
+				  sequence="1"
+				  groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

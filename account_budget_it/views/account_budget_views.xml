@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="crossovered_budget_view_form_inherit_it" model="ir.ui.view">
+		<field name="name">crossovered.budget.inherit.it</field>
+		<field name="model">crossovered.budget</field>
+		<field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//notebook/page/field[@name='crossovered_budget_line']/tree/field[@name='theoritical_amount']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//notebook/page/field[@name='crossovered_budget_line']/tree/field[@name='percentage']" position="before">
+					<field name="amount_diff" sum="amount_diff" optional="show"/>
+				</xpath>
+			</data>
+		</field>
+	</record>
+
+	<record id="view_crossovered_budget_line_tree_inherit" model="ir.ui.view">
+		<field name="name">crossovered.budget.lines.tree.inherit</field>
+		<field name="model">crossovered.budget.lines</field>
+		<field name="inherit_id" ref="account_budget.view_crossovered_budget_line_tree"/>
+		<field name="arch" type="xml">
+			<field name="theoritical_amount" position="replace">
+				<field name="amount_diff" string="Diferencia" optional="show"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_crossovered_budget_line_pivot_inherit" model="ir.ui.view">
+		<field name="name">crossovered.budget.lines.pivot.inherit</field>
+		<field name="model">crossovered.budget.lines</field>
+		<field name="inherit_id" ref="account_budget.view_crossovered_budget_line_pivot"/>
+		<field name="arch" type="xml">
+			<field name="theoritical_amount" position="replace">
+				<field name="amount_diff" type="measure" string="Diferencia"/>
+			</field>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_destinos_usd_wizard_form">
+			<field name="name">account.destinos.usd.wizard.form</field>
+			<field name="model">account.destinos.usd.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="journal_id"/>
+							<field name="date"/>
+							<field name="glosa"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Generar Asiento" name="do_moves" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_destinos_usd_wizard_action" model="ir.actions.act_window">
+			<field name="name">Generar Destino</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.destinos.usd.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+
+	<menuitem id='menu_account_destinos_usd_wizard_action' 
+				  parent='menu_eeff_usd_utilities' 
+				  action="account_destinos_usd_wizard_action"
+				  sequence="6"/>
+</odoo>

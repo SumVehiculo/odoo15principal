@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_book_ledger_view_tree" model="ir.ui.view">
+            <field name="name">account.book.ledger.view.tree</field>
+            <field name="model">account.book.ledger.view</field>
+            <field name="arch" type="xml">
+                <tree string="Libro Mayor Analítico" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="debe" sum="debe"/>
+                    <field name="haber" sum="haber"/>
+                    <field name="balance" sum="balance"/>
+                    <field name="saldo"/>
+                    <field name="moneda"/>
+                    <field name="tc"/>
+                    <field name="cta_analitica"/>
+                    <field name="glosa"/>
+                    <field name="td_partner" optional="hide"/>
+                    <field name="doc_partner" optional="hide"/>
+                    <field name="partner" optional="hide"/>
+                    <field name="td_sunat" optional="hide"/>
+                    <field name="nro_comprobante" optional="hide"/>
+                    <field name="fecha_doc" optional="hide"/>
+                    <field name="fecha_ven" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_book_ledger_view_pivot" model="ir.ui.view">
+            <field name="name">account.book.ledger.view.pivot</field>
+            <field name="model">account.book.ledger.view</field>
+            <field name="arch" type="xml">
+                <pivot string="Libro Mayor Analítico">
+                    <field name="debe" type="measure"/>
+                    <field name="haber" type="measure"/>
+                    <field name="balance" type="measure"/>
+                    <field name="cuenta" type="row"/>
+                    <field name="periodo" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_account_book_ledger_view_graph" model="ir.ui.view">
+            <field name="name">account.book.ledger.view.graph</field>
+            <field name="model">account.book.ledger.view</field>
+            <field name="arch" type="xml">
+                <graph string="Libro Mayor Analítico" type="bar" stacked="1">
+                    <field name="debe"/>
+                    <field name="haber"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="account_book_ledger_view_search" model="ir.ui.view">
+            <field name="name">account.book.ledger.view.search</field>
+            <field name="model">account.book.ledger.view</field>
+            <field name="arch" type="xml">
+                <search string="Libro Mayor Analítico">
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="partner"/>
+                    <field name="doc_partner"/>
+                    <field name="nro_comprobante"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+                        <filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                        <filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+                        <filter string="RUC" name="doc_partner" icon="terp-partner" context="{'group_by':'doc_partner'}"/>
+                        <filter string="Número Comprobante" name="nro_comprobante" icon="terp-partner" context="{'group_by':'nro_comprobante'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_book_ledger_view_it" model="ir.actions.act_window">
+            <field name="name">Libro Mayor Analítico</field>
+            <field name="res_model">account.book.ledger.view</field>
+            <field name="view_id" ref="view_account_book_ledger_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,pivot,graph</field>
+            <field name="search_view_id" ref="account_book_ledger_view_search"/>
+        </record>
+
+    </data>
+</odoo>

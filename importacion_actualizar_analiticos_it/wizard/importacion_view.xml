@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record model="ir.ui.view" id="view_importacion_actualizar_analiticos_form">
+			<field name="name">importacion.actualizar.analiticos.form</field>
+			<field name="model">importacion.actualizar.analiticos</field>
+			<field name="arch" type="xml">
+				<form string="Actualizar Diarios Analiticos" version="7.0">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="period_id" required="1"/>
+							</group>
+						</group>
+						<footer>
+                            <button string="Actualizar" name="primerpaso" type="object" class="oe_highlight"/>
+                            or
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="importacion_actualizar_analiticos_action" model="ir.actions.act_window">
+			<field name="name">Actualizar Diarios Analiticos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">importacion.actualizar.analiticos</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<menuitem id="importacion_actualizar_diario_analitico_menu"  
+				  parent="account_base_import_it.menu_import_imports_invoices"
+				  sequence="15"  
+				  action="importacion_actualizar_analiticos_action" />
+
+	</data>
+</odoo>

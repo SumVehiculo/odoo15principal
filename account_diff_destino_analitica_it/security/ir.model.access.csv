@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_diff_destino_analitica_wizard_group_user,account.diff.destino.analitica.wizard.group.user,model_account_diff_destino_analitica_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_account_diff_destino_analitica_view_group_user,account.diff.destino.analitica.view.group.user,model_account_diff_destino_analitica_view,account_base_it.group_account_tables_user,1,1,1,1

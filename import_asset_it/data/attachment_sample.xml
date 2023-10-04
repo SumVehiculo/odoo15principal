@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+        <record id="import_account_asset_it_example_xls" model="ir.attachment">
+            <field name="name">import_account_asset_it_example.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_asset_it/sample_import_file/import_account_asset_it_example.xlsx"/>
+        </record>
+    </data>
+</odoo>

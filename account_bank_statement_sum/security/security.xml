@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_caja_chica_aprobacion" model="res.groups">
+			<field name="name">Tesoreria: Aprobación Caja Chica</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+	</record>
+</odoo>

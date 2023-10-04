@@ -1,0 +1,14 @@
+<odoo>
+    <data>        
+        <record id="stock_picking_type_hide_inmediate_transfer_kanban" model="ir.ui.view">
+            <field name="name">stock.picking.type.hide.inmediate.transfer.kanban</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@role='menu']//div[@class='col-6 o_kanban_card_manage_section o_kanban_manage_new']//div[@role='menuitem'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

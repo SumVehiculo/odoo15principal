@@ -1,0 +1,176 @@
+<odoo>
+
+<!--	<report-->
+<!--		id="report_contract"-->
+<!--		model="hr.contract"-->
+<!--		string="Imprimir Datos del Contrato"-->
+<!--		name="hr_fields_it.report_contract_view"-->
+<!--		file="hr.report_contract_view"-->
+<!--		report_type="qweb-pdf"/>-->
+
+	<record id="report_contract" model="ir.actions.report">
+		<field name="name">Imprimir Datos del Contrato</field>
+		<field name="model">hr.contract</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hr_fields_it.report_contract_view</field>
+		<field name="report_file">hr.report_contract_view</field>
+<!--		<field name="print_report_name">'Contrato - %s' % (object.employee_id.name)</field>-->
+		<field name="binding_model_id" ref="model_hr_contract"/>
+		<field name="binding_type">report</field>
+	</record>
+
+	<template id="report_contract_view">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<h2><span t-field="doc.name"/></h2>
+						<hr/>
+						<table class="table">
+							<tr>
+								<td><label>Empleado:</label> <span t-field="doc.employee_id.name"/></td>
+								<td><label>Departamento:</label> <span t-field="doc.department_id.name"/></td>
+							</tr>
+							<tr>
+								<td><label>Tipo de Trabajador:</label> <span t-field="doc.worker_type_id.description"/></td>
+								<td><label>Puesto de Trabajo:</label> <span t-field="doc.job_id.name"/></td>
+							</tr>
+						</table>
+						<hr/>
+						<center><h3>INFORMACION</h3></center>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Salario y Complementos</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label>Salario:</label> <span t-field="doc.wage"/>
+									</td>
+									<td>
+										<label>Tipo de Pago: </label> <span t-field="doc.wage_type"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Estructura Salarial:</label> <span t-field="doc.structure_id.name"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table">
+							<thead>
+								<tr class="table-info">
+									<th><h4>Duracion</h4></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="2">
+										<label>Duracion </label> Desde: <span t-field="doc.date_start"/> Hasta: <span t-field="doc.date_end"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Planificacion de Trabajo: </label> <span t-field="doc.resource_calendar_id.name"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr/>
+						<center><h3>DATOS LABORALES</h3></center>
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>
+										<label>Afiliacion: </label><span t-field="doc.membership_id.name"/>
+									</td>
+									<td>
+										<label>Tipo de Comision AFP: </label><span t-field="doc.commision_type"/>
+									</td>
+									<td>
+										<label>CUSPP: </label><span t-field="doc.cuspp"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Seguro de Salud: </label><span t-field="doc.social_insurance_id.name"/>
+									</td>
+									<td>
+										<label>Regimen Laboral: </label><span t-field="doc.labor_regime"/>
+									</td>
+									<td>
+										<label>Situacion: </label><span t-field="doc.situation_id.description"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Distribucion Gastos: </label><span t-field="doc.distribution_id.name"/>
+									</td>
+									<td colspan="2">
+										<label>Otros Empleadores por rentas de 5ta categoria: </label><span t-field="doc.other_employers"/>
+									</td>					
+								</tr>
+								<!--<tr>
+									<td>
+										<label>Remuneracion Mensual Afecta Proyectada: </label><span t-field="doc.remuneracion_mensual_proyectada"/>
+									</td>
+									<td>
+										<label>Gratificacion por Fiestas Patrias Proyectada: </label><span t-field="doc.gratificacion_fiesta_patria_proyectada"/>
+									</td>
+									<td>
+										<label>Gratificacion por Navidad Proyectada: </label><span t-field="doc.gratificacion_navidad_proyectada"/>
+									</td>					
+								</tr>-->
+							</tbody>
+						</table>
+						<div style="page-break-before: always;"/>
+						<center><h3>SUSPENSION LABORAL</h3></center>
+						<table class="table">
+							<thead>
+								<th>Tipo Suspension</th>
+								<th>Motivo</th>
+								<th>Nro de Dias</th>
+								<th>Periodos</th>
+							</thead>
+							<tbody>
+								<t t-foreach="doc.work_suspension_ids" t-as="susp">
+									<tr>
+										<td>
+											<span t-field="susp.suspension_type_id.description"/>
+										</td>
+										<td>
+											<span t-field="susp.reason"/>
+										</td>
+										<td>
+											<span t-field="susp.days"/>
+										</td>
+										<td>
+											<span t-field="susp.payslip_run_id.name"/>
+										</td>
+									</tr>
+								</t>
+							</tbody>
+						</table>
+						<hr/>
+						<center><h3>AFP NET</h3></center>
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>
+										<label>Excepcion Aportador: </label><span t-field="doc.exception"/>
+									</td>
+									<td>
+										<label>Tipo de Trabajo: </label><span t-field="doc.work_type"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+</odoo>

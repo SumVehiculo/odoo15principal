@@ -1,0 +1,5 @@
+.o_notification_manager .o_notification.efm_success {
+    color: #4c4c4c;
+    background-color: #afff8a;
+    cursor: pointer;
+}

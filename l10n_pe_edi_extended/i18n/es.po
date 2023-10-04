@@ -1,0 +1,2011 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_pe_edi_extended
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-11 16:25+0000\n"
+"PO-Revision-Date: 2022-02-11 16:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_partner_status
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_partner_status
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_partner_status
+msgid ""
+"\n"
+"    Status of sending the DTE to the partner:\n"
+"    - Not sent: the DTE has not been sent to the partner but it has sent to SUNAT.\n"
+"    - Sent: The DTE has been sent to the partner."
+msgstr ""
+"\n"
+"    Estado del envio del DTE al receptor:\n"
+"    - No enviado: El DTE no ha sido enviado al receptor pero si fue enviado a SUNAT.\n"
+"    - Enviado: El DTE ha sido enviado al receptor."
+
+#. module: l10n_pe_edi_extended
+#: code:addons/l10n_pe_edi_extended/models/account_move.py:0
+#, python-format
+msgid "%(words)s WITH %(amount)02d/100 %(currency_label)s"
+msgstr "%(words)s CON %(amount)02d/100 %(currency_label)s"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid ", visit"
+msgstr ", visita"
+
+#. module: l10n_pe_edi_extended
+#: model:mail.template,body_html:l10n_pe_edi_extended.email_template_edi_invoice
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear\n"
+"        <t t-if=\"object.partner_id.parent_id\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object.partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        Here is your\n"
+"        <t t-if=\"object.name\">\n"
+"            invoice <strong t-out=\"object.name or ''\">F001-54</strong>\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            invoice\n"
+"        </t>\n"
+"        <t t-if=\"object.invoice_origin\">\n"
+"            (with reference: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
+"        </t>\n"
+"        from <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <ul>\n"
+"            <li>Date: <strong t-out=\"object.invoice_date or ''\">00/00/0000</strong></li>\n"
+"            <li>Due date: <strong t-out=\"object.invoice_date_due or ''\">00/00/0000</strong></li>\n"
+"            <li>Total amount: <strong t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 0.00</strong></li>\n"
+"            <t t-if=\"object.l10n_pe_dte_pdf_file_link\">\n"
+"                <li>PDF Link: <strong><a t-attf-href=\"{{ object.l10n_pe_dte_pdf_file_link }}\">Click Here</a></strong></li>\n"
+"            </t>\n"
+"            <t t-if=\"object.l10n_pe_dte_file_link\">\n"
+"                <li>XML Link: <strong><a t-attf-href=\"{{ object.l10n_pe_dte_file_link }}\">Click Here</a></strong></li>\n"
+"            </t>\n"
+"            <t t-if=\"object.l10n_pe_dte_cdr_file_link\">\n"
+"                <li>CDR Link: <strong><a t-attf-href=\"{{ object.l10n_pe_dte_cdr_file_link }}\">Click Here</a></strong></li>\n"
+"            </t>\n"
+"        </ul>\n"
+"        <t t-if=\"object.payment_state in ('paid', 'in_payment')\">\n"
+"            This invoice is already paid.\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            Please remit payment at your earliest convenience.\n"
+"            <t t-if=\"object.payment_reference\">\n"
+"                <br/><br/>\n"
+"                Please use the following communication for your payment: <strong t-out=\"object.payment_reference or ''\">INV/2021/05/0005</strong>.\n"
+"            </t>\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <t t-if=\"object.invoice_user_id.signature\">\n"
+"            <br/>\n"
+"            <t t-out=\"object.invoice_user_id.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Estimado\n"
+"        <t t-if=\"object.partner_id.parent_id\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object.partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        Aquí está su\n"
+"        <t t-if=\"object.name\">\n"
+"            factura <strong t-out=\"object.name or ''\">INV/2021/05/0005</strong>\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            factura\n"
+"        </t>\n"
+"        <t t-if=\"object.invoice_origin\">\n"
+"            (con referencia: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
+"        </t>\n"
+"        de <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <ul>\n"
+"            <li>Fecha: <strong t-out=\"object.invoice_date or ''\">00/00/0000</strong></li>\n"
+"            <li>Fecha de Vencimiento: <strong t-out=\"object.invoice_date_due or ''\">00/00/0000</strong></li>\n"
+"            <li>Importe total: <strong t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 0.00</strong></li>\n"
+"            <t t-if=\"object.l10n_pe_dte_pdf_file_link\">\n"
+"                <li>Enlace del PDF: <strong><a t-attf-href=\"{{ object.l10n_pe_dte_pdf_file_link }}\">Click Aqui</a></strong></li>\n"
+"            </t>\n"
+"            <t t-if=\"object.l10n_pe_dte_file_link\">\n"
+"                <li>Enlace del XML: <strong><a t-attf-href=\"{{ object.l10n_pe_dte_file_link }}\">Click Aqui</a></strong></li>\n"
+"            </t>\n"
+"            <t t-if=\"object.l10n_pe_dte_cdr_file_link\">\n"
+"                <li>Enlace del CDR: <strong><a t-attf-href=\"{{ object.l10n_pe_dte_cdr_file_link }}\">Click Aqui</a></strong></li>\n"
+"            </t>\n"
+"        </ul>\n"
+"        <t t-if=\"object.payment_state in ('paid', 'in_payment')\">\n"
+"            Esta factura ya está pagada.\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            Por favor remita el pago a su más pronta conveniencia.\n"
+"            <t t-if=\"object.payment_reference\">\n"
+"                <br/><br/>\n"
+"                Utilice la siguiente referencia para su pago: <strong t-out=\"object.payment_reference or ''\">INV/2021/05/0005</strong>.\n"
+"            </t>\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"         No dude en contactarnos si tiene alguna pregunta.\n"
+"        <t t-if=\"object.invoice_user_id.signature\">\n"
+"            <br/>\n"
+"            <t t-out=\"object.invoice_user_id.signature or ''\">--<br/>Mitchell Admin</t>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid ""
+"<i title=\"Send now\" role=\"img\" aria-label=\"Send now\" class=\"fa fa-fw "
+"fa-cloud-upload\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid ""
+"<span class=\"o_form_label\">Check DTE's automatically</span>\n"
+"                                <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" role=\"img\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid ""
+"<span class=\"o_form_label\">Legal Informatión</span>\n"
+"                                <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" role=\"img\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid ""
+"<span class=\"o_form_label\">Perú DTE Web Services</span>\n"
+"                            <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid ""
+"<span class=\"o_form_label\">Send DTE's automatically</span>\n"
+"                                <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" role=\"img\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid ""
+"<span class=\"o_stat_text\">Accepted by</span>\n"
+"                            <span class=\"o_stat_text\">SUNAT</span>"
+msgstr ""
+"<span class=\"o_stat_text\">Aceptado por</span>\n"
+"                            <span class=\"o_stat_text\">SUNAT</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid ""
+"<span class=\"o_stat_text\">Check</span>\n"
+"                            <span class=\"o_stat_text\">Status</span>"
+msgstr ""
+"<span class=\"o_stat_text\">Verificar</span>\n"
+"                            <span class=\"o_stat_text\">Status</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid ""
+"<span class=\"o_stat_text\">Send to</span>\n"
+"                            <span class=\"o_stat_text\">SUNAT</span>"
+msgstr ""
+"<span class=\"o_stat_text\">Enviar a</span>\n"
+"                            <span class=\"o_stat_text\">SUNAT</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>AMOUNT EXPORTATION</strong></span>"
+msgstr "<span><strong>EXPORTACIÓN</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>AMOUNT FREE</strong></span>"
+msgstr "<span><strong>GRATUITA</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>BASE AMOUNT </strong></span>"
+msgstr "<span><strong>GRAVADA </strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>DISCOUNT (-)</strong></span>"
+msgstr "<span><strong>DESCUENTO (-)</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>EXONERATED</strong></span>"
+msgstr "<span><strong>EXONERADA</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>G. DISCOUNT (-)</strong></span>"
+msgstr "<span><strong>DESC. GLOBAL (-)</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>ICBPER</strong></span>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>IGV</strong></span>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>ISC</strong></span>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>PREPAID AMOUNT</strong></span>"
+msgstr "<span><strong>IMPORTE PRE-PAGADO</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>TOTAL WITH PERCEPTION</strong></span>"
+msgstr "<span><strong>TOTAL COBRADO</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span><strong>UNAFFECTED</strong></span>"
+msgstr "<span><strong>INAFECTA</strong></span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span>AMOUNT</span>"
+msgstr "<span>IMPORTE</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span>CODE / DESCRIPTION</span>"
+msgstr "<span>CÓDIGO / DESCRIPCIÓN</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span>DISC.%</span>"
+msgstr "<span>DESC.%</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span>P/U</span>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span>QTY</span>"
+msgstr "<span>CANT</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span>UOM</span>"
+msgstr "<span>UDM</span>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<span>V/U</span>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<strong>AMOUNT IN WORDS:</strong>"
+msgstr "<strong>IMPORTE EN LETRAS:</strong>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<strong>CLIENT</strong>"
+msgstr "<strong>CLIENTE</strong>"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "<strong>TOTAL</strong>"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "ADDRESS:"
+msgstr "DIRECCIÓN:"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "AMOUNT PENDING TO PAY"
+msgstr "MONTO PENDIENTE DE PAGO"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_status__accepted
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_void_status__accepted
+msgid "Accepted"
+msgstr "Aceptado"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_status__objected
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_void_status__objected
+msgid "Accepted With Objections"
+msgstr "Aceptado con observaciones"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_move_reversal
+msgid "Account Move Reversal"
+msgstr "Revocación de movimiento en cuenta"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_report_l10n_pe_edi_extended_report_einvoice
+msgid "Account report with payment lines"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_debit_note
+msgid "Add Debit Note wizard"
+msgstr "Asistente para agregar nota débito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_line
+msgid "Advance"
+msgstr "Anticipo"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_invoice_id
+msgid "Advance Invoice"
+msgstr "Anticipo - Comprobante"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_type
+msgid "Advance Type"
+msgstr "Anticipo - Tipo"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_amount
+msgid "Advance amount"
+msgstr "Anticipo - Importe"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_date
+msgid "Advance date"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_number
+msgid "Advance number"
+msgstr "Anticipo - Correlativo"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_serial
+msgid "Advance serial"
+msgstr "Anticipo - Serie"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_debit_note__l10n_pe_dte_debit_note_type__12
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__12
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_debit_note_type__12
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__12
+msgid "Ajustes afectos al IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_debit_note__l10n_pe_dte_debit_note_type__11
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__11
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_debit_note_type__11
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__11
+msgid "Ajustes de operaciones de exportación"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__13
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__13
+msgid "Ajustes – montos y/o fechas de pago"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_allowance_charge_reason_code
+msgid "Allowance or Charge reason"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_amount_discount
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_amount_discount
+msgid "Amount discount before taxes"
+msgstr "Descuentos antes de impuestos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_amount_free
+msgid "Amount free"
+msgstr "Gratuito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_in_words
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_in_words
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_in_words
+msgid "Amount in Words"
+msgstr "Monto en palabras"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__20
+msgid "Anticipo de ISC"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0502
+msgid "Anticipos\tLiquidación de compra"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__01
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__01
+msgid "Anulación de la operación"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__02
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__02
+msgid "Anulación por error en el RUC"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_isc_type__02
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax_template__l10n_pe_edi_isc_type__02
+msgid ""
+"Aplicación del Monto Fijo ( Sistema específico, bienes en el apéndice III, "
+"Apéndice IV, lit. B – T.U.O IGV e ISC)"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_status__ask_for_status
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_void_status__ask_for_status
+msgid "Ask For Status"
+msgstr "Consulta de estado"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_debit_note__l10n_pe_dte_debit_note_type__02
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_debit_note_type__02
+msgid "Aumento en el valor"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_base
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_base
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_base
+msgid "Base Amount"
+msgstr "Base imponible"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_advance_type__03
+msgid "Boleta de venta"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__08
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__08
+msgid "Bonificación"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_cdr_void_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_cdr_void_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_cdr_void_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_cdr_void_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_cdr_void_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_cdr_void_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_cdr_void_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_cdr_void_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_cdr_void_file_link
+msgid "CDR Void file"
+msgstr "Archivo CDR de baja"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_cdr_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_cdr_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_cdr_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_cdr_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_cdr_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_cdr_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_cdr_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_cdr_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_cdr_file_link
+msgid "CDR file"
+msgstr "Archivo CDR"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "CREDIT NOTE TYPE:"
+msgstr "TIPO DE NOTA DE CRÉDITO"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "CURRENCY:"
+msgstr "MONEDA:"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.l10n_pe_dte_move_cancel_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.actions.act_window,name:l10n_pe_edi_extended.l10n_pe_dte_move_cancel_action
+msgid "Cancel Invoices"
+msgstr "Cancelar comprobantes"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_cancel_reason
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_cancel_reason
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_cancel_reason
+msgid "Cancel Reason"
+msgstr "Motivo de cancelación"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.l10n_pe_dte_move_cancel_form
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid "Cancel in SUNAT"
+msgstr "Dar de baja en SUNAT"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.l10n_pe_dte_move_cancel_form
+msgid "Cancel invoices"
+msgstr "Cancelar facturas"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.l10n_pe_dte_move_cancel_form
+msgid ""
+"Cancel the invoice in SUNAT. <span class=\"font-weight-bold text-danger\"> "
+"The invoice will be sent to SUNAT and canceled. After pressing the button "
+"there is no backward movement.</span>"
+msgstr ""
+"Dar de baja en SUNAT. <span class=\"font-weight-bold text-danger\"> El "
+"comprobante será enviado a SUNAT y dado de baja. Luego de presionar el botón"
+" no hay marcha atrás.</span>"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_status__cancelled
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_void_status__cancelled
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid "Cancelled"
+msgstr "Anulada"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__49
+msgid "Cargos globales que afectan la base imponible del IGV/IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__50
+msgid "Cargos globales que no afectan la base imponible del IGV/IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_allowance_charge_reason_code
+msgid "Catalog 53 of possible reasons of discounts"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_check
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_check
+msgid "Check DTE to PSE/OSE"
+msgstr "Verificar DTE en PSE/OSE"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_check_interval_unit
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_check_interval_unit
+msgid "Check DTE:Interval Unit"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_check_next_execution_date
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_check_next_execution_date
+msgid "Check DTE:Next Execution"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.actions.server,name:l10n_pe_edi_extended.action_l10n_pe_dte_send_check_multi
+msgid "Check status at SUNAT"
+msgstr "Verificar estado en SUNAT"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "Choose the period to check DTE's"
+msgstr "Elige el periodo para verificacion de DTE's"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "Choose the period to send DTE's"
+msgstr "Elige el periodo para envios de DTE's"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_res_company
+msgid "Companies"
+msgstr "Compañias"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0503
+msgid "Compra de oro\tLiquidación de compra"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0501
+msgid "Compra interna\tLiquidación de compra"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de configuración"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__03
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__03
+msgid "Corrección por error en la descripción"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_country_code
+msgid "Country Code"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__create_date
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_credit_note_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_credit_note_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_reversal__l10n_pe_dte_credit_note_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_credit_note_type
+msgid "Credit Note Type"
+msgstr "Tipo de nota de crédito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__invoice_payment_fee_ids
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__invoice_payment_fee_ids
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__invoice_payment_fee_ids
+msgid "Credit Payment Fees"
+msgstr "Cuotas de pago credito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__2100
+msgid "Créditos a empresas\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__2102
+msgid "Créditos de consumo no revolvente \tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__2101
+msgid "Créditos de consumo revolvente\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_uom_uom__l10n_pe_edi_unece
+msgid "Código UN/ECE rec 20"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_product_product__l10n_pe_edi_unspsc
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_product_template__l10n_pe_edi_unspsc
+msgid "Código UNSPSC v14_0801"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "DEBIT NOTE TYPE:"
+msgstr "TIPO DE NOTA DE DÉBITO"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "DENOMINATION:"
+msgstr "DENOMINACIÓN:"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_control_url
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_control_url
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "DTE Control URL"
+msgstr "URL de consulta de DTE's"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_hash
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_hash
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_hash
+msgid "DTE Hash"
+msgstr "Codigo hash de DTE"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_pdf_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_pdf_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_pdf_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_pdf_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_pdf_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_pdf_file_link
+msgid "DTE PDF file"
+msgstr "Archivo PDF"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_service_provider
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_service_provider
+msgid "DTE Service Provider"
+msgstr "Proveedor de servicios de DTE"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_file_link
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_file
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_file_link
+msgid "DTE file"
+msgstr "Archivo DTE"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "DUE DATE:"
+msgstr "FECHA DE VENC.:"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__res_company__l10n_pe_dte_check_interval_unit__daily
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__res_company__l10n_pe_dte_send_interval_unit__daily
+msgid "Daily"
+msgstr "Cada dia"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_debit_note_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_debit_note__l10n_pe_dte_debit_note_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_debit_note_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_debit_note_type
+msgid "Debit Note Type"
+msgstr "Tipo de nota de débito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__04
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__04
+msgid "Descuento global"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__05
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__05
+msgid "Descuento por ítem"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__05
+msgid "Descuentos globales por anticipos exonerados"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__04
+msgid ""
+"Descuentos globales por anticipos gravados que afectan la base imponible del"
+" IGV/IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__06
+msgid "Descuentos globales por anticipos inafectos"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__02
+msgid "Descuentos globales que afectan la base imponible del IGV/IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__03
+msgid "Descuentos globales que no afectan la base imponible del IGV/IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__07
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__07
+msgid "Devolución por ítem"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__06
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__06
+msgid "Devolución total"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.detail_anticipo
+msgid "Disc. Code"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_discount
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_discount
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_discount
+msgid "Discount"
+msgstr "Descuento"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__09
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__09
+msgid "Disminución en el valor"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__date_due
+msgid "Due Date"
+msgstr "Fecha de vencimiento"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_tax_group__l10n_pe_edi_code
+msgid "EDI Code"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_tax__l10n_pe_edi_igv_type
+msgid "EDI IGV Type"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_tax__l10n_pe_edi_isc_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_tax_template__l10n_pe_edi_isc_type
+msgid "EDI ISC Type"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_tax__l10n_pe_edi_international_code
+msgid "EDI International Code"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__amount_by_group2
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__amount_by_group2
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__amount_by_group2
+msgid "Edit Tax amounts if you encounter rounding issues."
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid "Electronic Invoice"
+msgstr "Comprobante electrónico"
+
+#. module: l10n_pe_edi_extended
+#: model:mail.template,subject:l10n_pe_edi_extended.email_template_edi_invoice
+msgid ""
+"Electronic Invoice ${object.name or 'n/a'} | ${object.company_id.name} "
+msgstr ""
+"Comprobante Electrónico ${object.name or 'n/a'} | ${object.company_id.name} "
+
+#. module: l10n_pe_edi_extended
+#: model:mail.template,name:l10n_pe_edi_extended.email_template_edi_invoice
+msgid "Electronic Invoice: Send by email"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Asistente de redacción de correo electrónico"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__20
+msgid "Exonerado - Operación Onerosa"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__21
+msgid "Exonerado - Transferencia gratuita"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_exonerated
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_exonerated
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_exonerated
+msgid "Exonerated  Amount"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0200
+msgid "Exportación de Bienes\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__40
+msgid "Exportación de Bienes o Servicios"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0205
+msgid ""
+"Exportación de Servicios  - Servicios que conformen un Paquete "
+"Turístico\tFactura"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0202
+msgid ""
+"Exportación de Servicios – Prestación de servicios de hospedaje No "
+"Domiciliado\tFactura"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0208
+msgid ""
+"Exportación de Servicios – Prestación servicios realizados parcialmente en "
+"el extranjero\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0201
+msgid ""
+"Exportación de Servicios – Prestación servicios realizados íntegramente en "
+"el país\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0204
+msgid ""
+"Exportación de Servicios – Servicios  a naves y aeronaves de bandera "
+"extranjera\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0206
+msgid ""
+"Exportación de Servicios – Servicios complementarios al transporte de "
+"carga\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0207
+msgid ""
+"Exportación de Servicios – Suministro de energía eléctrica a favor de "
+"sujetos domiciliados en ZED\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0203
+msgid "Exportación de Servicios – Transporte de navieras\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_exportation
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_exportation
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_exportation
+msgid "Exportation Amount"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__45
+msgid "FISE"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_advance_type__02
+msgid "Factura"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "Fee"
+msgstr "Cuota"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_free_product
+msgid "Free"
+msgstr "Gratuito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_free
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_free
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_free
+msgid "Free Amount"
+msgstr "Valor gratuito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_global_discount
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_global_discount
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_global_discount
+msgid "Global discount"
+msgstr "Descuento global"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__17
+msgid "Gravado - IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__10
+msgid "Gravado - Operación Onerosa"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__15
+msgid "Gravado – Bonificaciones"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__13
+msgid "Gravado – Retiro"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__12
+msgid "Gravado – Retiro por donación"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__16
+msgid "Gravado – Retiro por entrega a trabajadores"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__11
+msgid "Gravado – Retiro por premio"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__14
+msgid "Gravado – Retiro por publicidad"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__res_company__l10n_pe_dte_check_interval_unit__hourly
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__res_company__l10n_pe_dte_send_interval_unit__hourly
+msgid "Hourly"
+msgstr "Cada hora"
+
+#. module: l10n_pe_edi_extended
+#: model:account.tax.group,name:l10n_pe_edi_extended.tax_group_icbper
+msgid "ICBPER"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_icbper
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_icbper
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_icbper
+msgid "ICBPER Amount"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_icbper_amount
+msgid "ICBPER amount"
+msgstr "Valor ICBPER"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__id
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_igv
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_igv
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_igv
+msgid "IGV Amount"
+msgstr "Valor IGV"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid "IGV Retention"
+msgstr "Retención del IGV"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_retention
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_retention
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_retention
+msgid "IGV Retention Amount"
+msgstr "Importe de la retención"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_retention_base
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_retention_base
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_retention_base
+msgid "IGV Retention Base"
+msgstr "Base imponible de la retención"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_retention_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_retention_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_retention_type
+msgid "IGV Retention Type"
+msgstr "Regimen de retención"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_igv_amount
+msgid "IGV amount"
+msgstr "Valor IGV"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "INVOICE DATE:"
+msgstr "FECHA EMISIÓN:"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_isc
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_isc
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_isc
+msgid "ISC Amount"
+msgstr "Valor ISC"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_isc_amount
+msgid "ISC amount"
+msgstr "Valor ISC"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__res_company__l10n_pe_dte_send_interval_unit__immediately
+msgid "Immediately"
+msgstr "Inmediatamente"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__30
+msgid "Inafecto - Operación Onerosa"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__34
+msgid "Inafecto - Retiro por Convenio Colectivo"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__36
+msgid "Inafecto - Retiro por publicidad"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__37
+msgid "Inafecto - Transferencia gratuita"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__32
+msgid "Inafecto – Retiro"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__31
+msgid "Inafecto – Retiro por Bonificación"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__33
+msgid "Inafecto – Retiro por Muestras Médicas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_igv_type__35
+msgid "Inafecto – Retiro por premio"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.detail_anticipo
+msgid "Integrity Sale"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_debit_note__l10n_pe_dte_debit_note_type__01
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_debit_note_type__01
+msgid "Intereses por mora"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "Interval"
+msgstr "Intervalo"
+
+#. module: l10n_pe_edi_extended
+#: model:mail.template,report_name:l10n_pe_edi_extended.email_template_edi_invoice
+msgid ""
+"Invoice_{{ (object.name or '').replace('/','_') }}{{ object.state == 'draft'"
+" and '_draft' or '' }}"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_invoice_id
+msgid "Invoices related to the advance regualization"
+msgstr "Facturas relacionadas con la regularización del anticipo"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.actions.server,name:l10n_pe_edi_extended.ir_cron_check_invoices_ir_actions_server
+#: model:ir.cron,cron_name:l10n_pe_edi_extended.ir_cron_check_invoices
+#: model:ir.cron,name:l10n_pe_edi_extended.ir_cron_check_invoices
+msgid "Invoices: Check status to PSE/OSE"
+msgstr "Comprobantes de pago: Verificar estado en PSE/OSE"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.actions.server,name:l10n_pe_edi_extended.ir_cron_send_invoices_ir_actions_server
+#: model:ir.cron,cron_name:l10n_pe_edi_extended.ir_cron_send_invoices
+#: model:ir.cron,name:l10n_pe_edi_extended.ir_cron_send_invoices
+msgid "Invoices: Send to PSE/OSE"
+msgstr "Comprobantes de pago: Enviar a PSE/OSE"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_journal__l10n_pe_is_dte
+msgid "Is DTE?"
+msgstr "Es DTE?"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_is_einvoice
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_is_einvoice
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_is_einvoice
+msgid "Is E-invoice"
+msgstr "Es Comrpobante electrónico"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_line
+msgid "Is advance line?"
+msgstr "¿Es anticipo?"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_free_product
+msgid "Is free product?"
+msgstr "Es producto gratuito"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee____last_update
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__write_date
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_status__manual
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_void_status__manual
+msgid "Manual"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__move_id
+msgid "Move"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "Next Run"
+msgstr "Siguiente ejecución"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_partner_status__not_sent
+msgid "Not Sent"
+msgstr "No enviado"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "OBSERVATIONS:"
+msgstr "OBSERVACIONES:"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "OPERACIÓN SUJETA A PERCEPCIÓN DEL I.G.V. TASA"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0301
+msgid ""
+"Operaciones con Carta de porte aéreo (emitidas en el ámbito "
+"nacional)\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0302
+msgid "Operaciones de Transporte ferroviario de pasajeros\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__1001
+msgid "Operación Sujeta a Detracción\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__1002
+msgid ""
+"Operación Sujeta a Detracción- Recursos Hidrobiológicos\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__1004
+msgid ""
+"Operación Sujeta a Detracción- Servicios de Transporte Carga\tFactura, "
+"Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__1003
+msgid ""
+"Operación Sujeta a Detracción- Servicios de Transporte Pasajeros\tFactura, "
+"Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__2001
+msgid "Operación Sujeta a Percepción\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_operation_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_operation_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_operation_type
+msgid "Operation Type"
+msgstr "Tipo de operación"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_others
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_others
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_others
+msgid "Other charges"
+msgstr "Otros cargos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__2104
+msgid ""
+"Otras operaciones no  gravadas - Empresas del sistema de seguros\tFactura, "
+"Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__2103
+msgid ""
+"Otras operaciones no gravadas - Empresas del sistema financiero y "
+"cooperativas de ahorro y crédito no autorizadas a captar recursos del "
+"público\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_credit_note_type__10
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_reversal__l10n_pe_dte_credit_note_type__10
+msgid "Otros Conceptos "
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "PAYMENT TERMS:"
+msgstr "CONDICIÓN DE PAGO:"
+
+#. module: l10n_pe_edi_extended
+#: model:account.tax.group,name:l10n_pe_edi_extended.tax_group_per
+msgid "PER"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "PERCEPTION"
+msgstr "PERCEPCIÓN"
+
+#. module: l10n_pe_edi_extended
+#: model:account.tax.group,name:l10n_pe_edi_extended.tax_group_per_global
+msgid "PERG"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "PURCHASE/SERVICE ORDER:"
+msgstr "ORDEN DE COMPRA/SERVICIO:"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_partner_status
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_partner_status
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_partner_status
+msgid "Partner DTE status"
+msgstr "Estado de DTE en cliente"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_debit_note__l10n_pe_dte_debit_note_type__03
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_debit_note_type__03
+msgid "Penalidades/ otros conceptos "
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_status__not_sent
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_void_status__not_sent
+msgid "Pending To Be Sent"
+msgstr "Pendiente de ser enviado"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_igv_percent
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_igv_percent
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_igv_percent
+msgid "Percentage IGV"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__52
+msgid "Percepción a la adquisición de combustible"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__53
+msgid "Percepción realizada al agente de percepción con tasa especial"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__51
+msgid "Percepción venta interna"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_perception
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_perception
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_perception
+msgid "Perception Amount"
+msgstr "Importe de la percepción"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_perception_base
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_perception_base
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_perception_base
+msgid "Perception Base"
+msgstr "Base imponible de la percepción"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_perception_percentage
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_perception_percentage
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_perception_percentage
+msgid "Perception Percentage"
+msgstr "Porcentaje de la percepción"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_tax_group__l10n_pe_edi_code
+msgid "Peruvian EDI code to complement catalog 05"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "Peruvian Electronic Invoicing"
+msgstr "Facturación electrónica Perú"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid ""
+"Please choose your DTE service provider (values depend on Test or Production"
+" or PSE)."
+msgstr ""
+"Selecciona tu proveedor de servicios DTE (Valores dependen en pruebas y "
+"producción o PSE)."
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "Please fill legal information about DTE's"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_service_provider
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_service_provider
+msgid "Please select your company service provider for DTE service."
+msgstr "Por favor selecciona el proveedor de servicios DTE para tu compañia"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_prepaid
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_prepaid
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_prepaid
+msgid "Prepaid Amount"
+msgstr "Importe Pre-pagado"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_price_unit_included
+msgid "Price unit IGV included"
+msgstr "Precio unitario con IGV incluído"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_price_unit_excluded
+msgid "Price unit excluded"
+msgstr "Precio unitario sin impuestos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_price_unit_included
+msgid "Price unit with IGV included"
+msgstr "Precio unitario con IGV incluído"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_price_unit_excluded
+msgid "Price unit without taxes"
+msgstr "Precio unitario sin impuestos"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "Printed representation of the"
+msgstr "Representación impresa de la"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de Producto"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_uom_uom
+msgid "Product Unit of Measure"
+msgstr "Unidad de Medida del Producto"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_service_order
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_service_order
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_service_order
+msgid "Purchase/Service order"
+msgstr "Orden Compra/Serv."
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "RELATED DOCUMENT:"
+msgstr "DOCUMENTO RELACIONADO:"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "RETENTION ("
+msgstr "RETENCIÓN ("
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "RUC"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_l10n_pe_dte_move_cancel__description
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_cancel_reason
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_cancel_reason
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_cancel_reason
+msgid "Reason given by the user to cancel this move"
+msgstr "Motivo de cancelación del comprobante"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__46
+msgid "Recargo al consumo y/o propinas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_rectification_ref_date
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_rectification_ref_date
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_rectification_ref_date
+msgid "Rectificativa - Fecha comprobante"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_rectification_ref_number
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_rectification_ref_number
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_rectification_ref_number
+msgid "Rectificativa - Serie-numero"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_rectification_ref_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_rectification_ref_type
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_rectification_ref_type
+msgid "Rectificativa - Tipo Comprobante"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_status__rejected
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_void_status__rejected
+msgid "Rejected"
+msgstr "Rechazado"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__63
+msgid "Rentención de renta de segunda categoría"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__61
+msgid "Retención de renta por anticipos"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move_line__l10n_pe_dte_allowance_charge_reason_code__62
+msgid "Retención del IGV"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__res_company__l10n_pe_dte_service_provider__sunat
+msgid "SUNAT - Production"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__res_company__l10n_pe_dte_service_provider__sunattest
+msgid "SUNAT - Test"
+msgstr "SUNAT - Pruebas"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_void_status
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_void_status
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_void_status
+msgid "SUNAT DTE Void status"
+msgstr "Estado de baja de DTE en SUNAT"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_void_status_response
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_void_status_response
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_void_status_response
+msgid "SUNAT DTE Void status response"
+msgstr "SUNAT DTE respuesta de anulacion"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_status
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_status
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_status
+msgid "SUNAT DTE status"
+msgstr "Estado de DTE en SUNAT"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_status_response
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_status_response
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_status_response
+msgid "SUNAT DTE status response"
+msgstr "SUNAT DTE respuesta de emisión"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_authorization_message
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_authorization_message
+msgid "SUNAT Exempt Authorization Message"
+msgstr "Mensaje de resolucion de autorización de SUNAT"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_resolution_number
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_resolution_number
+msgid "SUNAT Exempt Resolution Number"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.res_config_settings_view_pe_form
+msgid "SUNAT Exempt authorization message"
+msgstr "Mensaje de resolucion de autorización de SUNAT"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_l10n_pe_dte_move_cancel
+msgid "Send DTE cancel"
+msgstr "Enviar baja de DTE"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_send_interval_unit
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_send_interval_unit
+msgid "Send DTE:Interval Unit"
+msgstr "Envio de DTE:Unidad de intervalo"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_send_next_execution_date
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_send_next_execution_date
+msgid "Send DTE:Next Execution"
+msgstr "Envio de DTE: Siguiente ejecución"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.actions.server,name:l10n_pe_edi_extended.action_l10n_pe_dte_send_multi
+msgid "Send to PSE/OSE/SUNAT"
+msgstr "Enviar a PSE/OSE/SUNAT"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_partner_status__sent
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_isc_type__01
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax_template__l10n_pe_edi_isc_type__01
+msgid "Sistema al valor (Apéndice IV, lit. A – T.U.O IGV e ISC)"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax__l10n_pe_edi_isc_type__03
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_tax_template__l10n_pe_edi_isc_type__03
+msgid ""
+"Sistema de Precios de Venta al Público (Apéndice IV, lit. C – T.U.O IGV e "
+"ISC)"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_status
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_status
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_status
+msgid ""
+"Status of sending the DTE to the SUNAT:\n"
+"    - Not sent: the DTE has not been sent to SUNAT but it has created.\n"
+"    - Ask For Status: The DTE is asking for its status to the SUNAT.\n"
+"    - Accepted: The DTE has been accepted by SUNAT.\n"
+"    - Accepted With Objections: The DTE has been accepted with objections by SUNAT.\n"
+"    - Rejected: The DTE has been rejected by SUNAT.\n"
+"    - Manual: The DTE is sent manually, i.e.: the DTE will not be sending manually."
+msgstr ""
+"Estados de envio del DTE a SUNAT:\n"
+"    - No enviado: El DTE no ha sido enviado a SUNAT pero fue creado.\n"
+"    - Solicitud de estado: El DTE esta solicitando su estado a SUNAT.\n"
+"    - Aceptado: El DTE fue aceptado por SUNAT.\n"
+"    - Aceptado con observaciones: El DTE fue aceptado con observaciones por SUNAT.\n"
+"    - Rechazado: El DTE fue rechazado por SUNAT.\n"
+"    - Manual: El DTE es enviado manualmente, e.d.: El DTE no sera enviado manualmente."
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_void_status
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_void_status
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_void_status
+msgid ""
+"Status of sending the Void DTE to the SUNAT:\n"
+"    - Not sent: the DTE has not been sent to SUNAT but it has created.\n"
+"    - Ask For Status: The DTE is asking for its status to the SUNAT.\n"
+"    - Accepted: The DTE has been accepted by SUNAT.\n"
+"    - Accepted With Objections: The DTE has been accepted with objections by SUNAT.\n"
+"    - Rejected: The DTE has been rejected by SUNAT.\n"
+"    - Manual: The DTE is sent manually, i.e.: the DTE will not be sending manually."
+msgstr ""
+"Estados de envio de la baja del DTE a SUNAT:\n"
+"    - No enviado: La baja del DTE no ha sido enviada a SUNAT pero fue creada.\n"
+"    - Solicitud de estado: La baja del DTE esta solicitando su estado a SUNAT.\n"
+"    - Aceptado: La baja del DTE fue aceptada por SUNAT.\n"
+"    - Aceptado con observaciones: La baja del DTE fue aceptada con observaciones por SUNAT.\n"
+"    - Rechazado: La baja del DTE fue rechazada por SUNAT.\n"
+"    - Manual: La baja del DTE es enviado manualmente, e.d.: La baja del DTE no sera enviada manualmente."
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_subtotal
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_subtotal
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_subtotal
+msgid "Subtotal"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_price_base
+msgid "Subtotal without discounts"
+msgstr "Subtotal sin descuentos"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "Summary:"
+msgstr "Resumen:"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "TRANSFERENCIA GRATUITA DE UN BIEN Y/O SERVICIO PRESTADO GRATUITAMENTE"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_retention_type__01
+msgid "Tasa 3%"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_retention_type__02
+msgid "Tasa 6%"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_tax_group
+msgid "Tax Group"
+msgstr "Grupo de impuestos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__amount_by_group2
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__amount_by_group2
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__amount_by_group2
+msgid "Tax amount by group"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_tax_template
+msgid "Templates for Taxes"
+msgstr "Plantilla de impuestos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_country_code
+msgid ""
+"The ISO country code in two chars. \n"
+"You can use this field for quick search."
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_service_order
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_service_order
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_service_order
+msgid "This Purchase/service order will be shown on the electronic invoice"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_authorization_message
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_control_url
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_company__l10n_pe_dte_resolution_number
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_authorization_message
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_control_url
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_res_config_settings__l10n_pe_dte_resolution_number
+msgid ""
+"This value must be provided and must appear in your pdf or printed tribute "
+"document, under the electronic stamp to be legally valid."
+msgstr ""
+"Este valor debe ser proporcionado y debe aparecer en su pdf o documento "
+"tributario impreso, bajo el sello electrónico para ser legalmente válido."
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move_payment_fee__amount_total
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid "Total"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_advance_amount
+msgid "Total Advance amount"
+msgstr "Valor total del anticipo"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_total
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_total
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_total
+msgid "Total Amount"
+msgstr "Importe total"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_total_with_perception
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_total_with_perception
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_total_with_perception
+msgid "Total Amount With Perception"
+msgstr "Importe Total incluido percepción"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_icbper_amount
+msgid "Total ICBPER amount"
+msgstr "Valor total de ICBPER"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_igv_amount
+msgid "Total IGV amount"
+msgstr "Valor total de IGV"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_isc_amount
+msgid "Total ISC amount"
+msgstr "Valor total de ISC"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_price_base
+msgid "Total amount without discounts and taxes"
+msgstr "Total sin impuestos y descuentos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_untaxed
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_untaxed
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_untaxed
+msgid "Total before taxes"
+msgstr "Total antes de impuestos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_untaxed
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_untaxed
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_untaxed
+msgid "Total before taxes, all discounts included"
+msgstr "Total antes de impuestos con descuento incluido"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_base
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_base
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_base
+msgid "Total with discounts and before taxes"
+msgstr "Total con descuentos antes de impuestos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_subtotal
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_subtotal
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_subtotal
+msgid "Total without discounts and taxes"
+msgstr "Total sin impuestos y descuentos"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__l10n_pe_dte_amount_unaffected
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__l10n_pe_dte_amount_unaffected
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__l10n_pe_dte_amount_unaffected
+msgid "Unaffected Amount"
+msgstr "Valor inafecto"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0112
+msgid "Venta Interna - Sustenta Gastos Deducibles Persona Natural\tFactura "
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0113
+msgid "Venta Interna-NRUS\tBoleta"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0101
+msgid "Venta interna\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended.selection__account_move__l10n_pe_dte_operation_type__0401
+msgid ""
+"Ventas no domiciliados que no califican como exportación\tFactura, Boletas"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.view_move_form
+msgid "Verify Again"
+msgstr "Verificar nuevamente"
+
+#. module: l10n_pe_edi_extended
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended.report_einvoice_document
+msgid "WITH DATE OF PAYMENT"
+msgstr "CON FECHA DE PAGO"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_bank_statement_line__invoice_payment_fee_total
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_move__invoice_payment_fee_total
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended.field_account_payment__invoice_payment_fee_total
+msgid "[Credit] Amount Pending to Pay"
+msgstr "[Crédito] Importe neto pendiente de pago"
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model,name:l10n_pe_edi_extended.model_account_move_payment_fee
+msgid "account.move.payment_fee"
+msgstr ""
+
+#. module: l10n_pe_edi_extended
+#: model:ir.model.fields,help:l10n_pe_edi_extended.field_account_move_line__l10n_pe_dte_amount_free
+msgid "amount calculated if the line id for free product"
+msgstr "monto calculado si la línea es para un producto gratuito"

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_purchase_book_usd_tree" model="ir.ui.view">
+            <field name="name">account.purchase.book.usd.tree</field>
+            <field name="model">account.purchase.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Registro de Compras" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha_cont"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_e"/>
+                    <field name="fecha_v"/>
+                    <field name="td"/>
+                    <field name="serie"/>
+                    <field name="anio"/>
+                    <field name="numero"/>
+                    <field name="tdp"/>
+                    <field name="docp"/>
+                    <field name="namep"/>
+                    <field name="base1" sum="base1"/>
+                    <field name="base2" sum="base2"/>
+                    <field name="base3" sum="base3"/>
+                    <field name="cng" sum="cng"/>
+                    <field name="isc" sum="isc"/>
+                    <field name="icbper" sum="icbper"/>
+                    <field name="otros" sum="otros"/>
+                    <field name="igv1" sum="igv1"/>
+                    <field name="igv2" sum="igv2"/>
+                    <field name="igv3" sum="igv3"/>
+                    <field name="total" sum="total"/>
+                    <field name="name"/>
+                    <field name="currency_rate"/>
+                    <field name="fecha_det"/>
+                    <field name="comp_det"/>
+                    <field name="f_doc_m"/>
+                    <field name="td_doc_m"/>
+                    <field name="serie_m"/>
+                    <field name="numero_m"/>
+                    <field name="glosa"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

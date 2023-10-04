@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>	
+
+		<record model="ir.actions.server" id="action_export_excel">
+			<field name="name">Imprimir Excel</field>
+			<field name="model_id" ref="account.model_account_move"/>
+			<field name="binding_model_id" ref="account.model_account_move" />
+			<field name="binding_view_types">form</field>
+			<field name="state">code</field>
+			<field name="code">action = records.generate_excel_rep_it()</field>
+		</record>
+
+		<record model="ir.actions.server" id="action_export_pdf">
+			<field name="name">Imprimir PDF</field>
+			<field name="model_id" ref="account.model_account_move"/>
+			<field name="binding_model_id" ref="account.model_account_move" />
+			<field name="binding_view_types">form</field>
+			<field name="state">code</field>
+			<field name="code">action = records.generate_pdf_rep_it()</field>
+		</record>
+
+	</data>
+</odoo>

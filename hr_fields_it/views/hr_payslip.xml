@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_payslip_form_inherit" model="ir.ui.view">
+		<field name="name">hr.payslip.form.inherit</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+		<field name="arch" type="xml">
+			<button name="action_payslip_done" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</button>
+			<button name="refund_sheet" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</button>
+<!--			<button name="compute_sheet" position="attributes">-->
+<!--				<attribute name="states">draft,verify</attribute>-->
+<!--			</button>-->
+			<button name="compute_sheet" position="before">
+				<button name="compute_wds" string="Dias Laborados" type="object" class="oe_highlight" states="verify"/>
+			</button>
+			<field name="struct_id" position="after">
+				<field name="holidays"/>
+				<field name="struct_type_id"/>
+			</field>
+			<xpath expr="//div[@class='alert alert-warning']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='action_print_payslip']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='amount']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='work_entry_type_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='name']" position="before">
+				<field name="code"/>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='number_of_days']" position="attributes">
+				<attribute name="readonly">0</attribute>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='number_of_hours']" position="attributes">
+				<attribute name="widget">float_time</attribute>
+				<attribute name="readonly">0</attribute>
+			</xpath>
+			<xpath expr="//field[@name='input_line_ids']/tree/field[@name='input_type_id']" position="before">
+				<field name="code"/>
+			</xpath>
+
+			<xpath expr="//field[@name='input_line_ids']/tree/field[@name='input_type_id']" position="attributes">
+				<attribute name="string">Descripcion</attribute>
+			</xpath>
+			<xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='input_line_ids']/tree/field[@name='amount']" position="attributes">
+				<attribute name="string">Importe</attribute>
+			</xpath>
+			<xpath expr="//page[@name='account_info']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//div[@name='button_box']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+			<xpath expr="//page[@name='account_info']" position="before">
+				<page name="data_contract" string="Datos Laborales">
+					<group name="data" >
+						<group string="Datos del Contrato">
+							<field name="wage" attrs="{'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="labor_regime" attrs="{'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="social_insurance_id" attrs="{'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="distribution_id" attrs="{'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="workday_id" attrs="{'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+						</group>
+						<group string="Datos de Afiliacion">
+							<field name="membership_id" attrs="{'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="commision_type" attrs="{'invisible' : [('is_afp', '=', False)], 'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="fixed_commision" attrs="{'invisible' : [('is_afp', '=', False)], 'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="mixed_commision" attrs="{'invisible' : [('is_afp', '=', False)], 'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="prima_insurance" attrs="{'invisible' : [('is_afp', '=', False)], 'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="retirement_fund" attrs="{'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="insurable_remuneration" attrs="{'invisible' : [('is_afp', '=', False)], 'readonly' : [('state', 'in',('done', 'paid'))]}"/>
+							<field name="is_afp" invisible="1"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

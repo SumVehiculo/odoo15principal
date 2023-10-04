@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_exchange_document_usd_rep_form">
+			<field name="name">account.exchange.document.usd.rep.form</field>
+			<field name="model">account.exchange.document.usd.rep</field>
+			<field name="arch" type="xml">
+				<form string="Diferencia ME Documento">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+						</group>
+						<group>
+							<field name="journal_id"/>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Generar" name="do_invoice" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_exchange_document_usd_rep_action" model="ir.actions.act_window">
+			<field name="name">Diferencia ME Documento</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.exchange.document.usd.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_exchange_document_usd_rep_action" 
+				  id="menu_action_account_exchange_document_usd_rep"
+				  parent="account_amount_currency_dolars_it.menu_eeff_usd_utilities" 
+				  sequence="15"
+				  groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

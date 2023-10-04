@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_product_it_root,product.product.it.root,product.model_product_product,group_edit_catalog_it_user,1,1,1,1
+access_product_template_it_root,product.template.it.root,product.model_product_template,group_edit_catalog_it_user,1,1,1,1
+access_product_category_it_root,product.category.it.root,product.model_product_category,group_edit_catalog_it_user,1,1,1,1
+access_res_partner_it_root,res.partner.it.root,base.model_res_partner,group_edit_catalog_it_user,1,1,1,1
+access_account_account_it_root,account.account.it.root,account.model_account_account,group_edit_catalog_it_user,1,1,1,1
+access_account_journal_it_root,account.journal.it.root,account.model_account_journal,group_edit_catalog_it_user,1,1,1,1
+access_account_analytic_account_it_root,account.analytic.account.it.root,analytic.model_account_analytic_account,group_edit_catalog_it_user,1,1,1,1
+access_glen_model_root,glen.model.root,model_glen_model_update,base.group_user,1,1,1,1

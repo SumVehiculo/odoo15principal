@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_bank_statement_surrender_tree" model="ir.ui.view">
+            <field name="name">account.bank.statement.surrender.tree</field>
+            <field name="model">account.bank.statement</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="not is_difference_zero and state=='open'" decoration-info="state=='open' and is_difference_zero" string="Statements">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="journal_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="balance_start"/>
+                    <field name="balance_end_real"/>
+                    <field name="balance_end" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state"/>
+                    <field name="is_difference_zero" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+		<record id="account.action_view_bank_statement_tree" model="ir.actions.act_window">
+			<field name="domain">[('journal_id.type', '=', 'cash'), ('journal_id.check_surrender', '=', False)]</field>
+			<field name="context">{'journal_type':'cash', 'journal_check_surrender': False}</field>
+		</record>
+		<record id="action_view_bank_statement_tree_surrender" model="ir.actions.act_window">
+			<field name="name">Rendiciones</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.bank.statement</field>
+			<field name="view_mode">tree,form,pivot,graph</field>
+			<field name="view_id" ref="view_bank_statement_surrender_tree"/>
+			<field name="search_view_id" ref="account.view_bank_statement_search"/>
+			<field name="domain">[('journal_id.type', '=', 'cash'),('journal_id.check_surrender', '=', True)]</field>
+			<field name="context">{'journal_type':'cash', 'default_journal_check_surrender': True}</field>
+			<field name="help" type="html">
+			  <p class="o_view_nocontent_smiling_face">
+				Crea una nueva Rendición
+			  </p>
+			</field>
+		</record>
+
+		<record id="view_bank_statement_form_inherit" model="ir.ui.view">
+			<field name="name">view.bank.statement.form.inherit</field>
+			<field name="model">account.bank.statement</field>
+			<field name="inherit_id" ref="account.view_bank_statement_form"/>
+			<field name="arch" type="xml">
+				<field name="journal_id" position="attributes">
+					<attribute name="domain">[('type', '=', journal_type), ('check_surrender', '=', journal_check_surrender)]</attribute>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</odoo>

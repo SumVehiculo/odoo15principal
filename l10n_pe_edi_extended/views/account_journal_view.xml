@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_journal_form" model="ir.ui.view">
+            <field name="model">account.journal</field>
+            <field name="name">account.journal.form.l10n_pe_edi</field>
+            <field name="inherit_id" ref="account.view_account_journal_form" />
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="l10n_pe_is_dte" attrs="{'invisible': ['|', ('country_code', '!=', 'PE'), ('type', 'not in', ['sale','general'])]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

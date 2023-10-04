@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='stock.catalog.05'><field name='code'>01</field><field name='name'>MERCADERÍAS</field></record>
+		<record model='stock.catalog.05'><field name='code'>02</field><field name='name'>PRODUCTOS TERMINADOS</field></record>
+		<record model='stock.catalog.05'><field name='code'>03</field><field name='name'>MATERIAS PRIMAS</field></record>
+		<record model='stock.catalog.05'><field name='code'>04</field><field name='name'>ENVASES</field></record>
+		<record model='stock.catalog.05'><field name='code'>05</field><field name='name'>MATERIALES AUXILIARES</field></record>
+		<record model='stock.catalog.05'><field name='code'>06</field><field name='name'>SUMINISTROS </field></record>
+		<record model='stock.catalog.05'><field name='code'>07</field><field name='name'>REPUESTOS</field></record>
+		<record model='stock.catalog.05'><field name='code'>08</field><field name='name'>EMBALAJES</field></record>
+		<record model='stock.catalog.05'><field name='code'>09</field><field name='name'>SUBPRODUCTOS </field></record>
+		<record model='stock.catalog.05'><field name='code'>10</field><field name='name'>DESECHOS Y DESPERDICIOS</field></record>
+		<record model='stock.catalog.05'><field name='code'>91</field><field name='name'>OTROS 1</field></record>
+		<record model='stock.catalog.05'><field name='code'>92</field><field name='name'>OTROS 2</field></record>
+		<record model='stock.catalog.05'><field name='code'>93</field><field name='name'>OTROS 3</field></record>
+		<record model='stock.catalog.05'><field name='code'>94</field><field name='name'>OTROS 4</field></record>
+		<record model='stock.catalog.05'><field name='code'>95</field><field name='name'>OTROS 5</field></record>
+		<record model='stock.catalog.05'><field name='code'>96</field><field name='name'>OTROS 6</field></record>
+		<record model='stock.catalog.05'><field name='code'>97</field><field name='name'>OTROS 7</field></record>
+		<record model='stock.catalog.05'><field name='code'>98</field><field name='name'>OTROS 8</field></record>
+		<record model='stock.catalog.05'><field name='code'>99</field><field name='name'>OTROS</field></record>
+
+	</data>
+</odoo>

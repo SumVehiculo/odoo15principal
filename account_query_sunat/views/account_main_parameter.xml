@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Verificacion SUNAT" groups="account_query_sunat.group_account_query_sunat_manager">
+					<group>
+						<group>
+							<field name="client_id"/>
+							<field name="client_secret"/>
+						</group>
+						<group>
+							<field name="token_generation_date" readonly="1"/>
+							<field name="token_expiration_date" readonly="1"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

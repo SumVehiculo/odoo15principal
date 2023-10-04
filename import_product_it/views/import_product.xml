@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_import_product_it_form" model="ir.ui.view">
+            <field name="name">import.product.it.form </field>
+            <field name="model">import.product.it</field>
+            <field name="arch" type="xml">
+                <form string="Importar Producto">
+                    <group>
+                        <field name="import_product_type" widget="radio" />
+                    </group>
+                    <group>
+                        <field name="import_product_search" widget="radio"/>
+                    </group>
+                    <group>
+                        <field name="file" filename="name"/>
+                    </group>
+                    <footer>
+                        <button class="fa fa-upload btn-primary"  name="product_import" string="Importar" type="object"/>
+                        <button class="fa fa-download btn-primary"  name="download_template" string="Descargar Plantilla" type="object"/>
+                        <button class="fa fa-filter btn-primary" name="verify_if_exists_product" string="Verificar Duplicados" type="object" attrs="{'invisible': [('import_product_type', 'not in', ['create'])]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_import_product_it" model="ir.actions.act_window">
+            <field name="name">Importar Productos</field>
+            <field name="res_model">import.product.it</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_import_product_it"
+                    id="menu_action_import_product_it"
+			        parent="account_base_import_it.menu_import_imports_partner"
+                    sequence="9"/>
+  </data>
+</odoo>
+ 

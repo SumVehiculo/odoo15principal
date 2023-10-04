@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_make_kardex_formato_sunat" model="ir.ui.view">
+            <field name="name">make.kardex.valorado.formato.sunat.form</field>
+            <field name="model">make.kardex.valorado.formato.sunat</field>
+            <field name="arch" type="xml">
+                <form string="Kardex Valorado" version="7.0">
+                    <group>
+                        <field name="fini" invisible="1"/>
+                        <field name="ffin" invisible="1"/>
+                        <field name="fecha_ini_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="fecha_fin_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="check_fecha" />
+    
+                        <field name="allproducts"/>
+                        <field name="alllocations"/>
+                        <field name="analizador" invisible="1" />
+                    </group>
+                     <notebook>
+                            <page string="Productos">
+                                <field name="location_ids" string="Ubicaciones" domain="[('usage','in',['internal'])]" attrs="{'invisible':[('alllocations', '=', True)]}"/>
+                                <field name="products_ids" nolabel="True" domain="[('type','=',context['type_product'])]" attrs="{'invisible':[('allproducts', '=', True)]}"/>
+                            </page>
+                        </notebook>
+                    <footer>
+                        <button name="reportpdf_sunat" string="Formato Sunat PDF" type="object" class="oe_highlight"  onlyRead="1"/>
+                        or
+                        <button name="report_txt" string="Formato Sunat TXT" type="object" class="oe_highlight"  onlyRead="1"/>
+                        or
+                        <button name="report_xls" string="Formato Sunat Excel" type="object" class="oe_highlight"  onlyRead="1"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                 </form>
+             </field>
+        </record>
+
+        <record id="make_kardex_action_valorado_formato_sunat" model="ir.actions.act_window">
+            <field name="name">Kardex Formato Sunat</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">make.kardex.valorado.formato.sunat</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'tipo':'valorado','type_product':'product'}</field>
+        </record>
+
+        <menuitem name="Kardex Formato Sunat" id="menu_kardex_formato_sunat"
+                 parent="kardex_fisico_it.kardex_main_menu" action="make_kardex_action_valorado_formato_sunat"
+                 sequence="3" />
+
+    </data>
+</odoo>

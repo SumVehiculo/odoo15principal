@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--
+        <record id="view_move_form2" model="ir.ui.view">
+            <field name="name">account.move.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//group[@id='other_tab_group']" position="inside">                        
+                        <group string="Fecha Kardex" name="kardex_date_group" attrs="{'invisible': [('type', 'not in', ('in_invoice', 'in_refund'))]}">
+                            <field name="check_use_date_kardex"/>
+                            <field name="date_kardex" attrs="{'invisible': [('check_use_date_kardex', '=', False)] , 'required': [('check_use_date_kardex', '=', True)] }"/>
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+
+        <record id="view_main_parameter_form_inherit" model="ir.ui.view">
+            <field name="name">main.parameter.form.inherit</field>
+            <field name="model">main.parameter</field>
+            <field name="inherit_id" ref="account_base_it.view_main_parameter_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Gastos Vinculados Kardex">
+                        <group string="Configuración Fecha Kardex">
+                            <group>
+                                <field name="check_gastos_vinculados"/>
+                                <field name="anular_albaranres_view"/>                                
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+-->
+
+        <record id="group_edicion_tc_valor_kardex" model="res.groups">
+            <field name="name">Editar Valorizaciones del Kardex</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+
+        <record id="stockmove_editpriceunit" model="ir.ui.view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="arch" type="xml">
+                <form string="Precio Unitario" version="7.0" create="false">
+                    <group>
+                        <field name="price_unit_it" readonly="0"/>
+                    </group>
+                 </form>
+             </field>
+        </record>
+
+
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom']" position="after">
+                <field name="price_unit_it" groups="kardex_valorado_it.group_edicion_tc_valor_kardex"/>
+                <button name="actualizar_priceunit" type="object" string="Editar Precio Unitario" class="oe_highlight" groups="kardex_valorado_it.group_edicion_tc_valor_kardex"/>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="before">
+                <field name="tc" groups="kardex_valorado_it.group_edicion_tc_valor_kardex"/>
+            </xpath>
+        </field>
+    </record>
+                          
+
+
+
+        <record id="view_make_kardex_valorado" model="ir.ui.view">
+            <field name="name">make.kardex.valorado.form</field>
+            <field name="model">make.kardex.valorado</field>
+            <field name="arch" type="xml">
+                <form string="Kardex Valorado" version="7.0">
+                    <group>
+                        <field name="fini" invisible="1"/>
+                        <field name="ffin" invisible="1"/>
+                        <field name="fecha_ini_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="fecha_fin_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="check_fecha" />
+    
+                        <field name="allproducts"/>
+                        <field name="alllocations"/>
+                        <field name="analizador" invisible="1" />
+                    </group>
+                     <notebook>
+                            <page string="Productos">
+                                <field name="location_ids" string="Ubicaciones" domain="[('usage','in',['internal'])]" attrs="{'invisible':[('alllocations', '=', True)]}"/>
+                                <field name="products_ids" nolabel="True" domain="[('type','=',context['type_product'])]" attrs="{'invisible':[('allproducts', '=', True)]}"/>
+                            </page>
+                        </notebook>
+                    <footer>
+                        <button name="do_csvtoexcel" string="Exportar a Excel" type="object" class="oe_highlight" onlyRead="1"/>
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                 </form>
+             </field>
+        </record>
+
+        <record id="make_kardex_action_valorado" model="ir.actions.act_window">
+            <field name="name">Kardex Valorado</field>
+            <field name="res_model">make.kardex.valorado</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_make_kardex_valorado"/>
+            <field name="target">new</field>
+            <field name="context">{'tipo':'valorado','form_view_ref': 'view_make_kardex_valorado','type_product':'product'}</field>
+        </record>
+
+        <menuitem name="Kardex Valorado" id="kardex_sunat_val_menu_fisicovalorado"
+                 parent="kardex_fisico_it.kardex_main_menu" action="make_kardex_action_valorado"
+                 sequence="3" />
+
+        <menuitem name="Kardex Valorado" id="kardex_sunat_val_menu_fisico_stockvalorado"
+                 parent="kardex_fisico_it.kardex_main_menu_stock" action="make_kardex_action_valorado"
+                 sequence="3" />
+
+
+
+    </data>
+</odoo>

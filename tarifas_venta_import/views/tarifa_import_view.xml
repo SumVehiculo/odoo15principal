@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="product_pricelist_sale_import_wizard" model="ir.ui.view">
+            <field name="name">product.pricelist.sale.import.wizard</field>
+            <field name="model">product.pricelist.sale.import</field>
+            <field name="arch" type="xml">
+                <form string="Importar Tarifas">
+                    <group>
+                        <field name="import_tarifa_type" widget="radio"/>
+                    </group>
+                    <group>
+                        <field name="nombre_tarifa" string="Tarifa" domain="[ '|', ('company_id','=', allowed_company_ids[0] ), ('company_id','=',False)]"/>
+                    </group>
+                    <group>
+                        <field name="file" filename="name"/>
+                    </group>
+                    <footer>
+                        <button class="fa fa-upload btn-primary" name="tarifa_import" string="Importar" type="object"/>
+                        <button class="fa fa-download btn-primary" name="download_template" string="Descargar Plantilla" type="object"/>
+                        <button class="fa fa-filter btn-primary" name="verify_if_exists_product" string="Verificar Duplicados" type="object" invisible="1" attrs="{'invisible': [('import_tarifa_type', 'not in', ['create'])]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_gen_tarifa_import_wizard" model="ir.actions.act_window">
+			<field name="name">Tarifas</field>
+			<field name="res_model">product.pricelist.sale.import</field>			
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="gen_import_data_tarifa" name="Importar" parent="sale.sale_menu_root" groups="tarifas_venta_import.group_import_sale_tarifa_view" sequence="10"/>
+		
+		<menuitem action="action_gen_tarifa_import_wizard" id="action_gen_tarifa_import_menu"
+			parent="gen_import_data_tarifa" />
+
+  </data>
+</odoo>
+ 

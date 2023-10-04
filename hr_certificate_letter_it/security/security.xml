@@ -1,0 +1,24 @@
+<odoo>
+
+    <record id="model_access_certificate" model="ir.model.access">
+        <field name="name">model.access.certificate</field>
+        <field name="model_id" ref="hr_certificate_letter_it.model_hr_certificate_wizard" />
+        <field name="group_id" ref="hr_social_benefits.group_hr_social_benefits_root" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <record id="model_access_letter" model="ir.model.access">
+        <field name="name">model.access.letter</field>
+        <field name="model_id" ref="hr_certificate_letter_it.model_hr_letter_wizard" />
+        <field name="group_id" ref="hr_social_benefits.group_hr_social_benefits_root" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+</odoo>
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_payslip_worked_days_type_form" model="ir.ui.view">
+		<field name="name">hr.payslip.worked_days.type.form</field>
+		<field name="model">hr.payslip.worked_days.type</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="code"/>
+							<field name="name"/>
+							<field name="rate"/>
+						</group>
+						<group>
+							<field name="days"/>
+							<field name="hours" widget="float_time"/>
+							<field name="struct_ids" widget="many2many_tags"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_payslip_worked_days_type_tree" model="ir.ui.view">
+		<field name="name">hr.payslip.worked_days.type.tree</field>
+		<field name="model">hr.payslip.worked_days.type</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="code" optional="show"/>
+				<field name="name" optional="show"/>
+				<field name="days" optional="hide"/>
+				<field name="hours" optional="hide" widget="float_time"/>
+				<field name="rate" optional="show"/>
+				<field name="struct_ids" optional="show" widget="many2many_tags"/>
+				<field name="company_id" optional="hide" groups="base.group_multi_company"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_payslip_worked_days_type" model="ir.actions.act_window">
+		<field name="name">Worked Days</field>
+		<field name="res_model">hr.payslip.worked_days.type</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Worked Days aqui
+			</p>
+		</field>
+	</record>
+</odoo>

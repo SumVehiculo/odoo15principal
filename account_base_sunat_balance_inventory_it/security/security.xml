@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="sunat_table_data_comp_rule" model="ir.rule">
+			<field name="name">Tablas Sunat multi-company</field>
+			<field name="model_id" ref="model_sunat_table_data"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="sunat_table_data_031601_comp_rule" model="ir.rule">
+			<field name="name">Tablas Sunat 031601 multi-company</field>
+			<field name="model_id" ref="model_sunat_table_data_031601"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="sunat_table_data_031602_comp_rule" model="ir.rule">
+			<field name="name">Tablas Sunat 031602 multi-company</field>
+			<field name="model_id" ref="model_sunat_table_data_031602"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="sunat_table_data_031700_comp_rule" model="ir.rule">
+			<field name="name">Tablas Sunat 031700 multi-company</field>
+			<field name="model_id" ref="model_sunat_table_data_031700"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="account_register_values_it_comp_rule" model="ir.rule">
+			<field name="name">Registro de Valores multi-company</field>
+			<field name="model_id" ref="model_account_register_values_it"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

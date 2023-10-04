@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_surrender_free_concepts_form">
+			<field name="name">surrender.free.concepts.form</field>
+			<field name="model">surrender.free.concepts</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required="1"/>
+								<field name="account_analytic_tag_id"/>
+							</group>
+							<group>
+								<field name="expense_account_id"/>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_surrender_free_concepts_tree">
+			<field name="name">surrender.free.concepts.tree</field>
+			<field name="model">surrender.free.concepts</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" string="Nombre"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_surrender_free_concepts_action" model="ir.actions.act_window">
+			<field name="name">Entregas Gratuitas</field>
+			<field name="res_model">surrender.free.concepts</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_surrender_free_concepts_tree"/>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Entregas Gratuitas aqui
+			</p>
+			</field>
+		</record>
+		
+		<menuitem id='menu_surrender_free_concepts' 
+				  parent='account_base_it.menu_account_base_it' 
+				  action="view_surrender_free_concepts_action"
+				  sequence="25"
+				  groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

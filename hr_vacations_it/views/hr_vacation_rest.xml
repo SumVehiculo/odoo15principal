@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+	<data>
+		<record id="hr_vacation_rest_form_view" model="ir.ui.view">
+			<field name="name">hr.vacation.rest.form.view</field>
+			<field name="model">hr.vacation.rest</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<h1>Saldos de vacaciones</h1>
+						<group>
+							<field name="year"/>
+							<field name="identification_id"/>
+							<field name="employee_id"/>
+							<field name="date_aplication"/>
+							<field name="date_from"/>
+							<field name="date_end"/>
+							<field name="internal_motive" readonly="1"/>
+							<field name="motive"/>
+							<field name="days"/>
+							<field name="days_rest" />
+							<field name="amount" />
+							<field name="amount_rest"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_vacation_rest_tree" model="ir.ui.view">
+			<field name="name">hr.vacation.rest.tree.view</field>
+			<field name="model">hr.vacation.rest</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="year" optional="show"/>
+					<field name="identification_id" optional="show"/>
+					<field name="employee_id"/>
+					<field name="date_aplication" optional="show"/>
+					<field name="date_from" optional="show"/>
+					<field name="date_end" optional="show"/>
+					<field name="internal_motive"  optional="hide"/>
+					<field name="motive" optional="show"/>
+					<field name="days"/>
+					<field name="days_rest"/>
+					<field name="amount" optional="show"/>
+					<field name="amount_rest" optional="show"/>
+					<field name="company_id" optional="hide"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="hr_vacation_rest_search" model="ir.ui.view">
+			<field name="name">hr.vacation.rest.search</field>
+			<field name="model">hr.vacation.rest</field>
+			<field name="arch" type="xml">
+				<search string="Saldos de Vacaciones">
+					<field name="employee_id"/>
+					<field name="identification_id"/>
+					<field name="year"/>
+					<separator/>
+					<group expand="1" string="Group By...">
+						<filter string="Empleado" name="employee_id" icon="terp-partner" context="{'group_by':'employee_id'}"/>
+						<filter string="Año" name="year" icon="terp-partner" context="{'group_by':'year'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_hr_vacation_rest" model="ir.actions.act_window">
+			<field name="name">Saldos de Vacaciones</field>
+			<field name="res_model">hr.vacation.rest</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_vacation_rest_search"/>
+		</record>
+
+	</data>
+</odoo>

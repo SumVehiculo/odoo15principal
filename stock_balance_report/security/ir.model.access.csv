@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_balance_report_manager,stock.balance.report.manager,model_stock_balance_report,stock.group_stock_manager,1,1,1,1
+access_stock_balance_report_all,stock.balance.report.all,model_stock_balance_report,group_stock_balance_report_all,1,1,1,1
+access_stock_balance_report_wizard_manager,stock_balance_report_wizard_manager,model_stock_balance_report_wizard,stock.group_stock_manager,1,1,1,1
+access_stock_balance_report_wizard,stock_balance_report_wizard,model_stock_balance_report_wizard,group_stock_balance_report_all,1,1,1,1

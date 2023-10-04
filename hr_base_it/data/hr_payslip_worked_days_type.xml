@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.payslip.worked_days.type' id='wd_TAR'>
+			<field name='code'>TAR</field>
+			<field name='name'>TARDANZAS</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_FAL'>
+			<field name='code'>FAL</field>
+			<field name='name'>FALTAS</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_HE25'>
+			<field name='code'>HE25</field>
+			<field name='name'>HORAS EXTRAS 25%</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>25</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_HE35'>
+			<field name='code'>HE35</field>
+			<field name='name'>HORAS EXTRAS 35%</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>35</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_HE100'>
+			<field name='code'>HE100</field>
+			<field name='name'>HORAS EXTRAS 100%</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>100</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_SMAR'>
+			<field name='code'>SMAR</field>
+			<field name='name'>DIAS SUBSIDIADOS POR MATERNIDAD</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_SENF'>
+			<field name='code'>SENF</field>
+			<field name='name'>DIAS SUBSIDIADOS POR ENFERMEDAD</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_DLAB'>
+			<field name='code'>DLAB</field>
+			<field name='name'>DIAS LABORADOS</field>
+			<field name='days'>30</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_DVAC'>
+			<field name='code'>DVAC</field>
+			<field name='name'>DIAS VACACIONES</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_DMED'>
+			<field name='code'>DMED</field>
+			<field name='name'>DIAS DESCANSOS MEDICOS</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+		<record model='hr.payslip.worked_days.type' id='wd_DPAT'>
+			<field name='code'>DPAT</field>
+			<field name='name'>DIAS DE PATERNIDAD</field>
+			<field name='days'>0</field>
+			<field name='hours'>0</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('base_structure')])]"/>
+		</record>
+	</data>
+</odoo>

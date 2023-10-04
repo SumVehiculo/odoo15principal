@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="kardex_save_form" model="ir.ui.view">
+            <field name="name">kardex.save.form</field>
+            <field name="model">kardex.save</field>
+            <field name="arch" type="xml">
+                <form string="Guardado Kardex">
+                    <header>
+                        <button string="Validar Fisico" type="object" name="save_fisico" states="draft" class="oe_highlight" onlyRead="1"/>
+                        <button string="Validar Valorizado" type="object" name="save_valorado" states="first" class="oe_highlight" onlyRead="1"/>
+                        <button string="Procesar Valorado Dolares" type="object" name="save_valorado_dolar" states="valorized_dol" class="oe_highlight" onlyRead="1"/>
+                        <!--<button string="Generar Albaranes Fin Año" type="object" name="crear_saldos" states="done" class="oe_highlight" onlyRead="1"/>
+                        <button string="Borrar Albaranes Borrador" type="object" name="eliminar_saldos" states="done" class="oe_highlight" onlyRead="1"/>  
+                        <button string="Anular Albaranes Realizados" type="object" name="anular_saldos" states="done" class="oe_highlight" onlyRead="1"/>--> 
+                        <button string="Finalizar" type="object" name="agregar_krdx_parameter" states="val_dol" class="oe_highlight" onlyRead="1"/>
+                        <button string="Volver Borrador" type="object" name="draft" attrs="{'invisible': [('state', '=', 'draft')]}" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="get_albaranes_list"
+                                    class="oe_stat_button"
+                                    icon="fa-truck"
+                                    type="object"
+                                    attrs="{'invisible': [('albaranes_count', '=', 0)]}">
+                                    <field name="albaranes_count" widget="statinfo" string="Albaranes"/>  
+                            </button>
+                        </div>
+                        <group class="oe_title">
+                            <group>
+                                <h1>
+                                    <field name="name" required="1" options="{'no_create': True, 'no_create_edit':True, 'no_open':True}" readonly="0" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                </h1>
+                                <field name="date_start_related" readonly="1"/>
+                                <field name="date_fin_related" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <!--<field name="date" readonly="1"/>-->
+                                <field name="fecha_creacion" readonly="1"/>
+                                <field name="fecha_finalizado" readonly="1"/>
+                                <field name="tienelineas_cero_cero" invisible="1"/>
+                                <field name="tienelineas_cero_cero_dolar" invisible="1"/>
+                                <field name="tienelineas_cero" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>  
+                            </group>
+                            <group string="Aprobación Operación Sunat">
+                                <field name="fecha_aprob_sunat_oper" readonly="1"/>
+                                <label for="user_aprob_sunat_oper"/>
+                                    <div class="o_row">
+                                        <field name="user_aprob_sunat_oper" readonly="1"/>
+                                        <button string="Aprobar" type="object" name="aprobar_oper_sunat" attrs="{'invisible': [('state', '!=', 'draft')]}" class="btn-link mb-1 px-0" onlyRead="1"/>
+                                    </div>
+                                </group>
+                                <group string="Aprobación Costo Cero">
+                                    <field name="fecha_aprob_costo_cero" readonly="1"/>
+                                <label for="user_aprob_costo_cero_id"/>
+                                    <div class="o_row">
+                                        <field name="user_aprob_costo_cero_id" readonly="1"/>
+                                            <button string="Aprobar" type="object" name="aprobar_costo_cero" attrs="{'invisible': [('state', '!=', 'valorized')]}" class="btn-link mb-1 px-0" onlyRead="1"/>
+                                    </div>
+                                </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Detalle">
+                                <group>
+                                    <field name="lineas" nolabel="1" editable="bottom" create="0" delete="0" >
+                                        <tree>
+                                            <field name="almacen" readonly="1" />
+                                            <field name="producto" readonly="1" />
+                                            <field name="categoria" readonly="1" />
+                                            <field name="code" readonly="1" />
+                                            <field name="unidad" readonly="1" />
+                                            <field name="fecha" invisible="1" readonly="1" />
+                                            <field name="stock" readonly="1" />
+                                            <field name="lote" readonly="1" />
+                                            <field name="cprom" readonly="1" />
+                                            <field name="cprom_dolar" readonly="1" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Negativos" attrs="{'invisible': [('tienelineas_cero', '=', False)]}">
+                                <group>
+                                    <field name="lineas_cero" nolabel="1" editable="bottom" create="0" delete="0" >
+                                        <tree>
+                                            <field name="almacen" readonly="1" />
+                                            <field name="producto" readonly="1" />
+                                            <field name="categoria" readonly="1" />
+                                            <field name="code" readonly="1" />
+                                            <field name="unidad" readonly="1" />
+                                            <field name="fecha" invisible="1" readonly="1" />
+                                            <field name="stock" readonly="1" />
+                                            <field name="lote" readonly="1" />
+                                            <field name="cprom" readonly="1" />
+                                            <field name="cprom_dolar" invisible="1" readonly="1" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="NO valorizados" attrs="{'invisible': [('tienelineas_cero_cero', '=', False)]}">
+                                <group>
+                                    <field name="lineas_cero_cero" nolabel="1" editable="bottom" create="0" delete="0" >
+                                        <tree>
+                                            <field name="almacen" readonly="1" />
+                                            <field name="producto" readonly="1" />
+                                            <field name="categoria" readonly="1" />
+                                            <field name="code" readonly="1" />
+                                            <field name="unidad" readonly="1" />
+                                            <field name="fecha" invisible="1" readonly="1" />
+                                            <field name="stock" readonly="1" />
+                                            <field name="lote" readonly="1" />
+                                            <field name="cprom" readonly="1" />
+                                            <field name="cprom_dolar" invisible="1" readonly="1" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="NO valorizados Dolares" attrs="{'invisible': [('tienelineas_cero_cero_dolar', '=', False)]}">
+                                <group>
+                                    <field name="lineas_cero_cero_dolar" nolabel="1" editable="bottom" create="0" delete="0" >
+                                        <tree>
+                                            <field name="almacen" readonly="1" />
+                                            <field name="producto" readonly="1" />
+                                            <field name="categoria" readonly="1" />
+                                            <field name="code" readonly="1" />
+                                            <field name="unidad" readonly="1" />
+                                            <field name="fecha" invisible="1" readonly="1" />
+                                            <field name="stock" readonly="1" />
+                                            <field name="lote" readonly="1" />
+                                            <field name="cprom" readonly="1" />
+                                            <field name="cprom_dolar" readonly="1" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <page string="Sugerencia OP. SUNAT">
+                                <group>
+                                    <field name="lineas_mal" readonly="1" nolabel="1">
+                                        <tree>
+                                            <field name="almacen" readonly="1" />
+                                            <field name="almacen_dest" readonly="1" />
+                                            <field name="sunat" readonly="1" />
+                                            <field name="sunat_esperado" readonly="1" />
+                                            <field name="producto" readonly="1" />
+                                            <field name="code" readonly="1" />
+                                            <field name="lote" readonly="1" />
+                                            <field name="picking_id" readonly="1" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids"/>
+                            <field name="message_ids"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_kardex_save_kanban" model="ir.ui.view">
+            <field name="name">kardex.save.kanban</field>
+            <field name="model">kardex.save</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_kardex_save o_emphasize_colors">
+                    <field name="color"/>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click #{kanban_color(record.color.raw_value)}">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <center><strong>Kardex Periodo <field name="name"/></strong></center>
+                                    </div>
+                                    <div class="col-12 text-left">
+                                        Fecha Actualización:<span class="badge badge-pill"><t t-esc="record.date.value"/></span>
+                                    </div>
+                                    <div class="col-12 text-left">
+                                        Estado:<span class="badge badge-pill"><t t-esc="record.state.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="kardex_save_tree" model="ir.ui.view">
+            <field name="name">kardex.save.tree</field>
+            <field name="model">kardex.save</field>
+            <field name="arch" type="xml">
+                <tree string="Guardado Kardex">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="state" />
+					<field name="company_id" groups="base.group_multi_company"/>  
+                </tree>
+            </field>
+        </record>
+
+        <record id="kardex_save_it_action" model="ir.actions.act_window">
+            <field name="name">Cierre de Kardex</field>
+            <field name="res_model">kardex.save</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primer Guardado kardex aqui
+			</p>
+			</field>
+        </record>
+
+        <menuitem action="kardex_save_it_action" 
+				  id="menu_kardex_save" 
+				  parent="account.menu_finance_reports"
+				  sequence="1"/>
+
+
+
+
+
+
+
+
+        <record id="kardex_parameter_guardar_anio_form" model="ir.ui.view">
+            <field name="name">kardex.parameter.guardar.anio.form</field>
+            <field name="model">kardex.parameter.guardar.anio</field>
+            <field name="arch" type="xml">
+                <form string="Guardado Kardex">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="fecha_inicio" required="1"/>
+                                <field name="fecha_final" required="1"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                        <footer>
+                            <button string="Guardar" name="guardar" type="object" class="oe_highlight" onlyRead="1"/>
+                            or
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <record id="kardex_parameter_form" model="ir.ui.view">
+            <field name="name">kardex.parameter.form</field>
+            <field name="model">kardex.parameter</field>
+            <field name="arch" type="xml">
+                <form string="Guardado Kardex">
+
+                        <header>
+                            <button string="Actualizar SQLs" type="object" name="sqls" class="oe_highlight"/>  
+                            <button string="Guardar Kardex" type="object" name="get_wizard" class="oe_highlight" onlyRead="1"/>  
+                        </header>
+                    <sheet>
+
+                        <group class="oe_title">
+                            <h1>
+                                <field name="company_id" readonly="1"/>
+                            </h1>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="picking_type_salida" required="1"/>
+                            </group>
+                            <group>
+                                <field name="picking_type_ingreso" required="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Inicio de Operaciones">
+                                <group>
+                                    <field name="anio_ids" nolabel="1" editable="bottom">
+                                        <tree>
+                                            <field name="name" required="1" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="kardex_parameter_tree" model="ir.ui.view">
+            <field name="name">kardex.parameter.tree</field>
+            <field name="model">kardex.parameter</field>
+            <field name="arch" type="xml">
+                <tree string="Guardado Kardex">
+                    <field name="company_id" />
+                    <field name="picking_type_salida" />
+                    <field name="picking_type_ingreso" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="kardex_parameter_it_action" model="ir.actions.act_window">
+            <field name="name">Kardex Parameter</field>
+            <field name="res_model">kardex.parameter</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer Parametro de Kardex
+            </p>
+            </field>
+        </record>
+
+        <menuitem action="kardex_parameter_it_action" 
+                  id="menu_kardex_parameter" 
+                  parent="account.menu_finance_reports"
+                  sequence="1"/>
+	</data>
+</odoo>

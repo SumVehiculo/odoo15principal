@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="group_stock_warehouse_restriction" model="res.groups">
+            <field name="name">Manejo Almacen Ubicacion y tipo operacion</field>            
+        </record>
+    </data>
+</odoo>

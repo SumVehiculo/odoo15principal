@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_einvoice_catalog_25_form" model="ir.ui.view">
+		<field name="name">einvoice.catalog.25.form</field>
+		<field name="model">einvoice.catalog.25</field>
+		<field name="arch" type="xml">
+			<form string="Einvoice Catalog 25">
+				<sheet>
+					<group>
+						<group>
+							<field name="code" required="1"/>
+							<field name="name" required="1"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_einvoice_catalog_25_list" model="ir.ui.view">
+		<field name="name">einvoice.catalog.25.list</field>
+		<field name="model">einvoice.catalog.25</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="code" optional="show"/>
+				<field name="name" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_einvoice_catalog_25_form" model="ir.actions.act_window">
+		<field name="name">Catalogo 25 - Codigo de Producto SUNAT</field>
+		<field name="res_model">einvoice.catalog.25</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_einvoice_catalog_25_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Catalogo 25 aqui
+		  </p>
+		</field>
+	</record>
+	
+</odoo>

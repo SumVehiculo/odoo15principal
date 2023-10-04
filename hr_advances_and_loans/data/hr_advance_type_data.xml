@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="advance_type_GRA" model="hr.advance.type">
+            <field name="name">DESCUENTO EN GRATIFICACION</field>
+            <field name="input_id" ref="hr_fields_it.input_type_DES_BBSS"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_ADELANTO"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="advance_type_CTS" model="hr.advance.type">
+            <field name="name">DESCUENTO EN CTS</field>
+            <field name="input_id" ref="hr_fields_it.input_type_DES_BBSS"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_ADELANTO"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="advance_type_VAC" model="hr.advance.type">
+            <field name="name">DESCUENTO EN VACACIONES</field>
+            <field name="input_id" ref="hr_fields_it.input_type_ADELANTO"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_ADELANTO"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="advance_type_LIQ" model="hr.advance.type">
+            <field name="name">DESCUENTO EN LIQUIDACION</field>
+            <field name="input_id" ref="hr_fields_it.input_type_ADELANTO"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_ADELANTO"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+    </data>
+</odoo>

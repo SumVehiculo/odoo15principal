@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_function_result_group_root,function.result.group.root,account_rfun_rep_it.model_function_result,account_base_it.group_account_tables_user,1,1,1,1
+access_function_result_wizard_group_root,function.result.wizard.group.root,account_rfun_rep_it.model_function_result_wizard,account_base_it.group_account_tables_user,1,1,1,1

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_update_uneven_entries_wizard_form">
+			<field name="name">update.uneven.entries.wizard.form</field>
+			<field name="model">update.uneven.entries.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Reporte" name="get_report_excel" type="object" class="oe_highlight"/>
+						<button string="Cuadrar Asientos" name="fix_moves" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="update_uneven_entries_wizard_action" model="ir.actions.act_window">
+			<field name="name">Asientos Descuadrados</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">update.uneven.entries.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+
+	<menuitem id='menu_update_uneven_entries_wizard_action' 
+				  parent='account_amount_currency_dolars_it.menu_eeff_usd_utilities' 
+				  action="update_uneven_entries_wizard_action"
+				  sequence="4"/>
+</odoo>

@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--###################  HIJOS VENTAS ########################-->
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_acepta_propuesta_v">
+			<field name="name">view.form.acepta.propuesta.v</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Acepta la Propuesta">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Exportar" name="get_ventas_sire_1" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_acepta_propuesta_v" model="ir.actions.act_window">
+			<field name="name">Propuesta SUNAT</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_acepta_propuesta_v')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_reemplaza_propuesta_v">
+			<field name="name">view.form.reemplaza.propuesta.v</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Reemplaza/Compara Propuesta">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_2" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_2" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_reemplaza_propuesta_v" model="ir.actions.act_window">
+			<field name="name">Reemplaza/Compara propuesta</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_reemplaza_propuesta_v')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_ajustes_pos_v">
+			<field name="name">view.form.ajustes.pos.v</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ajustes Posteriores">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_3" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_3" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_ajustes_pos_v" model="ir.actions.act_window">
+			<field name="name">Ajustes Posteriores</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_ajustes_pos_v')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_ajustes_pos_ple_v">
+			<field name="name">view.form.ajustes.pos.ple.v</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ajustes posteriores ple">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_4" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_4" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_action_ajustes_pos_ple_v" model="ir.actions.act_window">
+			<field name="name">Ajustes posteriores ple</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_ajustes_pos_ple_v')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_complementa_propuesta_v">
+			<field name="name">view.form.complementa.propuesta.v</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Complementa propuesta">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_5" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_5" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_complementa_propuesta_v" model="ir.actions.act_window">
+			<field name="name">Complementa propuesta</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_complementa_propuesta_v')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+        <!--###################  HIJOS Compras ########################-->
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_acepta_propuesta_c">
+			<field name="name">view.form.acepta.propuesta.c</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Acepta la Propuesta">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="name_file" invisible="1"/>
+							<field name="document_file" filename="name_file" string="Cargar"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Mostrar" name="get_compras_sire_1" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_action_acepta_propuesta_c" model="ir.actions.act_window">
+			<field name="name">Propuesta SUNAT</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_acepta_propuesta_c')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+         <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_reemplaza_propuesta_c">
+			<field name="name">view.form.reemplaza.propuesta.c</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Reemplaza/Compara Propuesta">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="comp_pr"/>
+							<field name="given_numer" attrs="{'invisible':[('comp_pr', '=', False)]}"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_compras_2" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_2" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_reemplaza_propuesta_c" model="ir.actions.act_window">
+			<field name="name">Reemplaza/Compara propuesta</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_reemplaza_propuesta_c')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_complementa_c">
+			<field name="name">view.form.complementa.c</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Complementa Propuesta">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="compl_type" required="1"/>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_compras_3" type="object" class="oe_highlight"/>
+					<!--button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_3" type="object" class="oe_highlight"/-->
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_complementa_c" model="ir.actions.act_window">
+			<field name="name">Complementa propuesta</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_complementa_c')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_ajustes_pos_c">
+			<field name="name">view.form.ajustes.pos.c</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ajustes Posteriores SIRE">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_compras_4" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_4" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_ajustes_pos_c" model="ir.actions.act_window">
+			<field name="name">Ajustes Posteriores SIRE</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_ajustes_pos_c')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_ajustes_pos_ple_c">
+			<field name="name">view.form.ajustes.pos.ple.c</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ajustes posteriores PLE">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_compras_5" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_5" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_ajustes_pos_ple_c" model="ir.actions.act_window">
+			<field name="name">Ajustes posteriores PLE</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_ajustes_pos_ple_c')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_n_domiciliados_c">
+			<field name="name">view.form.n.domiciliados.c</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Operaciones no domiciliados">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_compras_6" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_6" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+        <record id="view_action_n_domiciliados_c" model="ir.actions.act_window">
+			<field name="name">Operaciones no domiciliados</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_n_domiciliados_c')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_form_ajustes_no_domiciliados_c">
+			<field name="name">view.form.ajustes.no.domiciliados.c</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ajuste Posteriores no domiciliados SIRE">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_compras_7" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_7" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+        <record id="view_action_ajustes_no_domiciliados_c" model="ir.actions.act_window">
+			<field name="name">Ajuste Posteriores no domiciliados SIRE</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_form_ajustes_no_domiciliados_c')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!-- ######################################################## -->
+        <record model="ir.ui.view" id="view_from_ajustes_no_domiciliados_c_ple">
+			<field name="name">view.from.ajustes.no.domiciliados.c.ple</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ajustes Posteriores no domiciliados PLE">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="given_numer" required="1"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar ZIP" icon="fa-folder" name="get_compras_8" type="object" class="oe_highlight"/>
+					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_8" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+        <record id="view_action_ajustes_no_domiciliados_c_ple" model="ir.actions.act_window">
+			<field name="name">Ajustes Posteriores no domiciliados PLE</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_from_ajustes_no_domiciliados_c_ple')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+        <!--###################  MENU PADRE   ########################-->
+        <menuitem name="SIRE"
+				id="menu_sunat_sire_parent" 
+				parent="account_base_sunat_it.menu_sunat" 
+				sequence="5"/>  
+         <!--###################   HIJOS   ########################-->
+        <menuitem name="Ventas"
+				id="menu_sunat_sire_ventas" 
+				parent="account_sunat_sire_it.menu_sunat_sire_parent" 
+				sequence="1"/>    
+        
+        <menuitem name="Compras"
+				id="menu_sunat_sire_compras" 
+				parent="account_sunat_sire_it.menu_sunat_sire_parent"   
+				sequence="2"/>  
+
+        <!--###################  MENU HIJOS VENTAS ########################-->
+        <menuitem action="account_sunat_sire_it.view_action_acepta_propuesta_v"
+				id="menu_sunat_sire_ventas_acepta_propuesta_v" 
+				parent="account_sunat_sire_it.menu_sunat_sire_ventas" 
+				sequence="1"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_reemplaza_propuesta_v"
+				id="menu_sunat_sire_ventas_reemplaza_propuesta_v" 
+				parent="account_sunat_sire_it.menu_sunat_sire_ventas" 
+				sequence="2"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_complementa_propuesta_v"
+				id="menu_sunat_sire_ventas_complementa_propuesta_v" 
+				parent="account_sunat_sire_it.menu_sunat_sire_ventas" 
+				sequence="3"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_ajustes_pos_v"
+				id="menu_sunat_sire_ventas_ajustes_pos_v" 
+				parent="account_sunat_sire_it.menu_sunat_sire_ventas" 
+				sequence="4"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_ajustes_pos_ple_v"
+				id="menu_sunat_sire_ventas_ajustes_pos_ple_v" 
+				parent="account_sunat_sire_it.menu_sunat_sire_ventas" 
+				sequence="5"/> 
+
+        <!--###################  HIJOS COMPRAS ########################-->        
+        <menuitem action="account_sunat_sire_it.view_action_acepta_propuesta_c"
+				id="menu_sunat_sire_compras_acepta_propuesta_c" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="1"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_reemplaza_propuesta_c"
+				id="menu_sunat_sire_compras_reemplaza_propuesta_c" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="2"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_complementa_c"
+				id="menu_sunat_sire_compras_complementa_c" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="3"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_ajustes_pos_c"
+				id="menu_sunat_sire_compras_ajustes_pos_c" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="4"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_ajustes_pos_ple_c"
+				id="menu_sunat_sire_compras_ajustes_pos_ple_c" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="5"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_n_domiciliados_c"
+				id="menu_sunat_sire_compras_n_domiciliados_c" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="6"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_ajustes_no_domiciliados_c"
+				id="menu_sunat_sire_compras_ajustes_no_domiciliados_c" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="7"/> 
+
+        <menuitem action="account_sunat_sire_it.view_action_ajustes_no_domiciliados_c_ple"
+				id="menu_sunat_sire_compras_ajustes_no_domiciliados_c_ple" 
+				parent="account_sunat_sire_it.menu_sunat_sire_compras" 
+				sequence="8"/> 
+
+    </data>
+    
+
+</odoo>

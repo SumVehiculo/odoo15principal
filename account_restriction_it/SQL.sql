@@ -1,0 +1,1 @@
+UPDATE account_account SET is_document_an=TRUE WHERE internal_type IN ('payable','receivable');

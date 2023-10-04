@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_book_honorary_view_tree" model="ir.ui.view">
+            <field name="name">account.book.honorary.view.tree</field>
+            <field name="model">account.book.honorary.view</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Libros de Honorarios" create="false">
+                    <field name="periodo"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_e"/>
+                    <field name="fecha_p"/>
+                    <field name="td"/>
+                    <field name="serie"/>
+                    <field name="numero"/>
+                    <field name="tdp"/>
+                    <field name="docp"/>
+                    <field name="apellido_p"/>
+                    <field name="apellido_m"/>
+                    <field name="namep"/>
+                    <field name="divisa"/>
+                    <field name="tipo_c"/>
+                    <field name="renta" sum="renta"/>
+                    <field name="retencion" sum="retencion"/>
+                    <field name="neto_p" sum="neto_p"/>
+                    <field name="periodo_p"/>
+                    <field name="is_not_home"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_book_honorary_view_search" model="ir.ui.view">
+            <field name="name">account.book.honorary.view.search</field>
+            <field name="model">account.book.honorary.view</field>
+            <field name="arch" type="xml">
+                <search string="Libros de Honorarios">
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_e"/>
+                    <field name="docp"/>
+                    <field name="numero"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+                        <filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+                        <filter string="Fecha Emision" name="fecha_e" icon="terp-partner" context="{'group_by':'fecha_e'}"/>
+                        <filter string="Tipo de Documento" name="td" icon="terp-partner" context="{'group_by':'td'}"/>
+                        <filter string="Número Comprobante" name="numero" icon="terp-partner" context="{'group_by':'numero'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_book_honorary_view_it" model="ir.actions.act_window">
+            <field name="name">Libros de Honorarios</field>
+            <field name="res_model">account.book.honorary.view</field>
+            <field name="view_id" ref="view_account_book_honorary_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_book_honorary_view_search"/>
+        </record>
+
+    </data>
+</odoo>

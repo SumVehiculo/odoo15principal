@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="group_product_template_restriction" model="res.groups">
+            <field name="name">Manejo Creacion de Productos</field>            
+        </record>
+    </data>
+</odoo>

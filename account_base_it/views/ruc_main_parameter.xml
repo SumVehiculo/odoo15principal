@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_ruc_main_parameter_form" model="ir.ui.view">
+			<field name="name">ruc.main.parameter.form</field>
+			<field name="model">ruc.main.parameter</field>
+			<field name="arch" type="xml">
+				<form>
+					<notebook>
+						<page string="Consulta RUC y DNI">
+							<gruop>
+								<group>
+									<field name="query_email"/>
+									<field name="query_token" password="True" widget="password_meter"/>
+									<field name="query_type"/>
+								</group>
+								<group>
+									<field name="query_dni_url"/>
+									<field name="query_ruc_url"/>
+								</group>
+							</gruop>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_ruc_main_parameter_tree" model="ir.ui.view">
+			<field name="name">ruc.main.parameter.tree</field>
+			<field name="model">ruc.main.parameter</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="action_ruc_main_parameter_form" model="ir.actions.act_window">
+			<field name="name">Parametros RUC/DNI</field>
+			<field name="res_model">ruc.main.parameter</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+			  <p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Parametros Principales aqui
+			  </p>
+			</field>
+		</record>
+		
+	</data>
+</odoo>

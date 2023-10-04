@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_import_move_apertura_it_form">
+			<field name="name">import.move.apertura.it.form</field>
+			<field name="model">import.move.apertura.it</field>
+			<field name="arch" type="xml">
+				<form string="Importacion Saldo Inicial">
+					<header>
+            			<button string="Descargar Plantilla" name="download_template" icon="fa-download" type="object" states="draft" class="btn-primary oe_inline"/>
+		                <button string="Importar" name="importar" type="object" states="draft" class="oe_highlight" />
+		                <button string="Eliminar Importados" name="eliminar" confirm="Se eliminarán los asientos importados. ¿Desea continuar?" states="import" type="object" class="oe_highlight" />
+		                <button string="Regresar Borrador" name="borrador" states="cancel" type="object" class="oe_highlight" />
+						<field name="state" widget="statusbar" />               
+		            </header> 
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button class="oe_stat_button" string="Facturas Importadas" name="open_entries"  type="object" icon="fa-list" attrs="{'invisible': [('state','!=','import')]}"/>
+						</div>
+						<group>
+							<group>
+								<field name="fecha_contable" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="account_descargo_mn" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="account_descargo_me" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="partner_descargo" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="document_descargo" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="journal_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="tipo" readonly="1" force_save="1"/>
+							</group>
+							<group>
+								<field name="is_opening_close"/>
+								<field name="name_file" invisible="1"/>
+								<field name="document_file" filename="name_file" string="Excel" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/> 
+							</group>
+						</group>
+						<notebook>
+							<page string="Importacion">
+								<field name="detalle" readonly="1">
+									<tree editable="bottom">
+										<field name="ruc"/>
+										<field name="razon_social"/>
+										<field name="fecha_emision"/>
+										<field name="fecha_vencimiento"/>
+										<field name="vendedor"/>
+										<field name="tipo_doc"/>
+										<field name="numero"/>
+										<field name="moneda"/>
+										<field name="saldo_mn"/>
+										<field name="saldo_me"/>
+										<field name="cuenta"/>
+										<field name="tipo_cambio"/>
+										<field name="doc_origin"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="import_move_apertura_it_tree" model="ir.ui.view">
+            <field name="name">import.move.apertura.it.tree</field>
+            <field name="model">import.move.apertura.it</field>
+            <field name="arch" type="xml">
+                <tree string="Importacion Saldo Inicial">
+                   <field name="fecha_contable"/>
+                   <field name="account_descargo_mn"/>
+                   <field name="account_descargo_me"/>
+                   <field name="partner_descargo"/>
+                   <field name="document_descargo"/>
+                   <field name="journal_id"/>
+                   <field name="state"/>
+				   <field name="company_id" groups="base.group_multi_company"/>  
+                </tree>
+            </field>
+        </record>
+
+		<record id="import_move_apertura_it_action_customer" model="ir.actions.act_window">
+			<field name="name">Saldos Iniciales Facturas por Cobrar</field>
+			<field name="res_model">import.move.apertura.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'default_tipo':'out'}</field>
+			<field name="domain">[('tipo','=','out')]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Importacion de Saldo Inicial aqui
+			</p>
+			</field>
+		</record>
+
+		<record id="import_move_apertura_it_action_supplier" model="ir.actions.act_window">
+			<field name="name">Saldos Iniciales Facturas por Pagar</field>
+			<field name="res_model">import.move.apertura.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'default_tipo':'in'}</field>
+			<field name="domain">[('tipo','=','in')]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Importacion de Saldo Inicial aqui
+			</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_import_move_apertura_it_customer" 
+				  parent="account_base_import_it.menu_import_imports_invoices" 
+				  sequence="3" 
+				  action="import_move_apertura_it_action_customer" />
+
+		<menuitem id="menu_import_move_apertura_it_supplier" 
+				  parent="account_base_import_it.menu_import_imports_invoices" 
+				  sequence="6" 
+				  action="import_move_apertura_it_action_supplier" />
+
+	</data>
+</odoo>

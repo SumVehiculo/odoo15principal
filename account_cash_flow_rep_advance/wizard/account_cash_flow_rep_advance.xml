@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_cash_flow_rep_advance_wizard_form">
+			<field name="name">account.cash.flow.rep.advance.form</field>
+			<field name="model">account.cash.flow.rep.advance</field>
+			<field name="arch" type="xml">
+				<form string="Fujo de Caja">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							<field name="period_to" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_cash_flow_rep_advance_action" model="ir.actions.act_window">
+			<field name="name">Flujo de Caja</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.cash.flow.rep.advance</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<record model="ir.ui.menu" id="account_cash_flow_rep.menu_account_cash_flow_rep_wizard">
+			<field name="action" ref="account_cash_flow_rep_advance_action"/>
+		</record>
+	</data>
+</odoo>

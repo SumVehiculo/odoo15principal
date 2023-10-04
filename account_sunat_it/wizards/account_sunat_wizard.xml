@@ -1,0 +1,1758 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_sunat_diario_wizard_form">
+			<field name="name">account.sunat.diario.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Libro Diario">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Generar TXT" name="get_txt_diario" type="object" class="oe_highlight"/>
+						<button string="Generar XLS" name="get_excel_diario" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_plan_contable_wizard_form">
+			<field name="name">account.sunat.plan.contable.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Plan Contable">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar TXT" name="get_txt_plan_c" type="object" class="oe_highlight"/>
+							<button string="Generar XLS" name="get_excel_plan_c" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_mayor_wizard_form">
+			<field name="name">account.sunat.mayor.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Mayor">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar TXT" name="get_txt_mayor" type="object" class="oe_highlight"/>
+							<button string="Generar XLS" name="get_excel_mayor" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_compras_81_wizard_form">
+			<field name="name">account.compras.81.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Compras 8.1">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar TXT" name="get_txt_81" type="object" class="oe_highlight"/>
+							<button string="Generar XLS" name="get_excel_81" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_compras_82_wizard_form">
+			<field name="name">account.compras.82.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Compras 8.2">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar TXT" name="get_txt_82" type="object" class="oe_highlight"/>
+							<button string="Generar XLS" name="get_excel_82" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_ventas_141_wizard_form">
+			<field name="name">account.ventas.141.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Ventas 14.1">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar TXT" name="get_txt_141" type="object" class="oe_highlight"/>
+							<button string="Generar XLS" name="get_excel_141" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_caja_ple_wizard_form">
+			<field name="name">account.caja.ple.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Caja">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar PLE" name="get_txt_caja" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_banco_ple_wizard_form">
+			<field name="name">account.banco.ple.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Banco">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar PLE" name="get_txt_banco" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_balance_ple_wizard_form">
+			<field name="name">account.balance.ple.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="BC SUNAT">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="number" required="1"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar TXT" name="get_txt_balance" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_servidores_wizard_form">
+			<field name="name">account.sunat.servidores.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Servidores">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+							<group>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar PS4" name="get_txt_servidores" type="object" class="oe_highlight"/>
+							<button string="Generar XLS" name="get_excel_servidores" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_recibos_wizard_form">
+			<field name="name">account.sunat.recibos.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Recibos">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+							<group>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar 4TA" name="get_txt_recibos" type="object" class="oe_highlight"/>
+							<button string="Generar XLS" name="get_excel_recibos" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_pdt_wizard_form">
+			<field name="name">account.sunat.pdt.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PDT 0621P">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar PDT 0621P" name="get_pdt_p" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_pdti_wizard_form">
+			<field name="name">account.sunat.pdti.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PDT 0621PI">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar PDT 0621PI" name="get_pdt_pi" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<!--
+
+		<record model="ir.ui.view" id="view_account_sunat_daot_purchase_wizard_form">
+			<field name="name">account.sunat.daot.purchase.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="DAOT Compras">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_daot_purchase" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_daot_sale_wizard_form">
+			<field name="name">account.sunat.daot.sale.wizard.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="DAOT Ventas">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_daot_sale" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		-->
+
+		<record id="account_sunat_diario_wizard_action" model="ir.actions.act_window">
+			<field name="name">Libro Diario</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_diario_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_plan_contable_wizard_action" model="ir.actions.act_window">
+			<field name="name">Plan Contable</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_plan_contable_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_mayor_wizard_action" model="ir.actions.act_window">
+			<field name="name">Mayor</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_mayor_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_compras_81_wizard_action" model="ir.actions.act_window">
+			<field name="name">Compras 8.1</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_compras_81_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_compras_82_wizard_action" model="ir.actions.act_window">
+			<field name="name">Compras 8.2</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_compras_82_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_ventas_141_wizard_action" model="ir.actions.act_window">
+			<field name="name">Ventas 14.1</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_ventas_141_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_caja_ple_wizard_action" model="ir.actions.act_window">
+			<field name="name">Caja</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_caja_ple_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_banco_ple_wizard_action" model="ir.actions.act_window">
+			<field name="name">Banco</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_banco_ple_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_balance_ple_wizard_action" model="ir.actions.act_window">
+			<field name="name">BC SUNAT</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_balance_ple_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_servidores_wizard_action" model="ir.actions.act_window">
+			<field name="name">Servidores de Cuarta</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_servidores_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_recibos_wizard_action" model="ir.actions.act_window">
+			<field name="name">Recibos de Honorarios</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_recibos_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_pdt_wizard_action" model="ir.actions.act_window">
+			<field name="name">Comprobantes Percepcion</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_pdt_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_pdti_wizard_action" model="ir.actions.act_window">
+			<field name="name">Percepciones Incluidas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_pdti_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<!--
+
+		<record id="account_sunat_daot_purchase_wizard_action" model="ir.actions.act_window">
+			<field name="name">Compras</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_daot_purchase_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_daot_sale_wizard_action" model="ir.actions.act_window">
+			<field name="name">Ventas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_daot_sale_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		-->
+
+		<menuitem action="account_sunat_it.account_sunat_diario_wizard_action" 
+				id="menu_finance_sunat_diario" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="1"
+				groups="account_base_it.group_account_tables_user"/>
+
+		<menuitem action="account_sunat_plan_contable_wizard_action" 
+				id="menu_finance_sunat_plan_contable" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="2"/>
+
+		<menuitem action="account_sunat_mayor_wizard_action" 
+				id="menu_finance_sunat_mayor" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="3"/>
+
+		<menuitem action="account_compras_81_wizard_action" 
+				id="menu_finance_sunat_compras_81" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="4"/>
+
+		<menuitem action="account_compras_82_wizard_action" 
+				id="menu_finance_sunat_compras_82" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="5"/>
+
+		<menuitem action="account_ventas_141_wizard_action" 
+				id="menu_finance_sunat_ventas_141" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="6"/>
+
+		<menuitem action="account_caja_ple_wizard_action" 
+				id="menu_finance_sunat_caja_ple" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="7"/>
+
+		<menuitem action="account_banco_ple_wizard_action" 
+				id="menu_finance_sunat_banco_ple" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="8"/>
+
+		<menuitem action="account_balance_ple_wizard_action" 
+				id="menu_finance_sunat_balance_ple" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="9"/>
+
+		<menuitem action="account_sunat_servidores_wizard_action" 
+				id="menu_finance_sunat_servidores" 
+				parent="account_base_sunat_it.menu_finance_sunat_cuarta" 
+				sequence="1"/>
+
+		<menuitem action="account_sunat_recibos_wizard_action" 
+				id="menu_finance_sunat_recibos" 
+				parent="account_base_sunat_it.menu_finance_sunat_cuarta" 
+				sequence="2"/>
+
+		<menuitem action="account_sunat_pdt_wizard_action" 
+				id="menu_finance_sunat_pdt" 
+				parent="account_base_sunat_it.menu_finance_sunat_percepcion" 
+				sequence="1"/>
+
+		<menuitem action="account_sunat_pdti_wizard_action" 
+				id="menu_finance_sunat_pdti" 
+				parent="account_base_sunat_it.menu_finance_sunat_percepcion" 
+				sequence="2"/>
+
+		<!--
+
+		<menuitem action="account_sunat_daot_purchase_wizard_action" 
+				id="menu_finance_sunat_daot_purchase" 
+				parent="account_base_sunat_it.menu_finance_sunat_daot" 
+				sequence="1"/>
+
+		<menuitem action="account_sunat_daot_sale_wizard_action" 
+				id="menu_finance_sunat_daot_sale" 
+				parent="account_base_sunat_it.menu_finance_sunat_daot" 
+				sequence="2"/>
+
+		-->
+
+<!--########################################################## PDB ##########################################################-->
+		
+		<record model="ir.ui.view" id="view_account_pdb_currency_rate_form">
+			<field name="name">account.pdb.currency.rate.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PDB de Tipo de Cambio">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdb_currency_rate" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_pdb_purchase_form">
+			<field name="name">account.pdb.purchase.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PDB de Compras">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdb_purchase" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_pdb_sale_form">
+			<field name="name">account.pdb.sale.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PDB de Ventas">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdb_sale" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_pdb_payment_form">
+			<field name="name">account.pdb.payment.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PDB de Pagos">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdb_payment" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_pdb_currency_rate_action" model="ir.actions.act_window">
+			<field name="name">Tipo de Cambio</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_pdb_currency_rate_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_pdb_purchase_action" model="ir.actions.act_window">
+			<field name="name">Compras</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_pdb_purchase_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_pdb_sale_action" model="ir.actions.act_window">
+			<field name="name">Ventas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_pdb_sale_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_pdb_payment_action" model="ir.actions.act_window">
+			<field name="name">Pagos</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_pdb_payment_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_pdb_currency_rate_action" 
+				id="menu_pdb_currency_rate" 
+				parent="account_base_sunat_it.menu_sunat_pdb" 
+				sequence="1"/>
+			
+		<menuitem action="account_pdb_purchase_action" 
+				id="menu_pdb_purchase" 
+				parent="account_base_sunat_it.menu_sunat_pdb" 
+				sequence="2"/>
+		
+		<menuitem action="account_pdb_sale_action" 
+				id="menu_pdb_sale" 
+				parent="account_base_sunat_it.menu_sunat_pdb" 
+				sequence="3"/>
+
+		<menuitem action="account_pdb_payment_action" 
+				id="menu_pdb_payment" 
+				parent="account_base_sunat_it.menu_sunat_pdb" 
+				sequence="4"/>
+
+<!--##########################################################REPORTES PDF##########################################################-->
+
+		<record model="ir.ui.view" id="view_account_sunat_libro_report_form">
+			<field name="name">account.sunat.libro.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Libro Diario">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdf_libro_diario" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_mayor_report_form">
+			<field name="name">account.sunat.mayor.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Libro Mayor">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdf_libro_mayor" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_purchase_report_form">
+			<field name="name">account.sunat.purchase.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Registro Compras">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdf_compras" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_sale_report_form">
+			<field name="name">account.sunat.sale.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Registro Ventas">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdf_ventas" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_caja_report_form">
+			<field name="name">account.sunat.caja.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Libro Caja">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdf_libro_caja" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_banco_report_form">
+			<field name="name">account.sunat.banco.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Libro Banco">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar" name="get_pdf_libro_banco" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_inventario_report_form">
+			<field name="name">account.sunat.inventario.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Inventario y Balance">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_inventario_balance" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta10_report_form">
+			<field name="name">account.sunat.cuenta10.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="10 Caja y Bancos">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_10_caja_bancos" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta12_report_form">
+			<field name="name">account.sunat.cuenta12.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="12 Clientes">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_12_cliente" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta13_report_form">
+			<field name="name">account.sunat.cuenta13.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="13 Ctas por Cobrar Relacionadas">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_13_cobrar_relacionadas" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta14_report_form">
+			<field name="name">account.sunat.cuenta14.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="14 Ctas por Cobrar Acc. Personal">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_14_cobrar_acc_personal" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta16_report_form">
+			<field name="name">account.sunat.cuenta16.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="16 Ctas por Cobrar Diversas">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_16_cobrar_diversas" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta19_report_form">
+			<field name="name">account.sunat.cuenta19.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="19 Prov. Ctas por Cobrar Dudosa">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_19_cobrar_dudosa" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta40_report_form">
+			<field name="name">account.sunat.cuenta40.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="40 Tributos por pagar">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_40" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta41_report_form">
+			<field name="name">account.sunat.cuenta41.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="41 Remuneraciones por pagar">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_41" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta42_report_form">
+			<field name="name">account.sunat.cuenta42.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="42 Ctas por pagar comerciales terceros">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_42" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta43_report_form">
+			<field name="name">account.sunat.cuenta43.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="43 Ctas por pagar comerciales relacionadas">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_43" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta44_report_form">
+			<field name="name">account.sunat.cuenta44.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="44 Ctas por pagar accionistas y directores">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_44" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta45_report_form">
+			<field name="name">account.sunat.cuenta45.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="45 Obligaciones financieras">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_45" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta46_report_form">
+			<field name="name">account.sunat.cuenta46.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="46 Ctas por pagar diversas - Terceros">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_46" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta47_report_form">
+			<field name="name">account.sunat.cuenta47.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="47 Ctas por pagar diversas - Relacionadas">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_47" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta48_report_form">
+			<field name="name">account.sunat.cuenta48.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="48 Provisiones">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_48" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_cuenta49_report_form">
+			<field name="name">account.sunat.cuenta49.report.form</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="arch" type="xml">
+				<form string="49 Pasivo Diferido">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+					<button string="Generar" name="get_pdf_cuenta_49" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_sunat_libro_report_action" model="ir.actions.act_window">
+			<field name="name">Libro Diario</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_libro_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_mayor_report_action" model="ir.actions.act_window">
+			<field name="name">Libro Mayor</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_mayor_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_purchase_report_action" model="ir.actions.act_window">
+			<field name="name">Libro Compras</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_purchase_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_sale_report_action" model="ir.actions.act_window">
+			<field name="name">Libro Ventas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_sale_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_caja_report_action" model="ir.actions.act_window">
+			<field name="name">Libro Caja</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_caja_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_banco_report_action" model="ir.actions.act_window">
+			<field name="name">Libro Banco</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_banco_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_inventario_report_action" model="ir.actions.act_window">
+			<field name="name">Inventario y Balance</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_inventario_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta10_report_action" model="ir.actions.act_window">
+			<field name="name">10 Caja y Bancos</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta10_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		
+
+		<record id="account_sunat_cuenta12_report_action" model="ir.actions.act_window">
+			<field name="name">12 Clientes</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta12_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta13_report_action" model="ir.actions.act_window">
+			<field name="name">13 Ctas por Cobrar Relacionadas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta13_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta14_report_action" model="ir.actions.act_window">
+			<field name="name">14 Ctas por Cobrar Acc. Personal</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta14_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta16_report_action" model="ir.actions.act_window">
+			<field name="name">16 Ctas por Cobrar Diversas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta16_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta19_report_action" model="ir.actions.act_window">
+			<field name="name">19 Prov. Ctas por Cobrar Dudosa</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta19_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta40_report_action" model="ir.actions.act_window">
+			<field name="name">40 Tributos por pagar</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta40_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta41_report_action" model="ir.actions.act_window">
+			<field name="name">41 Remuneraciones por pagar</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta41_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta42_report_action" model="ir.actions.act_window">
+			<field name="name">42 Ctas por pagar comerciales terceros</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta42_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta43_report_action" model="ir.actions.act_window">
+			<field name="name">43 Ctas por pagar comerciales relacionadas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta43_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta44_report_action" model="ir.actions.act_window">
+			<field name="name">44 Ctas por pagar accionistas y directores</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta44_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta45_report_action" model="ir.actions.act_window">
+			<field name="name">45 Obligaciones financieras</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta45_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta46_report_action" model="ir.actions.act_window">
+			<field name="name">46 Ctas por pagar diversas - Terceros</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta46_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta47_report_action" model="ir.actions.act_window">
+			<field name="name">47 Ctas por pagar diversas - Relacionadas</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta47_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta48_report_action" model="ir.actions.act_window">
+			<field name="name">48 Provisiones</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta48_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="account_sunat_cuenta49_report_action" model="ir.actions.act_window">
+			<field name="name">49 Pasivo Diferido</field>
+			<field name="res_model">account.sunat.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_cuenta49_report_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_sunat_libro_report_action" 
+				id="menu_reports_sunat_reports_libro" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="1"/>
+
+		<menuitem action="account_sunat_mayor_report_action" 
+				id="menu_reports_sunat_reports_mayor" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="2"/>
+
+		<menuitem action="account_sunat_purchase_report_action" 
+				id="menu_reports_sunat_reports_purchase" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="3"/>
+
+		<menuitem action="account_sunat_sale_report_action" 
+				id="menu_reports_sunat_reports_sale" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="4"/>
+
+		<menuitem action="account_sunat_caja_report_action" 
+				id="menu_reports_sunat_reports_caja" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="5"/>
+
+		<menuitem action="account_sunat_banco_report_action" 
+				id="menu_reports_sunat_reports_banco" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="6"/>
+
+		<menuitem action="account_sunat_inventario_report_action" 
+				id="menu_reports_sunat_reports_inventario" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="7"/>
+
+		<menuitem action="account_sunat_cuenta10_report_action" 
+				id="menu_reports_sunat_reports_cuenta10" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="8"/>
+
+		<menuitem action="account_sunat_cuenta12_report_action" 
+				id="menu_reports_sunat_reports_cuenta12" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="9"/>
+
+		<menuitem action="account_sunat_cuenta13_report_action" 
+				id="menu_reports_sunat_reports_cuenta13" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="10"/>
+
+		<menuitem action="account_sunat_cuenta14_report_action" 
+				id="menu_reports_sunat_reports_cuenta14" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="11"/>
+
+		<menuitem action="account_sunat_cuenta16_report_action" 
+				id="menu_reports_sunat_reports_cuenta16" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="12"/>
+
+		<menuitem action="account_sunat_cuenta19_report_action" 
+				id="menu_reports_sunat_reports_cuenta19" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="13"/>
+
+		<menuitem action="account_sunat_cuenta40_report_action" 
+				id="menu_reports_sunat_reports_cuenta40" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="14"/>
+		
+		<menuitem action="account_sunat_cuenta41_report_action" 
+				id="menu_reports_sunat_reports_cuenta41" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="15"/>
+		
+		<menuitem action="account_sunat_cuenta42_report_action" 
+				id="menu_reports_sunat_reports_cuenta42" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="16"/>
+
+		<menuitem action="account_sunat_cuenta43_report_action" 
+				id="menu_reports_sunat_reports_cuenta43" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="17"/>
+
+		<menuitem action="account_sunat_cuenta44_report_action" 
+				id="menu_reports_sunat_reports_cuenta44" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="18"/>
+
+		<menuitem action="account_sunat_cuenta45_report_action" 
+				id="menu_reports_sunat_reports_cuenta45" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="19"/>
+		
+		<menuitem action="account_sunat_cuenta46_report_action" 
+				id="menu_reports_sunat_reports_cuenta46" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="20"/>
+
+		<menuitem action="account_sunat_cuenta47_report_action" 
+				id="menu_reports_sunat_reports_cuenta47" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="21"/>
+
+		<menuitem action="account_sunat_cuenta48_report_action" 
+				id="menu_reports_sunat_reports_cuenta48" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="22"/>
+
+		<menuitem action="account_sunat_cuenta49_report_action" 
+				id="menu_reports_sunat_reports_cuenta49" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="23"/>
+
+	</data>
+</odoo>

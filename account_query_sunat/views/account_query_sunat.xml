@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_query_sunat_tree" model="ir.ui.view">
+            <field name="name">account.query.sunat.tree</field>
+            <field name="model">account.query.sunat</field>
+            <field name="arch" type="xml">
+                <tree string="Validación de comprobantes de compra" create="false" edit="false" delete="false">
+                    <field name="td_p_id"/>
+                    <field name="nro_comprobante"/>
+                    <field name="proveedor_id"/>
+                    <field name="doc_proveedor"/>
+                    <field name="success"/>
+                    <field name="message" optional="hide"/>
+                    <field name="estadocp" optional="hide"/>
+                    <field name="estadoruc" optional="hide"/>
+                    <field name="conddomiruc" optional="hide"/>
+                    <field name="observaciones"/>
+                    <field name="errorcode"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_query_sunat_action" model="ir.actions.act_window">
+			<field name="name">Validación de comprobantes de compra</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.query.sunat</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+
+        <menuitem id="account_query_sunat_menu" 
+                    name="Validación de comprobantes de compra" 
+                    action="account_query_sunat_action" 
+                    parent="account.menu_finance_payables" 
+                    sequence="22"/>
+    </data>
+
+
+</odoo>

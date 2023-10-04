@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="group_hr_vacation_root" model="res.groups">
+			<field name="name">Control de Vacaciones</field>
+			<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+			<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+		</record>
+
+		<record id="hr_vacation_rest_rule" model="ir.rule">
+			<field name="name">Control de vacaciones multi-company</field>
+			<field name="model_id" ref="model_hr_vacation_rest"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

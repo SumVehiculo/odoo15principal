@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem parent="account.menu_finance_reports" name="Kardex" id="kardex_main_menu"/>
+        <menuitem parent="stock.menu_stock_warehouse_mgmt" name="Kardex" id="kardex_main_menu_stock"/>
+
+        <record id="view_make_kardex" model="ir.ui.view">
+            <field name="name">make.kardex.form</field>
+            <field name="model">make.kardex</field>
+            <field name="arch" type="xml">
+                <form string="Kardex Sunat" version="7.0">
+                    <group>
+                        <field name="fini" invisible="1"/>
+                        <field name="ffin" invisible="1"/>
+                        <field name="fecha_ini_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="fecha_fin_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="check_fecha" />
+    
+                        <field name="allproducts"/>
+                        <field name="alllocations"/>
+                        <field name="analizador" invisible="1" />
+                    </group>
+                     <notebook>
+                            <page string="Productos">
+                                <field name="location_ids" string="Ubicaciones" domain="[('usage','in',['internal'])]" attrs="{'invisible':[('alllocations', '=', True)]}"/>
+                                <field name="products_ids" nolabel="True" domain="[('type','=',context['type_product'])]" attrs="{'invisible':[('allproducts', '=', True)]}"/>
+                            </page>
+                        </notebook>
+                    <footer>
+                        <button name="do_csvtoexcel" string="Exportar a Excel" type="object" class="oe_highlight" onlyRead="1"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                 </form>
+             </field>
+        </record>
+
+        <record id="make_kardex_action_fisico" model="ir.actions.act_window">
+            <field name="name">Kardex Fisico</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">make.kardex</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_make_kardex"/>
+            <field name="target">new</field>
+            <field name="context">{'tipo':'fisico','form_view_ref': 'view_make_kardex','type_product':'product'}</field>
+        </record>
+
+        <menuitem name="Kardex Fisico" id="kardex_sunat_val_menu_fisico"
+                 parent="kardex_main_menu" action="make_kardex_action_fisico"
+                 sequence="3" />
+
+        <menuitem name="Kardex Fisico" id="kardex_sunat_val_menu_fisico_stock"
+                 parent="kardex_main_menu_stock" action="make_kardex_action_fisico"
+                 sequence="3" />
+
+        <record id="view_make_kardex_product" model="ir.ui.view">
+            <field name="name">make.kardex.product.form</field>
+            <field name="model">make.kardex.product</field>
+            <field name="arch" type="xml">
+                <form string="Kardex Sunat" version="7.0">
+                    <group>
+                        <field name="fini" invisible="1"/>
+                        <field name="ffin" invisible="1"/>
+                        <field name="fecha_ini_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="fecha_fin_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="check_fecha" />
+    
+                        <field name="alllocations"/>
+                        <field name="analizador" invisible="1" />
+                    </group>
+                     <notebook>
+                            <page string="Productos">
+                                <field name="location_ids" string="Ubicaciones" domain="[('usage','in',['internal'])]" attrs="{'invisible':[('alllocations', '=', True)]}"/>
+                            </page>
+                        </notebook>
+                    <footer>
+                        <button name="do_csvtoexcel" string="Exportar a Excel" type="object" class="oe_highlight" onlyRead="1"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                 </form>
+             </field>
+        </record>
+
+        <record model="ir.actions.server" id="action_make_kardex_product">
+            <field name="name">Kardex Valorado</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="binding_model_id" ref="product.model_product_product" />
+            <field name="state">code</field>
+            <field name="code">action = records.get_kardex_fisico()</field>
+        </record>
+
+        <record model="ir.actions.server" id="action_make_kardex_product_template">
+            <field name="name">Kardex Valorado</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template" />
+            <field name="state">code</field>
+            <field name="code">action = records.get_kardex_fisico()</field>
+        </record>
+
+
+
+
+
+        <record id="view_make_kardex_view_tree" model="ir.ui.view">
+            <field name="name">tree.view.kardex.fisico.tree</field>
+            <field name="model">tree.view.kardex.fisico</field>
+            <field name="arch" type="xml">
+                <tree string="Kardex Sunat">
+                        <field name="u_origen" />
+                        <field name="u_destino" />
+                        <field name="almacen" />
+                        <field name="t_opera" />
+                        <field name="categoria" />
+                        <field name="producto" />
+                        <field name="cod_pro" />
+                        <field name="unidad" />
+                        <field name="fecha" />
+                        <field name="doc_almacen" />
+                        <field name="entrada" />
+                        <field name="salida" />
+                 </tree>
+             </field>
+        </record>
+
+
+
+
+
+
+
+
+
+        <record id="view_make_kardex_lote" model="ir.ui.view">
+            <field name="name">make.kardex.lote.form</field>
+            <field name="model">make.kardex.lote</field>
+            <field name="arch" type="xml">
+                <form string="Kardex Sunat Lote" version="7.0">
+                    <group>
+                        <field name="fini" invisible="1"/>
+                        <field name="ffin" invisible="1"/>
+                        <field name="fecha_ini_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="fecha_fin_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="check_fecha" />
+    
+                        <field name="allproducts"/>
+                        <field name="alllocations"/>
+                        <field name="analizador" invisible="1" />
+                    </group>
+                     <notebook>
+                            <page string="Productos">
+                                <field name="location_ids" string="Ubicaciones" domain="[('usage','in',['internal'])]" attrs="{'invisible':[('alllocations', '=', True)]}"/>
+                                <field name="products_ids" nolabel="True" domain="[('type','=',context['type_product'])]" attrs="{'invisible':[('allproducts', '=', True)]}"/>
+                            </page>
+                        </notebook>
+                    <footer>
+                        <button name="do_csvtoexcel" string="Exportar a Excel" type="object" class="oe_highlight" onlyRead="1"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                 </form>
+             </field>
+        </record>
+
+        <record id="make_kardex_action_fisico_lote" model="ir.actions.act_window">
+            <field name="name">Kardex Fisico Lote</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">make.kardex.lote</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'tipo':'fisico','form_view_ref': 'view_make_kardex','type_product':'product'}</field>
+        </record>
+
+        <menuitem name="Kardex Fisico Lote" id="kardex_sunat_val_menu_fisico_lote"
+                 parent="kardex_fisico_it.kardex_main_menu" action="make_kardex_action_fisico_lote"
+                 sequence="3" />
+
+        <menuitem name="Kardex Fisico Lote" id="kardex_sunat_val_menu_fisico_stock_lote"
+                 parent="kardex_fisico_it.kardex_main_menu_stock" action="make_kardex_action_fisico_lote"
+                 sequence="3" />
+
+
+    </data>
+</odoo>

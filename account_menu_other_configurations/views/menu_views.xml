@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<menuitem id="menu_other_configurations" 
+						name="Otras Configuraciones" 
+						parent="account.menu_finance_configuration" 
+						sequence="30" 
+						groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

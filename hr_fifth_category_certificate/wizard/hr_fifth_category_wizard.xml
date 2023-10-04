@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_fifth_category_wizard_form" model="ir.ui.view">
+		<field name="name">hr.fifth.category.wizard.form</field>
+		<field name="model">hr.fifth.category.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Certificado Quinta Categoria">
+				<group>
+					<group>
+						<field name="date" required="1"/>
+					</group>
+					<group>
+<!--						<field name="employee_id" required="1"/>-->
+					</group>
+				</group>
+				<footer>
+					<button string="Imprimir Certificado" name="get_fifth_certificate_employee" type="object" class="oe_highlight"/>
+					<button string="Enviar Certificado por Correo" name="send_quinta_by_email" type="object" class="oe_highlight"/>
+					<button string="Cancel" class="oe_link" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

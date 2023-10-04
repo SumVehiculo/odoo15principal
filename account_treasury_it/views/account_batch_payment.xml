@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="action_batch_payment_all" model="ir.actions.act_window">
+		<field name="name">Lotes de Pago</field>
+		<field name="res_model">account.batch.payment</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="account_batch_payment.view_batch_payment_tree"/>
+		<field name="search_view_id" ref="account_batch_payment.view_batch_payment_search"/>
+		<field name="context">{'search_default_open': 1}</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea un nuevo pago por lotes
+			</p><p>
+				Los pagos por lotes permiten que agrupes diferentes pagos para facilitar la conciliación. 
+				También son útiles al momento de depositar cheques. en el banco.
+			</p>
+		</field>
+	</record>
+</odoo>

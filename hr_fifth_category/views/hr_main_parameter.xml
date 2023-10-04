@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_inherit" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.inherit</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_base_it.hr_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='liquidation']" position="after">
+				<page name="fifth_category" string="Quinta Categoria">
+					<group>
+						<group>
+							<field name="fifth_afect_sr_id"/>
+							<field name="gratification_sr_id"/>
+							<field name="fiscal_year_id"/>
+						</group>
+						<group>
+							<field name="fifth_extr_sr_id"/>
+							<field name="fifth_category_input_id"/>
+							<field name="compute_proy_planilla"/>
+						</group>
+					</group>
+					<group>
+						<button name="generate_tramos" nolabel="1" type="object" class="btn-primary" string="Generar Tramos" />
+					</group>
+					<group>
+						<field name="rate_limit_ids" nolabel="1" >
+							<tree editable="bottom" create="0" delete="0">
+								<field name="range" required="1"/>
+								<field name="limit" required="1"/>
+								<field name="rate" required="1"/>
+							</tree>
+						</field>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

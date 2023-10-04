@@ -1,0 +1,14 @@
+<odoo>
+    <data>        
+        <record id="view_picking_hide_desbloquear_form" model="ir.ui.view">
+            <field name="name">view.picking.hide.desbloquear.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_toggle_is_locked'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

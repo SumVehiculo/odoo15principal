@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="wiz_product_import_s_views" model="ir.ui.view">
+            <field name="name">product_import_wizard </field>
+            <field name="model">product.import</field>
+            <field name="arch" type="xml">
+                <form string="Importar Producto">
+                    <group>
+                        <field name="import_product_type" widget="radio" />
+                    </group>
+                    <group>
+                        <field name="import_product_search" widget="radio" attrs="{'invisible': [('import_product_type', '=', 'create')]}" />
+                    </group>
+                    <group>
+                        <field name="file" filename="name"/>
+                    </group>
+                    <footer>
+                        <button class="fa fa-upload btn-primary"  name="product_import" string="Import" type="object"/>
+                        <button class="fa fa-download btn-primary"  name="download_template" string="Descargar Plantilla" type="object"/>
+                        <button class="fa fa-filter btn-primary" name="verify_if_exists_product" string="Verificar Duplicados" type="object" invisible="1" attrs="{'invisible': [('import_product_type', 'not in', ['create'])]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wiz_product_s_import" model="ir.actions.act_window">
+            <field name="name">Importar Producto</field>
+            <field name="res_model">product.import</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_wiz_product_s_import"
+                    id="wiz_product_s_import"
+                    parent="stock.menu_stock_config_settings"
+                    sequence="52"
+                    groups = "product_template_import.group_import_product_s_view"/>
+    </data>
+</odoo>
+ 

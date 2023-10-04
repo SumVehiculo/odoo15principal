@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="group_account_query_sunat_manager" model="res.groups">
+			<field name="name">Verificacion de Comprobantes SUNAT</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+
+		<record id="account_query_sunat_comp_rule" model="ir.rule">
+			<field name="name">Verificacion de Comprobantes MultiCompany </field>
+			<field name="model_id" ref="model_account_query_sunat"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

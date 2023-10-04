@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="multipayment_advance_it_form_view" model="ir.ui.view">
+			<field name="name">multipayment.advance.it.form</field>
+			<field name="model">multipayment.advance.it</field>
+			<field name="arch" type="xml">
+				<form string="Pagos Múltiples">
+					<header>
+						<button string="Publicar" type="object" name="crear_asiento" states="draft" class="oe_highlight"/>
+						<button string="Cancelar" type="object" name="cancelar" states="done" class="oe_highlight"/>
+						<button name="get_invoices_multipayment" string="Selecciona Facturas" states="draft" type="object" class="oe_highlight"/>
+						<button name="get_templates_multipayment" string="Selecciona Plantillas" states="draft" type="object" class="oe_highlight"/>
+						<button name="calculate_line" string="Calcular" states="draft" type="object" class="oe_highlight"/>
+						<button name="autocomplete_amount" string="Autocompletar Importe" states="draft" type="object" class="oe_highlight"/>
+						<button name="update_saldo" string="Actualizar Saldos" states="draft" type="object" class="oe_highlight"/>
+						<!--button string="Importar Facturas" type="object" name="import_invoice_lines" states="draft" icon="fa-plus" class="oe_highlight"/-->
+						<field name="state" widget="statusbar" readonly="1"/>
+					</header>
+					<group class="oe_title">
+						<h1>
+							<field name="name" readonly="1"/>
+						</h1>
+					</group>
+					<group name="main">
+						<group name="main_1"> 
+							<field name="journal_id" required="1" attrs="{'readonly':[('state','in',['done'])]}" domain="['|',('type','in',['cash','bank']),('check_retention','=',True)]"/>
+							<field name="payment_date" required="1" attrs="{'readonly':[('state','in',['done'])]}"/>
+							<field name="catalog_payment_id" attrs="{'readonly':[('state','in',['done'])]}"/>
+							<field name="glosa" required="1" attrs="{'readonly':[('state','in',['done'])]}"/>
+							<field name="tc" attrs="{'readonly':[('state','in',['done'])]}" required="1"/>
+						</group>
+						<group name="main_2">
+							<field name="asiento_id" readonly="1"/>
+							<field name="amount" readonly="1"/>
+							<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/> 
+						</group>
+					</group>
+					<notebook>
+						<page string="Facturas" id="invoice_tab">
+							<field name="invoice_ids"  attrs="{'readonly':[('state','in',['done'])]}">
+								<tree editable="bottom">
+									<field name="partner_id" domain="[('parent_id','=',False)]" required="1"/>
+									<field name="cta_abono" optional="hide"/>
+									<field name="tipo_documento" required="1"/>
+									<field name="invoice_id" required="1" domain="[('type_document_id','=',tipo_documento),('partner_id','=',partner_id),('amount_residual','!=',0),('account_internal_type','in',('receivable','payable')),('reconciled','=',False),('move_id.state','=','posted')]"/>
+									<field name="account_id" required="1" optional="show"/>
+									<field name="operation_type" optional="hide"/>
+									<field name="good_services" optional="hide"/>
+									<field name="currency_id" optional="show"/>
+									<field name="fecha_vencimiento" required="0" optional="hide"/>
+									<field name="saldo" readonly="1" force_save="1" optional="show"/>
+									<field name="importe_divisa" required="1" sum="importe_divisa" optional="show"/>
+									<field name="debe" required="1" sum="debe" optional="show"/>
+									<field name="haber" required="1" sum="haber" optional="show"/>
+								</tree>
+							</field>
+						</page>
+						<page string="Caja" id="cash_tab">
+							<field name="lines_ids"  attrs="{'readonly':[('state','in',['done'])]}">
+								<tree editable="bottom">
+									<field name="account_id" required="1"/>
+									<field name="partner_id" optional="hide"/>
+									<field name="type_document_id" optional="hide"/>
+									<field name="nro_comp" optional="hide"/>
+									<field name="name" optional="hide"/>
+									<field name="currency_id"/>
+									<field name="importe_divisa" required="1" sum="importe_divisa"/>
+									<field name="debe" required="1" sum="debe"/>
+									<field name="haber" required="1" sum="haber"/>
+									<field name="analytic_account_id" optional="hide"/>
+									<field name="analytic_tag_id" optional="hide"/>
+									<field name="fecha_vencimiento" optional="hide"/>
+								</tree>
+							</field>
+						</page>
+						<page string="Otra Informacion" name="other_info">
+							<group name="other_1">
+								<group name="other_2">
+									<field name="nro_operation"/>
+									<field name="partner_cash_id"/>
+									<field name="payment_method_id" attrs="{'readonly':[('state','in',['done'])]}"/>
+								</group>
+								<group  name="other_3"> 
+									<field name="type_document_cash_id"/>
+									<field name="cash_flow_id"/>
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="multipayment_advance_it_view_tree" model="ir.ui.view">
+			<field name="name">multipayment.advance.it.view.tree</field>
+			<field name="model">multipayment.advance.it</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="journal_id"/>
+					<field name="payment_date"/>
+					<field name="partner_cash_id" optional="hide"/>
+					<field name="nro_operation" optional="hide"/>
+					<field name="glosa" optional="hide"/>
+					<field name="asiento_id" optional="hide"/>
+					<field name="amount" optional="show" sum="amount"/>
+					<field name="state" />
+					<field name="company_id" groups="base.group_multi_company"/> 
+				</tree>
+			</field>
+		</record>
+
+		<record id="multipayment_advance_it_action" model="ir.actions.act_window">
+			<field name="name">Pagos Múltiples</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">multipayment.advance.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Pagos Múltiples aqui
+			</p>
+			</field>
+		</record>
+
+		<record model="ir.actions.server" id="action_change_name_it_multipayment_advance_it">
+			<field name="name">Borrar Secuencia</field>
+			<field name="model_id" ref="account_multipayment_advance_it.model_multipayment_advance_it"/>
+			<field name="binding_model_id" ref="account_multipayment_advance_it.model_multipayment_advance_it" />
+			<field name="state">code</field>
+			<field name="code">action = records.action_change_name_it()</field>
+		</record>
+
+		<menuitem action="multipayment_advance_it_action" 
+				  id="menu_multipayment_advance_it" 
+				  parent="account_treasury_it.sub_menu_treasury_it2" 
+				  sequence="24"/>
+	</data>
+</odoo>

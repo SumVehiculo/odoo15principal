@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_import_move_apertura_it_group_user,import.move.apertura.it.group.user,import_saldos_iniciales_it.model_import_move_apertura_it,account_base_it.group_account_tables_user,1,1,1,1
+access_import_move_apertura_it_line_group_user,import.move.apertura.it.line.group.user,import_saldos_iniciales_it.model_import_move_apertura_it_line,account_base_it.group_account_tables_user,1,1,1,1

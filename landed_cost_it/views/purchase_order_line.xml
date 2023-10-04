@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_purchase_order_line_tree_landedcost" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree.landedcost</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Gastos Vinculados - Compras" edit="false">
+                    <field name="purchase_date_landed" widget="date"/>
+                    <field name="name_po_landed"/>
+                    <field name="partner_id_landed"/>
+                    <field name="product_id"/>
+                    <field name="price_total_signed_landed" sum="price_total_signed_landed"/>
+                    <field name="tc_landed"/>
+                    <field name="currency_id"/>
+                    <field name="price_subtotal" sum="price_subtotal" string="Total"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

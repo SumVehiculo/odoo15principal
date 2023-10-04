@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_res_country_state_list" model="ir.ui.view">
+		<field name="name">res.country.state.list</field>
+		<field name="model">res.country.state</field>
+		<field name="inherit_id" ref="base.view_country_state_tree"/>
+		<field name="arch" type="xml">
+			<field name="country_id" position="after">
+				<field name="state_id"/>
+				<field name="province_id"/>
+			</field>
+		</field>
+	</record>
+</odoo>

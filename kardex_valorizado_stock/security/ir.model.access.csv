@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kardex_stock_cost_tmp,kardex_stock_cost_tmp,model_kardex_stock_cost_tmp,,1,1,1,1
+access_make_kardex_valorado_stock,make_kardex_valorado_stock,model_make_kardex_valorado_stock,,1,1,1,1
+access_stock_balance_report_lote_costeo,stock_balance_report_lote_costeo,model_stock_balance_report_lote_costeo,,1,1,1,1

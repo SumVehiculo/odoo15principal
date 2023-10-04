@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_payslip_run_form_inherit" model="ir.ui.view">
+		<field name="name">hr.payslip.run.form.inherit</field>
+		<field name="model">hr.payslip.run</field>
+		<field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header/button[@name='close_payroll']" position="before">
+				<button name="vouchers_by_lot" string="Imprimir Boletas" type="object" class="oe_highlight" states="verify,close,paid"/>
+			</xpath>
+		</field>
+	</record>
+	<record id="vouchers_by_lot_hr_payslip_run" model="ir.actions.server">
+		<field name="name">Imprimir Boletas</field>
+		<field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>
+		<field name="binding_model_id" ref="hr_payroll.model_hr_payslip_run"/>
+		<field name="state">code</field>
+		<field name="code">action = records.vouchers_by_lot()</field>
+	</record>
+</odoo>

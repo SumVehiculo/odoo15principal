@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_exchange_rep_form">
+			<field name="name">account.exchange.rep.form</field>
+			<field name="model">account.exchange.rep</field>
+			<field name="arch" type="xml">
+				<form string="Diferencia ME Global">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="fiscal_year_id"/>
+								<field name="period" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+							<button string="Generar" name="do_invoice" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_exchange_rep_action" model="ir.actions.act_window">
+			<field name="name">Diferencia ME Global</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.exchange.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="exchange_diff_config_it.account_exchange_rep_action" 
+				  id="menu_action_account_exchange_rep" 
+				  parent="l10n_pe_currency_rate.menu_account_sunat_currency_rate" 
+				  sequence="3"
+				  groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

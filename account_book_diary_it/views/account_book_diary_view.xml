@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_book_diary_view_tree" model="ir.ui.view">
+            <field name="name">account.book.diary.view.tree</field>
+            <field name="model">account.book.diary.view</field>
+            <field name="arch" type="xml">
+                <tree string="Libro Diario" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="debe" sum="debe"/>
+                    <field name="haber" sum="haber"/>
+                    <field name="balance"/>
+                    <field name="moneda"/>
+                    <field name="tc"/>
+                    <field name="importe_me" sum="importe_me"/>
+                    <field name="cta_analitica"/>
+                    <field name="glosa"/>
+                    <field name="td_partner" optional="hide"/>
+                    <field name="doc_partner" optional="hide"/>
+                    <field name="partner" optional="hide"/>
+                    <field name="td_sunat" optional="hide"/>
+                    <field name="nro_comprobante" optional="hide"/>
+                    <field name="fecha_doc" optional="hide"/>
+                    <field name="fecha_ven" optional="hide"/>
+                    <field name="col_reg" optional="hide"/>
+                    <field name="monto_reg" optional="hide"/>
+                    <field name="medio_pago" optional="hide"/>
+                    <field name="ple_diario" optional="hide"/>
+                    <field name="ple_compras" optional="hide"/>
+                    <field name="ple_ventas" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_book_diary_view_pivot" model="ir.ui.view">
+            <field name="name">account.book.diary.view.pivot</field>
+            <field name="model">account.book.diary.view</field>
+            <field name="arch" type="xml">
+                <pivot string="Libro Diario">
+                    <field name="debe" type="measure"/>
+                    <field name="haber" type="measure"/>
+                    <field name="balance" type="measure"/>
+                    <field name="cuenta" type="row"/>
+                    <field name="periodo" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_account_book_diary_view_graph" model="ir.ui.view">
+            <field name="name">account.book.diary.view.graph</field>
+            <field name="model">account.book.diary.view</field>
+            <field name="arch" type="xml">
+                <graph string="Libro Diario" type="bar" stacked="1">
+                    <field name="debe"/>
+                    <field name="haber"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="account_book_diary_view_search" model="ir.ui.view">
+            <field name="name">account.book.diary.view.search</field>
+            <field name="model">account.book.diary.view</field>
+            <field name="arch" type="xml">
+                <search string="Libro Diario">
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="partner"/>
+                    <field name="td_partner"/>
+                    <field name="nro_comprobante"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Periodo" name="periodo" icon="terp-partner" context="{'group_by':'periodo'}"/>
+                        <filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+                        <filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                        <filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+                        <filter string="Tipo de Documento" name="td_partner" icon="terp-partner" context="{'group_by':'td_partner'}"/>
+                        <filter string="Número Comprobante" name="nro_comprobante" icon="terp-partner" context="{'group_by':'nro_comprobante'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_book_diary_view_it" model="ir.actions.act_window">
+            <field name="name">Libro Diario</field>
+            <field name="res_model">account.book.diary.view</field>
+            <field name="view_id" ref="view_account_book_diary_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,pivot,graph</field>
+            <field name="search_view_id" ref="account_book_diary_view_search"/>
+        </record>
+
+    </data>
+</odoo>

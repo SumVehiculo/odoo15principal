@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="currency_rate_update_now_form" model="ir.ui.view">
+            <field name="name">currency.rate.update.now.form</field>
+            <field name="model">currency.rate.update.now</field>
+            <field name="arch" type="xml">
+                <form string="Actualizar Ahora">
+                    <group>
+                         <group>
+                            <field name="date"/>
+                         </group>
+                    </group>
+                    <footer>
+				        <button name="update_now" string="Actualizar" icon="fa-upload" type="object" class="btn-primary oe_inline"/>
+                        <button string="Cancelar" class="btn-default" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_currency_rate_update_now" model="ir.actions.act_window">
+            <field name="name">Actualizar Ahora</field>
+            <field name="res_model">currency.rate.update.now</field>
+            <field name="view_mode">tree,form</field>
+           <field name="view_id" ref="currency_rate_update_now_form"/>
+           <field name="target">new</field>
+        </record>
+
+        
+
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_group_form_inherit" model="ir.ui.view">
+			<field name="name">account.group.form.inherit</field>
+			<field name="model">account.group</field>
+			<field name="inherit_id" ref="account.view_account_group_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//sheet" position="inside">
+						<notebook>
+							<page string="ITGRUPO">
+								<group>
+									<group>
+										<field name="type"/>
+										<field name="clasification_sheet"/>
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

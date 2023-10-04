@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_code_sunat_table_form" model="ir.ui.view">
+		<field name="name">account.code.sunat.table.form</field>
+		<field name="model">account.code.sunat.table</field>
+		<field name="arch" type="xml">
+			<form string="Account Period">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_account_code_sunat_table_list" model="ir.ui.view">
+		<field name="name">account.code.sunat.table.list</field>
+		<field name="model">account.code.sunat.table</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_account_code_sunat_table_form" model="ir.actions.act_window">
+		<field name="name">Codigo Plan Sunat</field>
+		<field name="res_model">account.code.sunat.table</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_account_code_sunat_table_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Codigo Sunat aqui
+		  </p>
+		</field>
+	</record>
+
+	<menuitem action="action_account_code_sunat_table_form" 
+			id="action_account_code_sunat_table_form_menu"
+			parent="account_base_it.menu_account_base_it" 
+			sequence="13" 
+			groups="account_base_it.group_account_tables_user"/>
+</odoo>

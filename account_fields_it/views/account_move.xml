@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_move_form_inherit_invoice_document" model="ir.ui.view">
+		<field name="name">move.form.inherit.invoice.document</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="l10n_latam_invoice_document.view_move_form"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//field[@name='l10n_latam_document_type_id']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="journal_type_it" invisible="True"/>
+					<field name="l10n_latam_document_type_id"
+                    attrs="{'invisible': ['|',('move_type', 'in', ['out_receipt','in_receipt']),'&amp;',('journal_type_it','not in',['purchase','sale']),('move_type','=','entry')], 'required': ['|',('move_type','in', ['out_invoice','in_invoice','out_refund','in_refund']),'&amp;',('journal_type_it','in',['sale','purchase']),('move_type','=','entry')], 'readonly': [('state', '=', 'posted')]}"
+                    options="{'no_open': True, 'no_create': True}"/>
+					<field name="serie_id" attrs="{'invisible': [('move_type', 'not in', ['out_invoice','out_refund'])]}" domain="[('company_id','=',company_id),('type_document_id','=',l10n_latam_document_type_id)]"/>
+				</xpath>
+				<xpath expr="//field[@name='l10n_latam_document_number']" position="replace">
+				</xpath>
+			</data>
+		</field>
+	</record>
+
+	<record id="view_move_form_inherit" model="ir.ui.view">
+		<field name="name">move.form.inherit</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form"/>
+		<field name="arch" type="xml">
+			<data>
+				<label for="ref" position="attributes">
+					<attribute name="attrs">{'invisible':[('move_type', 'not in', ('in_invoice', 'in_receipt', 'in_refund','out_invoice', 'out_refund', 'out_receipt'))]}</attribute>
+					<attribute name="string">Nro Comprobante</attribute>
+				</label>
+				<label for="journal_id" position="replace">
+				</label>
+				<div name="journal_div" position="replace">
+					<field name="journal_id"
+						groups="account.group_account_readonly"
+						options="{'no_create': True}"
+						attrs="{'readonly': [('posted_before', '=', True)]}"/>
+					<field name="currency_id"
+						groups="base.group_multi_currency"
+						attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+					<field name="register_sunat" invisible="1"/>
+					<field name="currency_rate" attrs="{'readonly': ['|',('tc_per', '=', False),('state','!=','draft')]}" force_save="1"/>
+				</div>
+				<xpath expr="//field[@name='ref'][1]" position="attributes">
+					<attribute name="attrs">{'invisible':[('move_type', 'not in', ('in_invoice', 'in_receipt', 'in_refund','out_invoice', 'out_refund', 'out_receipt'))],'required': ['|',('move_type','in', ['out_invoice','in_invoice','out_refund','in_refund']),'&amp;',('journal_type_it','in',['sale','purchase']),('move_type','=','entry')],'readonly': [('state','!=','draft')]}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='payment_reference']" position="replace">
+				</xpath>
+				<xpath expr="//group[@id='header_left_group']/div[1]" position="inside">
+					<label for="partner_id" string="Socio"
+                        attrs="{'invisible': ['|',('move_type','not in',('entry')),'&amp;',('journal_type_it','not in',['purchase','sale']),('move_type','=','entry')]}"/>
+				</xpath>
+				<xpath expr="//field[@name='partner_id']" position="attributes">
+					<attribute name="attrs">{'invisible': ['|',('move_type', 'in', ['out_receipt','in_receipt']),'&amp;',('journal_type_it','not in',['purchase','sale']),('move_type','=','entry')], 'required': ['|',('move_type','in', ['out_invoice','in_invoice','out_refund','in_refund']),'&amp;',('journal_type_it','in',['sale','purchase']),('move_type','=','entry')], 'readonly': [('state', '=', 'posted')]}</attribute>
+					<attribute name="widget"></attribute>
+					<attribute name="context">{'res_partner_search_mode': (context.get('default_move_type', 'entry') in ('out_invoice', 'out_refund', 'out_receipt') and 'customer') or (context.get('default_move_type', 'entry') in ('in_invoice', 'in_refund', 'in_receipt') and 'supplier') or False,
+                        'show_address': 0, 'default_is_company': True, 'show_vat': False}</attribute>
+				</xpath>
+				
+				<xpath expr="//group[@id='header_right_group']/div[1]" position="inside">
+					<label for="invoice_date" string="Fecha factura" style="font-weight:bold;"
+                        attrs="{'invisible': ['|',('move_type','!=','entry'),'&amp;',('journal_type_it','not in',['purchase','sale']),('move_type','=','entry')]}"/>
+				</xpath>
+				<xpath expr="//field[@name='invoice_date']" position="attributes">
+					<attribute name="attrs">{'invisible': ['|',('move_type', 'in', ['out_receipt','in_receipt']),'&amp;',('journal_type_it','not in',['purchase','sale']),('move_type','=','entry')], 'required': ['|',('move_type','in', ['out_invoice','in_invoice','out_refund','in_refund']),'&amp;',('journal_type_it','in',['sale','purchase']),('move_type','=','entry')], 'readonly': [('state', '=', 'posted')]}</attribute>
+				</xpath>
+				<label for="invoice_payment_term_id" position="attributes">
+					<attribute name="attrs">{'invisible': [('journal_type_it','not in',['purchase','sale']),('move_type','=','entry')]}</attribute>
+				</label>
+				<xpath expr="//group[@id='header_right_group']/div[2]" position="attributes">
+					<attribute name="attrs">{'invisible': [('journal_type_it','not in',['purchase','sale']),('move_type','=','entry')]}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='name']" position="replace">
+					<field name="name" attrs="{'invisible':[('name', '=', '/')], 'readonly':[('es_editable', '=', False)]}" />
+					<field name="es_editable" invisible="True" />
+					<field name="journal_type_it" invisible="True"/>
+				</xpath>
+				<xpath expr="//notebook/page[@id='other_tab_entry']/group/group/field[@name='to_check']" position="after">
+					<field name="is_opening_close"/>
+					<field name="tc_per" attrs="{'readonly': [('state','!=','draft')]}"/>
+					<field name="td_payment_id"/>
+					<field name="ple_state"/>
+					<field name="date_corre_ple"/>
+					<field name="perception_date"/>
+				</xpath>
+				<xpath expr="//notebook/page[@id='other_tab']/group[@id='other_tab_group']" position="inside">
+					<group string="ITGRUPO" name="itgrupo">
+						<field name="tc_per" attrs="{'readonly': [('state','!=','draft')]}"/>
+						<field name="ple_state"/>
+						<field name="date_corre_ple"/>
+						<field name="is_descount"/>
+						<field name="perception_date"/>
+						<field name="acc_number_partner_id" force_save="1" domain="[('partner_id', '=', partner_id)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+					</group>
+				</xpath>
+				<xpath expr="//notebook/page[@id='other_tab']/group[@id='other_tab_group']" position="inside">
+					<group string="Venta"
+							name="account_customer_it"
+							attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}">
+						<field name="doc_origin_customer"/>
+					</group>
+				</xpath>
+				<xpath expr="//notebook/page[@id='other_tab']/group/group/field[@name='inalterable_hash']" position="after">
+                    <field name="payment_reference"
+                    attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt'))], 'readonly': [('state', '!=', 'draft')]}"/>
+				</xpath>
+				<xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='partner_id']" position="attributes">
+					<attribute name="attrs">{'column_invisible': 0}</attribute>
+					<attribute name="optional">show</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='tax_ids']" position="attributes">
+					<attribute name="attrs">{'column_invisible': [('parent.move_type', 'in', ['entry'])]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/form/group/field[@name='account_id']" position="before">
+					<field string="Conciliacion #" name="full_reconcile_id"/>
+				</xpath>
+				<xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='partner_id']" position="after">
+					<field name="type_document_id" optional="hide"/>
+					<field name="nro_comp" optional="hide"/>
+				</xpath>
+				<xpath expr="//field[@name='ref'][2]" position="after">
+					<field name="glosa" attrs="{'required': [('move_type', 'in', ('out_invoice', 'out_refund','in_invoice', 'in_refund'))]}"/>
+				</xpath>
+				<xpath expr="//group[@id='other_tab_entry_group']/group/field[@name='fiscal_position_id']" position="replace">
+				</xpath>
+				<xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='credit']" position="after">
+					<field name="tax_amount_it" optional="hide"/>
+					<field name="tax_amount_me" optional="hide"/>
+					<field name="tc" optional="hide"/>
+					<field name="cuo" optional="hide"/>
+					<field name="cash_flow_id" optional="hide"/>
+					<field name="is_p" optional="hide" attrs="{'column_invisible': [('parent.move_type', 'not in', ['entry'])]}"/>
+				</xpath>
+
+				<xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='date_maturity']" position="before">
+					<field name="invoice_date_it" optional="hide" attrs="{'column_invisible': [('parent.move_type', 'not in', ['entry'])]}"/>
+				</xpath>
+				
+				<xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='date_maturity']" position="after">
+					<field name="cta_cte_origen" optional="hide" attrs="{'column_invisible': [('parent.move_type', 'not in', ['entry'])]}"/>
+				</xpath>
+
+				<xpath expr="//notebook" position='inside'>
+					<page string='SUNAT' attrs="{'invisible': ['|',('move_type', 'in', ['out_receipt','in_receipt']),'&amp;',('register_sunat','not in',['1','2']),('move_type','=','entry')]}">
+						<group>
+							<group string='Detracción'>
+								<field name="linked_to_detractions"/>
+								<field name="type_op_det"/>
+								<field name="date_detraccion"/>
+								<field name="detraction_percent_id"/>
+								<field name="percentage" widget="percentage"/>
+								<field name="voucher_number"/>
+								<field name="detra_amount"/>
+							</group>
+							<group string='Percepción'>
+								<field name="linked_to_perception"/>
+								<field name="type_t_perception"/>
+								<field name="number_perception"/>
+							</group>
+						</group>
+						<group>
+							<group string='Documentos Relacionados'>
+							</group>
+							<field name="doc_invoice_relac">
+								<tree editable="bottom">
+									<field name="type_document_id" width="2"/>
+									<field name="date" width="3"/>
+									<field name="nro_comprobante" width="4"/>
+									<field name="amount_currency" width="2"/>
+									<field name="amount" width="2"/>
+
+									<field name="bas_amount" width="2"/>
+									<field name="tax_amount" width="2"/>
+								</tree>
+							</field>
+						</group>
+					</page>
+					<page string='PLE' attrs="{'invisible': [('move_type', 'not in', ['out_invoice','out_refund'])]}">
+						<group>
+							<group>
+								<field name="campo_09_sale"/>
+								<field name="campo_31_sale"/>
+								<field name="campo_32_sale"/>
+								<field name="c_sire"/>
+								<field name="adj_sire"/>
+							</group>
+							<group>
+								<field name="campo_33_sale"/>
+								<field name="campo_34_sale"/>
+								<field name="date_modify_sale"/>
+							</group>
+						</group>
+					</page>
+					<page string='PLE' attrs="{'invisible': ['|',('move_type', 'in', ['out_receipt','in_receipt','out_invoice','out_refund']),'&amp;',('register_sunat','not in',['1']),('move_type','=','entry')]}">
+						<group>
+							<group>
+								<field name="campo_09_purchase"/>
+								<field name="campo_33_purchase"/>
+								<field name="campo_34_purchase"/>
+								<field name="campo_35_purchase"/>
+								<field name="campo_36_purchase"/>
+								<field name="participation_percent_sire" widget="percentage"/>
+								<field name="tax_mat_exo_igv_sire"/>
+								<field name="corre_sire"/>
+							</group>
+							<group>
+								<field name="campo_37_purchase"/>
+								<field name="campo_38_purchase"/>
+								<field name="campo_39_purchase"/>
+								<field name="campo_40_purchase"/>
+								<field name="campo_41_purchase"/>
+								<field name="date_modify_purchase"/>
+							</group>
+						</group>
+					</page>
+					<page string='PLE NO DOMIC.' attrs="{'invisible': ['|',('move_type', 'in', ['out_receipt','in_receipt','out_invoice','out_refund']),'&amp;',('register_sunat','not in',['1']),('move_type','=','entry')]}">
+						<group>
+							<group>
+								<field name="campo_26_purchase_nd"/>
+								<field name="campo_27_purchase_nd"/>
+								<field name="campo_28_purchase_nd"/>
+								<field name="campo_29_purchase_nd"/>
+								<field name="campo_30_purchase_nd"/>
+							</group>
+							<group>
+								<field name="campo_32_purchase_nd"/>
+								<field name="campo_33_purchase_nd"/>
+								<field name="campo_34_purchase_nd"/>
+								<field name="campo_35_purchase_nd"/>
+								<field name="campo_23_purchase_nd"/>
+							</group>
+						</group>
+						<group string="Sustento Credito Fiscal">
+							<group>
+								<field name="campo_11_purchase_nd"/>
+								<field name="campo_12_purchase_nd"/>
+							</group>
+							<group>
+								<field name="campo_13_purchase_nd"/>
+								<field name="campo_14_purchase_nd"/>
+								<field name="campo_15_purchase_nd"/>
+							</group>
+						</group>
+					</page>
+				</xpath>
+			</data>
+		</field>
+	</record>
+
+	<record id="view_account_invoice_filter_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.select.inherit</field>
+		<field name="inherit_id" ref="account.view_account_invoice_filter"/>
+		<field name="model">account.move</field>
+		<field name="arch" type="xml">
+			<xpath expr="/search/group/filter[@name='invoicedate']" position="after">
+				<filter name="date" string="Fecha Contable" context="{'group_by': 'date'}"/>
+			</xpath>
+		</field>
+	</record>
+
+	<!--VIEW TREE MOVES-->
+
+	<record id="view_move_tree_inherit_field" model="ir.ui.view">
+		<field name="name">account.move.tree.inherit.field</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_tree"/>
+		<field name="arch" type="xml">
+			<field name="journal_id" position="after">
+				<field name="glosa" optional="show"/>
+			</field>
+		</field>
+	</record>
+
+	<!--VIEW TREE INVOICES-->
+
+	<record id="view_invoice_tree_inherit_field" model="ir.ui.view">
+		<field name="name">invoice.tree.inherit.field</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_invoice_tree"/>
+		<field name="arch" type="xml">
+			<field name="ref" position="before">
+				<field name="l10n_latam_document_type_id_code" optional="hide" string="T.D."/>
+			</field>
+			<field name="partner_id" position="before">
+				<field name="partner_vat" optional="hide" string="TDP"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_out_invoice_tree_inherit_field" model="ir.ui.view">
+		<field name="name">move.out.invoice.inherit.field</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_out_invoice_tree"/>
+		<field name="arch" type="xml">
+			<field name="ref" position="attributes">
+				<attribute name="string">Nro Comprobante</attribute>
+				<attribute name="optional">hide</attribute>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_out_credit_note_tree_inherit_field" model="ir.ui.view">
+		<field name="name">move.out.credit.inherit.field</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_out_credit_note_tree"/>
+		<field name="arch" type="xml">
+			<field name="ref" position="attributes">
+				<attribute name="string">Nro Comprobante</attribute>
+				<attribute name="optional">hide</attribute>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_in_invoice_tree_inherit_field" model="ir.ui.view">
+		<field name="name">move.in.invoice.inherit.field</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_in_invoice_tree"/>
+		<field name="arch" type="xml">
+			<field name="ref" position="attributes">
+				<attribute name="string">Nro Comprobante</attribute>
+				<attribute name="optional">hide</attribute>
+			</field>
+		</field>
+	</record>
+</odoo>

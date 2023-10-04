@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_import_statement_line_wizard_group_user,import.statement.line.wizard.group.user,model_import_statement_line_wizard,account_base_it.group_account_tables_user,1,1,1,1

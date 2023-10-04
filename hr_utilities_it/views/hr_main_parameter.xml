@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_utilities" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.utilities</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_base_it.hr_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Utilidades" name="utilities">
+					<group>
+						<group>
+							<field name="rule_total_income"/>
+							<field name="hr_input_for_results"/>
+						</group>
+						<group>
+							<field name="wd_dtrab" widget="many2many_tags"/>
+							<field name="wd_falt" widget="many2many_tags"/>
+						</group>
+					</group>
+<!--					<group string='Representante'>-->
+<!--						<group>-->
+<!--							<field name="legal_representative"/>-->
+<!--						</group>-->
+<!--					</group>-->
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

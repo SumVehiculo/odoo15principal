@@ -1,0 +1,14 @@
+<odoo>
+	<data>
+	   <record id="view_account_move_reversal_inherit" model="ir.ui.view">
+			<field name="name">account.move.reversal.inherit</field>
+			<field name="model">account.move.reversal</field>
+			<field name="inherit_id" ref="account.view_account_move_reversal"/>
+			<field name="arch" type="xml">
+				<field name="refund_method" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

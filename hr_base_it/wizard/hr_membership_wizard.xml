@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_membership_wizard_form" model="ir.ui.view">
+		<field name="name">hr.membership.wizard.form</field>
+		<field name="model">hr.membership.wizard</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<group>
+						<field name="company_ids" widget="many2many_tags" required="1"/>
+					</group>
+				</group>
+				<footer>
+					<button string="Generar" name="duplicate_by_company" type="object" class="oe_highlight"/>
+					<button string="Cancel" class="oe_link" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record id="hr_membership_wizard_form_edit" model="ir.ui.view">
+		<field name="name">hr.membership.wizard.form.edit</field>
+		<field name="model">hr.membership.wizard</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<group>
+						<field name="company_ids" widget="many2many_tags" required="1"/>
+					</group>
+				</group>
+				<group>
+					<group>
+						<field name="fixed_commision"/>
+						<field name="mixed_commision"/>
+						<field name="prima_insurance"/>
+					</group>
+					<group>
+						<field name="retirement_fund"/>
+						<field name="insurable_remuneration"/>
+					</group>
+				</group>
+				<footer>
+					<button string="Editar" name="edit_by_company" type="object" class="oe_highlight"/>
+					<button string="Cancel" class="oe_link" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="view_account_balance_period_usd_book_tree" model="ir.ui.view">
+			<field name="name">account.balance.period.usd.book.tree</field>
+			<field name="model">account.balance.period.usd.book</field>
+			<field eval="1" name="priority"/>
+			<field name="arch" type="xml">
+				<tree string="Saldo por Periodo" create="false">
+					<field name="periodo"/>
+					<field name="fecha_con"/>
+					<field name="libro"/>
+					<field name="voucher"/>
+					<field name="td_partner"/>
+					<field name="doc_partner"/>
+					<field name="partner"/>
+					<field name="td_sunat"/>
+					<field name="nro_comprobante"/>
+					<field name="fecha_doc"/>
+					<field name="fecha_ven"/>
+					<field name="cuenta"/>
+					<field name="moneda"/>
+					<field name="debe" sum="debe"/>
+					<field name="haber" sum="haber"/>
+					<field name="saldo_mn" sum="saldo_mn"/>
+					<field name="saldo_me" sum="saldo_me"/>
+					<!--button name="edit_linea_it" icon="fa-building-o" string="Ver Detalle" type="object"/-->
+				</tree>
+			</field>
+		</record>
+
+		<record id="account_balance_period_usd_book_search" model="ir.ui.view">
+			<field name="name">account.balance.period.usd.book.search</field>
+			<field name="model">account.balance.period.usd.book</field>
+			<field name="arch" type="xml">
+				<search string="Saldo por Periodo">
+					<field name="libro"/>
+					<field name="voucher"/>
+					<field name="cuenta"/>
+					<field name="partner"/>
+					<field name="td_sunat"/>
+					<field name="doc_partner"/>
+					<separator/>
+					<group expand="1" string="Group By...">
+						<filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+						<filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+						<filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+						<filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+						<filter string="Tipo de Documento" name="td_sunat" icon="terp-partner" context="{'group_by':'td_sunat'}"/>
+						<filter string="RUC" name="doc_partner" icon="terp-partner" context="{'group_by':'doc_partner'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_account_balance_period_usd_book_it" model="ir.actions.act_window">
+			<field name="name">Saldo por Periodo</field>
+			<field name="res_model">account.balance.period.usd.book</field>
+			<field name="view_id" ref="view_account_balance_period_usd_book_tree"/>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree</field>
+			<field name="search_view_id" ref="account_balance_period_usd_book_search"/>
+		</record>
+
+	</data>
+</odoo>

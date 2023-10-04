@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="group_hr_tables_root" model="res.groups">
+		<field name="name">Mostrar Tablas RRHH</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+	</record>
+	<record id="group_hr_show_menu_root" model="res.groups">
+		<field name="name">Mostrar Menus Nativos</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+	</record>
+	<record model="ir.rule" id="wdt_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Worked Days Type</field>
+		<field name="model_id" ref="hr_base_it.model_hr_payslip_worked_days_type"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record model="ir.rule" id="mp_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Main Parameter</field>
+		<field name="model_id" ref="hr_base_it.model_hr_main_parameter"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record model="ir.rule" id="hr_analytic_distribution_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Analytic Distribution</field>
+		<field name="model_id" ref="hr_base_it.model_hr_analytic_distribution"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record model="ir.rule" id="hr_membership_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Membesrhip</field>
+		<field name="model_id" ref="hr_base_it.model_hr_membership"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record model="ir.rule" id="hr_resource_calendar_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Calendar</field>
+		<field name="model_id" ref="resource.model_resource_calendar"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+</odoo>

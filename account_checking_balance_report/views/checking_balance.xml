@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_checking_balance_tree">
+			<field name="name">checking.balance.tree</field>
+			<field name="model">checking.balance</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="cuenta"/>
+					<field name="nomenclatura"/>
+					<field name="debe" sum="total"/>
+					<field name="haber" sum="total"/>
+					<field name="saldo_deudor" sum="total"/>
+					<field name="saldo_acreedor" sum="total"/>
+				</tree>
+			</field>
+		</record>
+	</data>
+</odoo>

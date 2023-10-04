@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<odoo>
+	<data>
+		<record id="view_import_move_line_wizard_form" model="ir.ui.view">
+			<field name="name">import.move.line.wizard.form</field>
+			<field name="model">import.move.line.wizard</field>
+			<field name="priority">1</field>
+			<field name="arch" type="xml">
+				<form string="Importador de Lineas Contables">
+					<sheet>
+						<group>
+							<group>
+								<field name="name_file" invisible="1"/>
+								<field name="document_file" filename="name_file" string="Excel"/>
+							</group>
+						</group>
+					</sheet>
+					<footer>
+						<button name="download_template" string="Descargar Plantilla" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+						<button name="importar" string="Importar" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+						o
+						<button string="Cancelar" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

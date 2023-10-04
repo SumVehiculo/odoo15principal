@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_move_form_inherit_tax" model="ir.ui.view">
+		<field name="name">move.form.inherit.tax</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account_fields_it.view_move_form_inherit"/>
+		<field name="arch" type="xml">
+			<data>
+				<field name="is_descount" position="after">
+					<field name="personalize_tax" attrs="{'invisible':[('move_type', 'not in', ['out_invoice','in_invoice','out_refund','in_refund'])]}"/>
+				</field>
+			</data>
+		</field>
+	</record>
+</odoo>

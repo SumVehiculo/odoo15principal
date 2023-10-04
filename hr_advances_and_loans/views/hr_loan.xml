@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        SOLICITUD DE PRESTAMO-->
+        <record id="hr_loan_form" model="ir.ui.view">
+            <field name="name">hr_loan_form_view</field>
+            <field name="model">hr.loan</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Prestamos">
+                    <header>
+                        <button name="get_fees" type="object" string="Generar Cuotas" class="oe_highlight"/>
+                        <button name="refresh_fees" type="object" string="Recalcular" class="oe_highlight"/>
+                        <button name="get_excel" type="object" string="Generar Excel" class="oe_highlight"/>
+                        <button name="get_pdf" type="object" string="Generar PDF" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" invisible="1"/>
+                                <field name="employee_id" required="1"/>
+                                <field name="date" required="1"/>
+                                <field name="amount" required="1"/>
+                            </group>
+                            <group>
+                                <field name="loan_type_id" required="1"/>
+                                <field name="fees_number" required="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <field name="line_ids">
+                            <tree editable="bottom">
+                                <field name="fee"/>
+                                <field name="amount" sum="Total" attrs="{'readonly':[('validation','=','paid out')]}"/>
+                                <field name="date" attrs="{'readonly':[('validation','=','paid out')]}"/>
+                                <field name="debt" attrs="{'readonly':[('validation','=','paid out')]}"/>
+                                <field name="loan_type_id" optional="show"/>
+                                <field name="validation" readonly="1"/>
+                                <button name="set_not_payed" type="object" icon="fa-rotate-left" string="Cambiar a No Pagado" help="Cambiar a No Pagado" confirm="¿Esta seguro que desea Cambiar el estado de este prestamo a No Pagado?" class="oe_edit_only"/>
+                            </tree>
+                        </field>
+                        <field name="observations"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_loan_tree" model="ir.ui.view">
+            <field name="name">hr_loan_tree_view</field>
+            <field name="model">hr.loan</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="(amount == saldo_final)">
+                    <field name="employee_id"/>
+                    <field name="amount"/>
+                    <field name="saldo_final"/>
+                    <field name="date"/>
+                    <field name="fees_number"/>
+                    <field name="loan_type_id"/>
+                    <field name="company_id" optional="hide" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_loan" model="ir.actions.act_window">
+            <field name="name">Prestamos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.loan</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html"> 
+                <p class="o_view_nocontent_smiling_face"> 
+                    Haga click aqui para crear un nuevo Prestamo.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="loan_menu" 
+                  action="action_loan" 
+                  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+                  sequence="74"
+                  groups="hr_advances_and_loans.group_hr_loans_root"/>
+
+<!--        TIPO DE PRESTAMO-->
+        <record id="hr_loan_type_form" model="ir.ui.view">
+            <field name="name">hr_loan_type_form_view</field>
+            <field name="model">hr.loan.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Tipo de Prestamo">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                            </group>
+                            <group>
+                                <field name="input_id" required="1"/>
+                            </group>
+                        </group>
+<!--                        <group string="Contabilidad">-->
+<!--                            <group>-->
+<!--                                <field name="salary_rule_id" options="{'no_create': True, 'no_create_edit':True}"/>-->
+<!--                            </group>-->
+<!--                            <group/>-->
+<!--                        </group>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="hr_loan_type_tree" model="ir.ui.view">
+            <field name="name">hr_loan_type_tree_view</field>
+            <field name="model">hr.loan.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="input_id"/>
+<!--                    <field name="salary_rule_id"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_loan_type" model="ir.actions.act_window">
+            <field name="name">Tipo de Prestamo</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.loan.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html"> 
+                <p class="o_view_nocontent_smiling_face"> 
+                    Haga click aqui para crear un nuevo Tipo de Prestamo.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="loan_type_menu" 
+                  action="action_loan_type" 
+                  parent="hr_base_it.menu_hr_tables_configuration" 
+                  sequence="8"
+                  groups="hr_advances_and_loans.group_hr_loans_root"
+        />
+    </data>
+</odoo>

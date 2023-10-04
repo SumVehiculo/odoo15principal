@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="FieldRadioIcon.button">
+        <div t-if="mode === 'edit'" class="custom-control custom-radio o_radio_item" aria-atomic="true">
+            <input type="radio" class="custom-control-input o_radio_input" t-att-checked="checked ? true : undefined" t-att-disabled="disabled ? true : undefined"
+                t-att-name="name" t-att-data-value="value[0]" t-att-data-index="index" t-att-id="id"/>
+            <label class="custom-control-label o_form_label" t-att-for="id"><img t-attf-src="/hr_leave_it/static/src/img/icons/{{value[1]}}" width="48" height="48" /></label>
+        </div>
+        <div t-else="">
+            <img t-attf-src="/hr_leave_it/static/src/img/icons/{{value[1]}}" width="48" height="48"/>
+        </div>
+    </t>
+
+</templates>

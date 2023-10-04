@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kardex_save,kardex_save,kardex_save_period_tabla.model_kardex_save,,1,1,1,1
+access_kardex_parameter,kardex_parameter,kardex_save_period_tabla.model_kardex_parameter,,1,1,1,1
+access_kardex_parameter_anios,kardex_parameter_anios,kardex_save_period_tabla.model_kardex_parameter_anios,,1,1,1,1
+access_kardex_save_period,kardex_save_period,kardex_save_period_tabla.model_kardex_save_period,,1,1,1,
+access_kardex_save_period_error,kardex_save_period_error,kardex_save_period_tabla.model_kardex_save_period_error,,1,1,1,1

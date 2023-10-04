@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="import_partner_it_wizard_view" model="ir.ui.view">
+			<field name="name">import.partner.it.form</field>
+			<field name="model">import.partner.it</field>
+			<field name="arch" type="xml">
+				<form string="Importar Partner">
+                    <group>
+                        <field name="partner_option" widget="radio" />
+                    </group>
+					<group>
+						<field name="file" filename="file_name" />
+						<field name="file_name" invisible="1"/>
+					</group>
+					<footer>
+						<button class="fa fa-upload btn-primary" name="import_partner" string="Import" type="object"/>
+						<button class="fa fa-download btn-primary" name="download_template" string="Descargar Plantilla" type="object"/>
+                    	<button class="fa fa-filter btn-primary" name="verify_if_exists_partner" string="Verificar Duplicados" type="object" attrs="{'invisible': [('partner_option', 'not in', ['create'])]}"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_import_partner_it_import_wizard" model="ir.actions.act_window">
+			<field name="name">Importar Partners</field>
+			<field name="res_model">import.partner.it</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<menuitem action="action_import_partner_it_import_wizard" 
+			id="import_partner_it_import_menu"
+			parent="account_base_import_it.menu_import_imports_partner" 
+			sequence="6"/>
+
+	</data>
+</odoo>
+ 

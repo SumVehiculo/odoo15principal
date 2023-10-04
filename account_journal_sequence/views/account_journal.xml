@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_journal_form_inherit" model="ir.ui.view">
+			<field name="name">account.journal.form</field>
+			<field name="model">account.journal</field>
+			<field name="inherit_id" ref="account.view_account_journal_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button name="generar_wizard" type="object" string="Generar Secuencia" class="oe_highlight"/>
+					</header>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.actions.server" id="action_create_sequence_account_journal">
+			<field name="name">Generar Secuencias</field>
+			<field name="model_id" ref="account.model_account_journal"/>
+			<field name="binding_model_id" ref="account.model_account_journal" />
+			<field name="binding_view_types">list</field>
+			<field name="state">code</field>
+			<field name="code">action = records.action_create_sequence()</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_document_type_form_inherit" model="ir.ui.view">
+		<field name="name">l10n_latam.document.type.form.inherit</field>
+		<field name="model">l10n_latam.document.type</field>
+		<field name="inherit_id" ref="l10n_latam_invoice_document.view_document_type_form"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//form" position="attributes">
+                    <attribute name="create">1</attribute>
+                    <attribute name="edit">1</attribute>
+				</xpath>
+				<xpath expr="//form" position="inside">
+					<notebook>
+						<page string="ITGRUPO">
+							<group>
+								<group>
+									<field name="digits_serie"/>
+									<field name="digits_number"/>
+									<field name="pse_code"/>
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</xpath>
+			</data>
+		</field>
+	</record>
+
+    <record id="view_document_type_tree_inherit" model="ir.ui.view">
+		<field name="name">l10n_latam.document.type.tree.inherit</field>
+		<field name="model">l10n_latam.document.type</field>
+		<field name="inherit_id" ref="l10n_latam_invoice_document.view_document_type_tree"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//tree" position="attributes">
+                    <attribute name="create">1</attribute>
+                    <attribute name="edit">1</attribute>
+				</xpath>
+				<field name="doc_code_prefix" position="after">
+					<field name="digits_serie" optional="hide"/>
+					<field name="digits_number" optional="hide"/>
+					<field name="pse_code" optional="hide"/>
+				</field>
+			</data>
+		</field>
+	</record>
+</odoo>

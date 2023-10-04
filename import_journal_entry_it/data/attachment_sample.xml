@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="journal_entry_template_xls" model="ir.attachment">
+            <field name="name">journal_entry_template.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_journal_entry_it/sample_import_file/journal_entry_template.xlsx"/>
+        </record>
+    </data>
+</odoo>

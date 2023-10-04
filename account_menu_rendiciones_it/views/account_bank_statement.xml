@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_bank_statement_surrender_tree_inherit" model="ir.ui.view">
+		<field name="name">account.bank.statement.surrender.inherit</field>
+		<field name="model">account.bank.statement</field>
+		<field name="inherit_id" ref="account_treasury_it.view_bank_statement_surrender_tree"/>
+		<field name="arch" type="xml">
+			<field name="name" position="attributes">
+				<attribute name="optional">show</attribute>
+			</field>
+            <field name="date" position="replace">
+				<field name="date_surrender" optional="show"/>
+				<field name="date_render_it" optional="show"/>
+				<field name="memory" optional="show"/>
+                <field name="employee_id" optional="show" string="Empleado"/>
+				<field name="einvoice_catalog_payment_id" optional="show"/>
+				<field name="amount_surrender" optional="show"/>
+			</field>
+            <field name="journal_id" position="attributes">
+				<attribute name="optional">hide</attribute>
+			</field>
+            <field name="company_id" position="attributes">
+				<attribute name="optional">hide</attribute>
+			</field>
+            <field name="balance_start" position="replace">
+			</field>
+            <field name="state" position="attributes">
+				<attribute name="optional">show</attribute>
+			</field>
+		</field>
+	</record>
+
+    <record id="view_bank_statement_form_button_user" model="ir.ui.view">
+        <field name="name">bank.statement.form.inherit</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account_accountant.view_bank_statement_form" />
+        <field name="arch" type="xml">
+           <xpath expr="//header/button[@name='button_post']" position="replace">
+                <button string="Publicar" states="open" class="oe_highlight" name="button_post" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager"/>
+            </xpath>
+            <xpath expr="//header/button[@name='button_validate_or_action']" position="replace">
+                <button string="Validar" class="oe_highlight" name="button_validate_or_action" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager" attrs="{'invisible':['|', '|', ('all_lines_reconciled', '=', False), ('line_ids','=',[]), ('state', '!=', 'posted')]}"/>
+            </xpath>
+            <xpath expr="//header/button[@name='button_reopen']" position="replace">
+                <button string="Restablecer a nuevo" name="button_reopen" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager" attrs="{'invisible': [('state', '!=', 'posted')]}"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_bank_reconcile_bank_statements']" position="replace">
+                <button string="Conciliar" class="oe_highlight" name="action_bank_reconcile_bank_statements" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager" attrs="{'invisible': ['|', '|', ('all_lines_reconciled', '=', True), ('line_ids', '=', []), ('state', '!=', 'posted')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--record id="view_bank_statement_form_button_admin" model="ir.ui.view">
+        <field name="name">bank.statement.form.inherit</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form" />
+        <field name="groups_id" eval="[(6, 0, [ref('account_menu_rendiciones_it.group_bank_statement_group_manager')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='button_post']" position="replace">
+                <button string="Post" states="open" class="oe_highlight" name="button_post" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager"/>
+            </xpath>
+            <xpath expr="//header/button[@name='button_validate_or_action']" position="replace">
+                <button string="Validate" class="oe_highlight" name="button_validate_or_action" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager" attrs="{'invisible':['|', '|', ('all_lines_reconciled', '=', False), ('line_ids','=',[]), ('state', '!=', 'posted')]}"/>
+            </xpath>
+            <xpath expr="//header/button[@name='button_reopen']" position="replace">
+                <button string="Reset to New" name="button_reopen" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager" attrs="{'invisible': [('state', '!=', 'posted')]}"/>
+            </xpath>
+            <xpath expr="//header/button[@name='button_reprocess']" position="replace">
+                <button string="Reset to Processing" name="button_reprocess" type="object" groups="account_menu_rendiciones_it.group_bank_statement_group_manager" attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+            </xpath>
+        </field>
+    </record-->
+
+    <record id="view_bank_statement_form_rendiciones_pers" model="ir.ui.view">
+        <field name="name">bank.statement.form.inherit.surrend</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account_fields_it.view_bank_statement_form_inherit" />
+        <field name="arch" type="xml">
+            <label for="balance_start" position="attributes">
+                <attribute name="attrs">{'invisible': [('journal_check_surrender','=',True)]}</attribute>
+            </label>
+            <label for="balance_end_real" position="attributes">
+                <attribute name="attrs">{'invisible': [('journal_check_surrender','=',True)]}</attribute>
+            </label>
+            <xpath expr="//field[@name='balance_start']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '=', 'confirm')],'invisible': [('journal_check_surrender','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='balance_end_real']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '=', 'confirm')],'invisible': [('journal_check_surrender','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//group/group[2]/div[1]/button[@name='open_cashbox_id']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|',('state','!=','open'),('journal_type','!=','cash'),('journal_check_surrender','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//group/group[2]/div[2]/button[@name='open_cashbox_id']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|',('state','!=','open'),('journal_type','!=','cash'),('journal_check_surrender','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

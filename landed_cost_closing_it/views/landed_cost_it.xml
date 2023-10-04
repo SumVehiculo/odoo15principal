@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <menuitem action="landed_cost_it.action_landed_cost_it" 
+				  id="menu_landed_cost_it_purchase" 
+				  parent="purchase.menu_procurement_management"
+				  sequence="99"
+				  groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

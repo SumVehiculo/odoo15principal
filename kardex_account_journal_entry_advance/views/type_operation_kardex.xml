@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_type_operation_kardex_form_inherit" model="ir.ui.view">
+		<field name="name">type.operation.kardex.form.inherit</field>
+		<field name="model">type.operation.kardex</field>
+		<field name="inherit_id" ref="kardex_fisico_it.view_type_operation_kardex_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='name']" position="after">
+				<field name="account_id"/>
+			</xpath>
+		</field>
+	</record>
+
+    <menuitem action="kardex_fisico_it.action_type_operation_kardex_form" 
+              id="menu_action_type_operation_kardex_form_advance"               
+              sequence="98"
+			  name="Tipos de Movimientos Contables"
+			  parent="stock.menu_stock_config_settings"/>
+</odoo>

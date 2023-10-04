@@ -1,0 +1,16 @@
+<odoo>
+	<data>
+		<record id="view_mpicking_form_inherit_landedcost" model="ir.ui.view">
+			<field name="name">picking.form.inherit.landedcost</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//notebook/page[@name='extra']/group/group/field[@name='group_id']" position="before">
+						<field name="landed_cost_id"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

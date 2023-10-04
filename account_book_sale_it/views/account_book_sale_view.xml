@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_book_sale_view_tree" model="ir.ui.view">
+            <field name="name">account.book.sale.view.tree</field>
+            <field name="model">account.book.sale.view</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Registro de Ventas" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha_cont"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_e"/>
+                    <field name="fecha_v"/>
+                    <field name="td"/>
+                    <field name="serie"/>
+                    <field name="anio"/>
+                    <field name="numero"/>
+                    <field name="tdp"/>
+                    <field name="docp"/>
+                    <field name="namep"/>
+                    <field name="exp" sum="exp"/>
+                    <field name="venta_g" sum="venta_g"/>
+                    <field name="inaf" sum="inaf"/>
+                    <field name="exo" sum="exo"/>
+                    <field name="isc_v" sum="isc_v"/>
+                    <field name="icbper" sum="icbper"/>
+                    <field name="otros_v" sum="otros_v"/>
+                    <field name="igv_v" sum="igv_v"/>
+                    <field name="total" sum="total"/>
+                    <field name="name"/>
+                    <field name="monto_me"/>
+                    <field name="currency_rate"/>
+                    <field name="fecha_det"/>
+                    <field name="comp_det"/>
+                    <field name="f_doc_m"/>
+                    <field name="td_doc_m"/>
+                    <field name="serie_m"/>
+                    <field name="numero_m"/>
+                    <field name="glosa"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_book_sale_usd_view_tree" model="ir.ui.view">
+            <field name="name">account.book.sale.usd.view.tree</field>
+            <field name="model">account.book.sale.view</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Registro de Ventas" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha_cont"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_e"/>
+                    <field name="fecha_v"/>
+                    <field name="td"/>
+                    <field name="serie"/>
+                    <field name="anio"/>
+                    <field name="numero"/>
+                    <field name="tdp"/>
+                    <field name="docp"/>
+                    <field name="namep"/>
+                    <field name="exp" sum="exp"/>
+                    <field name="venta_g" sum="venta_g"/>
+                    <field name="inaf" sum="inaf"/>
+                    <field name="exo" sum="exo"/>
+                    <field name="isc_v" sum="isc_v"/>
+                    <field name="icbper" sum="icbper"/>
+                    <field name="otros_v" sum="otros_v"/>
+                    <field name="igv_v" sum="igv_v"/>
+                    <field name="total" sum="total"/>
+                    <field name="name"/>
+                    <field name="currency_rate"/>
+                    <field name="fecha_det"/>
+                    <field name="comp_det"/>
+                    <field name="f_doc_m"/>
+                    <field name="td_doc_m"/>
+                    <field name="serie_m"/>
+                    <field name="numero_m"/>
+                    <field name="glosa"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_book_sale_view_search" model="ir.ui.view">
+            <field name="name">account.book.sale.view.search</field>
+            <field name="model">account.book.sale.view</field>
+            <field name="arch" type="xml">
+                <search string="Registro de Ventas">
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_e"/>
+                    <field name="namep"/>
+                    <field name="docp"/>
+                    <field name="numero"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+                        <filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+                        <filter string="Fecha Emision" name="fecha_e" icon="terp-partner" context="{'group_by':'fecha_e'}"/>
+                        <filter string="Partner" name="namep" icon="terp-partner" context="{'group_by':'namep'}"/>
+                        <filter string="Tipo de Documento" name="td" icon="terp-partner" context="{'group_by':'td'}"/>
+                        <filter string="Número Comprobante" name="numero" icon="terp-partner" context="{'group_by':'numero'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_book_sale_view_it" model="ir.actions.act_window">
+            <field name="name">Registro de Ventas</field>
+            <field name="res_model">account.book.sale.view</field>
+            <field name="view_id" ref="view_account_book_sale_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_book_sale_view_search"/>
+        </record>
+
+    </data>
+</odoo>

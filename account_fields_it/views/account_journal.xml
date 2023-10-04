@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_journal_form_inherit" model="ir.ui.view">
+			<field name="name">view.account.journal.form.inherit</field>
+			<field name="model">account.journal</field>
+			<field name="inherit_id" ref="account.view_account_journal_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//notebook" position="inside">
+						<page string="ITGRUPO">
+							<group>
+								<group>
+									<field name="sequence_id_it" readonly="1" required="0"/>
+                        			<field name="register_sunat"/>
+								</group>
+								<group>
+									<field name="voucher_edit"/>
+									<field name="check_surrender"/>
+									
+								</group>
+							</group>
+							<group string="Pagos Multiples" id="multipayment">
+								<group>
+									<field name="check_retention" attrs="{'invisible':[('type', '!=', 'general')]}"/>
+								</group>
+								<group>
+									<field name="account_multipayment_id" attrs="{'invisible':[('check_retention', '=', False)]}"/>
+									<field name="multipayment_precentage" widget="percentage" attrs="{'invisible':[('check_retention', '=', False)]}"/>
+								</group>
+							</group>
+						</page>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_cashflow" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit.cashflow</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<field name="dir_create_file" position="after">
+				<field name="use_counterpart_cash_flow"/>
+			</field>
+		</field>
+	</record>
+</odoo>

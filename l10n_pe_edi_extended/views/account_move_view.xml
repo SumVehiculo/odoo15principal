@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="detail_anticipo" model="ir.ui.view">
+            <field name="model">account.move.line</field>
+            <field name="name">form_l10n_pe_edi.anticipo</field>
+            <field name="arch" type="xml">
+                 <form string="Integrity Sale">
+                     <sheet>
+                         <group>
+                             <field name="name" readonly="1" />
+                             <field name="l10n_pe_dte_allowance_charge_reason_code" string="Disc. Code" optional="hide"/>
+                             <field name="l10n_pe_dte_advance_line" />
+                             <field name="l10n_pe_dte_advance_type" attrs="{'readonly': [('l10n_pe_dte_advance_line','!=', True)]}" />
+                             <field name="l10n_pe_dte_advance_serial" attrs="{'readonly': [('l10n_pe_dte_advance_line','!=', True)]}" />
+                             <field name="l10n_pe_dte_advance_number" attrs="{'readonly': [('l10n_pe_dte_advance_line','!=', True)]}" />
+                             <field name="l10n_pe_dte_advance_date" attrs="{'readonly': [('l10n_pe_dte_advance_line','!=', True)]}" />
+                         </group>
+                     </sheet>
+                 </form>
+
+            </field>
+
+        </record>
+
+
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="name">account.move.form.l10n_pe_edi</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="before">
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible':['|','|',('l10n_pe_dte_status_response','=',False),('l10n_pe_dte_status_response','=',''),('l10n_pe_dte_is_einvoice','=',False)]}">
+                        <strong><field style="display:inline" name="l10n_pe_dte_status_response"/></strong> <button string="Verify Again" name="l10n_pe_dte_action_check" type="object" class="btn-link" groups="account.group_account_manager"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible':['|','|',('l10n_pe_dte_void_status_response','=',False),('l10n_pe_dte_void_status_response','=',''),('l10n_pe_dte_is_einvoice','=',False)]}">
+                        <strong><field style="display:inline" name="l10n_pe_dte_void_status_response"/></strong>
+                    </div>
+                </xpath>
+                <button name="button_draft" position="after">
+                    <button name="%(l10n_pe_dte_move_cancel_action)d" string="Cancel in SUNAT" type="action" class="btn btn-danger" attrs="{'invisible':['|', ('state','!=','posted'), ('l10n_pe_dte_is_einvoice', '=', 'False')]}" groups="account.group_account_manager"/>
+                </button>
+                <widget name="web_ribbon" position="after">
+                    <widget name="web_ribbon" title="Cancelled" bg_color="bg-danger" attrs="{'invisible': ['|','|',('l10n_pe_dte_void_status', '!=', 'accepted'), ('state', '!=', 'cancel'), ('l10n_pe_dte_is_einvoice', '=', 'False')]}"/>
+                </widget>
+                <div class="oe_button_box" position="inside">
+                    <button type="object" class="oe_stat_button" name="l10n_pe_dte_action_send" icon="fa-cloud-upload" attrs="{'invisible':['|','|',('l10n_pe_dte_status','!=','not_sent'),('state','not in',['posted']),('l10n_pe_dte_is_einvoice', '=', False)]}">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Send to</span>
+                            <span class="o_stat_text">SUNAT</span>
+                        </div>
+                    </button>
+                    <button type="object" class="text-danger" name="l10n_pe_dte_action_check" icon="fa-refresh" attrs="{'invisible':['&amp;','|', ('l10n_pe_dte_is_einvoice', '=', 'False'),('l10n_pe_dte_status','!=','ask_for_status'),('l10n_pe_dte_void_status','!=','ask_for_status')]}">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Check</span>
+                            <span class="o_stat_text">Status</span>
+                        </div>
+                    </button>
+                    <button class="text-success" icon="fa-check" attrs="{'invisible':['|',('l10n_pe_dte_status','!=','accepted'), ('l10n_pe_dte_is_einvoice', '=', 'False')]}">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Accepted by</span>
+                            <span class="o_stat_text">SUNAT</span>
+                        </div>
+                    </button>
+                </div>
+                <notebook>
+                    <page string="Electronic Invoice" name="pe_electronic_invoice" attrs="{'invisible':[('l10n_pe_dte_is_einvoice', '=', False)]}">
+                        <group>
+                            <field name="l10n_pe_dte_is_einvoice" invisible="1"/>
+                            <label for="l10n_pe_dte_status"/>
+                            <div name="l10n_pe_dte_status_container">
+                                <field name="l10n_pe_dte_status" class="oe_inline" readonly="1"/>
+                            </div>
+                            <field name="l10n_pe_dte_void_status" readonly="1" attrs="{'invisible':[('state','!=','cancel')]}"/>
+                            <field name="l10n_pe_dte_cancel_reason" readonly="1" attrs="{'invisible':[('state','!=','cancel')]}"/>
+                            <field name="l10n_pe_dte_partner_status" readonly="1"/>
+                            <field name="l10n_pe_dte_file_link" widget="url" readonly="1"/>
+                            <field name="l10n_pe_dte_hash" readonly="1"/>
+                            <field name="l10n_pe_dte_pdf_file_link" widget="url" readonly="1"/>
+                            <field name="l10n_pe_dte_cdr_file_link" widget="url" readonly="1"/>
+                            <field name="l10n_pe_dte_cdr_void_file_link" widget="url" readonly="1" attrs="{'invisible':[('state','!=','cancel')]}"/>
+                        </group>
+                    </page>
+                </notebook>
+                <field name="payment_reference" position="after">
+                    <field name="l10n_pe_dte_service_order" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'out_receipt'))], 'readonly': [('state', '!=', 'draft')]}"/>
+                </field>
+                <field name="l10n_latam_document_type_id" position="after">
+                    <field name="l10n_pe_dte_operation_type" />
+                </field>
+                <field name="invoice_user_id" position="after">
+                    <field name="l10n_pe_dte_credit_note_type" attrs="{'invisible': [('move_type', 'not in', ['out_refund', 'in_refund'])],'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="l10n_pe_dte_debit_note_type" attrs="{'invisible': [('move_type', 'not in', ['out_invoice', 'in_invoice'])],'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="l10n_pe_dte_rectification_ref_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="l10n_pe_dte_rectification_ref_number" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </field>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="after">
+                    <button name="show_detail_anticipo" string="+" type="object"
+                                                attrs="{'invisible': [('id','=',False)] }"
+                                                icon="fa-external-link" width="0.1"  options="{&quot;warn&quot;: true  }"/>
+
+                </xpath>
+                <xpath expr="//sheet/notebook" position="after">
+                    <group id="pe_dte_retention" string="IGV Retention">
+                        <field name="l10n_pe_dte_retention_type"/>
+                        <field name="l10n_pe_dte_amount_retention_base" attrs="{'invisible':[('l10n_pe_dte_retention_type','not in',('01','02'))]}"/>
+                        <field name="l10n_pe_dte_amount_retention" attrs="{'invisible':[('l10n_pe_dte_retention_type','not in',('01','02'))]}"/>
+                    </group>
+                    <field name="invoice_payment_fee_ids" attrs="{'readonly': [('move_type', 'not in', ['out_refund', 'in_refund'])]}">
+                        <tree editable="bottom">
+                            <field name="sequence"/>
+                            <field name="amount_total" sum="Total"/>
+                            <field name="date_due"/>
+                            <field name="currency_id"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="action_l10n_pe_dte_send_multi" model="ir.actions.server">
+            <field name="name">Send to PSE/OSE/SUNAT</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_view_types">list</field>
+            <field name="code">
+                records.l10n_pe_dte_action_send()
+            </field>
+        </record>
+
+        <record id="action_l10n_pe_dte_send_check_multi" model="ir.actions.server">
+            <field name="name">Check status at SUNAT</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_view_types">list</field>
+            <field name="code">
+                records.l10n_pe_dte_action_check()
+            </field>
+        </record>
+    </data>
+</odoo>

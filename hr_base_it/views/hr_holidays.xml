@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_holidays_form" model="ir.ui.view">
+		<field name="name">hr.holidays.form</field>
+		<field name="model">hr.holidays</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="date"/>
+							<field name="workday_id"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_holidays_tree" model="ir.ui.view">
+		<field name="name">hr.holidays.tree</field>
+		<field name="model">hr.holidays</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="date" optional="show"/>
+				<field name="workday_id" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_holidays" model="ir.actions.act_window">
+		<field name="name">Dias no Laborables</field>
+		<field name="res_model">hr.holidays</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Dias no Laborables aqui
+			</p>
+		</field>
+	</record>
+</odoo>

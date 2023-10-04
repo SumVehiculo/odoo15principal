@@ -1,0 +1,1 @@
+from . import sunat_table_data

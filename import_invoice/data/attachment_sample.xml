@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="sample_invoice_xls" model="ir.attachment">
+            <field name="name">invoice.xls</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_invoice/sample_import_file/invoice.xls"/>
+        </record>
+
+        <record id="sample_invoice_with_account_xls" model="ir.attachment">
+            <field name="name">invoice_with_account.xls</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_invoice/sample_import_file/invoice_with_account.xls"/>
+        </record>
+
+        <record id="sample_invoice_customer_xls" model="ir.attachment">
+            <field name="name">invoice_customer.xls</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_invoice/sample_import_file/invoice_customer.xls"/>
+        </record>
+
+        <record id="sample_invoice_with_account_customer_xls" model="ir.attachment">
+            <field name="name">invoice_with_account_customer.xls</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_invoice/sample_import_file/invoice_with_account_customer.xls"/>
+        </record>
+    </data>
+</odoo>

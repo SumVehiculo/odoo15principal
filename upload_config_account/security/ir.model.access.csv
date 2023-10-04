@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_upload_chart_account_it_group_user,upload.chart.account.it.user,model_upload_chart_account_it,account.group_account_manager,1,1,1,1

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
+		<field name="name">account.analytic.account.form.inherit</field>
+		<field name="model">account.analytic.account</field>
+		<field name="inherit_id" ref="account_budget.view_account_analytic_account_form_inherit_budget"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//notebook" position="inside">
+					<page string="ITGRUPO">
+						<group>
+							<group>
+								<field name="a_debit" domain="[('company_id', '=', company_id)]"/>
+								<field name="a_credit" domain="[('company_id', '=', company_id)]"/>
+							</group>
+						</group>
+					</page>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

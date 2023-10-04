@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+<!--
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field eval="12" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_right oe_button_box']" position="inside">
+                    <button type="object" 
+                        class="oe_stat_button"
+                        id="estadobutton_button"
+                        icon="fa-pencil-square-o"
+                        name="nohacernada">
+                        <div><strong><field name="is_closed_kardex"/></strong><br/>Estado del Kardex</div>
+                    </button>
+                </xpath>
+
+                <field name="date" position="after">
+                    <field name="fecha_ingreso_lote" />
+                </field>
+
+            </field>
+        </record>   
+-->
+    <record id="stock_picking_cerradi" model="ir.ui.view">
+        <field name="name">stock.picking.cerrado</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="before">
+                <field name="cerrado_krdx" invisible="1"/>
+                <widget name="web_ribbon" title="Periodo Cerrado" attrs="{'invisible': [('cerrado_krdx', '!=', True)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+        <record model="ir.ui.view" id="kardex_cerrar_periodo_form">
+            <field name="name">Kardex Cerrar Periodo Form</field>
+            <field name="model">kardex.cerrado.config</field>
+            <field name="arch" type="xml">
+                <form string="Kardex Cerrado Periodo" version="8.0">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" readonly="1"/>                            
+                        </group>
+                        <group>
+                            <field name="fecha_inicio"/>
+                            <field name="fecha_fin"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="kardex_cerrar_periodo_tree">
+            <field name="name">Kardex Cerrar Periodo Tree</field>
+            <field name="model">kardex.cerrado.config</field>
+            <field name="arch" type="xml">
+                <tree string="Kardex Cerrado Periodo">
+                    <field name="name"/>
+                    <field name="fecha_inicio"/>
+                    <field name="fecha_fin"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="kardex_cerrar_periodo_action">
+            <field name="name">Kardex Cerrar Periodo</field>
+            <field name="res_model">kardex.cerrado.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="kardex_cerrar_periodo_action" id="menu_kardex_cerrar_periodo" parent="account.menu_finance_configuration" groups="cerrar_kardex_it.group_kardex_cerrado_id" />
+
+    </data>
+</openerp>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="account_template_multipayment_form_view" model="ir.ui.view">
+			<field name="name">account.template.multipayment.form</field>
+			<field name="model">account.template.multipayment</field>
+			<field name="arch" type="xml">
+				<form string="Plantilla Pagos Múltiples">
+					<group name="main">
+						<group name="main_1"> 
+							<field name="name"/>
+							<field name="account_id"/>
+						</group>
+						<group name="main_2">
+							<field name="analytic_account_id"/>
+							<field name="analytic_tag_id"/>
+							<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/> 
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_template_multipayment_view_tree" model="ir.ui.view">
+			<field name="name">account.template.multipayment.view.tree</field>
+			<field name="model">account.template.multipayment</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="account_id"/>
+					<field name="analytic_account_id" optional="hide"/>
+					<field name="analytic_tag_id" optional="hide"/>
+					<field name="company_id" groups="base.group_multi_company"/> 
+				</tree>
+			</field>
+		</record>
+
+		<record id="account_template_multipayment_action" model="ir.actions.act_window">
+			<field name="name">Plantillas Pagos Múltiples</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.template.multipayment</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera Plantilla de Pagos Múltiples aqui
+			</p>
+			</field>
+		</record>
+
+		<menuitem action="account_template_multipayment_action" 
+				  id="menu_account_template_multipayment" 
+				  parent="account_treasury_it.sub_menu_treasury_it4" 
+				  sequence="6" 
+				  groups="account.group_account_manager"/>
+	</data>
+</odoo>

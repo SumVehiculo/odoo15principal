@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<function model="hr.salary.rule" name="store_salary_rules"/>
+	<data noupdate="1">
+		<record model='hr.salary.rule' id="salary_rule_BAS">
+			<field name='name'>Básico</field>
+			<field name='code'>BAS</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>1</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = (worked_days.DLAB.number_of_days) * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_FAL">
+			<field name='name'>Faltas</field>
+			<field name='code'>FAL</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>2</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days.FAL.number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='DES_AFE'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TAR">
+			<field name='name'>Tardanzas</field>
+			<field name='code'>TAR</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>3</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days.TAR.number_of_hours * (payslip.wage/30/8)
+			</field>
+			<field name='category_id' ref='DES_AFE'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_DMED">
+			<field name='name'>Descanso Médico</field>
+			<field name='code'>DMED</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>4</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days.DMED.number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_BAS_M">
+			<field name='name'>Basico del mes</field>
+			<field name='code'>BAS_M</field>
+			<field name='sunat_code'>0121</field>
+			<field name='sequence'>10</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS - FAL - TAR + DMED
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_AF">
+			<field name='name'>Asignación Familiar</field>
+			<field name='code'>AF</field>
+			<field name='sunat_code'>0201</field>
+			<field name='sequence'>11</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if employee.children > 0 and contract.labor_regime !='fourth-fifth':
+	if worked_days.DVAC.number_of_days ==30 or worked_days.SENF.number_of_days ==30 or worked_days.SMAR.number_of_days ==30:
+		result=0
+	else:
+		result = payslip.rmv * 0.10
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_HE25">
+			<field name='name'>Horas extras 25%</field>
+			<field name='code'>HE25</field>
+			<field name='sunat_code'>0105</field>
+			<field name='sequence'>12</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = (((payslip.wage+AF)/30/8) * (1+worked_days.HE25.rate/100)) * worked_days.HE25.number_of_hours
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_HE35">
+			<field name='name'>Horas extras de 35%</field>
+			<field name='code'>HE35</field>
+			<field name='sunat_code'>0106</field>
+			<field name='sequence'>13</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = (((payslip.wage+AF)/30/8) * (1+worked_days.HE35.rate/100)) * worked_days.HE35.number_of_hours
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_HE100">
+			<field name='name'>Horas extras 100%</field>
+			<field name='code'>HE100</field>
+			<field name='sunat_code'>0107</field>
+			<field name='sequence'>14</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = (((payslip.wage+AF)/30/8) * (1+worked_days.HE100.rate/100)) * worked_days.HE100.number_of_hours
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_BONR">
+			<field name='name'>Bonificaciones regulares</field>
+			<field name='code'>BONR</field>
+			<field name='sunat_code'>0306</field>
+			<field name='sequence'>25</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.BONRER.amount if inputs.BONRER else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_BONI_EX">
+			<field name='name'>Bonificacion Extraordinaria</field>
+			<field name='code'>BONI_EX</field>
+			<field name='sunat_code'>0312</field>
+			<field name='sequence'>26</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.BONI_EX.amount if inputs.BONI_EX else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_SMAR">
+			<field name='name'>Subsidio Maternidad</field>
+			<field name='code'>SMAR</field>
+			<field name='sunat_code'>0915</field>
+			<field name='sequence'>27</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.SMAR.amount if inputs.SMAR else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_SENF">
+			<field name='name'>Subsidio por enfermedad</field>
+			<field name='code'>SENF</field>
+			<field name='sunat_code'>0916</field>
+			<field name='sequence'>28</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.SENF.amount if inputs.SENF else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_VAC">
+			<field name='name'>Vacaciones</field>
+			<field name='code'>VAC</field>
+			<field name='sunat_code'>0118</field>
+			<field name='sequence'>29</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if inputs.VAC.amount >0:
+    result = inputs.VAC.amount if inputs.VAC else 0
+else:
+    result = (worked_days.DVAC.number_of_days) * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_VATRU">
+			<field name='name'>Vacaciones Truncas</field>
+			<field name='code'>VATRU</field>
+			<field name='sunat_code'>0114</field>
+			<field name='sequence'>30</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.VAC_TRU.amount if inputs.VAC_TRU else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_GRA">
+			<field name='name'>Gratificaciones de fiestas patrias y navidad</field>
+			<field name='code'>GRA</field>
+			<field name='sunat_code'>0406</field>
+			<field name='sequence'>31</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.GRA.amount if inputs.GRA else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_BON9">
+			<field name='name'>Bonificacion 9%</field>
+			<field name='code'>BON9</field>
+			<field name='sunat_code'>0312</field>
+			<field name='sequence'>32</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.BON9.amount if inputs.BON9 else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_GRA_TRU">
+			<field name='name'>Gratificación Trunca </field>
+			<field name='code'>GRA_TRU</field>
+			<field name='sunat_code'>0407</field>
+			<field name='sequence'>33</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.GRA_TRU.amount if inputs.GRA_TRU else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_BON9_TRU">
+			<field name='name'>Bonificacion 9% Trunca </field>
+			<field name='code'>BON9_TRU</field>
+			<field name='sunat_code'>0313</field>
+			<field name='sequence'>34</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.BON9_TRU.amount if inputs.BON9_TRU else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_CTS">
+			<field name='name'>Compensación por tiempo de servicios</field>
+			<field name='code'>CTS</field>
+			<field name='sunat_code'>0904</field>
+			<field name='sequence'>35</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.CTS.amount if inputs.CTS else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_CTS_TRU">
+			<field name='name'>CTS Trunca</field>
+			<field name='code'>CTS_TRU</field>
+			<field name='sunat_code'>0904</field>
+			<field name='sequence'>36</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.CTS_TRU.amount if inputs.CTS_TRU else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_TINGR">
+			<field name='name'>Total Ingresos </field>
+			<field name='code'>TINGR</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>54</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS_M+AF+TOT_EXT+BONR+BONI_EX+SMAR+SENF+VAC+VATRU+GRA+GRA_TRU+BON9+BON9_TRU+CTS+CTS_TRU+COMI+DPAT+UTIL
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_AONP">
+			<field name='name'>Ingresos Afectos ONP</field>
+			<field name='code'>AONP</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>55</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS_M+AF+TOT_EXT+BONR+VAC+VATRU+COMI+DPAT
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_AAFP">
+			<field name='name'>Ingresos Afectos AFP</field>
+			<field name='code'>AAFP</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>56</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.exception in ('I','O'):
+	result=0
+else:
+	result = BAS_M+AF+TOT_EXT+BONR+SMAR+SENF+VAC+VATRU+COMI+DPAT
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ONP">
+			<field name='name'>ONP</field>
+			<field name='code'>ONP</field>
+			<field name='sunat_code'>0607</field>
+			<field name='sequence'>57</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.membership_id.name == 'ONP':
+	result = round((payslip.retirement_fund/100) * AONP, 2)
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='APOR_TRA'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_A_JUB">
+			<field name='name'>AFP Aporte Fondo de Pensiones</field>
+			<field name='code'>A_JUB</field>
+			<field name='sunat_code'>0608</field>
+			<field name='sequence'>58</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.membership_id.name == 'ONP':
+	result = 0
+elif payslip.membership_id.name == 'AFP HABITAT':
+	result = round((payslip.retirement_fund/100) * AAFP, 2)
+elif payslip.membership_id.name == 'AFP INTEGRA':
+	result = round((payslip.retirement_fund/100) * AAFP, 2)
+elif payslip.membership_id.name == 'AFP PRIMA':
+	result = round((payslip.retirement_fund/100) * AAFP, 2)
+elif payslip.membership_id.name == 'AFP PROFUTURO':
+	result = round((payslip.retirement_fund/100) * AAFP, 2)
+elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+	result = round((payslip.retirement_fund/100) * AAFP, 2)
+elif payslip.membership_id.name == 'SIN REGIMEN':
+	result = 0
+			</field>
+			<field name='category_id' ref='APOR_TRA'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_COMFI">
+			<field name='name'>AFP Comisión Sobre Flujo</field>
+			<field name='code'>COMFI</field>
+			<field name='sunat_code'>0601</field>
+			<field name='sequence'>59</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.commision_type == 'flow':
+	if payslip.membership_id.name == 'ONP':
+		result = 0
+	elif payslip.membership_id.name == 'AFP HABITAT':
+		result = round((payslip.fixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'AFP INTEGRA':
+		result = round((payslip.fixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'AFP PRIMA':
+		result = round((payslip.fixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'AFP PROFUTURO':
+		result = round((payslip.fixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+		result = round((payslip.fixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'SIN REGIMEN':
+		result = 0
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='APOR_TRA'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_COMMIX">
+			<field name='name'>AFP Comisión Mixta</field>
+			<field name='code'>COMMIX</field>
+			<field name='sunat_code'>0601</field>
+			<field name='sequence'>60</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.commision_type == 'mixed':
+	if payslip.membership_id.name == 'ONP':
+		result = 0
+	elif payslip.membership_id.name == 'AFP HABITAT':
+		result = round((payslip.mixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'AFP INTEGRA':
+		result = round((payslip.mixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'AFP PRIMA':
+		result = round((payslip.mixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'AFP PROFUTURO':
+		result = round((payslip.mixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+		result = round((payslip.mixed_commision/100) * AAFP, 2)
+	elif payslip.membership_id.name == 'SIN REGIMEN':
+		result = 0
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='APOR_TRA'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_SEGI">
+			<field name='name'>AFP Prima de Seguros</field>
+			<field name='code'>SEGI</field>
+			<field name='sunat_code'>0606</field>
+			<field name='sequence'>61</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.is_older:
+    result = 0
+else:
+    if payslip.membership_id.name == 'ONP':
+        result = 0
+    elif payslip.membership_id.name == 'AFP HABITAT':
+        if AAFP &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'AFP INTEGRA':
+        if AAFP &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'AFP PRIMA':
+        if AAFP &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'AFP PROFUTURO':
+        if AAFP &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+        result = 0
+    elif payslip.membership_id.name == 'SIN REGIMEN':
+        result = 0
+			</field>
+			<field name='category_id' ref='APOR_TRA'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_QUINTA">
+			<field name='name'>Quinta Categoría</field>
+			<field name='code'>QUINTA</field>
+			<field name='sunat_code'>0605</field>
+			<field name='sequence'>66</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.QUINTA.amount if inputs.QUINTA else 0
+			</field>
+			<field name='category_id' ref='APOR_TRA'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_TDES">
+			<field name='name'>Total descuentos</field>
+			<field name='code'>TDES</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>86</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = TAT + TDESN
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_NETO">
+			<field name='name'>Neto a pagar </field>
+			<field name='code'>NETO</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>87</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = TINGR - TDES
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_AESSALUD">
+			<field name='name'>Afectos Essalud</field>
+			<field name='code'>AESSALUD</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>88</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS_M+AF+TOT_EXT+BONR+VAC+VATRU+COMI+DPAT
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ESSALUD">
+			<field name='name'>EsSalud</field>
+			<field name='code'>ESSALUD</field>
+			<field name='sunat_code'>0804</field>
+			<field name='sequence'>89</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.labor_regime  not in ('fourth-fifth','practice'):
+	if AESSALUD > payslip.rmv:
+		result = AESSALUD * 0.09
+	else:
+		result = payslip.rmv * 0.09
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='APOR_EMP'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_REMAFE">
+			<field name='name'>Remuneraciones Afectas</field>
+			<field name='code'>REMAFE</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>96</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.membership_id.is_afp:
+    result = (AAFP-VAC-VATRU)/(AAFP if AAFP>0 else 1)
+else:
+    result =(AONP-VAC-VATRU)/(AONP if AONP>0 else 1)
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_VACAFE">
+			<field name='name'>Vacaciones afectas</field>
+			<field name='code'>VACAFE</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>97</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.membership_id.is_afp:
+    result =(VAC+VATRU)/(AAFP if AAFP>0 else 1)
+else:
+    result =(VAC+VATRU)/(AONP if AONP>0 else 1)
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_NETREMU">
+			<field name='name'>Neto Remuneraciones</field>
+			<field name='code'>NETREMU</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>98</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+net_rem = TINGR-TDESN-VAC-VATRU-GRA_TRU-BON9_TRU-CTS_TRU-((TAT-QUINTA) * REMAFE)-QUINTA
+if net_rem &lt; 0:
+    result = 0
+else:
+    result = net_rem
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_NETVACA">
+			<field name='name'>Neto Vacaciones</field>
+			<field name='code'>NETVACA</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>99</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+net_vac = VAC+VATRU-((TAT-QUINTA) * VACAFE)
+if net_rem &lt; 0:
+    result = net_vac + net_rem
+else:
+    result = net_vac
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TOT_EXT">
+			<field name='name'>Total Horas Extras</field>
+			<field name='code'>TOT_EXT</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>15</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = HE25 + HE35 + HE100
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_INDEM">
+			<field name='name'>Indemnizacion</field>
+			<field name='code'>INDEM</field>
+			<field name='sunat_code'>0904</field>
+			<field name='sequence'>37</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.INDEM.amount if inputs.INDEM else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ROAQ">
+			<field name='name'>Remuneracion Ord. Afecta Quinta</field>
+			<field name='code'>ROAQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>100</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS_M+AF+TOT_EXT+BONR+VAC+VATRU+GRA_TRU+BON9_TRU+COMI+DPAT
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_REAQ">
+			<field name='name'>Remuneracion Extra Afecta Quinta</field>
+			<field name='code'>REAQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>101</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BONI_EX+UTIL
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_RAU">
+			<field name='name'>Remuneracion Afecta Utilidades</field>
+			<field name='code'>RAU</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>102</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS_M+AF+TOT_EXT+BONR+BONI_EX+VAC+VATRU+GRA+BON9+GRA_TRU+BON9_TRU+COMI+DPAT
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_COMI">
+			<field name='name'>Comisiones</field>
+			<field name='code'>COMI</field>
+			<field name='sunat_code'>0103</field>
+			<field name='sequence'>38</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.COMI.amount if inputs.COMI else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ADELANTO">
+			<field name='name'>Adelanto de Remuneracion</field>
+			<field name='code'>ADELANTO</field>
+			<field name='sunat_code'>0701</field>
+			<field name='sequence'>69</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.ADELANTO.amount if inputs.ADELANTO else 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ADE_QUIN">
+			<field name='name'>Adelanto Quincenal</field>
+			<field name='code'>ADE_QUIN</field>
+			<field name='sunat_code'>0701</field>
+			<field name='sequence'>70</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.ADE_QUIN.amount if inputs.ADE_QUIN else 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_DPAT">
+			<field name='name'>Descanso Paternidad</field>
+			<field name='code'>DPAT</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>39</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days.DPAT.number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_RET_JUD">
+			<field name='name'>Retención Judicial</field>
+			<field name='code'>RET_JUD</field>
+			<field name='sunat_code'>0703</field>
+			<field name='sequence'>71</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.RET_JUD.amount if inputs.RET_JUD else 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ADE_GRA">
+			<field name='name'>Adelanto de Gratificacion</field>
+			<field name='code'>ADE_GRA</field>
+			<field name='sequence'>72</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if inputs.ADE_GRA.amount >0:
+	result = inputs.ADE_GRA.amount if inputs.ADE_GRA else 0
+else:
+	result = (GRA+BON9-inputs.DES_BBSS.amount) if (GRA+BON9)>0 else 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ADE_CTS">
+			<field name='name'>Adelanto de CTS</field>
+			<field name='code'>ADE_CTS</field>
+			<field name='sequence'>73</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if inputs.ADE_CTS.amount >0:
+	result = inputs.ADE_CTS.amount if inputs.ADE_CTS else 0
+else:
+	result = (CTS-inputs.DES_BBSS.amount) if CTS>0 else 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ADE_VAC">
+			<field name='name'>Adelanto de Vacaciones</field>
+			<field name='code'>ADE_VAC</field>
+			<field name='sequence'>74</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if inputs.ADE_VAC.amount >0:
+	result = inputs.ADE_VAC.amount if inputs.ADE_VAC else 0
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_PREST">
+			<field name='name'>Prestamos al Personal</field>
+			<field name='code'>PREST</field>
+			<field name='sunat_code'>0706</field>
+			<field name='sequence'>75</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.PREST.amount if inputs.PREST else 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_DES_BBSS">
+			<field name='name'>Descuentos en BBSS</field>
+			<field name='code'>DES_BBSS</field>
+			<field name='sequence'>76</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.DES_BBSS.amount if inputs.DES_BBSS else 0
+			</field>
+			<field name='category_id' ref='DES_NET'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_UTIL">
+			<field name='name'>Utilidades</field>
+			<field name='code'>UTIL</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>40</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>False</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs.UTIL.amount if inputs.UTIL else 0
+			</field>
+			<field name='category_id' ref='ING'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TAT">
+			<field name='name'>Total Aportes Trabajador</field>
+			<field name='code'>TAT</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>67</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = ONP+A_JUB+COMFI+COMMIX+SEGI+QUINTA
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TDESN">
+			<field name='name'>Total Descuentos al Neto</field>
+			<field name='code'>TDESN</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>85</field>
+			<field name='appears_on_payslip'>True</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = ADELANTO+ADE_QUIN+RET_JUD+ADE_GRA+ADE_CTS+ADE_VAC+PREST+DES_BBSS
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_AEM">
+			<field name='name'>Total Aportes Empleador</field>
+			<field name='code'>AEM</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>95</field>
+			<field name='appears_on_payslip'>False</field>
+<!--			<field name='is_subtotal'>True</field>-->
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = ESSALUD
+			</field>
+			<field name='category_id' ref='SUB'/>
+			<field name='struct_id' ref='hr_base_it.base_structure'/>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="hr_payslip_run_form_inherit" model="ir.ui.view">
+			<field name="name">hr.payslip.run.form.inherit</field>
+			<field name="model">hr.payslip.run</field>
+			<field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//header" position="inside">
+					<button name="get_employees_news" string="Agregar Empleados" states="verify" type="object" class="oe_highlight"/>
+					<button name="set_draft" string="Volver a Borrador" type="object" states="verify" confirm="Volver Borrador este Lote eliminara todas las Nominas que existen actualmente ¿Esta seguro que desea hacer esto?"/>
+					<button name="compute_wds_by_lot" string="Dias Laborados" type="object" class="oe_highlight" states="verify"/>
+					<button name="recompute_payslips" string="Recalcular" type="object" class="oe_highlight" states="verify"/>
+					<button name="tab_payroll" string="Planilla Tabular" type="object" class="oe_highlight" attrs="{'invisible':[('state','not in',['verify','close','paid'])]}"/>
+					<button name="close_payroll" string="Cerrar" type="object" class="oe_highlight" states="verify" groups="hr_fields_it.group_hr_manager"/>
+					<button name="reopen_payroll" string="Reabrir Planilla" type="object" class="oe_highlight" states="close" groups="hr_fields_it.group_hr_manager"/>
+				</xpath>
+				<button name="action_draft" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</button>
+				<button name="action_validate" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</button>
+				<field name="credit_note" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				<xpath expr="//sheet" position="inside">
+					<field name="slip_ids">
+						<tree create="0">
+							<field name="number" optional="hide"/>
+							<field name="identification_id" optional="show"/>
+							<field name="employee_id"/>
+							<field name="income" optional="show"/>
+							<field name="worker_contributions" optional="show"/>
+							<field name="net_wage" optional="show"/>
+							<field name="net_discounts" optional="show"/>
+							<field name="net_to_pay" optional="show"/>
+							<field name="employer_contributions" optional="show"/>
+							<field name="state" optional="show"/>
+						</tree>
+					</field>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="hr_payslip_run_tree_inherit" model="ir.ui.view">
+			<field name="name">hr.payslip.run.tree.inherit</field>
+			<field name="model">hr.payslip.run</field>
+			<field name="inherit_id" ref="hr_payroll.hr_payslip_run_tree"/>
+			<field name="arch" type="xml">
+				<field name="credit_note" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+			</field>
+		</record>
+
+		<record id="tab_hr_payslip_run" model="ir.actions.server">
+			<field name="name">Planilla Tabular</field>
+			<field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="binding_model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="state">code</field>
+			<field name="code">action = records.tab_payroll()</field>
+		</record>
+<!--		<record id="plame_hr_payslip_run" model="ir.actions.server">-->
+<!--			<field name="name">Generar PLAME</field>-->
+<!--			<field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>-->
+<!--			<field name="binding_model_id" ref="hr_payroll.model_hr_payslip_run"/>-->
+<!--			<field name="state">code</field>-->
+<!--			<field name="code">action = records.generate_plame_wizard()</field>-->
+<!--		</record>-->
+
+		<record id="plame_rem_hr_payslip_run" model="ir.actions.server">
+			<field name="name">Exportar Plame .REM</field>
+			<field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="binding_model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="state">code</field>
+			<field name="code">action = records.export_plame()</field>
+		</record>
+		<record id="plame_hour_hr_payslip_run" model="ir.actions.server">
+			<field name="name">Exportar Plame .JOR</field>
+			<field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="binding_model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="state">code</field>
+			<field name="code">action = records.export_plame_hours()</field>
+		</record>
+		<record id="plame_suspenc_hr_payslip_run" model="ir.actions.server">
+			<field name="name">Exportar Plame .SNL</field>
+			<field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="binding_model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="state">code</field>
+			<field name="code">action = records.export_plame_suspencion()</field>
+		</record>
+
+		<record id="afp_net_hr_payslip_run" model="ir.actions.server">
+			<field name="name">Generar AFP NET</field>
+			<field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="binding_model_id" ref="hr_payroll.model_hr_payslip_run"/>
+			<field name="state">code</field>
+			<field name="code">action = records.afp_net()</field>
+		</record>
+
+		<record model="ir.ui.menu" id="hr_payroll.menu_hr_payslip_run">
+			<field name="name">Planillas</field>
+		</record>
+	</data>
+</odoo>

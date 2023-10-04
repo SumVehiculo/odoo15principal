@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_advance_root,hr_advance_root,hr_advances_and_loans.model_hr_advance,group_hr_advances_root,1,1,1,1
+access_hr_advance_type_root,hr_advance_type_root,hr_advances_and_loans.model_hr_advance_type,group_hr_advances_root,1,1,1,1
+access_hr_loan_root,hr_loan_root,hr_advances_and_loans.model_hr_loan,group_hr_loans_root,1,1,1,1
+access_hr_loan_type_root,hr_loan_type_root,hr_advances_and_loans.model_hr_loan_type,group_hr_loans_root,1,1,1,1
+access_hr_loan_line_root,hr_loan_line_root,hr_advances_and_loans.model_hr_loan_line,group_hr_loans_root,1,1,1,1
+access_report_cuenta_corriente_user,report.cuenta.corriente.user,model_report_cuenta_corriente,hr_payroll.group_hr_payroll_manager,1,1,1,1

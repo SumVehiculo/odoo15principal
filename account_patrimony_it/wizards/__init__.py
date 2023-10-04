@@ -1,0 +1,1 @@
+from . import net_patrimony_wizard

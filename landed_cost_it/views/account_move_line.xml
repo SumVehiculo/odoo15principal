@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_move_line_tree_landedcost" model="ir.ui.view">
+            <field name="name">account.move.line.tree.landedcost</field>
+            <field name="model">account.move.line</field>
+            <field name="arch" type="xml">
+                <tree string="Gastos Vinculados - Facturas" edit="false">
+                    <field name="invoice_date_landed"/>
+                    <field name="type_document_id"/>
+                    <field name="nro_comp"/>
+                    <field name="date" string="Fecha Contable"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="debit" sum="debit" string="Debe"/>
+                    <field name="amount_currency" sum="amount_currency" string="Monto ME"/>
+                    <field name="tc" string="TC"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_move_line_tree_grouped_inherit_field" model="ir.ui.view">
+            <field name="name">move.line.tree.grouped.inherit.field</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree_grouped"/>
+            <field name="arch" type="xml">
+                <field name="credit" position="after">
+                    <field name="landed_cost_id" optional="hide"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

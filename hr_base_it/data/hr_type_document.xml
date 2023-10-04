@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.type.document' id='document_DNI'>
+			<field name='afp_code'>0</field>
+			<field name='sunat_code'>1</field>
+			<field name='description'>DOCUMENTO NACIONAL DE IDENTIDAD</field>
+			<field name='name'>DNI</field>
+		</record>
+		<record model='hr.type.document' id='document_CARNE_EXT'>
+			<field name='afp_code'>1</field>
+			<field name='sunat_code'>4</field>
+			<field name='description'>CARNET DE EXTRANJERIA</field>
+			<field name='name'>CARNE EXT.</field>
+		</record>
+		<record model='hr.type.document' id='document_RUC'>
+			<field name='afp_code'></field>
+			<field name='sunat_code'>6</field>
+			<field name='description'>REG. UNICO DE CONTRIBUYENTES</field>
+			<field name='name'>RUC</field>
+		</record>
+		<record model='hr.type.document' id='document_PASAPORTE'>
+			<field name='afp_code'>4</field>
+			<field name='sunat_code'>7</field>
+			<field name='description'>PASAPORTE</field>
+			<field name='name'>PASAPORTE</field>
+		</record>
+		<record model='hr.type.document' id='document_CARNE_SOLIC_REFUGIO'>
+			<field name='afp_code'></field>
+			<field name='sunat_code'>9</field>
+			<field name='description'>CARNE DE SOLICIT DE REFUGIO</field>
+			<field name='name'>CARNE SOLIC REFUGIO</field>
+		</record>
+		<record model='hr.type.document' id='document_PART_NAC'>
+			<field name='afp_code'></field>
+			<field name='sunat_code'>11</field>
+			<field name='description'>PARTIDA DE NACIMIENTO</field>
+			<field name='name'>PART. NAC.</field>
+		</record>
+		<record model='hr.type.document' id='document_CARMP'>
+			<field name='afp_code'>2</field>
+			<field name='sunat_code'>NE</field>
+			<field name='description'>CARNET MILITAR Y POLICIAL</field>
+			<field name='name'>CARMP</field>
+		</record>
+		<record model='hr.type.document' id='document_LAT'>
+			<field name='afp_code'>3</field>
+			<field name='sunat_code'>NE</field>
+			<field name='description'>LIBRETA ADOLESCENTES TRABAJADOR</field>
+			<field name='name'>LAT</field>
+		</record>
+		<record model='hr.type.document' id='document_IA'>
+			<field name='afp_code'>5</field>
+			<field name='sunat_code'>NE</field>
+			<field name='description'>INEXISTENCIA/AFILIA</field>
+			<field name='name'>IA</field>
+		</record>
+		<record model='hr.type.document' id='document_PTP'>
+			<field name='afp_code'>6</field>
+			<field name='sunat_code'>NE</field>
+			<field name='description'>PERMISO TEMPORAL DE PERMANENCIA</field>
+			<field name='name'>PTP</field>
+		</record>
+	</data>
+</odoo>

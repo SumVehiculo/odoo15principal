@@ -1,0 +1,1354 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* logistic
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-25 04:26+0000\n"
+"PO-Revision-Date: 2021-11-25 04:26+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: logistic
+#: model:mail.template,subject:logistic.email_template_edi_despatch
+msgid "${object.company_id.name} Despatch (Ref ${object.name or 'n/a'})"
+msgstr "${object.company_id.name} Guia (Ref ${object.name or 'n/a'})"
+
+#. module: logistic
+#: model:ir.actions.report,print_report_name:logistic.logistic_despatchs
+msgid "(object._get_report_base_filename())"
+msgstr ""
+
+#. module: logistic
+#: model:mail.template,body_html:logistic.email_template_edi_despatch
+msgid ""
+"<div style=\"font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px;padding: 0px;\">\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;padding: 0px; font-size: 13px;\">\n"
+"        Dear\n"
+"        % if object.partner_id.parent_id:\n"
+"            ${object.partner_id.name} (${object.partner_id.parent_id.name}),\n"
+"        % else:\n"
+"            ${object.partner_id.name},\n"
+"        % endif\n"
+"        <br/><br/>\n"
+"        Here is your\n"
+"        % if object.name:\n"
+"            despatch <strong style=\"font-weight:bolder;\">${object.name}</strong>\n"
+"        % else:\n"
+"            despatch\n"
+"        %endif\n"
+"        % if object.despatch_origin:\n"
+"            (with reference: ${object.despatch_origin})\n"
+"        % endif\n"
+"        from ${object.company_id.name}.\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px;padding: 0px;\">\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;padding: 0px; font-size: 13px;\">\n"
+"        Estimados\n"
+"        % if object.partner_id.parent_id:\n"
+"            ${object.partner_id.name} (${object.partner_id.parent_id.name}),\n"
+"        % else:\n"
+"            ${object.partner_id.name},\n"
+"        % endif\n"
+"        <br><br>\n"
+"        Aqui esta su\n"
+"        % if object.name:\n"
+"            guia <strong style=\"font-weight:bolder;\">${object.name}</strong>\n"
+"        % else:\n"
+"            guia\n"
+"        %endif\n"
+"        % if object.despatch_origin:\n"
+"            (con referencia: ${object.despatch_origin})\n"
+"        % endif\n"
+"        de ${object.company_id.name}.\n"
+"        <br/><br/>\n"
+"        No dudes en contactarnos si tienes alguna duda.\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid ""
+"<span attrs=\"{'invisible': [('composition_mode', '!=', 'mass_mail')]}\">\n"
+"                                        <strong>Email mass mailing</strong> on\n"
+"                                        <span>the selected records</span>\n"
+"                                    </span>\n"
+"                                    <span>Followers of the document and</span>"
+msgstr ""
+"<span attrs=\"{'invisible': [('composition_mode', '!=', 'mass_mail')]}\">\n"
+"                                        <strong>Envio masivo de correo</strong> on\n"
+"                                        <span>Los registros seleccionados</span>\n"
+"                                    </span>\n"
+"                                    <span>Seguidores de este documento y</span>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.res_config_settings_view_pe_form
+msgid ""
+"<span class=\"fa fa-lg fa-truck-o\" title=\"Values set here are company-"
+"specific.\" role=\"img\" aria-label=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+"<span class=\"fa fa-lg fa-truck-o\" title=\"Los valores establecidos aquí son empresa -"
+"specific.\" role=\"img\" aria-label=\"Los valores establecidos aquí son empresa -"
+"specific.\" groups=\"base.group_multi_company\"/>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<span>Description</span>"
+msgstr "<span>Descripción</span>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<span>Quantity</span>"
+msgstr "<span>Cantidad</span>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<span>Source Document</span>"
+msgstr "<span>Documento de origen</span>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<span>Volume</span>"
+msgstr "<span>Volumen</span>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<span>Weight</span>"
+msgstr "<span>Peso</span>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<strong>Despatch Date:</strong>"
+msgstr "<strong>Fecha:</strong>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<strong>Receiver Code:</strong>"
+msgstr "<strong>Codigo de receptor:</strong>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<strong>Reference:</strong>"
+msgstr "<strong>Referencia:</strong>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<strong>Source:</strong>"
+msgstr "<strong>Fuente:</strong>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<strong>Start Date:</strong>"
+msgstr "<strong>Fecha inicio:</strong>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<strong>Total Volume</strong>"
+msgstr "<strong>Volumen Total</strong>"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "<strong>Total Weight</strong>"
+msgstr "<strong>Peso Total</strong>"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__access_warning
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__access_warning
+msgid "Access warning"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_needaction
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__active_domain
+msgid "Active domain"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_ids
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_exception_decoration
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_state
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__add_sign
+msgid "Add Sign"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Add contacts to notify..."
+msgstr "Agregar contactos a notificar"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__partner_ids
+msgid "Additional Contacts"
+msgstr "Contactos adicionales"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__partner_id
+msgid "Address"
+msgstr "Dirección"
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__no_auto_thread
+msgid ""
+"Answers do not go in the original document discussion thread. This has an "
+"impact on the generated message-id."
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Attach a file"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_attachment_count
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__attachment_ids
+msgid "Attachments"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__author_id
+msgid "Author"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__author_id
+msgid ""
+"Author of the message. If not set, email_from may hold an email address that"
+" did not match any partner."
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_expedition_form
+msgid "Authorize"
+msgstr "Autorizar"
+
+#. module: logistic
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_expedition__state__open
+msgid "Authorized"
+msgstr "Autorizado"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__opened_date
+msgid "Authorized at"
+msgstr "Autorizado el"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__opened_uid
+msgid "Authorized by"
+msgstr "Autorizado por"
+
+#. module: logistic
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_despatch__state__cancel
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_expedition__state__cancel
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "Cancelled despatch"
+msgstr "Guia Cancelada"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__carrier_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__carrier_id
+msgid "Carrier"
+msgstr "Transportista"
+
+#. module: logistic
+#: model_terms:ir.actions.act_window,help:logistic.action_logistic_despatch_tree
+msgid "Clic here to create a logistic despatch."
+msgstr "Clic aqui para crear una guia."
+
+#. module: logistic
+#: model_terms:ir.actions.act_window,help:logistic.action_logistic_point_tree
+msgid "Click here to create an expedition point."
+msgstr "Clic aqui para crear un punto de expedición."
+
+#. module: logistic
+#: model_terms:ir.actions.act_window,help:logistic.action_logistic_route_tree
+msgid "Click here to create an expedition route."
+msgstr "Click aqui para crear una ruta de expedición."
+
+#. module: logistic
+#: model_terms:ir.actions.act_window,help:logistic.action_logistic_expedition_tree
+msgid "Click here to create an expedition."
+msgstr "Click aqui para crear una expedición"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__code
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__code
+msgid "Code"
+msgstr "Código"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_res_company
+msgid "Companies"
+msgstr "Compañias"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__company_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__company_id
+msgid "Company"
+msgstr "Compañia"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__composer_id
+msgid "Composer"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__composition_mode
+msgid "Composition mode"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__body
+msgid "Contents"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__create_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__create_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__create_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__create_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__create_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__create_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__create_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__create_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__create_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__create_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__access_url
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__access_url
+msgid "Customer Portal URL"
+msgstr "Url de portal de cliente"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__date_order
+msgid "Date"
+msgstr "Fecha"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__issue_date
+msgid "Date despatch"
+msgstr "Fecha de emisión"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__date_end
+msgid "Date of end"
+msgstr "Fecha de fin"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__date_start
+msgid "Date of start"
+msgstr "Fecha de inicio"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__start_date
+msgid "Date start"
+msgstr "Fecha de inicio"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__auto_delete
+msgid "Delete Emails"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__auto_delete_message
+msgid "Delete Message Copy"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__auto_delete
+msgid "Delete sent emails (mass mailing only)"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__logistic_point_delivery_id
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Delivery"
+msgstr "Llegada"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__delivery_address_id
+msgid "Delivery Address"
+msgstr "Dirección de llegada"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__logistic_point_departure_id
+msgid "Departure"
+msgstr "Partida"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__name
+msgid "Description"
+msgstr "Descripción"
+
+#. module: logistic
+#: code:addons/logistic/models/expedition.py:0
+#: model:ir.actions.act_window,name:logistic.action_logistic_despatch_tree
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__despatch_id
+#: model:ir.model.fields,field_description:logistic.field_stock_picking__despatch_id
+#: model:ir.ui.menu,name:logistic.menu_action_logistic_despatch_tree
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_search
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_tree
+#, python-format
+msgid "Despatch"
+msgstr "Guia"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__despatch_sent
+msgid "Despatch Sent"
+msgstr "Guia enviada"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Despatch send & Print"
+msgstr "Enviar e Imprimir Guia"
+
+#. module: logistic
+#: model:mail.template,report_name:logistic.email_template_edi_despatch
+msgid ""
+"Despatch_${(object.name or '').replace('/','_')}${object.state == 'draft' "
+"and '_draft' or ''}"
+msgstr ""
+
+#. module: logistic
+#: model:ir.actions.report,name:logistic.logistic_despatchs
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__despatch_ids
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_expedition_form
+msgid "Despatchs"
+msgstr "Guias"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_expedition_form
+msgid "Despatchs related to pickings"
+msgstr "Guias relacionadas a pickings"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__display_name
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__display_name
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__display_name
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__display_name
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__display_name
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__auto_delete_message
+msgid ""
+"Do not keep a copy of the email in the document communication history (mass "
+"mailing only)"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_despatch__state__draft
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_expedition__state__draft
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: logistic
+#: code:addons/logistic/models/expedition.py:0
+#: code:addons/logistic/models/expedition.py:0
+#, python-format
+msgid "Draft Despatch"
+msgstr "Guia Borrador"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "Draft despatch"
+msgstr "Guia borrador"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_delivery_carrier__driver_id
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_res_partner__logistic_license_number
+#: model:ir.model.fields,field_description:logistic.field_res_users__logistic_license_number
+msgid "Driver License"
+msgstr "Licencia de conducir"
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_delivery_carrier__driver_id
+msgid "Driver of the vehicle"
+msgstr "Conductor del vehiculo"
+
+#. module: logistic
+#: model:ir.ui.menu,name:logistic.logistic_menu_action_delivery_carrier_tree
+msgid "Drivers"
+msgstr "Conductores"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__is_email
+msgid "Email"
+msgstr "Correo electrónico"
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__email_from
+msgid ""
+"Email address of the sender. This field is set when no matching partner is "
+"found and replaces the author_id field in the chatter."
+msgstr ""
+
+#. module: logistic
+#: model:ir.actions.act_window,name:logistic.action_logistic_expedition_tree
+#: model:ir.model.fields,field_description:logistic.field_stock_picking__expedition_id
+#: model:ir.ui.menu,name:logistic.menu_action_logistic_expedition_tree
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_expedition_form
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_expedition_search
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_expedition_tree
+msgid "Expedition"
+msgstr "Expedición"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_point_form
+msgid "Expedition Point"
+msgstr "Punto de expedición"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__route_id
+msgid "Expedition Route"
+msgstr "Ruta de expedición"
+
+#. module: logistic
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_expedition__state__done
+msgid "Finalized"
+msgstr "Finalizado"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__done_date
+msgid "Finalized at"
+msgstr "Finalizado el"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__done_uid
+msgid "Finalized by"
+msgstr "Finalizado por"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_follower_ids
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_channel_ids
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_partner_ids
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__email_from
+msgid "From"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_picking_form
+msgid "Generate Despatch"
+msgstr "Generar Guia"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__gross_weight
+msgid "Gross Weight"
+msgstr "Peso Bruto"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Header"
+msgstr "Cabecera"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__id
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__id
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__id
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__id
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__id
+msgid "ID"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_exception_icon
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__activity_exception_icon
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__message_needaction
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__message_unread
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__message_needaction
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__message_has_error
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__message_has_sms_error
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__message_has_error
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_despatch__type__in_despatch
+msgid "In Despatch"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__parent_id
+msgid "Initial thread message."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__internal_number
+msgid "Internal number"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_is_follower
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__printed
+msgid "Is Printed"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_res_partner__logistic_is_driver
+#: model:ir.model.fields,field_description:logistic.field_res_users__logistic_is_driver
+msgid "Is Vehicle Driver?"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__despatch_sent
+msgid "It indicates that the despatch has been sent."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__journal_id
+msgid "Journal"
+msgstr "Diario"
+
+#. module: logistic
+#: code:addons/logistic/models/expedition.py:0
+#, python-format
+msgid "Journal is required to manage the despatch sequence"
+msgstr "El diario es requerido para generar la secuencia de la guia"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_stock_warehouse__despatch_journal_ids
+msgid "Journals (Sequences)"
+msgstr "Diarios (Secuencias)"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch____last_update
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line____last_update
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send____last_update
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition____last_update
+#: model:ir.model.fields,field_description:logistic.field_logistic_point____last_update
+#: model:ir.model.fields,field_description:logistic.field_logistic_route____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__write_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__write_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__write_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__write_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__write_uid
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__write_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__write_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__write_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__write_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__write_date
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__layout
+msgid "Layout"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__line_ids
+msgid "Line"
+msgstr "Linea"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Lines"
+msgstr "Lineas"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__is_log
+msgid "Log an Internal Note"
+msgstr ""
+
+#. module: logistic
+#: model:ir.module.category,name:logistic.logistic_group_category
+#: model:ir.ui.menu,name:logistic.logistic_root
+#: model_terms:ir.ui.view,arch_db:logistic.res_config_settings_view_pe_form
+#: model_terms:ir.ui.view,arch_db:logistic.view_partner_form_toponyms
+msgid "Logistic"
+msgstr "Logistica"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_logistic_despatch_send
+msgid "Logistic Despatch Send"
+msgstr "Envio de guia"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_logistic_despatch
+msgid "Logistic Despatchs"
+msgstr "Guia"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_point_tree
+msgid "Logistic Points"
+msgstr "Puntos logisticos"
+
+#. module: logistic
+#: model:ir.actions.act_window,name:logistic.action_logistic_route_tree
+#: model:ir.ui.menu,name:logistic.menu_action_logistic_route_tree
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_route_form
+msgid "Logistic Route"
+msgstr "Rutas Logisticas"
+
+#. module: logistic
+#: model:ir.actions.act_window,name:logistic.action_logistic_point_tree
+#: model:ir.ui.menu,name:logistic.menu_action_logistic_point_tree
+msgid "Logistic points"
+msgstr "Puntos logisticos"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__mail_activity_type_id
+msgid "Mail Activity Type"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_main_attachment_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: logistic
+#: model:res.groups,name:logistic.group_manager
+msgid "Manager"
+msgstr "Administrador"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_has_error
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__record_name
+msgid "Message Record Name"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__message_type
+msgid ""
+"Message type: email for email message, notification for system message, "
+"comment for other messages such as user replies"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_ids
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__name
+#: model:ir.model.fields,field_description:logistic.field_logistic_route__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__record_name
+msgid "Name get of the related document."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__net_weight
+msgid "Net Weight"
+msgstr "Peso Neto"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_date_deadline
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_summary
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_type_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__no_auto_thread
+msgid "No threading for answers"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__note
+msgid "Notes"
+msgstr "Observaciones"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__notify
+msgid "Notify followers"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__notify
+msgid "Notify followers of the document (mass post only)"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_needaction_counter
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_has_error_counter
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__message_needaction_counter
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__message_has_error_counter
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__message_unread_counter
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_despatch__state__open
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Open"
+msgstr "Abrir"
+
+#. module: logistic
+#: model:ir.ui.menu,name:logistic.logistic_operations
+msgid "Operations"
+msgstr "Operaciones"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__despatch_origin
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Origin"
+msgstr "Origen"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__origin_address_id
+msgid "Origin Address"
+msgstr "Dirección de origen"
+
+#. module: logistic
+#: model:ir.model.fields.selection,name:logistic.selection__logistic_despatch__type__out_despatch
+msgid "Out Despatch"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__mail_server_id
+msgid "Outgoing mail server"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__packages
+msgid "Packages"
+msgstr "Bultos"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__parent_id
+msgid "Parent Message"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_delivery_carrier__partner_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__partner_id
+msgid "Partner"
+msgstr "Socio"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_res_company__logistic_picking_done_restrict
+#: model:ir.model.fields,field_description:logistic.field_res_config_settings__logistic_picking_done_restrict
+msgid "Picking Done Restriction"
+msgstr "Restricción de albarán validado"
+
+#. module: logistic
+#: code:addons/logistic/models/stock_picking.py:0
+#, python-format
+msgid "Picking status is not done"
+msgstr "El estado del albarán no esta realizado"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__picking_ids
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__picking_ids
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Pickings"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__access_url
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__access_url
+msgid "Portal Access URL"
+msgstr "URL de acceso a portal"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Preview as a PDF"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__is_print
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Print"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__partner_id
+msgid "Receiver"
+msgstr "Destinatario"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Recipients"
+msgstr "Destinatarios"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__ref
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__res_id
+msgid "Related Document ID"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__model
+msgid "Related Document Model"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__reply_to
+msgid ""
+"Reply email address. Setting the reply_to bypasses the automatic thread "
+"creation."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__reply_to
+msgid "Reply-To"
+msgstr ""
+
+#. module: logistic
+#: model:ir.ui.menu,name:logistic.logistic_reports
+msgid "Reports"
+msgstr "Informes"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__activity_user_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.res_config_settings_view_pe_form
+msgid "Restrict despatch creation only when picking has done."
+msgstr "Restricción de creación de guia de remisión solo cuando el albarán este realizado"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_has_sms_error
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__despatch_user_id
+msgid "Salesperson"
+msgstr "Responsable"
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Save as a new template"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Save as new template"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__access_token
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__access_token
+msgid "Security Token"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Send"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_form
+msgid "Send & Print"
+msgstr "Enviar e Imprimir"
+
+#. module: logistic
+#: model:ir.actions.act_window,name:logistic.despatch_send
+msgid "Send & print"
+msgstr "Enviar e Imprimir"
+
+#. module: logistic
+#: code:addons/logistic/models/expedition.py:0
+#: code:addons/logistic/wizards/logistic_despatch_send.py:0
+#, python-format
+msgid "Send Despatch"
+msgstr "Enviar Guia"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: logistic
+#: model:ir.ui.menu,name:logistic.logistic_settings
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr "Métodos de envío"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__state
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__activity_state
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__subject
+msgid "Subject"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.logistic_despatch_send_wizard_form
+msgid "Subject..."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__subtype_id
+msgid "Subtype"
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.report_despatch_document
+msgid "Tax ID"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__user_id
+msgid "Technical field used to fit the generic behavior in mail templates."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__despatch_origin
+msgid "The document(s) that generated the despatch."
+msgstr "Documentos que generaron la guia"
+
+#. module: logistic
+#: code:addons/logistic/wizards/logistic_despatch_send.py:0
+#, python-format
+msgid ""
+"The following despatch(s) will not be sent by email, because the receiver "
+"don't have email address."
+msgstr ""
+
+#. module: logistic
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_despatch_search
+#: model_terms:ir.ui.view,arch_db:logistic.view_logistic_expedition_search
+msgid "Today"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__tracking_code
+msgid "Tracking Code"
+msgstr "Código de seguimiento"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__type
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__message_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__type_name
+msgid "Type Name"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__activity_exception_decoration
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_unread
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__message_unread_counter
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__uom_id
+msgid "UoM"
+msgstr "UdM"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__weight_uom
+msgid "UoM of weight"
+msgstr "UdM del peso"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__use_active_domain
+msgid "Use active domain"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__template_id
+msgid "Use template"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__user_id
+#: model:res.groups,name:logistic.group_user
+msgid "User"
+msgstr "Usuario"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_delivery_carrier__vehicle_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__vehicle_id
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__vehicle_id
+msgid "Vehicle"
+msgstr "Vehiculo"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__driver_id
+msgid "Vehicle Carrier"
+msgstr "Conductor"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__driver_id
+msgid "Vehicle Driver"
+msgstr "Conductor"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__total_volume
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__volume
+msgid "Volume"
+msgstr "Volumen"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_stock_warehouse
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__warehouse_id
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_point__warehouse_ids
+msgid "Warehouses Related"
+msgstr "Almacenes relacionado"
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__website_message_ids
+#: model:ir.model.fields,field_description:logistic.field_logistic_expedition__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch__website_message_ids
+#: model:ir.model.fields,help:logistic.field_logistic_expedition__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch__total_weight
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_line__weight
+msgid "Weight"
+msgstr "Peso (KGM)"
+
+#. module: logistic
+#: model:ir.model.fields,help:logistic.field_logistic_despatch_send__is_log
+msgid "Whether the message is an internal note (comment mode only)"
+msgstr ""
+
+#. module: logistic
+#: code:addons/logistic/wizards/logistic_despatch_send.py:0
+#, python-format
+msgid "You can only send despatchs."
+msgstr ""
+
+#. module: logistic
+#: model:ir.model.fields,field_description:logistic.field_logistic_despatch_send__despatch_without_email
+msgid "despatch(s) that will not be sent"
+msgstr "guia(s) que no serán enviados"
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_logistic_despatch_line
+msgid "logistic.despatch.line"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_logistic_expedition
+msgid "logistic.expedition"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_logistic_point
+msgid "logistic.point"
+msgstr ""
+
+#. module: logistic
+#: model:ir.model,name:logistic.model_logistic_route
+msgid "logistic.route"
+msgstr ""

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_bank_statement_form_inherit" model="ir.ui.view">
+			<field name="name">bank.statement.form.inherit</field>
+			<field name="model">account.bank.statement</field>
+			<field name="inherit_id" ref="account.view_bank_statement_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//page[@name='statement_line_ids']//field[@name='line_ids']//tree/field[@name='ref']" position="before">
+						<field name="type_document_id" optional="show" attrs="{'readonly': [('is_reconciled','=',True)]}"/>
+					</xpath>
+					<xpath expr="//page[@name='statement_line_ids']//field[@name='line_ids']//tree/field[@name='ref']" position="after">
+						<field name="catalog_payment_id" attrs="{'readonly': [('is_reconciled','=',True)]}"/>
+						<field name="account_cash_flow_id"/>
+					</xpath>
+					<xpath expr="//page[@name='statement_line_ids']//field[@name='line_ids']//tree/button[@name='button_undo_reconciliation']" position="attributes">
+						<attribute name="string"></attribute>
+					</xpath>
+					<xpath expr="//sheet/group[1]/group[2]/div[2]" position="after">
+						<field name="journal_check_surrender" invisible="1"/>
+					</xpath>
+					<xpath expr="//page[@name='statement_line_ids']//field[@name='line_ids']//tree/field[@name='online_transaction_identifier']" position="attributes">
+						<attribute name="attrs">{'column_invisible': [('parent.journal_check_surrender', '=', True)]}</attribute>
+					</xpath>
+					<xpath expr="//page[@name='statement_line_ids']//field[@name='line_ids']//tree/field[@name='online_account_id']" position="attributes">
+						<attribute name="attrs">{'column_invisible': [('parent.journal_check_surrender', '=', True)]}</attribute>
+					</xpath>
+					<xpath expr="//page[@name='statement_line_ids']//field[@name='line_ids']//tree/field[@name='online_link_id']" position="attributes">
+						<attribute name="attrs">{'column_invisible': [('parent.journal_check_surrender', '=', True)]}</attribute>
+					</xpath>
+					<xpath expr="//notebook" position="inside">
+						<page string="Datos Rendicion" name="render_data" attrs="{'invisible': [('journal_check_surrender','!=',True)]}">
+							<group>
+								<group>
+									<field name="date_surrender"/>
+									<field name="employee_id" domain="[('is_employee', '=', True)]"/>
+									<field name="amount_surrender"/>
+								</group>
+								<group>
+									<field name="einvoice_catalog_payment_id"/>
+									<field name="memory"/>
+									<field name="date_render_it"/>
+								</group>
+							</group>
+						</page>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

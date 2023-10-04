@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="edit_kardex_date" model="res.groups">
+			<field name="name">Editar Fecha Kardex</field>
+			<field name="category_id" ref="base.module_category_manufacturing"/>
+		</record>
+	</data>
+</odoo>

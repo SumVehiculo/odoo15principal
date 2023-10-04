@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_asset_depreciation_confirmation_wizard" model="ir.ui.view">
+        <field name="name">asset.depreciation.confirmation.wizard</field>
+        <field name="model">asset.depreciation.confirmation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Compute Asset">
+                <div>
+                    <p>
+                        Este nuevo asistente genera el asiento de depreciacion para el periodo seleccionado.
+                    </p> 
+                </div>
+                <group>
+                    <field name="period" domain="[('is_opening_close','=',False)]"/>
+                </group>
+                <footer>
+                    <button string="Generar Asiento" name="asset_compute" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+         </field>
+    </record>
+
+    <record id="action_asset_depreciation_confirmation_wizard" model="ir.actions.act_window">
+        <field name="name">Generar Asientos de Depreciacion</field>
+        <field name="res_model">asset.depreciation.confirmation.wizard</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_asset_depreciation_confirmation_wizard"/>
+        <field name="target">new</field>
+        <field name="context">{'asset_type': 'purchase'}</field>
+    </record>
+
+    <menuitem action="action_asset_depreciation_confirmation_wizard"
+              id="menu_asset_depreciation_confirmation_wizard"
+              parent="om_account_asset.menu_asset_asset_it" 
+              sequence="3"
+              groups="account.group_account_manager"/>
+
+</odoo>

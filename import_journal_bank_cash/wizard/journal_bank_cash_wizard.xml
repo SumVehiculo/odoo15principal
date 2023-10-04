@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="sh_journal_bank_cash_wizard" model="ir.ui.view">
+			<field name="name">sh.journal.bank.cash.wizard</field>
+			<field name="model">journal.bank.cash.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Importar Diarios Caja y Bancos">
+					<group>
+						<field name="import_type" invisible="1"/>
+						<field name="file"/>
+					</group>
+					<footer>
+						<button name="import_pol_apply" string="Importar" type="object" class="btn-primary" />
+						<button string="Cancelar" class="btn-default" special="cancel" />
+
+						<div style="float:right;">
+							<button name="download_template" string="Descargar Plantilla" style="font-size: 12px;line-height: 1.5;border-radius: 3px;padding: 8px 10px;color: #FFFFFF;" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+						</div>
+
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="sh_journal_bank_cash_wizard_action" model="ir.actions.act_window">
+			<field name="name">Crear Diarios</field>
+			<field name="res_model">journal.bank.cash.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="sh_journal_bank_cash_wizard"/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="sh_journal_bank_cash_wizard_action" 
+				id="menu_journal_bank_cash_wizard" 
+				parent="account_menu_other_configurations.menu_other_configurations"
+				sequence="4"/>
+	</data>
+</odoo>

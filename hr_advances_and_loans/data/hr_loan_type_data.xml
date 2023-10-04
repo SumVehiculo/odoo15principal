@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="loan_type_GRA" model="hr.loan.type">
+            <field name="name">PRESTAMO EN GRATIFICACION</field>
+            <field name="input_id" ref="hr_fields_it.input_type_DES_BBSS"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_PREST"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="loan_type_CTS" model="hr.loan.type">
+            <field name="name">PRESTAMO EN CTS</field>
+            <field name="input_id" ref="hr_fields_it.input_type_DES_BBSS"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_PREST"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="loan_type_VACA" model="hr.loan.type">
+            <field name="name">PRESTAMO EN VACACIONES</field>
+            <field name="input_id" ref="hr_fields_it.input_type_PREST"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_PREST"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="loan_type_LIQ" model="hr.loan.type">
+            <field name="name">PRESTAMO EN LIQUIDACION</field>
+            <field name="input_id" ref="hr_fields_it.input_type_PREST"/>
+<!--            <field name="salary_rule_id" ref="hr_fields_it.salary_rule_PREST"/>-->
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+    </data>
+</odoo>

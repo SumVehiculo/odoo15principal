@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_contract_form_inherit" model="ir.ui.view">
+		<field name="name">hr.contract.form.inherit</field>
+		<field name="model">hr.contract</field>
+		<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+		<field name="arch" type="xml">
+			<group name="afp_net" position="after">
+				<group string="Quinta Categoria">
+					<button name="update_proyectado_quinta" nolabel="1" type="object" class="btn-primary" string="Proyectar Quinta" />
+				</group>
+				<group name="fifth_category">
+					<group>
+						<field name="fifth_rem_proyected"/>
+					</group>
+					<group>
+						<field name="grat_july_proyected"/>
+						<field name="grat_december_proyected"/>
+					</group>
+				</group>
+			</group>
+		</field>
+	</record>
+
+	<record id="update_proyectado_quinta_contract" model="ir.actions.server">
+		<field name="name">Proyectar Quinta</field>
+		<field name="model_id" ref="hr_payroll.model_hr_contract"/>
+		<field name="binding_model_id" ref="hr_payroll.model_hr_contract"/>
+		<field name="state">code</field>
+		<field name="code">action = records.update_proyectado_quinta()</field>
+	</record>
+</odoo>

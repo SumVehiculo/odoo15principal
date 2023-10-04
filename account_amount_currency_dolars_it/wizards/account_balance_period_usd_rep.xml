@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_balance_period_usd_rep_form">
+			<field name="name">account.balance.period.usd.rep.form</field>
+			<field name="model">account.balance.period.usd.rep</field>
+			<field name="arch" type="xml">
+				<form string="Saldo por Fecha Contable">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="exercise"/>
+								<field name="date_ini"/>
+								<field name="date_end"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+								<field name="only_pending"/>
+								<field name="type_account"/>
+								<field name="partner_id"/>
+								<field name="account_id" domain="[('is_document_an', '=', True)]"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_balance_period_usd_rep_action" model="ir.actions.act_window">
+			<field name="name">Saldo por Fecha Contable</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.balance.period.usd.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+		<menuitem action="account_balance_period_usd_rep_action" 
+					id="menu_action_account_balance_period_usd_rep" 
+					parent="account_amount_currency_dolars_it.menu_eeff_usd_reports" 
+					sequence="38" 
+					groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

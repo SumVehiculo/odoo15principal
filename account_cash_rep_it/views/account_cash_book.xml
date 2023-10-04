@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_cash_book_tree" model="ir.ui.view">
+            <field name="name">account.cash.book.tree</field>
+            <field name="model">account.cash.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Libro Caja y Bancos" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="debe" sum="debe"/>
+                    <field name="haber" sum="haber"/>
+                    <field name="saldo"/>
+                    <field name="moneda"/>
+                    <field name="tc"/>
+                    <field name="debe_me" sum="debe_me"/>
+                    <field name="haber_me" sum="haber_me"/>
+                    <field name="saldo_me"/>
+                    <field name="cta_analitica"/>
+                    <field name="glosa"/>
+                    <field name="td_partner"/>
+                    <field name="doc_partner"/>
+                    <field name="partner"/>
+                    <field name="td_sunat"/>
+                    <field name="nro_comprobante"/>
+                    <field name="fecha_doc"/>
+                    <field name="fecha_ven"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_cash_book_search" model="ir.ui.view">
+            <field name="name">account.cash.book.search</field>
+            <field name="model">account.cash.book</field>
+            <field name="arch" type="xml">
+                <search string="Libro Caja y Bancos">
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="partner"/>
+                    <field name="doc_partner"/>
+                    <field name="nro_comprobante"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+                        <filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                        <filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+                        <filter string="RUC" name="doc_partner" icon="terp-partner" context="{'group_by':'doc_partner'}"/>
+                        <filter string="Número Comprobante" name="nro_comprobante" icon="terp-partner" context="{'group_by':'nro_comprobante'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_cash_book_it" model="ir.actions.act_window">
+            <field name="name">Libro Caja y Bancos</field>
+            <field name="res_model">account.cash.book</field>
+            <field name="view_id" ref="view_account_cash_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_cash_book_search"/>
+        </record>
+
+    </data>
+</odoo>

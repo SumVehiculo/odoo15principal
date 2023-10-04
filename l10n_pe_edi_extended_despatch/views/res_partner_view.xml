@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_partner_form_toponyms">
+        <field name="name">res.partner.form.pe_despatch</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="logistic.view_partner_form_toponyms"/>
+        <field name="arch" type="xml">
+            <field name="logistic_license_number" position="after">
+                <field name="l10n_pe_dte_mtc_authorization"/>
+            </field>
+        </field>
+    </record>
+</data>
+</openerp>

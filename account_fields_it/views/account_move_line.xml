@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--VIEW TREE MOVE LINES-->
+
+	<record id="view_move_line_tree_inherit_field" model="ir.ui.view">
+		<field name="name">move.line.tree.inherit.field</field>
+		<field name="model">account.move.line</field>
+		<field name="inherit_id" ref="account.view_move_line_tree"/>
+		<field name="arch" type="xml">
+			<field name="account_id" position="after">
+				<field name="type_document_id"/>
+				<field name="nro_comp"/>
+				<field name="invoice_date_it" optional="hide"/>
+				<field name="cta_cte_origen" optional="hide"/>
+				<field name="is_p" optional="hide"/>
+			</field>
+			<field name="credit" position="after">
+				<field name="balance" optional="show" sum="balance"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_move_line_tree_grouped_inherit_field" model="ir.ui.view">
+		<field name="name">move.line.tree.grouped.inherit.field</field>
+		<field name="model">account.move.line</field>
+		<field name="inherit_id" ref="account.view_move_line_tree_grouped"/>
+		<field name="arch" type="xml">
+			<field name="account_id" position="after">
+				<field name="type_document_id"/>
+				<field name="nro_comp"/>
+				<field name="invoice_date_it" optional="hide"/>
+				<field name="cta_cte_origen" optional="hide"/>
+				<field name="is_p" optional="hide"/>
+			</field>
+		</field>
+	</record>
+
+</odoo>

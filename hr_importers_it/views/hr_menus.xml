@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem
+		id="menu_action_hr_import_employee"
+		action="action_hr_import_wizard"
+		parent="hr.menu_hr_employee_payroll"
+		sequence="200"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+</odoo>

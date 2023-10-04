@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_gv" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Gasto Vinculado" name='gv'>
+					<group string="Parametros para Existencias por recibir">
+						<group>
+							<field name="partner_landed_cost_existences_id"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

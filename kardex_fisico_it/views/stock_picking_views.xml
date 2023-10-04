@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+
+    <record id="group_modificar_kardex_fecha" model="res.groups">
+      <field name="name">Permitir Editar Fecha Kardex</field>
+    </record>
+
+    <record id="group_modificar_no_mostrar_kardex" model="res.groups">
+      <field name="name">Permitir Editar: No mostrar Kardex</field>
+    </record>
+
+    <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+               <field name="partner_id" position="after">
+                    <field name="kardex_date" required="0" />
+                    <field name="use_kardex_date" invisible="1"/>
+                    <field name="invoice_id"/>
+                    <field name="type_operation_sunat_id" />
+                    <field name="no_mostrar"  />
+               </field>
+
+               <field name="product_uom_category_id" position="after">
+                    <field name="invoice_id" optional="hide"/>
+                    <field name="kardex_date" optional="hide"/>
+                    <button name="actualizar_kardex_date_b" optional="hide" type="object" string="Editar Fecha Kardex" class="oe_highlight" groups="kardex_fisico_it.group_modificar_kardex_fecha"/>
+                    <field name="no_mostrar" optional="hide"/>
+                    <button name="change_mostrar_b" type="object" string="Editar Mostrar En Kardex" class="oe_highlight" groups="kardex_fisico_it.group_modificar_no_mostrar_kardex"/>
+               </field>
+            </field>
+    </record>
+
+    <record id="stockmove_editkardex_date" model="ir.ui.view">
+      <field name="name">stock.move.form.kardex.date</field>
+      <field name="model">stock.move</field>
+      <field name="arch" type="xml">
+        <form string="Fecha Kardex" version="7.0" create="false">
+          <group>
+              <field name="kardex_date" readonly="0"/>
+          </group>
+        </form>
+      </field>
+    </record>
+    <record id="stockmove_editno_mostrar" model="ir.ui.view">
+      <field name="name">stock.move.form.kardex.date</field>
+      <field name="model">stock.move</field>
+      <field name="arch" type="xml">
+        <form string="No Mostrar En Kardex" version="7.0" create="false">
+          <group>
+              <field name="no_mostrar" readonly="0"/>
+          </group>
+        </form>
+      </field>
+    </record>    
+  </data>
+</odoo>

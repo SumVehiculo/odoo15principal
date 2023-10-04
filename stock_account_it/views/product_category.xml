@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_category_property_form_stock_account_it" model="ir.ui.view">
+			<field name="name">product.category.stock.property.form.inherit.it</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="stock_account.view_category_property_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//group[@name='account_property']/group[@name='account_stock_property']" position="attributes">
+					<attribute name="invisible">0</attribute>
+					<attribute name="attrs">{}</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_product_category_form_inherit" model="ir.ui.view">
+			<field name="name">product.category.inherit</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view"/>
+			<field name="arch" type="xml">
+				<data>
+					<field name="property_account_expense_categ_id" position="after">
+						<field name="table_13_sunat"/>
+						<field name="stock_catalog_05_id"/>
+					</field>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

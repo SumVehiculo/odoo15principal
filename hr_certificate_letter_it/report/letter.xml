@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_template_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br />
+                        <img t-if="doc.company_id.logo_web" t-att-src="image_data_uri(doc.company_id.logo_web)" alt="Logo"/>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <p>
+                            <t t-esc="doc.city" />, <t t-esc="doc.day_fin" /> de <t t-esc="doc.month_fin" /> del <t t-esc="doc.year_fin" />
+                        </p>
+                        <br />
+                        <p><b>
+                            <h6>Señores</h6>
+                        </b></p>
+                        <p><strong>
+                            <h6><span t-field="doc.employee_id.cts_bank_account_id.bank_id.name" /><br /></h6>
+                        </strong></p>
+                        <p><b>
+                            <h6>Presente.-</h6>
+                        </b></p>
+
+                        <br />
+                        <p>De nuestra Consideración</p>
+                        <p style="text-align: justify;">
+                            Por la presente comunicamos que <t t-esc="doc.des_empl" />  <span t-field="doc.employee_id.name" />, identificado con <span t-field="doc.employee_id.type_document_id" /> N° <span t-field="doc.employee_id.identification_id" />, ha dejado de laborar en nuestra empresa a partir del día <t t-esc="doc.day_fin" /> de <t t-esc="doc.month_fin" /> del <t t-esc="doc.year_fin" />, por lo que solicitamos se le haga entrega del total de la Compensación por Tiempo de Servicios depositada en la Cta. CTS Nro.: <span t-field="doc.employee_id.cts_bank_account_id.acc_number" /> , de vuestra entidad.
+                        </p>
+
+                        <br />
+
+                        <p>
+                            Sin otro particular, quedamos de ustedes.
+                        </p>
+                        <p>
+                            Atentamente;
+                        </p>
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <p>
+                            <center>
+                                <img t-if="doc.main_parameter_id.signature" t-att-src="image_data_uri(doc.main_parameter_id.signature)"
+                                     alt="Firma" style="max-width: 400px; max-height: 150px;"/>
+                            </center>
+                            <center style="font-size: 14px;">
+                                <hr color="black" size="1" width="300" />
+                                <t t-esc="doc.main_parameter_id.reprentante_legal_id.name" />
+                                <br />
+                                <span t-field="doc.main_parameter_id.reprentante_legal_id.l10n_latam_identification_type_id.name" /> N°
+                                <t t-esc="doc.main_parameter_id.reprentante_legal_id.vat" />
+                            </center>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_letter" model="report.paperformat">
+        <field name="name">Formato Carta de Retiro CTS</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">33</field>
+        <field name="margin_right">33</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">50</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_letter" model="ir.actions.report">
+		<field name="name">Carta de Retiro CTS PDF</field>
+		<field name="model">hr.letter.wizard</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hr_certificate_letter_it.report_template_letter</field>
+		<field name="report_file">hr_certificate_letter_it.report_template_letter</field>
+		<field name="print_report_name">'Carta de Retiro CTS - %s' % (object.employee_id.name)</field>
+        <field name="paperformat_id" ref="hr_certificate_letter_it.paperformat_letter"/>
+		<field name="binding_model_id" ref="model_hr_letter_wizard"/>
+		<field name="binding_type">report</field>
+	</record>
+
+</odoo>

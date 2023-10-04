@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payroll_structure_type_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.type.form.inherit</field>
+        <field name="model">hr.payroll.structure.type</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payroll_structure_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_struct_id']" position="attributes">
+<!--				<attribute name="domain">[]</attribute>-->
+                <attribute name="string">Estructura Salarial</attribute>
+			</xpath>
+            <xpath expr="//field[@name='default_resource_calendar_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+			</xpath>
+            <xpath expr="//field[@name='default_schedule_pay']" position="attributes">
+                <attribute name="invisible">1</attribute>
+			</xpath>
+            <xpath expr="//field[@name='wage_type']" position="after">
+                <field name="default_schedule_pay"/>
+			</xpath>
+        </field>
+    </record>
+    <record id="hr_payroll_structure_type_view_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.type.tree.inherit</field>
+        <field name="model">hr.payroll.structure.type</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payroll_structure_type_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_struct_id']" position="attributes">
+                <attribute name="string">Estructura Salarial</attribute>
+			</xpath>
+            <xpath expr="//field[@name='default_resource_calendar_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+			</xpath>
+        </field>
+    </record>
+</odoo>

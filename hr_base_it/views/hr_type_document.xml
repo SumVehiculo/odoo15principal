@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_type_document_form" model="ir.ui.view">
+		<field name="name">hr.type.document.form</field>
+		<field name="model">hr.type.document</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>		
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="description"/>
+							<field name="sunat_code"/>
+							<field name="afp_code"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_type_document_tree" model="ir.ui.view">
+		<field name="name">hr.type.document.tree</field>
+		<field name="model">hr.type.document</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" optional="show"/>
+				<field name="description" optional="show"/>
+				<field name="sunat_code" optional="show"/>
+				<field name="afp_code" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_type_document" model="ir.actions.act_window">
+		<field name="name">Tipos de Documento (Tabla 3)</field>
+		<field name="res_model">hr.type.document</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Tipo de Documento aqui
+			</p>
+		</field>
+	</record>
+</odoo>

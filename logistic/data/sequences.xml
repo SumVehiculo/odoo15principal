@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_logistic_expedition" model="ir.sequence">
+            <field name="name">logistic_expedition_sequence</field>
+            <field name="code">logistic.logistic_expedition</field>
+            <field name="prefix">31</field>
+            <!--<field name="suffix"></field>-->
+            <field name="padding">8</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tree_view_kardex_fisico,tree.view.kardex.fisico,kardex_fisico_it.model_tree_view_kardex_fisico,,1,1,1,1
+access_tree_view_kardex_fisico,tree.view.kardex.fisico,kardex_fisico_it.model_tree_view_kardex_fisico,,1,1,1,1
+access_type_operation_kardex,type.operation.kardex,kardex_fisico_it.model_type_operation_kardex,,1,1,1,1
+access_make_kardex,make_kardex,kardex_fisico_it.model_make_kardex,,1,1,1,1
+access_make_kardex_product,make_kardex_product,kardex_fisico_it.model_make_kardex_product,,1,1,1,1
+access_make_kardex_lote,make_kardex_lote,kardex_fisico_it.model_make_kardex_lote,,1,1,1,1

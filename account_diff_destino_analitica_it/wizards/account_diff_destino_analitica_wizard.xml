@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_diff_destino_analitica_wizard_form">
+			<field name="name">account.diff.destino.analitica.wizard.form</field>
+			<field name="model">account.diff.destino.analitica.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="date_from"/>
+							<field name="date_to"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_diff_destino_analitica_wizard_action" model="ir.actions.act_window">
+			<field name="name">Diferencia Analitica VS Contabilidad</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.diff.destino.analitica.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_diff_destino_analitica_wizard_action" 
+		id="menu_action_account_diff_destino_analitica_wizard" 
+		parent="account_destinos_rep_it.menu_account_destinos_analytic_report" 
+		sequence="10" 
+		groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

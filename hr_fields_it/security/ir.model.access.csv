@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_work_suspension_root,hr_work_suspension_root,hr_fields_it.model_hr_work_suspension,hr_base_it.group_hr_tables_root,1,1,1,1
+access_hr_payroll_structure_wizard_root,hr_payroll_structure_wizard_root,hr_fields_it.model_hr_payroll_structure_wizard,hr_base_it.group_hr_tables_root,1,1,1,1
+access_hr_planilla_tabular_wizard_manager,hr.planilla.tabular.salary.wizard.group,model_hr_planilla_tabular_salary_wizard,hr_base_it.group_hr_tables_root,1,1,1,0
+access_hr_planilla_tabular_manager,hr.planilla.tabular.group,model_hr_planilla_tabular,hr_base_it.group_hr_tables_root,1,1,1,0
+access_hr_employee_news_wizard_manager,hr.employee.news.wizard.group,model_hr_employee_news_wizard,hr_base_it.group_hr_tables_root,1,1,1,0

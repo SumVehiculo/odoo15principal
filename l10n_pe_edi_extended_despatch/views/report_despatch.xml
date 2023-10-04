@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_despatch_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <div class="page" style="font-size: 0.75rem;">
+                <div id="despatch_header" class="row">
+                    <div t-attf-class="#{'col-8' if report_type != 'html' else 'col-12 col-sm-8'} mb-2">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <dl class="row mb-0">
+                                    <dt class="col-4 col-sm-4 mb-0"><strong>RECEIVER</strong></dt>
+                                    <dd class="col-8 col-sm-8 mb-0"></dd>
+                                </dl>
+                            </div>
+                            <div class="card-body">
+                                <dl class="row mb-0">
+                                    <dt class="col-4 col-sm-4 mb-0">
+                                        <span class="text-nowrap" t-esc="o.partner_id.commercial_partner_id.l10n_latam_identification_type_id and o.partner_id.commercial_partner_id.l10n_latam_identification_type_id.name or 'DOCUMENTO'"/>:
+                                    </dt>
+                                    <dd class="col-8 col-sm-8 mb-0">
+                                        <span class="text-nowrap" t-esc="o.partner_id.commercial_partner_id.vat or '00000000'"/>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <dt class="col-4 col-sm-4 mb-0">
+                                        DENOMINATION:
+                                    </dt>
+                                    <dd class="col-8 col-sm-8 mb-0">
+                                        <span class="text" t-field="o.partner_id.commercial_partner_id.name"/>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <dt class="col-4 col-sm-4 mb-0">
+                                        ADDRESS:
+                                    </dt>
+                                    <dd class="col-8 col-sm-8 mb-0">
+                                        <span class="text" t-esc="o.partner_id.street_name or ''"/> 
+                                        <span class="text" t-esc="o.partner_id.street_number or ''"/> 
+                                        <span class="text" t-esc="o.partner_id.street_number2 or ''"/> 
+                                        <span class="text" t-esc="o.partner_id.street2 or ''"/>
+                                        <t t-if="o.partner_id.l10n_pe_district">
+                                            , <span class="text" t-esc="o.partner_id.l10n_pe_district.name or ''"/>
+                                        </t>
+                                        <t t-if="o.partner_id.city_id">
+                                            , <span class="text-nowrap" t-esc="o.partner_id.city_id.name or ''"/>
+                                        </t>
+                                        <t t-if="o.partner_id.state_id">
+                                            , <span class="text-nowrap" t-esc="o.partner_id.state_id.name or ''"/>
+                                        </t>
+                                        <t t-if="o.partner_id.country_id">
+                                            , <span class="text-nowrap" t-esc="o.partner_id.country_id.name or ''"/>
+                                        </t>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <dl class="row mb-0">
+                                    <dt class="col-4 col-sm-4 mb-0">
+                                        ORIGIN ADDRESS:
+                                    </dt>
+                                    <dd class="col-8 col-sm-8 mb-0">
+                                        <span class="text" t-esc="o.origin_address_id.street_name or ''"/> 
+                                        <span class="text" t-esc="o.origin_address_id.street_number or ''"/> 
+                                        <span class="text" t-esc="o.origin_address_id.street_number2 or ''"/> 
+                                        <span class="text" t-esc="o.origin_address_id.street2 or ''"/>
+                                        <t t-if="o.origin_address_id.l10n_pe_district">
+                                            , <span class="text" t-esc="o.origin_address_id.l10n_pe_district.name or ''"/>
+                                        </t>
+                                        <t t-if="o.origin_address_id.city_id">
+                                            , <span class="text-nowrap" t-esc="o.origin_address_id.city_id.name or ''"/>
+                                        </t>
+                                        <t t-if="o.origin_address_id.state_id">
+                                            , <span class="text-nowrap" t-esc="o.origin_address_id.state_id.name or ''"/>
+                                        </t>
+                                        <t t-if="o.origin_address_id.country_id">
+                                            , <span class="text-nowrap" t-esc="o.origin_address_id.country_id.name or ''"/>
+                                        </t>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <dt class="col-4 col-sm-4 mb-0">
+                                        DELIVERY ADDRESS:
+                                    </dt>
+                                    <dd class="col-8 col-sm-8 mb-0">
+                                        <span class="text" t-esc="o.delivery_address_id.street_name or ''"/> 
+                                        <span class="text" t-esc="o.delivery_address_id.street_number or ''"/> 
+                                        <span class="text" t-esc="o.delivery_address_id.street_number2 or ''"/> 
+                                        <span class="text" t-esc="o.delivery_address_id.street2 or ''"/>
+                                        <t t-if="o.delivery_address_id.l10n_pe_district">
+                                            , <span class="text" t-esc="o.delivery_address_id.l10n_pe_district.name or ''"/>
+                                        </t>
+                                        <t t-if="o.delivery_address_id.city_id">
+                                            , <span class="text-nowrap" t-esc="o.delivery_address_id.city_id.name or ''"/>
+                                        </t>
+                                        <t t-if="o.delivery_address_id.state_id">
+                                            , <span class="text-nowrap" t-esc="o.delivery_address_id.state_id.name or ''"/>
+                                        </t>
+                                        <t t-if="o.delivery_address_id.country_id">
+                                            , <span class="text-nowrap" t-esc="o.delivery_address_id.country_id.name or ''"/>
+                                        </t>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-12 col-sm-4'} mb-2 order-first order-sm-last">
+                        <div class="card mb-3 text-center">
+                            <div class="card-header">
+                                <h5>
+                                    <span class="font-weight-bold">RUC <t t-esc="o.company_id.vat"/></span>
+                                </h5>
+                                <h5>
+                                    Electronic Despatch
+                                </h5>
+                                <h5>
+                                    <span class="font-weight-bold" t-esc="o.name or 'NO VALID'"/>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="row mb-0">
+                            <div class="col-12 col-sm-12 mb-0">
+                                <dl class="row mb-0">
+                                    <dt class="col-7 col-sm-7 mb-0">
+                                        DESPATCH DATE:
+                                    </dt>
+                                    <dd class="col-5 col-sm-5 mb-0">
+                                        <span class="text-nowrap" t-field="o.issue_date"/>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <dt class="col-7 col-sm-7 mb-0">
+                                        START DATE:
+                                    </dt>
+                                    <dd class="col-5 col-sm-5 mb-0">
+                                        <span class="text-nowrap" t-field="o.start_date"/>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="table table-sm o_main_table min-vh-50" name="despatch_line_table">
+                    <thead>
+                        <tr>
+                            <th name="th_quantity" class="text-right"><span>QTY</span></th>
+                            <th name="th_uom" class="text-right"><span>UOM</span></th>
+                            <th name="th_description" class="text-left"><span>CODE / DESCRIPTION</span></th>
+                            <th name="th_subtotal" class="text-right">
+                                <span>WEIGHT</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="despatch_tbody">
+                        <t t-set="lines" t-value="o.line_ids.sorted(key=lambda l: (-l.sequence, -l.id), reverse=True)"/>
+                        <t t-foreach="lines" t-as="line">
+                            <tr>
+                                <t name="despatch_line">
+                                    <td class="text-right">
+                                        <span t-field="line.quantity"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.uom_id"/>
+                                    </td>
+                                    <td name="despatch_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                    <td class="text-right o_weight_total">
+                                        <span class="text-nowrap" t-field="line.weight"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <div id="total" class="row">
+                    <div t-attf-class="#{'col-8' if report_type != 'html' else 'col-12 col-sm-8'} mb-2">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <dl class="row mb-0" t-if="o.l10n_pe_dte_shipment_reason">
+                                    <dt class="col-6 col-sm-5 mb-0">
+                                        REASON:
+                                    </dt>
+                                    <dd class="col-6 col-sm-7 mb-0">
+                                        <span class="text-nowrap" t-field="o.l10n_pe_dte_shipment_reason"/>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-0" t-if="o.l10n_pe_dte_transport_mode">
+                                    <dt class="col-6 col-sm-5 mb-0">
+                                        MODE:
+                                    </dt>
+                                    <dd class="col-6 col-sm-7 mb-0">
+                                        <span class="text-nowrap" t-field="o.l10n_pe_dte_transport_mode"/>
+                                    </dd>
+                                </dl>
+                                <dl class="row mb-0" t-if="o.carrier_id">
+                                    <dt class="col-6 col-sm-5 mb-0">
+                                        CARRIER:
+                                    </dt>
+                                    <dd class="col-6 col-sm-7 mb-0"><t t-esc="o.carrier_id.commercial_partner_id.l10n_latam_identification_type_id and o.carrier_id.commercial_partner_id.l10n_latam_identification_type_id.name or 'DOCUMENTO'"/> <t t-esc="o.carrier_id.commercial_partner_id.vat or '00000000'"/> <t t-esc="o.carrier_id.commercial_partner_id.name"/></dd>
+                                </dl>
+                                <dl class="row mb-0" t-if="o.driver_id">
+                                    <dt class="col-6 col-sm-5 mb-0">
+                                        DRIVER:
+                                    </dt>
+                                    <dd class="col-6 col-sm-7 mb-0"><t t-esc="o.driver_id.commercial_partner_id.l10n_latam_identification_type_id and o.driver_id.commercial_partner_id.l10n_latam_identification_type_id.name or 'DOCUMENTO'"/> <t t-esc="o.driver_id.commercial_partner_id.vat or '00000000'"/> <t t-esc="o.driver_id.commercial_partner_id.name"/></dd>
+                                </dl>
+                                <dl class="row mb-0" t-if="o.vehicle_id">
+                                    <dt class="col-6 col-sm-5 mb-0">
+                                        VEHICLE:
+                                    </dt>
+                                    <dd class="col-6 col-sm-7 mb-0"><t t-esc="o.vehicle_id.display_name"/></dd>
+                                </dl>
+                                <dl class="row mb-0" t-if="o.note">
+                                    <dt class="col-6 col-sm-5 mb-0">
+                                        OBSERVATIONS:
+                                    </dt>
+                                    <dd class="col-6 col-sm-7 mb-0" t-esc="o.note"/>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-12 col-sm-4'} mb-2 order-first order-sm-last">
+                        <table class="table table-sm" style="page-break-inside: avoid;">
+                            <tr t-if="o.packages > 0" class="border-black o_total">
+                                <td><strong>TOTAL PACKAGES</strong></td>
+                                <td class="text-right">
+                                    <span class="text-nowrap" t-field="o.packages"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.total_weight > 0" class="border-black o_total">
+                                <td><strong>TOTAL WEIGHT</strong></td>
+                                <td class="text-right">
+                                    <span class="text-nowrap" t-field="o.total_weight"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.total_volume > 0" class="border-black o_total">
+                                <td><strong>TOTAL VOLUME</strong></td>
+                                <td class="text-right">
+                                    <span class="text-nowrap" t-field="o.total_volume"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="despatch_info" class="row">
+                    <div class="col-12 mb-0">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <div id="despatch_footer" class="row">
+                                    <div t-attf-class="#{'col-9' if report_type != 'html' else 'col-12 col-sm-9'} mb-2">
+                                        <p>Printed representation of the <span class="font-weight-bold text-uppercase">Electronic Despatch</span> <span class="font-weight-bold" t-esc="o.name or 'NO VALID'"/>, visit <span class="font-weight-bold" t-esc="o.company_id.l10n_pe_dte_control_url or 'NO VALID'"/>
+                                        </p>
+                                        <p><span t-esc="o.company_id.l10n_pe_dte_authorization_message or ' '"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

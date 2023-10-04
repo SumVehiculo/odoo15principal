@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+	<!--Worked Days-->
+	<menuitem
+		id="menu_action_hr_payslip_worked_days_type"
+		action="action_hr_payslip_worked_days_type"
+		parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+		sequence="87"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<!-- Distribucion Analitica -->
+	<menuitem
+		id="menu_action_hr_analytic_distribution"
+		action="action_hr_analytic_distribution"
+		parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+		sequence="88"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<!-- Membership -->
+	<menuitem
+		id="menu_action_hr_membership"
+		action="action_hr_membership"
+		parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+		sequence="89"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<!-- Tables -->
+	<menuitem
+		id="menu_hr_tables_configuration"
+		name="Tablas"
+		parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+		sequence="90"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_type_document"
+		name="Tipos de Documentos"
+		action="action_hr_type_document"
+		parent="menu_hr_tables_configuration"
+		sequence="1"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_situation"
+		name="Situacion del Trabajador"
+		action="action_hr_situation"
+		parent="menu_hr_tables_configuration"
+		sequence="2"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_worker_type"
+		name="Tipo de Trabajador"
+		action="action_hr_worker_type"
+		parent="menu_hr_tables_configuration"
+		sequence="3"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_suspension_type"
+		name="Tipo de Suspension"
+		action="action_hr_suspension_type"
+		parent="menu_hr_tables_configuration"
+		sequence="4"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_social_insurance"
+		action="action_hr_social_insurance"
+		parent="menu_hr_tables_configuration"
+		sequence="5"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_sctr"
+		action="action_hr_sctr"
+		parent="menu_hr_tables_configuration"
+		sequence="6"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_workday"
+		action="action_hr_workday"
+		parent="menu_hr_tables_configuration"
+		sequence="9"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+        id="menu_action_horario_work"
+		name="Horario de Trabajo"
+        action="resource.action_resource_calendar_form"
+        parent="menu_hr_tables_configuration"
+		sequence="10"
+		groups="hr_base_it.group_hr_tables_root"
+    />
+	<menuitem
+		id="menu_action_hr_holidays"
+		action="action_hr_holidays"
+		parent="menu_hr_tables_configuration"
+		sequence="11"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_reasons_leave"
+		name="Motivos de Baja"
+		action="action_hr_reasons_leave"
+		parent="menu_hr_tables_configuration"
+		sequence="12"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="menu_action_hr_periodos"
+		action="action_hr_period"
+		parent="menu_hr_tables_configuration"
+		sequence="15"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="hr_period_generator_menu"
+		action="action_hr_period_generator"
+		parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+		sequence="90"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+	<menuitem
+		id="hr_main_parameter_menu"
+		action="action_hr_main_parameter"
+		parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+		sequence="91"
+		groups="hr_base_it.group_hr_tables_root"
+	/>
+
+	<record id="hr_work_entry_contract_enterprise.menu_hr_payroll_work_entries_root" model="ir.ui.menu">
+		<!--        <field name="name">Configuration</field>-->
+		<field name="groups_id" eval="[(6, 0, [ref('hr_base_it.group_hr_show_menu_root')])]"/>
+	</record>
+
+	<record id="hr_payroll.menu_hr_work_entry_report" model="ir.ui.menu">
+		<field name="groups_id" eval="[(6, 0, [ref('hr_base_it.group_hr_show_menu_root')])]"/>
+	</record>
+	<record id="hr_payroll.menu_hr_payroll_employee_payslips_to_pay" model="ir.ui.menu">
+		<field name="groups_id" eval="[(6, 0, [ref('hr_base_it.group_hr_show_menu_root')])]"/>
+	</record>
+
+	 <record id="hr_work_entry_contract_enterprise.menu_hr_work_entry_configuration" model="ir.ui.menu">
+<!--        <field name="name">Configuration</field>-->
+        <field name="groups_id" eval="[(4, ref('hr_base_it.group_hr_show_menu_root'))]"/>
+    </record>
+
+</odoo>

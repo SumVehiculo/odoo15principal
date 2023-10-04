@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="group_import_product_s_view" model="res.groups">
+        <field name="name">Permiso Importar Producto</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+  </data>
+</odoo>

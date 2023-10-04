@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sunat_table_data_group_user,sunat.table.data.group.user,model_sunat_table_data,account_base_it.group_account_tables_user,1,1,1,1
+access_sunat_table_data_line_group_user,sunat.table.data.line.group.user,model_sunat_table_data_line,account_base_it.group_account_tables_user,1,1,1,1
+access_sunat_table_data_031601_group_user,sunat.table.data.031601.group.user,model_sunat_table_data_031601,account_base_it.group_account_tables_user,1,1,1,1
+access_sunat_table_data_031602_group_user,sunat.table.data.031602.group.user,model_sunat_table_data_031602,account_base_it.group_account_tables_user,1,1,1,1
+access_sunat_table_data_031700_group_user,sunat.table.data.031700.group.user,model_sunat_table_data_031700,account_base_it.group_account_tables_user,1,1,1,1
+access_sunat_table_data_031700_line_group_user,sunat.table.data.031700.line.group.user,model_sunat_table_data_031700_line,account_base_it.group_account_tables_user,1,1,1,1
+access_account_register_values_it_user,account.register.values.it.user,model_account_register_values_it,account_base_it.group_account_tables_user,1,1,1,1

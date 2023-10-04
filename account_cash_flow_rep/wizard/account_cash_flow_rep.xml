@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_cash_flow_rep_wizard_form">
+			<field name="name">account.cash.flow.rep.form</field>
+			<field name="model">account.cash.flow.rep</field>
+			<field name="arch" type="xml">
+				<form string="Fujo de Caja">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="period_id"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_cash_flow_rep_action" model="ir.actions.act_window">
+			<field name="name">Flujo de Caja</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.cash.flow.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_cash_flow_rep_action" 
+		id="menu_account_cash_flow_rep_wizard" 
+		parent="account_report_menu_it.menu_account_worksheet" 
+		sequence="5" 
+		groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

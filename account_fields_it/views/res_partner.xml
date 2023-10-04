@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_partner_form_inherit" model="ir.ui.view">
+			<field name="name">res.partner.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="account.view_partner_property_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<page name="accounting" position="after">
+						<page name="without_address" string="No Domiciliados">
+							<group string="Datos">
+								<group>
+									<field name="is_not_home"/>
+									<field name="country_home_nd"/>
+									<field name="home_nd"/>
+								</group>
+								<group>
+									<field name="ide_nd"/>
+									<field name="v_con_nd"/>
+									<field name="c_d_imp"/>
+								</group>
+							</group>
+						</page>
+					</page>
+					<xpath expr="//field[@name='property_account_position_id']" position="after">
+						<field name="name_p" attrs="{'invisible': [('is_company','=', True)]}"/>
+						<field name="last_name" attrs="{'invisible': [('is_company','=', True)]}"/>
+						<field name="m_last_name" attrs="{'invisible': [('is_company','=', True)]}"/>
+					</xpath>
+					<xpath expr="//page[@name='sales_purchases']" position="inside">
+						<group string="Tipo de Partner">
+							<group>
+								<field name="is_supplier"/>
+								<field name="is_customer"/>
+								<field name="is_employee"/>
+							</group>
+						</group>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

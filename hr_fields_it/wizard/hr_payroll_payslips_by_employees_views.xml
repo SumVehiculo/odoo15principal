@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+       <!-- Inherit Form View to Modify it -->
+    <record id="view_hr_payslip_by_employees_inherit" model="ir.ui.view">
+        <field name="name">hr_payroll_payslip_employees_inherit</field>
+        <field name="model">hr.payslip.employees</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_by_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/group[3]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//form/group[2]" position="after">
+                <group colspan="2">
+                    <separator string="Tipo de Planilla" colspan="2"/>
+                    <newline/>
+                    <span class="text-muted">Escoja un tipo de planilla (ejemplo: mensual, semanal, quincenal etc)</span>
+                    <field name="type_id" nolabel="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                </group>
+            </xpath>
+            <xpath expr="//form/group[2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

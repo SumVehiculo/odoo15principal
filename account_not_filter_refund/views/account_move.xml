@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+        <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+            <field name="domain">[('move_type', 'in', ['out_invoice','out_refund'])]</field>
+        </record>
+
+        <record id="account.action_move_in_invoice_type" model="ir.actions.act_window">
+            <field name="domain">[('move_type', 'in', ['in_invoice','in_refund'])]</field>
+        </record>
+
+    </data>
+</odoo>

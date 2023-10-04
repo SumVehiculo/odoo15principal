@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="agregar_atributos_pruchase">
+            <field name="name">agregar.atributos.purchase</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                    <attribute name="domain">[('parent_id', '=', False),('is_supplier', '=', True)]</attribute> 
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+    <!-- <data>
+        <record model="ir.ui.view" id="agregar_atributos_partner">
+            <field name="name">agregar.atributos.partner</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_report.representante_inherit_purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_ref']" position="attributes">
+                  <attribute name="context">{'default_parent_id': partner_id}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data> -->
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_import_wd_wizard_form" model="ir.ui.view">
+		<field name="name">hr.import.wd.wizard.form</field>
+		<field name="model">hr.import.wd.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Importar Worked Days e Inputs">
+				<group>
+					<group>
+						<field name="file" widget="file"/>
+						<field name="option" required="1"/>
+					</group>
+				</group>
+				<footer>
+					<button string=" Generar Plantilla" name="get_template" type="object" class="fa fa-download btn-primary"/>
+					<button string=" Importar Plantilla" name="import_template" type="object" class="fa fa-upload btn-primary"/>
+					<button string="Cancel" class="oe_link" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

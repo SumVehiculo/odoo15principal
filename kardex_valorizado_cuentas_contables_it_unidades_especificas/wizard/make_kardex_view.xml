@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+
+        <record id="view_make_kardex_valorado" model="ir.ui.view">
+            <field name="name">make.kardex.valorado.form</field>
+            <field name="model">make.kardex.valorado</field>
+            <field name="inherit_id" ref="kardex_valorado_it.view_make_kardex_valorado"/>
+            <field name="arch" type="xml">
+                <field name="check_fecha" position="after">    
+                        <field name="tipo_kardex" required="1"/> 
+                </field>
+             </field>
+        </record>
+
+        <record id="product_template_only_form_view" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <field name="categ_id" position="after">
+                    <field name="check_unidad_especifica" />
+                </field>
+             </field>
+        </record>
+
+
+
+        <record id="view_production_lot_tree" model="ir.ui.view">
+            <field name="name">stock.production.lot.tree</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+            <field name="arch" type="xml">
+
+                <field name="product_id" position="after">
+                    <field name="precio_final" string="Costo Total" />
+                </field>
+             </field>
+        </record>
+
+
+
+        <record id="view_production_lot_form" model="ir.ui.view">
+            <field name="name">stock.production.lot.form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook" position="inside">
+                    <field name="check_unidad_especifica" invisible="1"/>
+                    <page string="Costo Unidades Especificas" attrs="{'invisible':[('check_unidad_especifica','!=',True)]}" >
+                        <group>
+                            <group>
+                                <field name="precio_compra" string="Costo Adquisición" />
+                                <field name="gasto_vinculado" string="Gasto Vinculado" />
+                                <field name="precio_final"  string="Costo Total" />
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+             </field>
+        </record>
+
+
+    </data>
+</odoo>

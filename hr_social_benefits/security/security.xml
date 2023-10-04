@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="group_hr_social_benefits_root" model="res.groups">
+		<field name="name">Beneficios Sociales</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+	</record>
+	<record id="hr_cts_not_shared_multi_company_rule" model="ir.rule">
+		<field name="name">Non Shared Records: CTS</field>
+		<field name="model_id" ref="hr_social_benefits.model_hr_cts"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record id="hr_gratification_not_shared_multi_company_rule" model="ir.rule">
+		<field name="name">Non Shared Records: Gratification</field>
+		<field name="model_id" ref="hr_social_benefits.model_hr_gratification"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record id="hr_liquidation_not_shared_multi_company_rule" model="ir.rule">
+		<field name="name">Non Shared Records: Liquidation</field>
+		<field name="model_id" ref="hr_social_benefits.model_hr_liquidation"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+</odoo>

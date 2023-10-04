@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_reasons_leave_form" model="ir.ui.view">
+		<field name="name">hr.reasons.leave.form</field>
+		<field name="model">hr.reasons.leave</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="description"/>
+							<field name="code"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_reasons_leave_tree" model="ir.ui.view">
+		<field name="name">hr.reasons.leave.tree</field>
+		<field name="model">hr.reasons.leave</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" optional="show"/>
+				<field name="description" optional="show"/>
+				<field name="code" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_reasons_leave" model="ir.actions.act_window">
+		<field name="name">Motivos de Baja (Tabla 17)</field>
+		<field name="res_model">hr.reasons.leave</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primer registro de motivos de baja aqui
+			</p>
+		</field>
+	</record>
+</odoo>

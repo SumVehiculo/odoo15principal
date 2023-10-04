@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_account_asset_category_form">
+        <field name="name">account.asset.category.form</field>
+        <field name="model">account.asset.category</field>
+        <field name="arch" type="xml">
+            <form string="Categoria de Activo">
+                <sheet>
+                    <group>
+                        <div class="oe_title">
+                            <label for="name" string="Categoria de Activo" class="oe_edit_only" attrs="{'invisible': [('type','!=','purchase')]}"/>
+                            <label for="name" string="Deferred Revenue Type" class="oe_edit_only" attrs="{'invisible': [('type','==','purchase')]}"/>
+                            <h1>
+                                <field name="name" placeholder="e.j. Computadoras"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="type" attrs="{'invisible': 1}"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Entradas de Diario">
+                            <field name="journal_id"/>
+                            <div>
+                                <label for="account_asset_id"
+                                       attrs="{'invisible': [('type','!=','purchase')]}"
+                                       style="font-weight: bold" class="o_light_label"/>
+                                <label for="account_asset_id" string="Deferred Revenue Account"
+                                       attrs="{'invisible': [('type','!=','sale')]}"
+                                       style="font-weight: bold" class="o_light_label"/>
+                            </div>
+                            <field name="account_asset_id" nolabel="1" attrs="{'invisible': [('type','=', False)]}"/>
+                            <div>
+                                <label for="account_depreciation_id"
+                                       attrs="{'invisible': [('type','!=','purchase')]}"
+                                       style="font-weight: bold" class="o_light_label"/>
+                                <label for="account_depreciation_id" string="Recognition Income Account"
+                                       attrs="{'invisible': [('type','!=','sale')]}"
+                                       style="font-weight: bold" class="o_light_label"/>
+                            </div>
+                            <field name="account_depreciation_id" nolabel="1"/>
+                            <div>
+                                <label for="account_depreciation_expense_id"
+                                       attrs="{'invisible': [('type','!=','purchase')]}"
+                                       style="font-weight: bold" class="o_light_label"/>
+                                <label for="account_depreciation_expense_id" string="Recognition Account"
+                                       attrs="{'invisible': [('type','!=','sale')]}"
+                                       style="font-weight: bold" class="o_light_label"/>
+                            </div>
+                            <field name="account_depreciation_expense_id" nolabel="1"/>
+                            <field name="account_retire_id"/>
+                            <field name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
+                            <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
+                        </group>
+                        <group string="Periodicidad">
+                            <field name="method_time" widget="radio" force_save="1" attrs="{'invisible': [('type','!=','purchase')]}"/>
+                            <label for="depreciation_rate"/>
+                            <div>
+                                <field name="depreciation_rate" nolabel="1" class="oe_inline"/>
+                                %
+                            </div>
+                            <field name="method_number" attrs="{'invisible':['|',('method_time','!=','number'),('type','=', False)], 'required':[('method_time','=','number')]}"/>
+                            <label for="method_period"/>
+                            <div>
+                                <field name="method_period" nolabel="1" attrs="{'invisible': [('type','=', False)]}" class="oe_inline"/>
+                                mes(es)
+                            </div>
+                            <field name="method_end" attrs="{'required': [('method_time','=','end')], 'invisible':[('method_time','!=','end')]}"/>
+                        </group>
+                        <group string="Opciones Adicionales">
+                            <field name="open_asset"/>
+                            <field name="group_entries"/>
+                            <field name="date_first_depreciation"/>
+                        </group>
+                        <group attrs="{'invisible': [('type','=','sale')]}" string="Metodo de Depreciacion">
+                            <field name="method" widget="radio"/>
+                            <field name="method_progress_factor" attrs="{'invisible':[('method','=','linear')], 'required':[('method','=','degressive')]}"/>
+                            <field name="prorata" attrs="{'invisible': [('method_time','=','end')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_asset_asset_category_kanban" model="ir.ui.view">
+        <field name="name">account.asset.category.kanban</field>
+        <field name="model">account.asset.category</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="journal_id"/>
+                <field name="method"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="row mb4">
+                                <div class="col-6">
+                                    <strong><span><t t-esc="record.name.value"/></span></strong>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="badge badge-pill"><strong><t t-esc="record.method.value"/></strong></span>
+                                </div>
+                            </div>
+                            <div> <t t-esc="record.journal_id.value"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_asset_category_tree">
+        <field name="name">account.asset.category.tree</field>
+        <field name="model">account.asset.category</field>
+        <field name="arch" type="xml">
+            <tree string="Asset category">
+                <field name="name"/>
+                <field name="journal_id"/>
+                <field name="method"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_asset_category_search">
+        <field name="name">account.asset.category.search</field>
+        <field name="model">account.asset.category</field>
+        <field name="arch" type="xml">
+            <search string="Search Asset Category">
+                <filter string="Ventas" name="sales" domain="[('type','=', 'sale')]" help="Deferred Revenues"/>
+                <filter string="Compras" name="purchase" domain="[('type','=', 'purchase')]" help="Assets"/>
+                <field name="name" string="Categoria"/>
+                <field name="journal_id"/>
+                <group expand="0" string="Group By...">
+                    <filter string="Tipo" name="type" domain="[]" context="{'group_by':'type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_asset_asset_form">
+        <field name="name">account.asset.asset.form</field>
+        <field name="model">account.asset.asset</field>
+        <field name="arch" type="xml">
+            <form string="Asset">
+                <header>
+                    <button name="validate" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                    <button type="object" name="compute_depreciation_board" string="Calcular Depreciacion" states="draft"/>
+                    <button name="get_asset_report" string="Reporte" type="object" class="oe_highlight"/>
+                    <button name="change_to_unsubscribe" states="open" string="Dar de Baja" type="object" class="oe_highlight" confirm="Se dará de baja el Activo y se borraran las lineas de Depreciación desde el mes de baja ¿Esta seguro?"/>
+                    <button name="set_to_draft" string="Cambiar a Borrador" type="object" attrs="{'invisible': ['|', ('entry_count', '!=', 0), ('state', '!=', 'open')]}"/>
+                    <button name="%(action_asset_modify)d" states="open" string="Modify Depreciation" type="action"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="open_entries"  type="object" icon="fa-pencil">
+                            <field string="Items" name="entry_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Laptop iBook"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category_id" domain="[('type', '=', 'purchase')]" context="{'default_type': 'purchase'}" help="Category of asset"/>
+                            <field name="code"/>
+                            <field name="parent_id"/>
+                            <field name="date" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="date_first_depreciation"/>
+                            <field name="first_depreciation_manual_date"
+                                   attrs="{'readonly': ['|',('date_first_depreciation', '!=', 'manual'),('state', '!=','draft')], 'required': [('date_first_depreciation', '=', 'manual')]}"/>
+                            <field name="first_depreciation_manual_date"
+                            invisible="1"/>
+                            <field name="type" invisible="1"/>
+                            <field name="account_analytic_id" groups="analytic.group_analytic_accounting" />
+                        </group>
+                        <group>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            <field name="value" widget="monetary" options="{'currency_field': 'currency_id'}" help="Gross value of asset"/>
+                            <field name="salvage_value" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('type','=','sale')]}"/>
+                            <field name="value_residual" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="partner_id" widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'supplier'}"/>
+                            <field name="invoice_id" options="{'no_create': True}"/>
+                            <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Tabla de Depreciacion" name="table_depreciation">
+                            <field name="depreciation_line_ids">
+                                <tree editable="bottom" create="false">
+                                    <field name="depreciation_date"/>
+                                    <field name="amount" widget="monetary"/>
+                                    <field name="depreciated_value" readonly="1"/>
+                                    <field name="remaining_value" readonly="1" widget="monetary" string="Residual"/>
+                                    <field name="parent_state" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Tabla de Depreciacion ME" name="table_depreciation_me">
+                            <field name="depreciation_line_me_ids">
+                                <tree editable="bottom" create="false">
+                                    <field name="depreciation_date"/>
+                                    <field name="amount_me" widget="monetary"/>
+                                    <field name="depreciated_value_me" readonly="1"/>
+                                    <field name="remaining_value_me" readonly="1" widget="monetary" string="Residual ME"/>
+                                    <field name="parent_state" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Informacion de Depreciacion" name="info_depreciation">
+                            <group>
+                                <group>
+                                    <field name="method" widget="radio" attrs="{'invisible': [('type','=','sale')]}"/>
+                                    <field name="method_progress_factor" attrs="{'invisible':[('method','=','linear')], 'required':[('method','=','degressive')]}"/>
+                                    <field name="method_time" widget="radio" attrs="{'invisible': [('type','!=','purchase')]}"/>
+                                    <field name="prorata" attrs="{'invisible': [('method_time','=','end')]}"/>
+                                </group>
+                                <group>
+                                    <field name="depreciation_authorization"/>
+                                    <field name="method_number" attrs="{'invisible':[('method_time','=','end')], 'required':[('method_time','=','number')]}"/>
+                                    <field name="method_period"/>
+                                    <field name="method_end" attrs="{'required': [('method_time','=','end')], 'invisible':[('method_time','=','number')]}"/>
+                                    <field name="years_depreciations" force_save="1" readonly="1"/>
+                                    <label for="depreciation_rate"/>
+                                    <div>
+                                        <field name="depreciation_rate" nolabel="1" force_save="1" readonly="1" class="oe_inline"/>
+                                        %
+                                    </div>
+                                    <field name="years_depreciations" invisible="1"/>
+                                    <field name="depreciation_rate" invisible="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Caracteristicas" name="features">
+                            <group>
+                                <group>
+                                    <field name="location"/>
+                                    <field name="brand"/>
+                                </group>
+                                <group>
+                                    <field name="model"/>
+                                    <field name="plaque"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Contabilidad" name="accountant">
+                            <group>
+                                <group>
+                                    <field name="tipo"/>
+                                    <field name="valor_retiro"/>
+                                    <field name="depreciacion_retiro"/>
+                                    <field name="ean13"/>
+                                    <field name="cuo" attrs="{'readonly': [('invoice_id', '=',True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="referencia"/>
+                                    <field name="nro_comprobante"/>
+                                    <field name="f_baja"/>
+                                    <field name="move_baja_id" attrs="{'invisible': [('state','!=','unsubscribe')]}" readonly="1"/>
+                                    <field name="autorizacion_depreciacion"/>
+                                    <field name="code_asiento"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Leasing" name="leasing">
+                            <group>
+                                <group>
+                                    <field name="contract_date"/>
+                                    <field name="contract_number"/>
+                                    <field name="date_start_contract"/>
+                                </group>
+                                <group>
+                                    <field name="fees_number"/>
+                                    <field name="amount_total_contract"/>
+                                    <field name="only_format_74"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="me_values" string="Valores ME">
+                            <group>
+                                <field name="tipo_cambio_d"/>
+                                <field name="bruto_dolares"/>
+                                <field name="salvage_value_me"/>
+                                <field name="value_residual_me"/>
+                            </group>
+                        </page>
+                        <page name="ple" string="PLE">
+                            <group>
+                                <field name="table_13_ple"/>
+                                <field name="table_18_ple"/>
+                                <field name="table_19_ple"/>
+                                <field name="table_20_ple"/>
+                                <field name="campo37_ple"/>
+                                <field name="periodo_ple"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_asset_asset_kanban" model="ir.ui.view">
+        <field name="name">account.asset.asset.kanban</field>
+        <field name="model">account.asset.asset</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="row mb4">
+                                <div class="col-6">
+                                    <strong><span><t t-esc="record.name.value"/></span></strong>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <strong><t t-esc="record.date.value"/></strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-muted">
+                                    <span><t t-esc="record.category_id.value"/></span>
+                                </div>
+                                <div class="col-6">
+                                    <span class="float-right text-right">
+                                        <field name="state" widget="kanban_label_selection" options="{'classes': {'draft': 'primary', 'open': 'success', 'close': 'default'}}"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_asset_asset_purchase_tree">
+        <field name="name">account.asset.asset.purchase.tree</field>
+        <field name="model">account.asset.asset</field>
+        <field name="arch" type="xml">
+            <tree string="Assets" decoration-info="(state == 'draft')" decoration-muted="(state == 'close')">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="value"/>
+                <field name="value_residual" widget="monetary"/>
+                <field name="currency_id" groups="base.group_multi_currency"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_asset_search" model="ir.ui.view">
+        <field name="name">account.asset.asset.search</field>
+        <field name="model">account.asset.asset</field>
+        <field name="arch" type="xml">
+            <search string="Asset Account">
+                <field name="name" string="Activo"/>
+                <field name="date"/>
+                <filter string="Borrador" name="draft" domain="[('state','in', ('draft'))]" help="Activos en estado Borrador"/>
+                <filter string="Abierto" name="open" domain="[('state','in', ('open'))]" help="Activos en estado Abierto"/>
+                <filter string="Cerrado" name="closed" domain="[('state','=', 'close')]" help="Activos en estado Cerrado"/>
+                <field name="category_id" string="Categoria de Activo"/>
+                <field name="partner_id" filter_domain="[('partner_id','child_of',self)]"/>
+                <group expand="0" string="Group By...">
+                        <filter string="Fecha" name="month" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Categoria de Activo" name="category" domain="[]" context="{'group_by':'category_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_account_asset_asset_form">
+        <field name="name">Activos</field>
+        <field name="res_model">account.asset.asset</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="view_account_asset_asset_purchase_tree"/>
+        <field name="domain">[('category_id.type', '=', 'purchase')]</field>
+    </record>
+
+    <record model="ir.actions.server" id="action_depreciation_board_me_account_asset_asset">
+		<field name="name">Actualizar valores USD</field>
+		<field name="model_id" ref="om_account_asset.model_account_asset_asset"/>
+		<field name="binding_model_id" ref="om_account_asset.model_account_asset_asset" />
+		<field name="state">code</field>
+		<field name="code">action = records.action_depreciation_board_me()</field>
+	</record>
+
+    <!-- Configuration -->
+
+    <menuitem id="menu_finance_config_assets" name="Assets and Revenues" parent="account.menu_finance_configuration" sequence="25"/>
+
+    <record model="ir.actions.act_window" id="action_account_asset_asset_list_normal_purchase">
+        <field name="name">Categoria de Activos</field>
+        <field name="res_model">account.asset.category</field>
+        <field name="domain">[('type', '=', 'purchase')]</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{'default_type': 'purchase'}</field>
+    </record>
+
+    <menuitem parent="om_account_asset.menu_asset_asset_it" 
+              id="menu_action_account_asset_asset_form" 
+              action="action_account_asset_asset_form" 
+              sequence="1" 
+              groups="account.group_account_manager"/>
+
+    <menuitem parent="om_account_asset.menu_asset_settings_it"
+              id="menu_action_account_asset_asset_list_normal_purchase"
+              action="action_account_asset_asset_list_normal_purchase"
+              sequence="10"/>
+</odoo>

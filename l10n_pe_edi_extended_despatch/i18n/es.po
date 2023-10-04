@@ -1,0 +1,473 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_pe_edi_extended_despatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-03 05:15+0000\n"
+"PO-Revision-Date: 2021-08-03 05:15+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,help:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_partner_status
+msgid ""
+"\n"
+"    Status of sending the DTE to the partner:\n"
+"    - Not sent: the DTE has not been sent to the partner but it has sent to SII.\n"
+"    - Sent: The DTE has been sent to the partner."
+msgstr ""
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid ", visit"
+msgstr ", visita"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:mail.template,body_html:l10n_pe_edi_extended_despatch.email_template_edi_despatch
+msgid ""
+"<div class=\"o_layout o_default_theme\">\n"
+"                    <table class=\"o_mail_wrapper\">\n"
+"                        <tbody>\n"
+"                        <tr>\n"
+"                            <td class=\"o_mail_no_options o_mail_wrapper_td oe_structure\">\n"
+"                                <div class=\"o_mail_block_title_sub\" data-snippet=\"s_mail_block_title_sub\" data-name=\"Title - Subtitle\">\n"
+"                                    <div class=\"o_mail_snippet_general\">\n"
+"                                    <table class=\"o_mail_table_styles\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\n"
+"                                        <tbody>\n"
+"                                        <tr>\n"
+"                                            <td class=\"o_mail_h_padding o_mail_v_padding o_mail_no_colorpicker\">\n"
+"                                            <h2 class=\"o_mail_no_margin o_default_snippet_text\">\n"
+"                                                Electronic Despatch ${object.name or 'n/a'}\n"
+"                                            </h2>\n"
+"                                            <p class=\"o_mail_no_margin o_default_snippet_text\">\n"
+"                                                Dear\n"
+"                                                % if object.partner_id.parent_id:\n"
+"                                                    ${object.partner_id.name} (${object.partner_id.parent_id.name}),\n"
+"                                                % else:\n"
+"                                                    ${object.partner_id.name},\n"
+"                                                % endif\n"
+"                                             </p>\n"
+"                                             <p>\n"
+"                                                Attached to this message is the \n"
+"                                                % if object.name:\n"
+"                                                    Electronic Despatch <strong>${object.name or 'n/a'}</strong>\n"
+"                                                % else:\n"
+"                                                    Despatch\n"
+"                                                %endif\n"
+"                                                % if object.despatch_origin:\n"
+"                                                    (with reference: ${object.despatch_origin})\n"
+"                                                % endif\n"
+"                                            </p>\n"
+"                                            <ul>\n"
+"                                                <li>Date: <strong>${object.issue_date or 'n/a'}</strong></li>\n"
+"                                                <li>Start date: <strong>${object.start_date}</strong></li>\n"
+"                                                <li>Weight: <strong>${object.total_weight or 'n/a'} ${object.weight_uom.name or 'kg'}</strong></li>\n"
+"                                            </ul>\n"
+"                                            <p>\n"
+"                                                The electronic document in PDF and XML formats is attached to this message. \n"
+"                                                The printed representation in PDF has the same validity as one issued in a traditional way.\n"
+"                                            </p>\n"
+"                                            </td>\n"
+"                                        </tr>\n"
+"                                        </tbody>\n"
+"                                    </table>\n"
+"                                    </div>\n"
+"                                </div>                            \n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        </tbody>\n"
+"                    </table>\n"
+"                </div>   \n"
+"            "
+msgstr ""
+"<div class=\"o_layout o_default_theme\">\n"
+"                    <table class=\"o_mail_wrapper\">\n"
+"                        <tbody>\n"
+"                        <tr>\n"
+"                            <td class=\"o_mail_no_options o_mail_wrapper_td oe_structure\">\n"
+"                                <div class=\"o_mail_block_title_sub\" data-snippet=\"s_mail_block_title_sub\" data-name=\"Title - Subtitle\">\n"
+"                                    <div class=\"o_mail_snippet_general\">\n"
+"                                    <table class=\"o_mail_table_styles\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">\n"
+"                                        <tbody>\n"
+"                                        <tr>\n"
+"                                            <td class=\"o_mail_h_padding o_mail_v_padding o_mail_no_colorpicker\">\n"
+"                                            <h2 class=\"o_mail_no_margin o_default_snippet_text\">\n"
+"                                                Guia de remisión electrónica ${object.name or 'n/a'}\n"
+"                                            </h2>\n"
+"                                            <p class=\"o_mail_no_margin o_default_snippet_text\">\n"
+"                                                Estimados\n"
+"                                                % if object.partner_id.parent_id:\n"
+"                                                    ${object.partner_id.name} (${object.partner_id.parent_id.name}),\n"
+"                                                % else:\n"
+"                                                    ${object.partner_id.name},\n"
+"                                                % endif\n"
+"                                             </p>\n"
+"                                             <p>\n"
+"                                                Adjunto a este mensaje esta la \n"
+"                                                % if object.name:\n"
+"                                                    Guia de Remisión Electrónica <strong>${object.name or 'n/a'}</strong>\n"
+"                                                % else:\n"
+"                                                    Guia\n"
+"                                                %endif\n"
+"                                                % if object.despatch_origin:\n"
+"                                                    (con referencia: ${object.despatch_origin})\n"
+"                                                % endif\n"
+"                                            </p>\n"
+"                                            <ul>\n"
+"                                                <li>Fecha: <strong>${object.issue_date or 'n/a'}</strong></li>\n"
+"                                                <li>Fecha de inicio: <strong>${object.start_date}</strong></li>\n"
+"                                                <li>Peso: <strong>${object.total_weight or 'n/a'} ${object.weight_uom.name or 'kg'}</strong></li>\n"
+"                                            </ul>\n"
+"                                            <p>\n"
+"                                                Se adjunta en este mensaje el documento electrónico en formatos PDF y XML. \n"
+"                                                La representación impresa en PDF puede imprimirse y usarse como una Factura emitida de manera tradicional.\n"
+"                                            </p>\n"
+"                                            </td>\n"
+"                                        </tr>\n"
+"                                        </tbody>\n"
+"                                    </table>\n"
+"                                    </div>\n"
+"                                </div>                            \n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        </tbody>\n"
+"                    </table>\n"
+"                </div>   \n"
+"            "
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.view_logistic_despatch_form_edi
+msgid ""
+"<span class=\"o_stat_text\">Accepted by</span>\n"
+"                        <span class=\"o_stat_text\">SUNAT</span>"
+msgstr ""
+"<span class=\"o_stat_text\">Aceptado por</span>\n"
+"                        <span class=\"o_stat_text\">SUNAT</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.view_logistic_despatch_form_edi
+msgid ""
+"<span class=\"o_stat_text\">Check</span>\n"
+"                        <span class=\"o_stat_text\">Status</span>"
+msgstr ""
+"<span class=\"o_stat_text\">Verificar</span>\n"
+"                        <span class=\"o_stat_text\">Estado</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.view_logistic_despatch_form_edi
+msgid ""
+"<span class=\"o_stat_text\">Send to</span>\n"
+"                        <span class=\"o_stat_text\">SUNAT</span>"
+msgstr ""
+"<span class=\"o_stat_text\">Enviar a</span>\n"
+"                        <span class=\"o_stat_text\">SUNAT</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<span>CODE / DESCRIPTION</span>"
+msgstr "<span>CODIGO / DESCRIPCIÓN</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<span>QTY</span>"
+msgstr "<span>CANT</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<span>UOM</span>"
+msgstr "<span>UDM</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<span>WEIGHT</span>"
+msgstr "<span>PESO</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<strong>RECEIVER</strong>"
+msgstr "<strong>DESTINATARIO</strong>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<strong>TOTAL PACKAGES</strong>"
+msgstr "<strong>Total Bultos</strong>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<strong>TOTAL VOLUME</strong>"
+msgstr "<strong>Volumen Total</strong>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "<strong>TOTAL WEIGHT</strong>"
+msgstr "<strong>Peso Total</strong>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "ADDRESS:"
+msgstr "DIRECCIÓN:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_status__accepted
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_void_status__accepted
+msgid "Accepted"
+msgstr "Aceptado"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_status__objected
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_void_status__objected
+msgid "Accepted With Objections"
+msgstr "Aceptado con observaciones"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_status__ask_for_status
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_void_status__ask_for_status
+msgid "Ask For Status"
+msgstr "Consulta de estado"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "CARRIER:"
+msgstr "TRANSPORTISTA:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_cdr_void_file
+msgid "CDR Void file"
+msgstr "Archivo CDR de baja"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_cdr_file
+msgid "CDR file"
+msgstr "Archivo CDR"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_cancel_reason
+msgid "Cancel Reason"
+msgstr "Motivo de cancelación"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_status__cancelled
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_void_status__cancelled
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_latam_country_code
+msgid "Country Code (LATAM)"
+msgstr "Código de pais (LATAM)"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "DELIVERY ADDRESS:"
+msgstr "DIRECCIÓN DE LLEGADA"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "DENOMINATION:"
+msgstr "DENOMINACIÓN:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "DESPATCH DATE:"
+msgstr "FECHA:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "DRIVER:"
+msgstr "CONDUCTOR:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_hash
+msgid "DTE Hash"
+msgstr "Codigo hash de DTE"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_file
+msgid "DTE file"
+msgstr "Archivo DTE"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:mail.template,report_name:l10n_pe_edi_extended_despatch.email_template_edi_despatch
+msgid ""
+"Despatch_${(object.name or '').replace('/','_')}${object.state == 'draft' "
+"and '_draft' or ''}"
+msgstr ""
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "Electronic Despatch"
+msgstr "Guia de remisión electrónica"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.view_logistic_despatch_form_edi
+msgid "Electronic Despatch"
+msgstr "Guia de remisión electrónica"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:mail.template,subject:l10n_pe_edi_extended_despatch.email_template_edi_despatch
+msgid ""
+"Electronic Despatch ${object.name or 'n/a'} | ${object.company_id.name} "
+msgstr ""
+"Guia de remisión electrónica ${object.name or 'n/a'} | ${object.company_id.name} "
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_is_einvoice
+msgid "Is E-invoice"
+msgstr "Es Comprobante electrónico?"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model,name:l10n_pe_edi_extended_despatch.model_logistic_despatch
+msgid "Logistic Despatchs"
+msgstr "Guias"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "MODE:"
+msgstr "MODALIDAD:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_status__manual
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_void_status__manual
+msgid "Manual"
+msgstr ""
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_transport_mode
+msgid "Mode"
+msgstr "Modalidad"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_partner_status__not_sent
+msgid "Not Sent"
+msgstr "No enviado"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "OBSERVATIONS:"
+msgstr "OBSERVACIONES:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "ORIGIN ADDRESS:"
+msgstr "DIRECCIÓN DE PARTIDA:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_partner_status
+msgid "Partner DTE status"
+msgstr "Estado de DTE en cliente"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_status__not_sent
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_void_status__not_sent
+msgid "Pending To Be Sent"
+msgstr "Pendiente de ser enviado"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid ""
+"Printed representation of the <span class=\"font-weight-bold text-"
+"uppercase\">Electronic Despatch</span>"
+msgstr ""
+"Representación impresa de la <span class=\"font-weight-bold text-"
+"uppercase\">Guia de Remisión Electrónica</span>"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "REASON:"
+msgstr "MOTIVO:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "RUC"
+msgstr ""
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_shipment_reason
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,help:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_cancel_reason
+msgid "Reason given by the user to cancel this move"
+msgstr "Motivo de cancelación del documento"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_status__rejected
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_void_status__rejected
+msgid "Rejected"
+msgstr "Rechazado"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "START DATE:"
+msgstr "FECHA DE INICIO:"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_void_status
+msgid "SUNAT DTE Void status"
+msgstr "Estado de baja de DTE en SUNAT"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,field_description:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_status
+msgid "SUNAT DTE status"
+msgstr "Estado de DTE en SUNAT"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields.selection,name:l10n_pe_edi_extended_despatch.selection__logistic_despatch__l10n_pe_dte_partner_status__sent
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,help:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_status
+msgid ""
+"Status of sending the DTE to the SUNAT:\n"
+"    - Not sent: the DTE has not been sent to SUNAT but it has created.\n"
+"    - Ask For Status: The DTE is asking for its status to the SUNAT.\n"
+"    - Accepted: The DTE has been accepted by SUNAT.\n"
+"    - Accepted With Objections: The DTE has been accepted with objections by SUNAT.\n"
+"    - Rejected: The DTE has been rejected by SUNAT.\n"
+"    - Manual: The DTE is sent manually, i.e.: the DTE will not be sending manually."
+msgstr ""
+"Estados de envio del DTE a SUNAT:\n"
+"    - No enviado: El DTE no ha sido enviado a SUNAT pero fue creado.\n"
+"    - Solicitud de estado: El DTE esta solicitando su estado a SUNAT.\n"
+"    - Aceptado: El DTE fue aceptado por SUNAT.\n"
+"    - Aceptado con observaciones: El DTE fue aceptado con observaciones por SUNAT.\n"
+"    - Rechazado: El DTE fue rechazado por SUNAT.\n"
+"    - Manual: El DTE es enviado manualmente, e.d.: El DTE no sera enviado manualmente."
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,help:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_pe_dte_void_status
+msgid ""
+"Status of sending the Void DTE to the SUNAT:\n"
+"    - Not sent: the DTE has not been sent to SUNAT but it has created.\n"
+"    - Ask For Status: The DTE is asking for its status to the SUNAT.\n"
+"    - Accepted: The DTE has been accepted by SUNAT.\n"
+"    - Accepted With Objections: The DTE has been accepted with objections by SUNAT.\n"
+"    - Rejected: The DTE has been rejected by SUNAT.\n"
+"    - Manual: The DTE is sent manually, i.e.: the DTE will not be sending manually."
+msgstr ""
+"Estados de envio de la baja del DTE a SUNAT:\n"
+"    - No enviado: La baja del DTE no ha sido enviada a SUNAT pero fue creada.\n"
+"    - Solicitud de estado: La baja del DTE esta solicitando su estado a SUNAT.\n"
+"    - Aceptado: La baja del DTE fue aceptada por SUNAT.\n"
+"    - Aceptado con observaciones: La baja del DTE fue aceptada con observaciones por SUNAT.\n"
+"    - Rechazado: La baja del DTE fue rechazada por SUNAT.\n"
+"    - Manual: La baja del DTE es enviado manualmente, e.d.: La baja del DTE no sera enviada manualmente."
+
+#. module: l10n_pe_edi_extended_despatch
+#: model:ir.model.fields,help:l10n_pe_edi_extended_despatch.field_logistic_despatch__l10n_latam_country_code
+msgid "Technical field used to hide/show fields regarding the localization"
+msgstr ""
+
+#. module: l10n_pe_edi_extended_despatch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_extended_despatch.report_despatch_document
+msgid "VEHICLE:"
+msgstr "VEHICULO:"

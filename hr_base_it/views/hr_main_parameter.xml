@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="arch" type="xml">
+			<form string="Parametros Principales">
+				<sheet>
+					<notebook>
+						<page name="configuration" string="Configuracion">
+							<group string="Reglas Salariales">
+								<group>
+									<field name="income_sr_id"/>
+									<field name="worker_contributions_sr_id"/>
+									<field name="net_sr_id"/>
+								</group>
+								<group>
+									<field name="net_discounts_sr_id"/>
+									<field name="net_to_pay_sr_id"/>
+									<field name="employer_contributions_sr_id"/>
+								</group>
+							</group>
+							<group string="Calculo de Planillas">
+								<group>
+									<field name="payslip_working_wd"/>
+								</group>
+								<group>
+									<field name="rmv"/>
+								</group>
+							</group>
+							<group>
+								<group string="Directorio">
+									<field name="dir_create_file"/>
+								</group>
+								<group string="AFP NET">
+									<field name="insurable_remuneration"/>
+								</group>
+							</group>
+							<group>
+								<group string="Representante">
+									<field name="reprentante_legal_id"/>
+								</group>
+								<group/>
+							</group>
+						</page>
+						<page name="voucher" string="Boleta">
+							<field name="signature" widget="image" class="oe_avatar"/>
+							<group>
+								<group string="Worked Days">
+									<field name="wd_dlab" widget="many2many_tags"/>
+									<field name="wd_dnlab" widget="many2many_tags"/>
+									<field name="wd_dsub" widget="many2many_tags"/>
+									<field name="wd_ext" widget="many2many_tags"/>
+									<field name="wd_dvac" widget="many2many_tags"/>
+								</group>
+								<group string="Categorias">
+									<field name="income_categories" widget="many2many_tags"/>
+									<field name="discounts_categories" widget="many2many_tags"/>
+									<field name="contributions_categories" widget="many2many_tags"/>
+									<field name="contributions_emp_categories" widget="many2many_tags"/>
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_main_parameter_tree" model="ir.ui.view">
+		<field name="name">hr.main.parameter.tree</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="company_id" groups="base.group_multi_company"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_main_parameter" model="ir.actions.act_window">
+		<field name="name">Parametros Principales</field>
+		<field name="res_model">hr.main.parameter</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Parametros aqui
+			</p>
+		</field>
+	</record>
+</odoo>

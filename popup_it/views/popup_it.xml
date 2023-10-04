@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="popup_it_form" model="ir.ui.view">
+		<field name="name">popup.it.form</field>
+		<field name="model">popup.it</field>
+		<field name="arch" type="xml">
+			<form string="Mensaje">
+				<field name="message" readonly="1" decoration-bf="True"/>
+				<footer>
+					<button string="OK" class="oe_highlight" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="popup_it_action">
+		<field name="name">Mensaje</field>
+		<field name="res_model">popup.it</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="popup_it_form" />
+		<field name="target">new</field>
+	</record>
+	<record id="popup_file_it_form" model="ir.ui.view">
+		<field name="name">popup.file.it.form</field>
+		<field name="model">popup.it</field>
+		<field name="arch" type="xml">
+			<form string="Archivo">
+				<field name="output_name" invisible="1"/>
+				<div >
+					<p>Este es el archivo generado: <field name="output_file" readonly="1" filename="output_name"/></p>
+				</div>
+				<footer>
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="popup_file_it_action">
+		<field name="name">Archivo</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">popup.it</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="popup_file_it_form" />
+		<field name="target">new</field>
+	</record>
+</odoo>

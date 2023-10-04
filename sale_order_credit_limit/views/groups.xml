@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <record id="group_aprobe_credit_limit" model="res.groups">
+			<field name="name">Aprobador Limite De Credito Superior</field>
+		</record>
+	</data>
+</odoo>

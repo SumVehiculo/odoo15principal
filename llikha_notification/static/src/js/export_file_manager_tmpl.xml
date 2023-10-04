@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="templates" xml:space="preserve">
+
+    <t t-name="Throbber" t-extend="Throbber">
+        <t t-jquery=".oe_throbber_message" t-operation="after">
+        	<div class="llikha_oe_throbber_message" style="color:white"></div>
+        </t>
+    </t>
+</templates>

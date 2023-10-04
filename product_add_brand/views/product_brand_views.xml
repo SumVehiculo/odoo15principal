@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="date_order" position="replace">
+                <field name="date_order" nolabel="1" groups="base.group_no_one" />
+            </field>
+        </field>
+    </record>
+
+
+    <!-- Brand search view -->
+    <record id="product_brand_search_form_view" model="ir.ui.view">
+        <field name="name">product.brand.search.form</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <search string="Marca Del Producto">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <act_window
+    id="action_product_brand_kanban"
+    name="Marca Del Producto"
+    res_model="product.brand"
+    view_mode="tree,form"
+    target="current"
+    domain="[('product_ids', 'in', active_id)]"/>
+
+    <!-- Brand form view -->
+    <record id="view_product_brand_form" model="ir.ui.view">
+        <field name="name">product.brand.form</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <form string="Marca Del Producto">
+                <sheet>
+                    <field name="logo" widget="image" class="oe_avatar" />
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Brand Name"/></h1>
+                        <div name="options">
+                            <div>
+                                <field name="visible_slider"/>
+                                <label for="visible_slider"/>
+                            </div>
+                            <div>
+                                <field name="active" />
+                                <label for="active"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Brand tree view -->
+    <record id="view_product_brand_tree" model="ir.ui.view">
+        <field name="name">product.brand.tree</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <tree string="Marca Del Producto">
+                <field name="name" string="Marca"/>
+                <field name="visible_slider" string="Visible En Website"/>
+                <field name="active" string="Activo"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_template_form_brand_add" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after"  >
+                <field name="product_brand_id" placeholder="Marca"/></field>
+        </field>
+    </record>
+
+    <record id="view_product_template_kanban_brand" model="ir.ui.view">
+        <field name="name">product.template.kanban.view.brand</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_details']" position="after">
+                <div>
+                    <a t-if="record.product_brand_id" type="action"
+                       name="%(action_product_brand_kanban)d">
+                        <field name="product_brand_id" />
+                    </a>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_variant_kanban_brand" model="ir.ui.view">
+        <field name="name">product.product.kanban.view.brand</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_details']" position="after">
+                <div>
+                    <a t-if="record.product_brand_id" type="open">
+                        <field name="product_brand_id"/>
+                    </a>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_template_tree_brand" model="ir.ui.view">
+        <field name="name">product.template.tree.view.brand</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="product_brand_id" string="Marca"/></field>
+        </field>
+    </record>
+    <record id="view_product_variant_tree_brand" model="ir.ui.view">
+        <field name="name">product.product.tree.view.brand</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="product_brand_id" string="Marca"/></field>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_product_brand">
+        <field name="name">Marcas Del Producto</field>
+        <field name="res_model">product.brand</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <menuitem
+    action="action_product_brand"
+    name="Marcas Del Producto"
+    id="menu_product_brand"
+    parent="sale.product_menu_catalog"
+    sequence="4" />
+</odoo>

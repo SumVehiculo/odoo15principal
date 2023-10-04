@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_journal_period_group_user,account.journal.period.group.user,model_account_journal_period,account_base_it.group_account_tables_user,1,1,1,1
+access_account_journal_period_line_group_user,account.journal.period.line.group.user,model_account_journal_period_line,account_base_it.group_account_tables_user,1,1,1,1

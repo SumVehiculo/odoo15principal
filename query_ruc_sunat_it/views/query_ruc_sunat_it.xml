@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_tree_query_ruc_sunat_it" model="ir.ui.view">
+        <field name="name">query.ruc.sunat.it.view.tree</field>
+        <field name="model">query.ruc.sunat.it</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="numero_ruc" />
+                <field name="estado_contribuyente"/>
+                <field name="condicion_contribuyente"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_form_query_ruc_sunat_it" model="ir.ui.view">
+        <field name="name">query.ruc.sunat.it.view.form</field>
+        <field name="model">query.ruc.sunat.it</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Consultar RUC" type="object" name="query_ruc" class="btn-primary"/>
+		    <button string="Crear Partner" type="object" name="get_create_partner" class="btn-primary" attrs="{'invisible':[('numero_ruc', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="numero_ruc"/>
+                        <field name="tipo_contribuyente"/>
+                        <field name="nombre_comercial"/>
+                        <field name="fecha_inscripcion"/>
+                        <field name="fecha_inicio_actividades"/>
+                        <field name="estado_contribuyente"/>
+                        <field name="condicion_contribuyente"/>
+                        <field name="domicilio_fiscal"/>
+                        <field name="sistema_emision_comprobante"/>
+                        <field name="actividad_comercio_exterior"/>
+                        <field name="sistema_contabilidad"/>
+                        <field name="actividad_economica"/>
+                        <field name="comprobante_pago"/>
+                        <field name="sistema_emision_electronica"/>
+                        <field name="emisor_electronico"/>
+                        <field name="comprobantes_electronicos"/>
+                        <field name="afiliado_ple"/>
+                        <field name="padrones"/>
+                    </group>
+                    <footer>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_query_ruc_sunat_it" model="ir.actions.act_window">
+        <field name="name">Consulta RUC</field>
+        <field name="res_model">query.ruc.sunat.it</field>
+        <field name="view_mode">tree,form</field><field name="help" type="html">
+			  <p class="o_view_nocontent_smiling_face">
+				Crea tu primer registro de Consulta RUC aqui
+			  </p>
+			</field>
+    </record>
+
+    <menuitem
+        id="parent_menu_query_ruc_sunat_it"
+        name="Consulta RUC"
+        sequence="22"
+        web_icon="query_ruc_sunat_it,static/src/img/icon.png"
+        groups="query_ruc_sunat_it.group_query_ruc_sunat_it"
+    />
+
+    <menuitem 
+        id="menu_action_query_ruc_sunat_it"
+        parent="query_ruc_sunat_it.parent_menu_query_ruc_sunat_it"
+        action="action_query_ruc_sunat_it"
+        sequence="1"
+    />
+
+</odoo>

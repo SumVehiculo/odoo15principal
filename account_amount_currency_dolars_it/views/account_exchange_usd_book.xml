@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_exchange_usd_book_tree" model="ir.ui.view">
+            <field name="name">account.exchange.usd.book.tree</field>
+            <field name="model">account.exchange.usd.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Registro Diferencia ME Global" create="false">
+                    <field name="periodo"/>
+                    <field name="cuenta"/>
+                    <field name="saldome"/>
+                    <field name="saldomn"/>
+                    <field name="tc"/>
+                    <field name="saldo_act"/>
+                    <field name="diferencia"/>
+                    <field name="cuenta_diferencia"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_exchange_usd_book_search" model="ir.ui.view">
+            <field name="name">account.exchange.usd.book.search</field>
+            <field name="model">account.exchange.usd.book</field>
+            <field name="arch" type="xml">
+                <search string="Registro Diferencia ME Global">
+                    <field name="cuenta"/>
+                    <field name="cuenta_diferencia"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                        <filter string="Cuenta Diferencia" name="cuenta_diferencia" icon="terp-partner" context="{'group_by':'cuenta_diferencia'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_exchange_usd_book_it" model="ir.actions.act_window">
+            <field name="name">Registro Diferencia ME Global</field>
+            <field name="res_model">account.exchange.usd.book</field>
+            <field name="view_id" ref="view_account_exchange_usd_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_exchange_usd_book_search"/>
+        </record>
+
+    </data>
+</odoo>

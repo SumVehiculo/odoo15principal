@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_patrimony_book_tree" model="ir.ui.view">
+            <field name="name">account.patrimony.book.tree</field>
+            <field name="model">account.patrimony.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Patrimonio Neto" create="false">
+                    <field name="glosa"/>
+                    <field name="capital" sum="capital"/>
+                    <field name="acciones" sum="acciones"/>
+                    <field name="cap_add" sum="cap_add"/>
+                    <field name="res_no_real" sum="res_no_real"/>
+                    <field name="exce_de_rev" sum="exce_de_rev"/>
+                    <field name="reservas" sum="reservas"/>
+                    <field name="res_ac" sum="res_ac"/>
+                    <field name="total" sum="total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_patrimony_book_it" model="ir.actions.act_window">
+            <field name="name">Patrimonio Neto</field>
+            <field name="res_model">account.patrimony.book</field>
+            <field name="view_id" ref="view_account_patrimony_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

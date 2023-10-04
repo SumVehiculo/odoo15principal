@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_delivery_carrier_form">
+        <field name="name">logistic.expedition.logistic_delivery.form</field>
+        <field name="model">logistic.expedition</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <field name="tracking_code" position="before">
+                <field name="carrier_id"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_delivery_carrier_tree">
+        <field name="name">logistic.expedition.logistic_delivery.tree</field>
+        <field name="model">logistic.expedition</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_tree"/>
+        <field name="arch" type="xml">
+            <field name="tracking_code" position="after">
+                <field name="carrier_id"/>
+            </field>
+        </field>
+    </record>
+</data>
+</openerp>

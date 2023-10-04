@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_opening_it_form">
+			<field name="name">account.opening.it.form</field>
+			<field name="model">account.opening.it</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="generate_opening" type="object" states="draft" string="GENERAR APERTURA" class="oe_highlight"/>
+						<button string="Vista Preliminar" type="object" name="preview_opening" />
+						<button name="cancel_opening" type="object" states="done" string="CANCELAR APERTURA" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"  readonly="1"/>
+                    </header>
+					<sheet>
+						<div class="oe_button_box" name="button_box" attrs="{'invisible': [('state', '=', 'draft')]}">
+							<button class="oe_stat_button" string="Asientos de Apertura" name="open_entries"  type="object" icon="fa-list"/>
+						</div>
+						<div class="oe_title">
+                            <h1>
+                                <field name="name" class="oe_inline" readonly="1"/>
+                            </h1>
+                        </div>
+						<group>
+							<group>
+								<field name="from_fiscal_year_id" required="1"/>
+								<field name="to_fiscal_year_id" required="1"/>
+								<field name="partner_id" required="1"/>
+								<field name="ref" required="1"/>
+							</group>
+							<group>
+								<field name="account_id" required="1"/>
+								<field name="journal_id" required="1"/>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_opening_it_tree">
+			<field name="name">account.opening.it.tree</field>
+			<field name="model">account.opening.it</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" string="Nombre"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_account_opening_it_action" model="ir.actions.act_window">
+			<field name="name">Apertura Contable</field>
+			<field name="res_model">account.opening.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_opening_it_tree"/>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Apertura Contable aqui
+			</p>
+			</field>
+		</record>
+		
+		<menuitem id='menu_account_opening_it' 
+				  parent='account.menu_finance_entries_actions' 
+				  action="view_account_opening_it_action"
+				  sequence="98"
+				  groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

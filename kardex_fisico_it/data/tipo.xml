@@ -1,0 +1,52 @@
+<odoo>
+	<data noupdate="1">
+		<record model='type.operation.kardex'><field name='name'>VENTA NACIONAL</field><field name='code'>01</field></record>
+		<record model='type.operation.kardex'><field name='name'>COMPRA NACIONAL</field><field name='code'>02</field></record>
+		<record model='type.operation.kardex'><field name='name'>CONSIGNACION RECIBIDA</field><field name='code'>03</field></record>
+		<record model='type.operation.kardex'><field name='name'>CONSIGNACION ENTREGADA</field><field name='code'>04</field></record>
+		<record model='type.operation.kardex'><field name='name'>DEVOLUCION RECIBIDA</field><field name='code'>05</field></record>
+		<record model='type.operation.kardex'><field name='name'>DEVOLUCION ENTREGADA</field><field name='code'>06</field></record>
+		<record model='type.operation.kardex'><field name='name'>BONIFICACION</field><field name='code'>07</field></record>
+		<record model='type.operation.kardex'><field name='name'>PREMIO</field><field name='code'>08</field></record>
+		<record model='type.operation.kardex'><field name='name'>DONACION</field><field name='code'>09</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALIDA A PRODUCCION</field><field name='code'>10</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALIDA POR TRANSFERENCIA ENTRE ALMACENES</field><field name='code'>11</field></record>
+		<record model='type.operation.kardex'><field name='name'>RETIRO</field><field name='code'>12</field></record>
+		<record model='type.operation.kardex'><field name='name'>MERMAS</field><field name='code'>13</field></record>
+		<record model='type.operation.kardex'><field name='name'>DESMEDROS</field><field name='code'>14</field></record>
+		<record model='type.operation.kardex'><field name='name'>DESTRUCCION</field><field name='code'>15</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALDO INICIAL</field><field name='code'>16</field></record>
+		<record model='type.operation.kardex'><field name='name'>EXPORTACION</field><field name='code'>17</field></record>
+		<record model='type.operation.kardex'><field name='name'>IMPORTACION</field><field name='code'>18</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA DE PRODUCCION</field><field name='code'>19</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA POR DEVOLUCION DE PRODUCCION</field><field name='code'>20</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA POR TRANSFERENCIA ENTRE ALMACENES</field><field name='code'>21</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA POR IDENTIFICACION ERRONEA</field><field name='code'>22</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALIDA POR IDENTIFICACION ERRONEA</field><field name='code'>23</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA POR DEVOLUCION DEL CLIENTE</field><field name='code'>24</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALIDA POR DEVOLUCION AL PROVEEDOR</field><field name='code'>25</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA PARA SERVICIO DE PRODUCCION</field><field name='code'>26</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALIDA POR SERVICIO DE PRODUCCION</field><field name='code'>27</field></record>
+		<record model='type.operation.kardex'><field name='name'>AJUSTE POR DIFERENCIA DE INVENTARIO</field><field name='code'>28</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA DE BIENES EN PRESTAMO</field><field name='code'>29</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALIDA DE BIENES EN PRESTAMO</field><field name='code'>30</field></record>
+		<record model='type.operation.kardex'><field name='name'>ENTRADA DE BIENES EN CUSTODIA</field><field name='code'>31</field></record>
+		<record model='type.operation.kardex'><field name='name'>SALIDA DE BIENES EN CUSTODIA</field><field name='code'>32</field></record>
+		<record model='type.operation.kardex'><field name='name'>MUESTRAS MEDICAS</field><field name='code'>33</field></record>
+		<record model='type.operation.kardex'><field name='name'>PUBLICIDAD</field><field name='code'>34</field></record>
+		<record model='type.operation.kardex'><field name='name'>GASTOS DE REPRESENTACION</field><field name='code'>35</field></record>
+		<record model='type.operation.kardex'><field name='name'>RETIRO PARA ENTREGA A TRABAJADORES</field><field name='code'>36</field></record>
+		<record model='type.operation.kardex'><field name='name'>RETIRO POR CONVENIO COLECTIVO</field><field name='code'>37</field></record>
+		<record model='type.operation.kardex'><field name='name'>RETIRO POR SUSTITUCION DE BIEN SINIESTRADO</field><field name='code'>38</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 1</field><field name='code'>91</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 2</field><field name='code'>92</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 3</field><field name='code'>93</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 4</field><field name='code'>94</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 5</field><field name='code'>95</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 6</field><field name='code'>96</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 7</field><field name='code'>97</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS 8</field><field name='code'>98</field></record>
+		<record model='type.operation.kardex'><field name='name'>OTROS</field><field name='code'>99</field></record>
+
+	</data>
+</odoo>

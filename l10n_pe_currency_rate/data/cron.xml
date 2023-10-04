@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="sunat_exchange_rate_res_currency_cron" model="ir.cron">
+            <field name="name">SUNAT - Exchange Rate</field>
+            <field name="model_id" ref="model_res_currency"/>
+            <field name="state">code</field>
+            <field name="code">model._action_sunat_exchange_rate()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <!--field name="active" eval="False"/-->
+            <field name="user_id" ref="base.user_root"/>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="True"/>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 10:00:00')"/>
+		</record>
+    </data>
+</odoo>

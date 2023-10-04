@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_cash_rep_form">
+			<field name="name">account.cash.rep.form</field>
+			<field name="model">account.cash.rep</field>
+			<field name="arch" type="xml">
+				<form string="Libro Caja y Bancos">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="fiscal_year_id"/>
+								<field name="date_from"/>
+								<field name="date_to"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+								<field name="show_header" attrs="{'invisible':[('type_show', '!=', 'excel')]}"/>
+							</group>
+						</group>
+						<group string="Cuentas">
+							<field name="account_ids" options="{'no_create': True}" 
+							domain="[('internal_type', '=', 'liquidity')]"/>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_cash_rep_action" model="ir.actions.act_window">
+			<field name="name">Libro Caja y Bancos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.cash.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_cash_rep_action" 
+				id="menu_action_account_cash_rep" 
+				parent="account_report_menu_it.menu_account_report_it" 
+				sequence="3" 
+				groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

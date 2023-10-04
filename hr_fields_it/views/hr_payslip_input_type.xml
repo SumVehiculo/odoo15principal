@@ -1,0 +1,26 @@
+<odoo>
+	<record id="hr_payslip_input_type_list_inherit" model="ir.ui.view">
+		<field name="name">hr.payslip.input.type.list.inherit</field>
+		<field name="model">hr.payslip.input.type</field>
+		<field name="inherit_id" ref="hr_payroll.hr_payslip_input_type_view_tree"/>
+		<field name="arch" type="xml">
+			<field name="struct_ids" position="after">
+				<field name="company_id" optional="show" groups="base.group_multi_company"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="hr_payslip_input_type_form_inherit" model="ir.ui.view">
+		<field name="name">hr.payslip.input.type.form.inherit</field>
+		<field name="model">hr.payslip.input.type</field>
+		<field name="inherit_id" ref="hr_payroll.hr_payslip_input_type_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//sheet/group" position="before">
+				<widget name="web_ribbon" title="Archivado" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+			</xpath>
+			<field name="struct_ids" position="after">
+				<field name="active" invisible="1"/>
+			</field>
+		</field>
+	</record>
+</odoo>

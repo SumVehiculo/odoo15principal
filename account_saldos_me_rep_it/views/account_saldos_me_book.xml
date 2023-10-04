@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_saldos_me_book_tree" model="ir.ui.view">
+            <field name="name">account.saldos.me.book.tree</field>
+            <field name="model">account.saldos.me.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Saldos Moneda Extranjera" create="false">
+                    <field name="cuenta"/>
+                    <field name="denominacion"/>
+                    <field name="moneda"/>
+                    <field name="debe" sum="debe"/>
+                    <field name="haber" sum="haber"/>
+                    <field name="saldo" sum="saldo"/>
+                    <field name="debe_me" sum="debe_me"/>
+                    <field name="haber_me" sum="haber_me"/>
+                    <field name="saldo_me" sum="saldo_me"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_saldos_me_book_it" model="ir.actions.act_window">
+            <field name="name">Saldos Moneda Extranjera</field>
+            <field name="res_model">account.saldos.me.book</field>
+            <field name="view_id" ref="view_account_saldos_me_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

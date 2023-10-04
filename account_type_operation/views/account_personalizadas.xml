@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_personalizadas_receivable_view_tree" model="ir.ui.view">
+        <field name="name">model_name.view.tree</field>
+        <field name="model">account.personalizadas</field>
+        <field name="arch" type="xml">
+            <tree string="Cuentas de Cobros Personalizadas">
+                <field name="name"/>
+                <field name="cuenta_mn_id"/>
+                <field name="cuenta_me_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_personalizadas_payable_view_tree" model="ir.ui.view">
+        <field name="name">model_name.view.tree</field>
+        <field name="model">account.personalizadas</field>
+        <field name="arch" type="xml">
+            <tree string="Cuentas de Pagos Personalizadas">
+                <field name="name"/>
+                <field name="cuenta_mn_id"/>
+                <field name="cuenta_me_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_personalizadas_view_form" model="ir.ui.view">
+        <field name="name">account.personalizadas.view.form</field>
+        <field name="model">account.personalizadas</field>
+        <field name="arch" type="xml">
+            <form string="Cuentas de Pagos Personalizadas">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                         <field name="p_type" invisible="1"/>
+                        <field name="cuenta_mn_id" domain="[('internal_type', '=', 'receivable')] if p_type == 'receivable' else [('internal_type', '=', 'payable')]"/>
+                        <field name="cuenta_me_id" domain="[('internal_type', '=', 'receivable')] if p_type == 'receivable' else [('internal_type', '=', 'payable')]"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_account_personalizadas_receivable_type" model="ir.actions.act_window">
+            <field name="name">Cobros</field>
+            <field name="res_model">account.personalizadas</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="account_personalizadas_receivable_view_tree"/>
+            <field name="domain">[('p_type', '=', 'receivable')]</field>
+            <field name="context">{'default_p_type': 'receivable'}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Crear una cuenta personalizada para clientes
+              </p>
+            </field>
+    </record>
+
+    <record id="action_account_personalizadas_payable_type" model="ir.actions.act_window">
+            <field name="name">Pagos</field>
+            <field name="res_model">account.personalizadas</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="account_personalizadas_payable_view_tree"/>
+            <field name="domain">[('p_type', '=', 'payable')]</field>
+            <field name="context">{'default_p_type': 'payable'}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Crear una cuenta personalizada para Proveedores
+              </p>
+            </field>
+    </record>   
+
+    <menuitem name="Cuentas personalizadas " 
+				  id="menu_action_account_personalizadas" 
+				  parent="account.menu_finance_configuration"
+				  sequence="99"/>
+
+    <menuitem action="account_type_operation.action_account_personalizadas_receivable_type" 
+				  id="menu_action_account_personalizadas_receivable" 
+				  parent="account_type_operation.menu_action_account_personalizadas"
+				  sequence="1"/>
+
+    <menuitem action="account_type_operation.action_account_personalizadas_payable_type" 
+				  id="menu_action_account_personalizadas_payable" 
+				  parent="account_type_operation.menu_action_account_personalizadas"
+				  sequence="2"/>
+
+</odoo>

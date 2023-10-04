@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_deferred_expense_wizard_group_user,account.deferred.expense.wizard.group.user,model_account_deferred_expense_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_account_deferred_expense_view_group_user,account.deferred.expense.view.group.user,model_account_deferred_expense_view,account_base_it.group_account_tables_user,1,1,1,1

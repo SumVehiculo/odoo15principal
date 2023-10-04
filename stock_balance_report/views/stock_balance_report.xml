@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+
+	<record model="ir.ui.view" id="view_stock_balance_report_tree">
+		<field name="name">stock.balance.report.tree</field>
+		<field name="model">stock.balance.report</field>
+		<field name="arch" type="xml">
+			<tree create="0" edit="0" delete="0">
+				<field name="producto"/>
+				<field name="codigo"/>
+				<field name="unidad"/>
+				<field name="categoria_1"/>
+				<field name="categoria_2"/>
+				<field name="categoria_3"/>
+				<field name="almacen"/>
+				<field name="entrada" sum="entrada"/>
+				<field name="reservado" sum="reservado"/>
+				<field name="saldo" sum="saldo"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="stock_balance_report_filter" model="ir.ui.view">
+		<field name="name">stock.balance.report.filter</field>
+		<field name="model">stock.balance.report</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="producto"/>
+				<field name="almacen"/>
+				<field name="codigo"/>
+				<field name="unidad"/>
+				<group expand="0" string="Group By">
+					<filter string="Producto" name="producto" domain="[]" context="{'group_by': 'producto'}"/>
+					<filter string="Almacen" name="almacen" domain="[]" context="{'group_by': 'almacen'}"/>
+					<filter string="Codigo" name="codigo" domain="[]" context="{'group_by': 'codigo'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="stock_balance_report_pivot" model="ir.ui.view">
+		<field name="name">stock.balance.report.pivot</field>
+		<field name="model">stock.balance.report</field>
+		<field name="arch" type="xml">
+			<pivot string="Reporte Saldos">
+				<field name="almacen" type="row"/>
+				<field name="producto" type="col"/>
+				<field name="saldo" type="measure"/>
+			</pivot>
+		</field>
+	</record>
+	
+	<record id="stock_balance_report_graph" model="ir.ui.view">
+		<field name="name">stock.balance.report.graph</field>
+		<field name="model">stock.balance.report</field>
+		<field name="arch" type="xml">
+			<graph string="Grafico Saldos" type="line">
+				<field name="almacen" type="col"/>
+				<field name="saldo" type="measure"/>
+			</graph>
+		</field>
+	</record>
+
+
+
+
+
+		<record model="ir.ui.view" id="view_stock_balance_report_wizard">
+			<field name="name">stock.balance.report.wizard.form</field>
+			<field name="model">stock.balance.report.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Saldos">
+					<group>
+						<group>
+							<h1>Desea generar Saldos?</h1>
+						</group>
+					</group>
+					<footer>
+						<button string="Generar" name="get_stock_lote" type="object" class="oe_highlight" onlyRead="1"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+
+
+		<record id="action_balance_report" model="ir.actions.act_window">
+			<field name="name">Saldos</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.balance.report.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+
+	<menuitem id="menu_balance_report"
+			action="action_balance_report"
+			parent="stock.menu_stock_warehouse_mgmt"
+			sequence="4"/>
+
+	<menuitem id="menu_balance_report_sale"
+			action="action_balance_report"
+			parent="sale.menu_sale_report"
+			sequence="4"/>
+
+	<record model="ir.ui.menu" id="sale.menu_sale_report">
+		<field name="groups_id" eval="[(6,0, [ref('sales_team.group_sale_manager'), ref('stock_balance_report.group_stock_balance_report_all')])]"/>
+	</record>
+</odoo>

@@ -1,0 +1,62 @@
+<odoo>
+	<data>
+		<record id="res_config_settings_automatic_s_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.automatic.s.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='analytic']" position="after">
+					<h2>Datos Origen Automático</h2>
+                    <div class="row mt16 o_settings_container" id="automatic_orign">
+                        <div class="col-12 col-lg-6 o_setting_box" id="automatic_datoss">
+                            <div class="o_setting_left_pane">
+                                <field name="origen_nro_compra"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="origen_nro_compra"/>
+                                <div class="text-muted">
+                                    Permite Que El Campo Origen - Nro. De Compra Viaje De Manera Atuomática
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="automatic_etiqueta">
+                                <div class="o_setting_left_pane">
+                                    <field name="etiqueta_lote"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="etiqueta_lote"/>
+                                    <div class="text-muted">
+                                        Permite Que El Campo Etiqueta Se Añada El Lote Que Viaja De Manera Atuomática
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+		<record id="res_config_settings_automatic_stock_s_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.automatic.stock.s.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@data-key='stock']" position="inside">
+                        <h2>Datos Lote Automatico</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">                                    
+                                </div>
+                                <div class="o_setting_right_pane" id="obligatorio_guia_nro">
+                                    <label for="descript_move_l"/>
+                                    <div class="text-muted" name="nro_guia_obligatorio">
+                                        Si esta marcado, Significa que El Lote Figurara En La Descripción De Operación Del Albaran.
+                                    </div>
+                                    <field name="descript_move_l" nolabel="1"/>
+                                </div>
+                            </div>
+                        </div>   
+            	</xpath>
+            </field>
+        </record>
+	</data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_einvoice_document" inherit_id="l10n_pe_edi_extended.report_einvoice_document">
+        <xpath expr="//dl[@name='related_document']" position="after">
+            <dl class="row mb-0" name="detraction" t-if="o.l10n_pe_dte_is_detraction">
+                <dt class="col-6 col-sm-5 mb-0">
+                    OPERACIÓN SUJETA A DETRACCIÓN (Tasa <t t-esc="o.l10n_pe_dte_detraction_percent"/>%):
+                </dt>
+                <dd class="col-6 col-sm-7 mb-0"><t t-esc="o.l10n_pe_dte_detraction_amount"/> (<span t-field="o.l10n_pe_dte_detraction_code"/>)</dd>
+            </dl>
+        </xpath>
+    </template>
+</odoo>

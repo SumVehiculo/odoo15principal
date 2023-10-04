@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_check_voucher_skip_detection2_wizard_wizard_form">
+			<field name="name">check.voucher.skip.detection2.wizard.form</field>
+			<field name="model">check.voucher.skip.detection2.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="period_id" required="1"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="check_voucher_skip_detection2_wizard_action" model="ir.actions.act_window">
+			<field name="name">Voucher Faltantes segun numeracion</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">check.voucher.skip.detection2.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="check_voucher_skip_detection2_wizard_action" 
+				id="menu_check_voucher_skip_detection2_wizard_wizard" 
+				parent="account_consistencia_rep_it.menu_account_consistency_report" 
+				sequence="96"/>
+	</data>
+</odoo>

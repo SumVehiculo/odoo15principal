@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="view_base_currency_rate_list_it" model="ir.ui.view">
+		<field name="name">base.currency.rate.list.it</field>
+		<field name="model">res.currency.rate</field>
+		<field name="arch" type="xml">
+			<tree edit="0" create="0" delete="0">
+				<field name="name" optional="show"/>
+				<field name="sale_type" optional="show"/>
+				<field name="purchase_type" optional="show"/>
+				<field name="company_id" groups="base.group_multi_company"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_base_currency_rate_form_it" model="ir.actions.act_window">
+		<field name="name">Tipos de Cambio</field>
+		<field name="res_model">res.currency.rate</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_base_currency_rate_list_it"/>
+	</record>
+
+	<menuitem id="menu_account_sunat_currency_rate" name="Diferencias de Cambio" parent="account.menu_finance_entries_actions">
+		<menuitem action="l10n_pe_currency_rate.view_base_currency_rate_form_it" id="menu_action_currency_rate_list" sequence="1"/>
+	</menuitem>
+</odoo>

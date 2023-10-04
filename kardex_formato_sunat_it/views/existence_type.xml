@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_existence_type_form" model="ir.ui.view">
+		<field name="name">existence.type.form</field>
+		<field name="model">existence.type</field>
+		<field name="arch" type="xml">
+			<form string="Tipos de Existencias">
+				<sheet>
+					<group>
+						<group>
+							<field name="code" required="1"/>
+							<field name="name" required="1"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_existence_type_list" model="ir.ui.view">
+		<field name="name">existence.type.list</field>
+		<field name="model">existence.type</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="code" optional="show"/>
+				<field name="name" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_existence_type_form" model="ir.actions.act_window">
+		<field name="name">Tipos de Existencias</field>
+		<field name="res_model">existence.type</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_existence_type_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Tipo de Existencia aqui
+		  </p>
+		</field>
+	</record>
+</odoo>

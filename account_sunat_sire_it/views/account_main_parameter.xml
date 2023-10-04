@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="SIRE" groups="account_sunat_sire_it.group_sire_api_query_sunat_manager">
+					<group string="Credenciales">
+						<group>
+							<field name="sire_username"/>
+							<field name="sire_password"/>
+						</group>
+						<group>
+							<field name="sire_client_id" string="Client ID"/>
+							<field name="sire_client_secret" string="Clave"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="sire_token_generation_date" readonly="1" string="Fecha de Generación de Token"/>
+							<field name="sire_token_expiration_date" readonly="1" string="Fecha de Vencimiento de Token"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

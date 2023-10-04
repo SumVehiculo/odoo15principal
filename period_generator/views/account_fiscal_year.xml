@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="action_account_fiscal_year_form_inherit" model="ir.ui.view">
+			<field name="name">account.fiscal.year.form.inherit</field>
+			<field name="model">account.fiscal.year</field>
+			<field name="inherit_id" ref="account_accountant.action_account_fiscal_year_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button name="generate_periods" type="object" string="Generar Periodos" class="oe_highlight"/>
+					</header>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+    <record id="group_aprob_costo_cero" model="res.groups">
+        <field name="name">Cierre Kardex - Aprobar Costo 0</field>
+    </record>
+    <record id="group_aprob_sunat_oper" model="res.groups">
+        <field name="name">Cierre Kardex - Aprobar Operación Sunat</field>
+    </record>
+    <record id="group_generator" model="res.groups">
+        <field name="name">generar periodos Automatico kardex</field>
+    </record>
+    <record id="groupcreatemano" model="res.groups">
+        <field name="name">generar periodos Especiales kardex</field>
+    </record>
+
+
+    <record id="view_period_generator_krdx_form" model="ir.ui.view">
+        <field name="name">period_generator.krdx.form</field>
+        <field name="model">period.generator.kardex</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Este asistente le ayudará a generar Periodos para el año fiscal seleccionado</p>
+                <group>
+                    <group>
+                        <field name="fiscal_year_id" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="generate_periods" string="Generar" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_period_generators_kardex" model="ir.actions.act_window">
+        <field name="name">Generar Periodos Kardex</field>
+        <field name="res_model">period.generator.kardex</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <record id="action_periodtree" model="ir.actions.act_window">
+        <field name="name">Periodos Kardex</field>
+        <field name="res_model">account.period.kardex</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <menuitem id="menu_krdx" name="Parametros Kardex" parent="stock.menu_stock_config_settings" sequence="60"/>
+    <menuitem action="action_period_generators_kardex" id="menu_kardex_period_generator" groups="kardex_save_period_valorized.group_generator" parent="kardex_save_period_valorized.menu_krdx" sequence="1"/>
+    <menuitem action="action_periodtree" id="perdio_tree" parent="kardex_save_period_valorized.menu_krdx" sequence="2" groups="kardex_save_period_valorized.groupcreatemano"/>
+    
+    <!--<menuitem id="menu_kardex_period_generator"
+              parent="account_menu_other_configurations.menu_other_configurations"
+              action="action_period_generators_kardex"
+              groups="kardex_save_period_valorized.group_generator"
+              sequence="3"/>-->
+
+
+
+
+
+
+
+
+
+
+
+
+		<record id="kardex_save_valorized_form" model="ir.ui.view">
+			<field name="model">kardex.save</field>
+			<field name="name">kardex.save.valorized.form</field>
+			<field name="inherit_id" ref="kardex_save_period_final.kardex_save_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='save_valorado']" position="before">
+					<button string="Procesar Valorado" type="object" name="save_valorized" states="first" class="oe_highlight" onlyRead="1"/>
+                    <button string="Procesar Valorado Dolares" type="object" name="save_valorized_dol" states="val_sol" class="oe_highlight" onlyRead="1"/>
+				</xpath>
+				<xpath expr="//button[@name='save_valorado']" position="attributes">
+					<attribute name="states">valorized</attribute>
+				</xpath>
+				<xpath expr="//button[@name='save_valorado_dolar']" position="attributes">
+					<attribute name="invisible">0</attribute>
+				</xpath>
+				<xpath expr="//button[@name='save_valorado_dolar']" position="attributes">
+					<attribute name="invisible">0</attribute>
+				</xpath>
+				<xpath expr="//button[@name='agregar_krdx_parameter']" position="attributes">
+					<attribute name="states">val_dol</attribute>
+				</xpath>
+                <xpath expr="//notebook" position="before">
+					<group>
+                            <group string="Aprobación Costo Dolar Cero">
+                                    <field name="fecha_aprob_costo_cero_dolar" readonly="1"/>
+                                <label for="user_aprob_costo_cero_id_dolar"/>
+                                    <div class="o_row">
+                                        <field name="user_aprob_costo_cero_id_dolar" readonly="1"/>
+                                            <button string="Aprobar" type="object" name="aprobar_costo_cero_dolar" attrs="{'invisible': [('state', '!=', 'valorized_dol')]}" class="btn-link mb-1 px-0" onlyRead="1"/>
+                                    </div>
+                                </group>
+                        </group>
+				</xpath>
+				<!--<xpath expr="//field[@name='state']" position="attributes">
+					<attribute name="statusbar_visible">draft,first,valorized,val_sol,done</attribute>
+				</xpath>-->
+			</field>
+		</record>
+	</data>
+</odoo>

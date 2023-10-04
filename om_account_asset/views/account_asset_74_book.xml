@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_asset_74_book_tree" model="ir.ui.view">
+            <field name="name">account.asset.74.book.tree</field>
+            <field name="model">account.asset.74.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Formato 7.4" create="false">
+                    <field name="campo1"/>
+                    <field name="campo2"/>
+                    <field name="campo3"/>
+                    <field name="campo4"/>
+                    <field name="campo5"/>
+                    <field name="campo6"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_asset_74_book_search" model="ir.ui.view">
+            <field name="name">account.asset.74.book.search</field>
+            <field name="model">account.asset.74.book</field>
+            <field name="arch" type="xml">
+                <search string="Formato 7.4">
+                    <field name="campo1"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_asset_74_book_it" model="ir.actions.act_window">
+            <field name="name">Formato 7.4</field>
+            <field name="res_model">account.asset.74.book</field>
+            <field name="view_id" ref="view_account_asset_74_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_asset_74_book_search"/>
+        </record>
+
+    </data>
+</odoo>

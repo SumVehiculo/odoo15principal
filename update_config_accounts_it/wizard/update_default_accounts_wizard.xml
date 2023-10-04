@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_update_default_accounts_wizard_form" model="ir.ui.view">
+        <field name="name">update.default.accounts.wizard.form</field>
+        <field name="model">update.default.accounts.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Este Wizard actualizará las cuentas predeterminadas del sistema en la Compañia en la que se encuentra.</p>
+                <group>
+                    <group>
+                        <field name="property_account_receivable_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_account_payable_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_account_expense_categ_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_account_income_categ_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_account_expense_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_account_income_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_stock_account_output_categ_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_stock_account_input_categ_id" domain="[('deprecated','=',False)]"/>
+                        <field name="property_stock_valuation_account_id" domain="[('deprecated','=',False)]"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="update_account" string="Actualizar" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_update_default_accounts_wizard" model="ir.actions.act_window">
+        <field name="name">Cuentas Predeterminadas</field>
+        <field name="res_model">update.default.accounts.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_update_default_accounts_wizard"
+              parent="account_menu_other_configurations.menu_other_configurations"
+              action="action_update_default_accounts_wizard"
+              groups="account.group_account_manager"
+              sequence="40"/>
+</odoo>

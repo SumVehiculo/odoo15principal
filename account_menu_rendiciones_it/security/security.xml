@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="group_bank_statement_group_manager" model="res.groups">
+			<field name="name">Extractos Bancarios Admin</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+
+		<record id="group_menu_surrender_group_manager" model="res.groups">
+			<field name="name">Menu Rendiciones</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+
+		<record id="group_menu_surrender_settings_group_manager" model="res.groups">
+			<field name="name">Ajustes Rendiciones</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+	</data>
+</odoo>

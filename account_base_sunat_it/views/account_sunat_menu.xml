@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- Top menu item -->
+		<menuitem name="SUNAT"
+            id="menu_sunat"
+			action="l10n_pe_currency_rate.view_base_currency_rate_form_it"
+            groups="group_sunat_accounting_menu"
+            web_icon="account_base_sunat_it,static/description/icon.png"
+            sequence="41"/>
+
+		<menuitem id="menu_finance_sunat" 
+				name="SUNAT" 
+				parent="account_base_sunat_it.menu_sunat" 
+				sequence="1"/>
+
+		<menuitem id="menu_finance_sunat_ple" 
+				name="PLES" 
+				parent="account_base_sunat_it.menu_finance_sunat" 
+				sequence="1"/>
+
+		<menuitem id="menu_finance_sunat_cuarta" 
+				name="4TA Categoria" 
+				parent="account_base_sunat_it.menu_finance_sunat" 
+				sequence="2"/>
+
+		<menuitem id="menu_finance_sunat_percepcion" 
+				name="Percepciones" 
+				parent="account_base_sunat_it.menu_finance_sunat" 
+				sequence="3"/>
+
+		<menuitem id="menu_finance_sunat_daot" 
+				name="DAOT" 
+				parent="account_base_sunat_it.menu_finance_sunat" 
+				sequence="4"/>
+
+		<menuitem id="menu_sunat_pdb" 
+				name="PDB" 
+				parent="account_base_sunat_it.menu_sunat" 
+				sequence="2"/>
+
+		<menuitem id="menu_sunat_reports" 
+				name="Informes" 
+				parent="account_base_sunat_it.menu_sunat" 
+				sequence="3"/>
+		
+		<menuitem id="menu_sunat_tables" 
+				name="Tablas" 
+				parent="account_base_sunat_it.menu_sunat" 
+				sequence="4"/>
+	</data>
+</odoo>

@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="group_res_partner_tarifa_plazos_vendedor_restriction" model="res.groups">
+            <field name="name">Manejo Tarifa y Plazos de Pago En Contactos</field>            
+        </record>
+    </data>
+</odoo>

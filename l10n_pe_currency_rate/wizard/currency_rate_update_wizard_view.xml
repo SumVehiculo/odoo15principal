@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pe_currency_rate_update_wizard_form" model="ir.ui.view">
+            <field name="name">pe.currency.rate.update.wizard.form</field>
+            <field name="model">pe.currency.rate.update.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Importar TC en Rango de Fechas">
+                    <group>
+                         <group>
+                            <field name="start_date" required="1" />
+                         </group>
+                         <group>
+                            <field name="end_date" required="1" />
+                         </group>
+                    </group>
+                    <footer>
+                        <button string='Agregar Tasas' name="get_currency_rate" type="object" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-default" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_pe_currency_rate_update_wizard" model="ir.actions.act_window">
+            <field name="name">Tasa en Rango</field>
+            <field name="res_model">pe.currency.rate.update.wizard</field>
+            <field name="view_mode">tree,form</field>
+           <field name="view_id" ref="pe_currency_rate_update_wizard_form"/>
+           <field name="target">new</field>
+        </record>
+
+        
+    </data>
+</odoo>

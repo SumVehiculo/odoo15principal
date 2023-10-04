@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_journal_period_form">
+			<field name="name">account.journal.period.form</field>
+			<field name="model">account.journal.period</field>
+			<field name="arch" type="xml">
+				<form string="Cierre de Periodo">
+					<header>
+						<button string="Cerrar Periodo" type="object" name="close_period" states="draft" class="oe_highlight"/>
+						<button string="Reabrir Periodo" type="object" name="open_period" states="done" class="oe_highlight"/>
+						<field name="state" widget="statusbar" readonly="1"/>
+					</header>
+					<group>
+						<group>
+							<field name="period_id" attrs="{'readonly':[('state','in',['done'])]}"/>
+							<field name="fiscal_year_id"/>
+							<field name="date_start"/>
+							<field name="date_end"/>
+						</group>
+						<group>
+							<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Periodos" attrs="{'invisible':[('state','in',['done'])]}">
+							<button name="add_all_journals" string="Agregar todos los diarios" type="object" states="draft"/>
+							<field name="line_ids">
+								<tree editable="bottom">
+									<field name="period_id" invisible="1"/>
+									<field name="journal_id"/>
+									<field name="type"/>
+									<field name="state" invisible="1" readonly="1"/>
+									<button name="action_done"
+										type="object" icon="fa-times-circle-o"
+										states="draft" help="Cerrar diario para este periodo"/>
+									<button name="action_draft"
+										type="object" icon="fa-share-square-o"
+										states="done" help="Reabrir diario para este periodo"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_journal_period_tree">
+			<field name="name">account.journal.period.tree</field>
+			<field name="model">account.journal.period</field>
+			<field name="arch" type="xml">
+				<tree string="Cierre de Periodo" decoration-info="state=='draft'" decoration-danger="state=='done'">
+					<field name="fiscal_year_id"/>
+					<field name="period_id"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+					<field name="state"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_account_journal_period_action" model="ir.actions.act_window">
+			<field name="name">Cierre de Periodo</field>
+			<field name="res_model">account.journal.period</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_journal_period_tree"/>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Cierre de Periodo aqui
+			</p>
+			</field>
+		</record>
+		
+		<menuitem id='menu_account_journal_period' 
+				  parent='account.account_account_menu' 
+				  action="view_account_journal_period_action"
+				  sequence="2"
+				  groups="account_journal_period_close.group_account_journal_period_user"/>
+		
+		<record model="ir.ui.menu" id="account_accountant.menu_action_change_lock_date">
+			<field name="groups_id" eval="[(6,0, [ref('account_journal_period_close.group_account_journal_period_user')])]"/>
+		</record>
+
+	</data>
+</odoo>

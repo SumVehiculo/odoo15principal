@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_bank_statement_import_form" model="ir.ui.view">
+			<field name="name">bank.statement.import.form.</field>
+			<field name="model">account.bank.statement</field>
+			<field name="inherit_id" ref="account.view_bank_statement_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form//header" position="inside">
+					<button
+						name="import_lines" type="object" string="Importar Lineas"
+						help="Importa Lineas de Extracto de un Archivo CSV"
+						attrs="{'invisible':[('state', '!=', 'open')]}"
+						icon="fa-plus" widget="statinfo"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

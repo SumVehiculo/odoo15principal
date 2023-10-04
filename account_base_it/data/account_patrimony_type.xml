@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='account.patrimony.type'><field name='code'>001</field><field name='name'>CAPITAL</field></record>
+		<record model='account.patrimony.type'><field name='code'>002</field><field name='name'>ACCIONES DE INVERSION</field></record>
+		<record model='account.patrimony.type'><field name='code'>003</field><field name='name'>CAPITAL ADICIONAL</field></record>
+		<record model='account.patrimony.type'><field name='code'>004</field><field name='name'>RESULTADOS NO REALIZADOS</field></record>
+		<record model='account.patrimony.type'><field name='code'>005</field><field name='name'>EXCEDENTE DE REVALUACION</field></record>
+		<record model='account.patrimony.type'><field name='code'>006</field><field name='name'>RESERVAS</field></record>
+		<record model='account.patrimony.type'><field name='code'>007</field><field name='name'>RESULTADOS ACUMULADOS</field></record>
+	</data>
+</odoo>

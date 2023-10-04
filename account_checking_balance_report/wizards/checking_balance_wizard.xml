@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_checking_balance_wizard_form">
+			<field name="name">checking.balance.wizard.form</field>
+			<field name="model">checking.balance.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Balance de Comprobacion">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							<field name="period_to" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+							<field name="show_header" attrs="{'invisible':[('type_show', '!=', 'excel')]}"/>
+							<field name="show_account_entries"/>
+							<field name="level"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="checking_balance_action" model="ir.actions.act_window">
+			<field name="name">Balance de Comprobacion</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">checking.balance.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="checking_balance_action" 
+				id="menu_checking_balance_wizard" 
+				parent="account_report_menu_it.menu_account_worksheet" 
+				sequence="1" 
+				groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

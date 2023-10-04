@@ -1,0 +1,32 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_hr_utilities_print_wizard_form">
+			<field name="name">hr.utilities.print.wizard.form</field>
+			<field name="model">hr.utilities.print.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Imprimir Liquidacion de Utilidades">
+					<group>
+						<group>
+							<field name="hr_utilities_id" invisible="1"/>
+							<field name="mode" widget="radio"/>
+							<field name="hr_utilities_line_id" attrs="{'invisible': [('mode', '=', 'all')],'required': [('mode', '!=', 'all')]}" domain="[('main_id','=',hr_utilities_id)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Imprimir" name="get_print" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_utilities_print_wizard_action" model="ir.actions.act_window">
+			<field name="name">Liquidacion de Distribucion de Utilidades</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.utilities.print.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

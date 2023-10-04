@@ -1,0 +1,231 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_provisiones_form_view">
+            <field name="name">hr_provisiones_form_view</field>
+            <field name="model">hr.provisiones</field>
+            <field name="arch" type="xml">
+                <form string="Provisiones">
+                    <header>
+                        <button name="actualizar" type="object" string="Actualizar" class="oe_highlight"/>
+                        <button name="get_provisions_wizard" type="object" string="Generar Asiento" class="oe_highlight"/>
+                        <button name="get_provisiones_excel" type="object" string="Generar Excel" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <h1>Provision</h1>
+                        <group>
+                            <group>
+                                <field name="payslip_run_id" required="1"/>
+                                <field name="gratificacion_id" required="1"/>
+                            </group>
+                            <group>
+                                <field name="asiento_contable" readonly="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <h1>Cuentas Contables</h1>
+                        <group>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <th style="padding:6px"><center>Debe</center></th>
+                                        <th style="padding:6px"><center>Haber</center></th>
+                                    </tr>
+                                    <tr>
+                                        <th style="padding:5px">CTS</th>
+                                        <td style="padding:5px"><field name="cts_debe" required="1"/></td>
+                                        <td style="padding:5px"><field name="cts_haber" required="1"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="padding:5px">Gratificacion</th>
+                                        <td style="padding:5px"><field name="grati_debe" required="1"/></td>
+                                        <td style="padding:5px"><field name="grati_haber" required="1"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="padding:5px">Bonificacion</th>
+                                        <td style="padding:5px"><field name="boni_debe" required="1"/></td>
+                                        <td style="padding:5px"><field name="boni_haber" required="1"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="padding:5px">Vacacion</th>
+                                        <td style="padding:5px"><field name="vaca_debe" required="1"/></td>
+                                        <td style="padding:5px"><field name="vaca_haber" required="1"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </group>
+                        <notebook>
+                            <page string="CTS">
+                                <field name="cts_lines">
+                                    <tree editable="bottom" create="0">
+                                        <field name="nro_doc"/>
+                                        <field name="employee_id"/>
+                                        <field name="fecha_ingreso"/>
+                                        <field name="distribution_id"/>
+                                        <field name="basico" sum="basico"/>
+                                        <field name="asignacion" sum="asignacion"/>
+
+                                        <field name="commission" sum="commission"/>
+                                        <field name="bonus" sum="bonus"/>
+                                        <field name="extra_hours" sum="extra_hours"/>
+
+                                        <field name="un_sexto_grati" sum="un_sexto_grati"/>
+                                        <field name="provisiones_cts" sum="provisiones_cts"/>
+                                        <field name="total_cts" sum="total_cts"/>
+                                        <button name="get_wizard" type="object" icon="fa-file-text-o"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Gratificaciones">
+                                <field name="grati_lines">
+                                    <tree editable="bottom" create="0">
+                                        <field name="nro_doc"/>
+                                        <field name="employee_id"/>
+                                        <field name="fecha_ingreso"/>
+                                        <field name="distribution_id"/>
+                                        <field name="basico" sum="basico"/>
+                                        <field name="asignacion" sum="asignacion"/>
+
+                                        <field name="commission" sum="commission"/>
+                                        <field name="bonus" sum="bonus"/>
+                                        <field name="extra_hours" sum="extra_hours"/>
+
+                                        <field name="provisiones_grati" sum="provisiones_grati"/>
+                                        <field name="boni_grati" sum="boni_grati"/>
+                                        <field name="total" sum="total"/>
+                                        <field name="total_grati" sum="total_grati"/>
+                                        <button name="get_wizard" type="object" icon="fa-file-text-o"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Vacaciones">
+                                <field name="vaca_lines">
+                                    <tree editable="bottom" create="0">
+                                        <field name="nro_doc"/>
+                                        <field name="employee_id"/>
+                                        <field name="fecha_ingreso"/>
+                                        <field name="distribution_id"/>
+                                        <field name="basico" sum="basico"/>
+                                        <field name="asignacion" sum="asignacion"/>
+
+                                        <field name="commission" sum="commission"/>
+                                        <field name="bonus" sum="bonus"/>
+                                        <field name="extra_hours" sum="extra_hours"/>
+
+                                        <field name="provisiones_vaca" sum="provisiones_vaca"/>
+                                        <field name="total_vaca" sum="total_vaca"/>
+                                        <button name="get_wizard" type="object" icon="fa-file-text-o"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_provisiones_tree" model="ir.ui.view">
+            <field name="name">hr_provisiones_tree_view</field>
+            <field name="model">hr.provisiones</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="payslip_run_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_planilla_provisiones" model="ir.actions.act_window">
+            <field name="name">Provisiones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.provisiones</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html"> 
+                <p class="o_view_nocontent_smiling_face"> 
+                    Haga click aqui para crear una nueva Provision de B.S..
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_planilla_seccion_provisiones" 
+                  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+                  sequence="76"
+                  action="action_planilla_provisiones"
+                  groups="hr_provisions.group_hr_provisions_root"/>
+        
+        <record id="cts_line_wizard" model="ir.ui.view">
+            <field name="name">cts_line_wizard_view</field>
+            <field name="model">cts.line.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Agregar Conceptos">
+                    <field name="conceptos_lines">
+                        <tree editable="bottom">
+                            <field name="concepto" required="1"/>
+                            <field name="monto" required="1"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button name="add_concept" string="Actualizar Total" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+                <script>
+                    $(".close").attr("disabled",true);
+                    $(".close").hide();
+                </script>
+            </field>
+        </record>
+
+        <record id="grati_line_wizard" model="ir.ui.view">
+            <field name="name">grati_line_wizard_view</field>
+            <field name="model">grati.line.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Agregar Conceptos">
+                    <field name="conceptos_lines">
+                        <tree editable="bottom">
+                            <field name="concepto" required="1"/>
+                            <field name="monto" required="1"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button name="add_concept" string="Actualizar Total" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+                <script>
+                    $(".close").attr("disabled",true);
+                    $(".close").hide();
+                </script>
+            </field>
+        </record>
+
+        <record id="vaca_line_wizard" model="ir.ui.view">
+            <field name="name">vaca_line_wizard_view</field>
+            <field name="model">vaca.line.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Agregar Conceptos">
+                    <field name="conceptos_lines">
+                        <tree editable="bottom">
+                            <field name="concepto" required="1"/>
+                            <field name="monto" required="1"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button name="add_concept" string="Actualizar Total" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+                <script>
+                    $(".close").attr("disabled",true);
+                    $(".close").hide();
+                </script>
+            </field>
+        </record>
+    </data>
+</odoo>

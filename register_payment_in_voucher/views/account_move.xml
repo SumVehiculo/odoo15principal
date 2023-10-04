@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_move_rate_form_inherit" model="ir.ui.view">
+		<field name="name">move.form.inherit</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//button[@name='action_register_payment']" position="attributes">
+					<attribute name="context">{
+							'dont_redirect_to_payments': True,
+							'default_type_document_id':l10n_latam_document_type_id,
+							'default_nro_comp':ref}</attribute>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

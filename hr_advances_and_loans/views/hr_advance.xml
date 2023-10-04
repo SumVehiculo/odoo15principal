@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        SOLICITUD DE ADELANTOS-->
+        <record id="hr_advance_form" model="ir.ui.view">
+            <field name="name">hr_advance_form_view</field>
+            <field name="model">hr.advance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Adelantos">
+                    <header>
+                        <button name="set_not_payed" string="Volver a No Pagado" type="object" class="oe_highlight" state="paid out"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" invisible="1"/>
+                                <field name="employee_id" required="1"/>
+                                <field name="amount" required="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="discount_date" required="1"/>
+                                <field name="advance_type_id" required="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_advance_tree" model="ir.ui.view">
+            <field name="name">hr_advance_tree_view</field>
+            <field name="model">hr.advance</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id"/>
+                    <field name="date" optional="show"/>
+                    <field name="discount_date" optional="show"/>
+                    <field name="advance_type_id" optional="show"/>
+                    <field name="state"/>
+                    <field name="amount"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_advance_search" model="ir.ui.view">
+            <field name="name">hr.advance.search</field>
+            <field name="model">hr.advance</field>
+            <field name="arch" type="xml">
+                <search string="Adelantos">
+                    <field name="employee_id"/>
+                    <field name="discount_date"/>
+                    <field name="amount"/>
+                    <separator/>
+                    <filter string="Fecha de Descuento" name="filter_discount_date" date="discount_date"/>
+                    <filter string="Pagado" name="filter_paid_out" domain="[('state', '=', 'paid out')]"/>
+                    <filter string="No Pagado" name="filter_not_payed" domain="[('state', '=', 'not payed')]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Fecha de Descuento" name="group_by_discount_date" context="{'group_by':'discount_date'}"/>
+                        <filter string="Empleado" name="group_by_employee_id" context="{'group_by':'employee_id'}"/>
+                        <filter string="Estado" name="group_by_state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_advance" model="ir.actions.act_window">
+            <field name="name">Adelantos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.advance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_by_employee_id': 1, 'search_default_group_by_discount_date': 1}</field>
+            <field name="help" type="html"> <p class="o_view_nocontent_smiling_face"> Haga click aqui para crear un nuevo Adelanto.</p></field>
+        </record>
+
+        <menuitem id="advance_menu"
+                  action="action_advance"
+                  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+                  sequence="73"
+                  groups="hr_advances_and_loans.group_hr_advances_root"
+        />
+
+<!--        TIPO DE ADELANTO-->
+        <record id="hr_advance_type_form" model="ir.ui.view">
+            <field name="name">hr_advance_type_form_view</field>
+            <field name="model">hr.advance.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Tipo de Adelanto">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                            </group>
+                            <group>
+                                <field name="input_id" required="1"/>
+                            </group>
+                        </group>
+<!--                        <group string="Contabilidad">-->
+<!--                            <group>-->
+<!--                                <field name="salary_rule_id" options="{'no_create': True, 'no_create_edit':True}"/>-->
+<!--                            </group>-->
+<!--                            <group/>-->
+<!--                        </group>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="hr_advance_type_tree" model="ir.ui.view">
+            <field name="name">hr_advance_type_tree_view</field>
+            <field name="model">hr.advance.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="input_id"/>
+<!--                    <field name="salary_rule_id"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_advance_type" model="ir.actions.act_window">
+            <field name="name">Tipo de Adelanto</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.advance.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html"> 
+                <p class="o_view_nocontent_smiling_face">
+                    Haga click aqui para crear un nuevo Tipo de Adelanto.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="advance_type_menu"
+                  action="action_advance_type"
+                  parent="hr_base_it.menu_hr_tables_configuration"
+                  sequence="7"
+                  groups="hr_advances_and_loans.group_hr_advances_root"
+        />
+    </data>
+</odoo>

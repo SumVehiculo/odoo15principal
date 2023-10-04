@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_deferred_expense_wizard_form">
+			<field name="name">account.deferred.expense.wizard.form</field>
+			<field name="model">account.deferred.expense.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Ingresos Diferidos">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_deferred_expense_wizard_action" model="ir.actions.act_window">
+			<field name="name">Detalle</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.deferred.expense.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="menu_account_report_it_expenses" 
+						name="Gastos Diferidos" 
+						parent="account.menu_finance_reports" 
+						sequence="105"/>
+
+		<menuitem action="account_deferred_expense_wizard_action" 
+				id="menu_action_account_deferred_expense_wizard" 
+				parent="menu_account_report_it_expenses" 
+				sequence="3" 
+				groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

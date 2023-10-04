@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+<t t-name="web.CrashManager.error">
+    <div class="oe_error_detail">
+        <pre><t t-esc="error.message"/></pre>
+        <hr/>
+        <t t-esc="error.data.debug"/>
+    </div>
+</t>
+</template>

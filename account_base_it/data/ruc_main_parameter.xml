@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id='jtejada_parameter' model='ruc.main.parameter'>
+			<field name='query_email'>jtejada@itgrupo.net</field>
+			<field name='query_type'>plain</field>
+			<field name='query_dni_url'>http://reniec.insite.pe/?wsdl</field>
+			<field name='query_ruc_url'>http://ws.insite.pe/sunat/ruc.php?wsdl</field>
+		</record>
+	</data>
+</odoo>

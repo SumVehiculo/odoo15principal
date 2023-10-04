@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>	
+		<record model="ir.actions.server" id="action_concile_special_account_move">
+			<field name="name">Aplicar Conciliación Especial</field>
+			<field name="model_id" ref="account.model_account_move"/>
+			<field name="binding_model_id" ref="account.model_account_move" />
+			<field name="state">code</field>
+			<field name="code">action = records.action_concile_special()</field>
+		</record>
+
+		<record model="ir.actions.server" id="action_reconcile_special_account_move">
+			<field name="name">Quitar Conciliación Especial</field>
+			<field name="model_id" ref="account.model_account_move"/>
+			<field name="binding_model_id" ref="account.model_account_move" />
+			<field name="state">code</field>
+			<field name="code">action = records.action_reconcile_special()</field>
+		</record>
+	</data>
+</odoo>

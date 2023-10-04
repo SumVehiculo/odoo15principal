@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_cash_flow_form_inherit_flow" model="ir.ui.view">
+			<field name="name">account.cash.flow.form.inherit.flow</field>
+			<field name="model">account.cash.flow</field>
+			<field name="inherit_id" ref="account_base_it.view_account_cash_flow_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<field name="group" position="replace">
+						<field name="grupo"/>
+					</field>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_account_cash_flow_list_inherit_flow" model="ir.ui.view">
+			<field name="name">account.cash.flow.list.inherit.flow</field>
+			<field name="model">account.cash.flow</field>
+			<field name="inherit_id" ref="account_base_it.view_account_cash_flow_list"/>
+			<field name="arch" type="xml">
+				<field name="group" position="after">
+					<field name="grupo"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

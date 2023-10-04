@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+	<!-- PURCHASE ORDER FORM VIEW -->
+	<record id="sh_inherit_purchase_order_form_for_import" model="ir.ui.view">
+		<field name="name">sh.inherit.purchase.order.form.for.import</field>
+		<field name="model">purchase.order</field>
+		<field name="inherit_id" ref="purchase.purchase_order_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header" position="inside">
+				<button name="sh_import_pol" string="IMPORTAR LINEAS"  type="object" states="draft,sent" groups="import_purchase_order_line.sh_import_pol_group" class="btn-primary" context="{'sh_po_id':id}" />
+			</xpath>
+		</field>
+	</record>
+</data>
+</odoo>
+  

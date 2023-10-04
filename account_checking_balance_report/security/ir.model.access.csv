@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_checking_balance_wizard_group_root,checking.balance.wizard.group.root,account_checking_balance_report.model_checking_balance_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_checking_register_group_root,checking.register.group.root,account_checking_balance_report.model_checking_register,account_base_it.group_account_tables_user,1,1,1,1
+access_checking_balance_group_root,checking.balance.group.root,account_checking_balance_report.model_checking_balance,account_base_it.group_account_tables_user,1,1,1,1

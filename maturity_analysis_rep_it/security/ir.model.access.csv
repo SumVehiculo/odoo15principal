@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_maturity_analysis_book_group_user,account.maturity.analysis.group.user,model_maturity_analysis_book,account_base_it.group_account_tables_user,1,1,1,1
+access_maturity_analysis_rep_group_user,account.maturity.analysis.rep.group.user,model_maturity_analysis_rep,account_base_it.group_account_tables_user,1,1,1,1

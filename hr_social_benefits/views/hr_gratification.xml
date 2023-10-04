@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_gratification_line_form" model="ir.ui.view">
+		<field name="name">hr.gratification.line.form</field>
+		<field name="model">hr.gratification.line</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<button name="compute_grati_line" string="Calcular"  context="{'line_form':True}" type="object" class="oe_edit_only"/>
+					<button name="get_vouchers_grati" string="Boleta Gratificacion" type="object" class="oe_highlight" attrs="{'invisible':[('cessation_date', '!=', False)]}"/>
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="preserve_record" />
+							<field name="identification_id" readonly="1"/>
+							<field name="last_name" readonly="1"/>
+							<field name="m_last_name" readonly="1"/>
+							<field name="names" readonly="1"/>
+							<field name="admission_date" readonly="1"/>
+							<field name="compute_date" readonly="1" attrs="{'invisible':[('cessation_date', '=', False)]}"/>
+							<field name="cessation_date" readonly="1" attrs="{'invisible':[('cessation_date', '=', False)]}"/>
+							<field name="labor_regime" readonly="1"/>
+							<field name="social_insurance_id" readonly="1"/>
+							<field name="distribution_id" readonly="1"/>
+							<field name="months" />
+							<field name="days" />
+							<field name="lacks" />
+						</group>
+						<group>
+							<field name="wage" readonly="1"/>
+							<field name="household_allowance" readonly="1"/>
+							<field name="commission" />
+							<field name="bonus" />
+							<field name="extra_hours" />
+							<field name="computable_remuneration" readonly="1"/>
+							<field name="amount_per_month" readonly="1"/>
+							<field name="amount_per_day" readonly="1"/>
+							<field name="grat_per_month" readonly="1"/>
+							<field name="grat_per_day" readonly="1"/>
+							<field name="amount_per_lack" readonly="1"/>
+							<field name="total_grat" readonly="1"/>
+							<field name="bonus_essalud" readonly="1"/>
+							<field name="total" readonly="1"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="hr_gratification_line_tree" model="ir.ui.view">
+		<field name="name">hr.gratification.line.tree</field>
+		<field name="model">hr.gratification.line</field>
+		<field name="arch" type="xml">
+			<tree edit="0" create="0" delete="0">
+				<field name="preserve_record" string="No R." optional="show"/>
+				<field name="identification_id" string="No Doc" optional="show"/>
+				<field name="employee_id" optional="show"/>
+				<field name="admission_date" optional="show"/>
+				<field name="compute_date" optional="hide"/>
+				<field name="cessation_date" optional="hide"/>
+				<field name="labor_regime" optional="hide"/>
+				<field name="social_insurance_id" optional="hide"/>
+				<field name="distribution_id" optional="hide"/>
+				<field name="months" optional="show"/>
+				<field name="days" optional="show"/>
+				<field name="lacks" optional="hide"/>
+				<field name="wage" sum="wage" optional="show"/>
+				<field name="household_allowance" string="Asig Familiar" sum="household_allowance" optional="show"/>
+				<field name="commission" sum="commission" optional="hide"/>
+				<field name="bonus" sum="bonus" optional="hide"/>
+				<field name="extra_hours" sum="extra_hours" optional="hide"/>
+				<field name="computable_remuneration" string="Rem Computable" sum="computable_remuneration" optional="show"/>
+				<field name="amount_per_month" sum="amount_per_month" optional="hide"/>
+				<field name="amount_per_day" sum="amount_per_day" optional="hide"/>
+				<field name="grat_per_month" sum="grat_per_month" optional="hide"/>
+				<field name="grat_per_day" sum="grat_per_day" optional="hide"/>
+				<field name="amount_per_lack" sum="amount_per_lack" optional="hide"/>
+				<field name="total_grat" sum="total_grat" optional="show"/>
+				<field name="bonus_essalud" sum="bonus_essalud" optional="show"/>
+				<field name="total" sum="total" optional="show"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="hr_gratification_form" model="ir.ui.view">
+		<field name="name">hr.gratification.form</field>
+		<field name="model">hr.gratification</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<button name="get_gratification" string="Procesar" type="object" class="oe_highlight" states="draft"/>
+					<button name="compute_grati_line_all" string="Recalcular" type="object" states="draft"/>
+					<button name="get_excel_gratification" string="Generar Excel" type="object" class="oe_highlight"/>
+					<button name="grati_by_lot" string="Boletas Gratificacion" type="object" class="oe_highlight"/>
+					<button name="export_gratification" string="Exportar Gratificacion" type="object" class="oe_highlight" states="draft" confirm="¿Esta seguro que desea exportar los montos de Gratificacion a su respectivo Lote de Nominas?"/>
+					<button name="turn_draft" string="Volver a Borrador" type="object" class="oe_highlight" states="exported"/>
+					<field name="state" widget="statusbar"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button name="action_open_grati" class="oe_stat_button" icon="fa-book" type="object" help="Boletas" attrs="{'invisible': [('grati_count', '=', 0)]}">
+							<div class="o_field_widget o_stat_info">
+								<span class="o_stat_value"><field name="grati_count"/></span>
+								<span class="o_stat_text">Boletas</span>
+							</div>
+						</button>
+					</div>
+					<group>
+						<group>
+							<field name="name" invisible="1"/>
+							<field name="fiscal_year_id"/>
+							<field name="with_bonus"/>
+							<field name="months_and_days"/>
+						</group>
+						<group>
+							<field name="type"/>
+							<field name="payslip_run_id"/>
+							<field name="deposit_date"/>
+							<field name="company_id" groups="base.group_multi_company"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Empleados">
+							<field name="line_ids" context="{'tree_view_ref':'hr_social_benefits.hr_gratification_line_tree',
+												'form_view_ref':'hr_social_benefits.hr_gratification_line_form'}"/>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="hr_gratification_tree" model="ir.ui.view">
+		<field name="name">hr.gratification.tree</field>
+		<field name="model">hr.gratification</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="fiscal_year_id" optional="show"/>
+				<field name="type" optional="show"/>
+				<field name="with_bonus" optional="show"/>
+				<field name="deposit_date" optional="show"/>
+				<field name="state" optional="show"/>
+				<field name="company_id" groups="base.group_multi_company" optional="show"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_hr_gratification" model="ir.actions.act_window">
+		<field name="name">Gratificacion</field>
+		<field name="res_model">hr.gratification</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Gratificacion aqui
+			</p>
+		</field>
+	</record>
+
+	<record id="voucher_by_email_hr_gratificacion" model="ir.actions.server">
+		<field name="name">Enviar Boleta de Gratificacion por Correo</field>
+		<field name="model_id" ref="hr_social_benefits.model_hr_gratification_line"/>
+		<field name="binding_model_id" ref="hr_social_benefits.model_hr_gratification_line"/>
+		<field name="state">code</field>
+		<field name="code">action = records.send_grati_by_email()</field>
+	</record>
+</odoo>

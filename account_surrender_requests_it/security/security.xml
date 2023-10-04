@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="account_surrender_requests_it_comp_rule" model="ir.rule">
+			<field name="name">Solicitudes de Entrega multi-company</field>
+			<field name="model_id" ref="model_account_surrender_requests_it"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+		
+		<record id="render_main_parameter_comp_rule" model="ir.rule">
+			<field name="name">Rendiciones Parametros multi-company</field>
+			<field name="model_id" ref="model_render_main_parameter"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="group_menu_surrender_approve_group_manager" model="res.groups">
+			<field name="name">Aprobar Solicitudes de Rendicion</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+	</data>
+</odoo>

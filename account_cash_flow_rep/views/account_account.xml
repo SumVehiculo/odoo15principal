@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_form_inherit_flow" model="ir.ui.view">
+			<field name="name">account.form.inherit.flow</field>
+			<field name="model">account.account</field>
+			<field name="inherit_id" ref="account_fields_it.view_account_form_inherit"/>
+			<field name="arch" type="xml">
+				<data>
+					<field name="account_type_cash_id" position="after">
+						<field name="account_cash_flow_id"/>
+					</field>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

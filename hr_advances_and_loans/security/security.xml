@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="group_hr_advances_root" model="res.groups">
+		<field name="name">Gestion de Adelantos</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+	</record>
+	<record id="group_hr_loans_root" model="res.groups">
+		<field name="name">Gestion de Prestamos</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+	</record>
+	<record model="ir.rule" id="hr_advance_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Advance</field>
+		<field name="model_id" ref="hr_advances_and_loans.model_hr_advance"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record model="ir.rule" id="hr_advance_type_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Type Advance</field>
+		<field name="model_id" ref="hr_advances_and_loans.model_hr_advance_type"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record model="ir.rule" id="hr_loan_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Loan</field>
+		<field name="model_id" ref="hr_advances_and_loans.model_hr_loan"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+	<record model="ir.rule" id="hr_loan_type_not_shared_multi_company_rule">
+		<field name="name">Non Shared Records: Type Loan</field>
+		<field name="model_id" ref="hr_advances_and_loans.model_hr_loan_type"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">
+			[('company_id', 'in', company_ids)]
+		</field>
+	</record>
+</odoo>

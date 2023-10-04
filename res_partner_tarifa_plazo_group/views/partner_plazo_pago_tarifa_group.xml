@@ -1,0 +1,72 @@
+<odoo>
+    <data>        
+        <record id="view_partner_vendedor_readonly_form" model="ir.ui.view">
+            <field name="name">view.partner.vendedor.readonly.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_vendedor_readonly_group_form" model="ir.ui.view">
+            <field name="name">view.partner.vendedor.readonly.group.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="res_partner_tarifa_plazo_group.view_partner_vendedor_readonly_form" />
+            <field name="groups_id" eval="[(6, 0, [ref('res_partner_tarifa_plazo_group.group_res_partner_tarifa_plazos_vendedor_restriction') ])]" />                
+            <field name="arch" type="xml">                                   
+                <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+            </field>
+        </record>        
+
+        <record id="view_partner_plazo_pago_readonly_form" model="ir.ui.view">
+            <field name="name">view.partner.plazo.pago.readonly.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_payment_term_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_plazo_pago_readonly_group_form" model="ir.ui.view">
+            <field name="name">view.partner.plazo.pago.readonly.group.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="res_partner_tarifa_plazo_group.view_partner_plazo_pago_readonly_form" />
+            <field name="groups_id" eval="[(6, 0, [ref('res_partner_tarifa_plazo_group.group_res_partner_tarifa_plazos_vendedor_restriction') ])]" />
+            <field name="arch" type="xml">                                   
+                <xpath expr="//field[@name='property_payment_term_id']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_property_tarifa_readonly_form" model="ir.ui.view">
+            <field name="name">view.partner.property.tarifa.readonly.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="product.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_partner_property_tarifa_readonly_group_form" model="ir.ui.view">
+            <field name="name">view.partner.property.tarifa.readonly.group.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="res_partner_tarifa_plazo_group.view_partner_property_tarifa_readonly_form" />
+            <field name="groups_id" eval="[(6, 0, [ref('res_partner_tarifa_plazo_group.group_res_partner_tarifa_plazos_vendedor_restriction') ])]" />
+            <field name="arch" type="xml">                                   
+                <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

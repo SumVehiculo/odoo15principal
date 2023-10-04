@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_it_invoice_serie_form" model="ir.ui.view">
+		<field name="name">it.invoice.serie.form</field>
+		<field name="model">it.invoice.serie</field>
+		<field name="arch" type="xml">
+			<form string="Serie de Comprobantes">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="type_document_id"/>
+							<field name="sequence_id"/>
+						</group>
+						<group>
+							<field name="manual"/>
+							<field name="company_id" required="1" groups="base.group_multi_company"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_it_invoice_serie_list" model="ir.ui.view">
+		<field name="name">it.invoice.serie.list</field>
+		<field name="model">it.invoice.serie</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" optional="show"/>
+				<field name="type_document_id" optional="show"/>
+				<field name="sequence_id" optional="show"/>
+				<field name="manual" optional="show"/>
+				<field name="company_id" groups="base.group_multi_company" optional="show"/>  
+			</tree>
+		</field>
+	</record>
+	<record id="action_it_invoice_serie_form" model="ir.actions.act_window">
+		<field name="name">Serie de Comprobantes</field>
+		<field name="res_model">it.invoice.serie</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_it_invoice_serie_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Serie de Comprobantes aqui
+		  </p>
+		</field>
+	</record>
+</odoo>

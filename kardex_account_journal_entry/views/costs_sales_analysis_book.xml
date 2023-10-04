@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_costs_sales_analysis_book_tree" model="ir.ui.view">
+            <field name="name">costs.sales.analysis.book.tree</field>
+            <field name="model">costs.sales.analysis.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Analsis de Costo de Venta" create="false">
+                    <field name="almacen"/>
+                    <field name="producto"/>
+                    <field name="cantidad" sum="cantidad"/>
+                    <field name="valor" sum="valor"/>
+					<field name="valuation_account_id"/>
+                    <field name="input_account_id"/>
+                    <field name="output_account_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="costs_sales_analysis_book_search" model="ir.ui.view">
+            <field name="name">costs.sales.analysis.book.search</field>
+            <field name="model">costs.sales.analysis.book</field>
+            <field name="arch" type="xml">
+                <search string="Analsis de Costo de Venta">
+                    <field name="almacen"/>
+                    <field name="producto"/>
+					<field name="valuation_account_id"/>
+                    <field name="input_account_id"/>
+                    <field name="output_account_id"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Almacen" name="almacen" icon="terp-partner" context="{'group_by':'almacen'}"/>
+                        <filter string="Producto" name="producto" icon="terp-partner" context="{'group_by':'producto'}"/>
+                        <filter string="Cuenta Producto" name="valuation_account_id" icon="terp-partner" context="{'group_by':'valuation_account_id'}"/>
+                        <filter string="Cuenta Variacion" name="input_account_id" icon="terp-partner" context="{'group_by':'input_account_id'}"/>
+                        <filter string="Cuenta Costo de Venta" name="output_account_id" icon="terp-partner" context="{'group_by':'output_account_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_costs_sales_analysis_book_it" model="ir.actions.act_window">
+            <field name="name">Analsis de Costo de Venta</field>
+            <field name="res_model">costs.sales.analysis.book</field>
+            <field name="view_id" ref="view_costs_sales_analysis_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="costs_sales_analysis_book_search"/>
+        </record>
+
+    </data>
+</odoo>

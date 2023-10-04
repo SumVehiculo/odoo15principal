@@ -1,0 +1,83 @@
+<odoo>
+    <data>
+        <record id="view_partner_credit_limit_form" model="ir.ui.view">
+            <field name="name">view.partner.credit.limit.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="after">
+                    <field name="credit_limit" string="Límite de Crédito"/>
+                    <field name="moneda" string="Moneda" domain="[('name', 'in', ['USD', 'PEN'])]"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_history_form" model="ir.ui.view">
+            <field name="name">view.order.history.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@id='action_confirm']" position="after">
+                    <button name="view_credit" string="Crédito" type="object"/>
+                </xpath>
+                <xpath expr="//page[@name='other_information']" position="after">
+                    <page string="Permisos Limite Crediticio" name="lmt_hredar">
+                        <group>
+                            <field name="usuario_aprobacion" readonly="1"/>
+                            <field name="fecha_aprobacion" readonly="1" />
+                        </group>
+                        <group>                            
+                            <button string="Aprobar Superar Limite Créditicio" name="aprobar" type="object" class="oe_highlight" attrs="{'invisible':[('usuario_aprobacion','!=',False)]}"/>
+                            <button string="desaprobar" name="desaprobar" type="object" class="oe_highlight" attrs="{'invisible':[('usuario_aprobacion','=',False)]}"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="res_config_settings_days_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.days.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='invoicing_setting_container']" position="inside">
+                    <div id="sale_limit_days" class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label for="limit_days_invoice"/>
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="limit_days_invoice" string="Limite Factura Vencida"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_history_form" model="ir.ui.view">
+            <field name="name">sale.history.form</field>
+            <field name="model">sale.history</field>
+            <field name="arch" type="xml">
+                <form string="Facturas">                    
+                    <sheet>                        
+                        <group>
+                            <group>
+                                <field name="name" string="Facturas Del Cliente" readonly="1"/>
+                                <field name="credit" string="Limite De Credito" readonly="1"/>
+                                <field name="moneda" string="Moneda" readonly="1"/>
+                            </group>                            
+                        </group>
+                        <notebook>
+                            <page string="Historial Crediticio">
+                                <field name="total_tasa_cambio_text" nolabel="True" readonly="1"/>
+                              </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button name="close" string="Entendido"
+                               class="oe_highlight" type="object" />
+                        <button special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

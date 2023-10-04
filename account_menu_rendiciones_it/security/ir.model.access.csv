@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_menu_ren_import_invoice_it_group_manager,menu.ren.import.invoice.it.group.manager,import_invoice.model_import_invoice_it,group_menu_surrender_group_manager,1,1,1,1
+access_menu_ren_bank_statement_group_user2,menu.ren.bank.statement.group.user2,account.model_account_bank_statement,group_menu_surrender_group_manager,1,1,1,1
+access_menu_ren_bank_statement_line_group_user2,menu.ren.bank.statement.line.group.user2,account.model_account_bank_statement_line,group_menu_surrender_group_manager,1,1,1,1
+access_menu_ren_account_journal_statement_group_user2,menu.ren.account.journal.statement.group.user2,account.model_account_journal,group_menu_surrender_group_manager,1,0,0,0

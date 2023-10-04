@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='account.efective.type'><field name='code'>O001</field><field name='name'>Venta de Bienes o Serv. (Ingresos Operaciones)</field><field name='group'>E1</field><field name='order'>1</field></record>
+		<record model='account.efective.type'><field name='code'>O002</field><field name='name'>Honorarios y Comisiones</field><field name='group'>E1</field><field name='order'>2</field></record>
+		<record model='account.efective.type'><field name='code'>O003</field><field name='name'>Intereses y Rendimientos (no incluidos en la ACTI)</field><field name='group'>E1</field><field name='order'>3</field></record>
+		<record model='account.efective.type'><field name='code'>O004</field><field name='name'>Dividendos (no incluidos en la ACT. de INV.)</field><field name='group'>E1</field><field name='order'>4</field></record>
+		<record model='account.efective.type'><field name='code'>O005</field><field name='name'>Regalias</field><field name='group'>E1</field><field name='order'>5</field></record>
+		<record model='account.efective.type'><field name='code'>O006</field><field name='name'>Otros Cobros de Efec. Relativ. a la Act.</field><field name='group'>E1</field><field name='order'>6</field></record>
+		<record model='account.efective.type'><field name='code'>O007</field><field name='name'>Proveedores de Bienes y Servicios</field><field name='group'>E2</field><field name='order'>7</field></record>
+		<record model='account.efective.type'><field name='code'>O008</field><field name='name'>Remuneraciones y Beneficios Sociales</field><field name='group'>E2</field><field name='order'>8</field></record>
+		<record model='account.efective.type'><field name='code'>O009</field><field name='name'>Tributos</field><field name='group'>E2</field><field name='order'>9</field></record>
+		<record model='account.efective.type'><field name='code'>O010</field><field name='name'>Intereses y Rendimientos (no incl. en la ACT. FIN)</field><field name='group'>E2</field><field name='order'>10</field></record>
+		<record model='account.efective.type'><field name='code'>O011</field><field name='name'>Regalias</field><field name='group'>E2</field><field name='order'>11</field></record>
+		<record model='account.efective.type'><field name='code'>O012</field><field name='name'>otros pagos de Efect. relat. a la ACTV</field><field name='group'>E2</field><field name='order'>12</field></record>
+		<record model='account.efective.type'><field name='code'>I001</field><field name='name'>Prestamos a Partes Relacionadas</field><field name='group'>E3</field><field name='order'>13</field></record>
+		<record model='account.efective.type'><field name='code'>I002</field><field name='name'>Venta de Subsidiarias y otras Unidades de Negocios</field><field name='group'>E3</field><field name='order'>14</field></record>
+		<record model='account.efective.type'><field name='code'>I003</field><field name='name'>Venta de Inversiones Financieras</field><field name='group'>E3</field><field name='order'>15</field></record>
+		<record model='account.efective.type'><field name='code'>I004</field><field name='name'>Venta de Inversiones Inmobiliarias</field><field name='group'>E3</field><field name='order'>16</field></record>
+		<record model='account.efective.type'><field name='code'>I005</field><field name='name'>Venta de Inmueble Maquinaria y Equipo</field><field name='group'>E3</field><field name='order'>17</field></record>
+		<record model='account.efective.type'><field name='code'>I006</field><field name='name'>Venta de Activos Intangibles</field><field name='group'>E3</field><field name='order'>18</field></record>
+		<record model='account.efective.type'><field name='code'>I007</field><field name='name'>Intereses y Rendiminentos</field><field name='group'>E3</field><field name='order'>19</field></record>
+		<record model='account.efective.type'><field name='code'>I008</field><field name='name'>Dividendos</field><field name='group'>E3</field><field name='order'>20</field></record>
+		<record model='account.efective.type'><field name='code'>I009</field><field name='name'>Otros Cobros de Efectivo Relativos a la Actividad</field><field name='group'>E3</field><field name='order'>21</field></record>
+		<record model='account.efective.type'><field name='code'>I010</field><field name='name'>Prestamos a Partes Relacionadas</field><field name='group'>E4</field><field name='order'>22</field></record>
+		<record model='account.efective.type'><field name='code'>I011</field><field name='name'>Compra de Subsidiarias y otras Unidades de Negocio</field><field name='group'>E4</field><field name='order'>23</field></record>
+		<record model='account.efective.type'><field name='code'>I012</field><field name='name'>Compra de Inversiones Financieras</field><field name='group'>E4</field><field name='order'>24</field></record>
+		<record model='account.efective.type'><field name='code'>I013</field><field name='name'>Compra de Inversiones Inmobiliarias</field><field name='group'>E4</field><field name='order'>25</field></record>
+		<record model='account.efective.type'><field name='code'>I014</field><field name='name'>Compra de Inmuebles Maquinaria y Equipo</field><field name='group'>E4</field><field name='order'>26</field></record>
+		<record model='account.efective.type'><field name='code'>I015</field><field name='name'>Desembolsos xObrs en Curso de INMUB. MAQUI EQUIPO</field><field name='group'>E4</field><field name='order'>27</field></record>
+		<record model='account.efective.type'><field name='code'>I016</field><field name='name'>Compra y desarrollo de Activos Intangibles</field><field name='group'>E4</field><field name='order'>28</field></record>
+		<record model='account.efective.type'><field name='code'>I017</field><field name='name'>Otros Pagos de Efectivo Relativos a la Actividad</field><field name='group'>E4</field><field name='order'>29</field></record>
+		<record model='account.efective.type'><field name='code'>F001</field><field name='name'>Aumento de Sobregiros Bancarios</field><field name='group'>E5</field><field name='order'>30</field></record>
+		<record model='account.efective.type'><field name='code'>F002</field><field name='name'>Emision de aceptacion de Obligaciones Financieras</field><field name='group'>E5</field><field name='order'>31</field></record>
+		<record model='account.efective.type'><field name='code'>F003</field><field name='name'>Emision de Acciones o Nuevos Aportes</field><field name='group'>E5</field><field name='order'>32</field></record>
+		<record model='account.efective.type'><field name='code'>F004</field><field name='name'>Venta de Acciones Propias (Acciones en Tesoreria)</field><field name='group'>E5</field><field name='order'>33</field></record>
+		<record model='account.efective.type'><field name='code'>F005</field><field name='name'>Otros Cobros de Efectivo Relativos a la Actividad</field><field name='group'>E5</field><field name='order'>34</field></record>
+		<record model='account.efective.type'><field name='code'>F006</field><field name='name'>Amortizacion o pago de Sobregiros Bancarios</field><field name='group'>E6</field><field name='order'>35</field></record>
+		<record model='account.efective.type'><field name='code'>F007</field><field name='name'>Amortizacion o pago de Obligaciones Financieras</field><field name='group'>E6</field><field name='order'>36</field></record>
+		<record model='account.efective.type'><field name='code'>F008</field><field name='name'>Recompra de Acciones Propias(Acciones -Tesoreria)</field><field name='group'>E6</field><field name='order'>37</field></record>
+		<record model='account.efective.type'><field name='code'>F009</field><field name='name'>Intereses y Rendimientos</field><field name='group'>E6</field><field name='order'>38</field></record>
+		<record model='account.efective.type'><field name='code'>F010</field><field name='name'>Dividendos Pagados</field><field name='group'>E6</field><field name='order'>39</field></record>
+		<record model='account.efective.type'><field name='code'>F011</field><field name='name'>Otros Pagos de EFECT. Relativos a la Actividad</field><field name='group'>E6</field><field name='order'>40</field></record>
+		<record model='account.efective.type'><field name='code'>SI</field><field name='name'>Saldo EFECT y EQUIV de EFECT al inicio del Ejercic</field><field name='group'>E7</field><field name='order'>41</field></record>
+		<record model='account.efective.type'><field name='code'>DC</field><field name='name'>Efecto de las Dif.de Cambio del EFEC y EQUIV de EF</field><field name='group'>E8</field><field name='order'>42</field></record>
+	</data>
+</odoo>

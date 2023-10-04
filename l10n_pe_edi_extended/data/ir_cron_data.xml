@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <record id="ir_cron_send_invoices" model="ir.cron">
+        <field name="name">Invoices: Send to PSE/OSE</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="interval_number">20</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="state">code</field>
+        <field name="code">model.run_send_invoice()</field>
+    </record>
+    <record id="ir_cron_check_invoices" model="ir.cron">
+        <field name="name">Invoices: Check status to PSE/OSE</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="state">code</field>
+        <field name="code">model.run_check_invoice()</field>
+    </record>
+</odoo>

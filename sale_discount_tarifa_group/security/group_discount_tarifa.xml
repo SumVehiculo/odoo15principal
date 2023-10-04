@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="group_sale_order_discount_restriction" model="res.groups">
+            <field name="name">Manejo Descuento En Ventas</field>            
+        </record>
+        <record id="group_sale_order_tarifa_restriction" model="res.groups">
+            <field name="name">Manejo Lista de Precio Venta</field>            
+        </record>
+    </data>
+</odoo>

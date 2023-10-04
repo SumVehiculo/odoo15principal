@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_salary_attachment_view_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.salary.attachment.tree.inherit</field>
+        <field name="model">hr.salary.attachment</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="deduction_type" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="monthly_amount" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="total_amount" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="paid_amount" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="date_start" position="attributes">
+				<attribute name="string">Fecha de Carga</attribute>
+			</field>
+            <field name="employee_id" position="before">
+				<field name="enviado"/>
+			</field>
+        </field>
+    </record>
+
+    <record id="hr_salary_attachment_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.salary.attachment.form.inherit</field>
+        <field name="model">hr.salary.attachment</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_form"/>
+        <field name="arch" type="xml">
+            <field name="deduction_type" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="date_estimated_end" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="date_end" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="monthly_amount" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="total_amount" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="paid_amount" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <field name="date_start" position="attributes">
+				<attribute name="string">Fecha de Carga</attribute>
+			</field>
+            <field name="monthly_amount" position="after">
+				<field name="company_id" readonly="1"/>
+			</field>
+<!--            <field name="attachment" position="attributes">-->
+<!--				<attribute name="widget">image</attribute>-->
+<!--			</field>-->
+        </field>
+    </record>
+
+    <record id="hr_salary_attachment_view_search_inherit" model="ir.ui.view">
+        <field name="name">hr.salary.attachment.search.inherit</field>
+        <field name="model">hr.salary.attachment</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_search"/>
+        <field name="arch" type="xml">
+            <field name="deduction_type" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+            <filter name="deduction_type" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</filter>
+        </field>
+    </record>
+
+    <record id="send_by_email_documento" model="ir.actions.server">
+		<field name="name">Enviar Documento por Correo</field>
+		<field name="model_id" ref="hr_payroll.model_hr_salary_attachment"/>
+		<field name="binding_model_id" ref="hr_payroll.model_hr_salary_attachment"/>
+		<field name="state">code</field>
+		<field name="code">action = records.action_send_mass_mail()</field>
+	</record>
+
+<!--    <record id="hr_salary_attachment_action" model="ir.actions.act_window">-->
+<!--        <field name="name">Salary Attachment</field>-->
+<!--        <field name="res_model">hr.salary.attachment</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--    </record>-->
+
+<!--    <record id="hr_salary_attachment_action_view_employee" model="ir.actions.act_window">-->
+<!--        <field name="name">Salary Attachment</field>-->
+<!--        <field name="res_model">hr.salary.attachment</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--        <field name="context">{"search_default_employee_id": [active_id]}</field>-->
+<!--    </record>-->
+</odoo>

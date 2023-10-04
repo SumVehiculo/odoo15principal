@@ -1,0 +1,29 @@
+<odoo>
+	<data>
+		<record id="view_hr_plame_wizard_form" model="ir.ui.view">
+			<field name="name">hr.plame.wizard.form</field>
+			<field name="model">hr.plame.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Generacion de Archivos PDT PLAME">
+					<group>
+						<group>
+							<field name="payslip_run_id" readonly="1" force_save="1"/>
+							<field name="type" required="1" />
+						</group>
+						<group>
+							<field name="company_id"/>
+						</group>
+					</group>
+					<footer>
+						<button string="PLAME REM" name="generate_plame_rem" type="object" class="oe_highlight" attrs="{'invisible': [('type','!=', 'rem')]}"/>
+						<button string="PLAME JOR" name="generate_plame_jor" type="object" class="oe_highlight" attrs="{'invisible': [('type','!=', 'jor')]}"/>
+						<button string="PLAME SNL" name="generate_plame_snl" type="object" class="oe_highlight" attrs="{'invisible': [('type','!=', 'snl')]}"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+	</data>
+</odoo>

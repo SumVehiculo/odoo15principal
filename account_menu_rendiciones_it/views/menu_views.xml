@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<!-- Top menu item -->
+	<menuitem name="Rendiciones"
+		id="menu_rend"
+		groups="account_menu_rendiciones_it.group_menu_surrender_group_manager"
+		web_icon="account_menu_rendiciones_it,static/description/icon.png"
+		sequence="23"/>
+
+	<menuitem id="menu_finance_render" 
+			name="Entregas a rendir" 
+			parent="menu_rend" 
+			sequence="3"/>
+
+	<menuitem id="menu_render_settings" 
+			name="Configuración"
+			parent="menu_rend"
+			groups="account_menu_rendiciones_it.group_menu_surrender_settings_group_manager"
+			sequence="52"/>
+
+	<menuitem action="account_menu_rendiciones_it.import_invoice_it_action_supplier" id="menu_import_invoice_it_supplier_menu_render" parent="menu_finance_render" sequence="9"/>
+	<menuitem action="account_menu_rendiciones_it.product_product_action_surrender" id="product_product_menu_purchasable_menu_render" name="Productos" parent="menu_render_settings" sequence="9"/>
+	<menuitem action="account.res_partner_action_supplier" id="menu_account_supplier_menu_render" name="Proveedores" parent="menu_render_settings" sequence="12"/>
+	<menuitem action="account.action_account_reconcile_model" id="action_account_reconcile_model_menu_render" name="Modelos de conciliacion" parent="menu_render_settings" sequence="15"/>
+</odoo>

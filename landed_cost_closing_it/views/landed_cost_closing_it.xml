@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_landed_cost_closing_it_form">
+			<field name="name">landed.cost.closing.it.form</field>
+			<field name="model">landed.cost.closing.it</field>
+			<field name="arch" type="xml">
+				<form string="Cierre Gastos Vinculados">
+					<header>
+						<button string="Cerrar Periodo" type="object" name="close_period" states="draft" class="oe_highlight"/>
+						<button string="Reabrir Periodo" type="object" name="open_period" states="done" class="oe_highlight"/>
+						<field name="state" widget="statusbar" readonly="1"/>
+					</header>
+					<group>
+						<group>
+							<field name="period_id" attrs="{'readonly':[('state','in',['done'])]}"/>
+							<field name="date_start"/>
+							<field name="date_end"/>
+						</group>
+						<group>
+							<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_landed_cost_closing_it_tree">
+			<field name="name">landed.cost.closing.it.tree</field>
+			<field name="model">landed.cost.closing.it</field>
+			<field name="arch" type="xml">
+				<tree string="Cierre Gastos Vinculados" decoration-info="state=='draft'" decoration-danger="state=='done'">
+					<field name="period_id"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+					<field name="state"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_landed_cost_closing_it_action" model="ir.actions.act_window">
+			<field name="name">Cierre Gastos Vinculados</field>
+			<field name="res_model">landed.cost.closing.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_landed_cost_closing_it_tree"/>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Cierre Gastos Vinculados aqui
+			</p>
+			</field>
+		</record>
+		
+		<menuitem id='menu_landed_cost_closing_it' 
+				  parent='purchase.menu_purchase_config' 
+				  action="view_landed_cost_closing_it_action"
+				  sequence="99"
+				  groups="account_base_it.group_account_tables_user"/>
+
+	</data>
+</odoo>

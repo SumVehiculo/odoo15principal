@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="account.action_account_payments_transfer" model="ir.actions.act_window">
+			<field name="context">{'default_payment_type': 'outbound', 'search_default_transfers_filter': 1, 'default_is_internal_transfer': True}</field>
+		</record>
+	</data>
+</odoo>

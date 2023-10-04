@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<!--MENUS-->
+		<menuitem name="Libro de inventarios y balances"
+				id="menu_reports_inventarios_balances_gl" 
+				parent="account_base_sunat_it.menu_sunat_reports" 
+				sequence="8"/>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_move_form_show_aml_inherit" model="ir.ui.view">
+		<field name="name">move.form.show.aml.inherit</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form"/>
+		<field name="arch" type="xml">
+			<data>
+                <xpath expr="//div[@name='button_box']" position="inside">
+					<field name="line_ids" invisible="1"/>
+					<button string="Apuntes Contables" type="object"
+						name="show_move_line_ids"
+						class="oe_stat_button" icon="fa-list"
+						attrs="{'invisible': ['|',('line_ids', '=', []),('move_type', 'not in', ['entry'])]}" />
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

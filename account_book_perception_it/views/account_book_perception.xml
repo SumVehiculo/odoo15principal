@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_book_perception_tree" model="ir.ui.view">
+            <field name="name">account.book.perception.tree</field>
+            <field name="model">account.book.perception</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Detalle Percepciones" create="false">
+                    <field name="periodo_con"/>
+                    <field name="periodo_percep"/>
+                    <field name="fecha_uso"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="tipo_per"/>
+                    <field name="ruc_agente"/>
+                    <field name="partner"/>
+                    <field name="tipo_comp"/>
+                    <field name="serie_cp"/>
+                    <field name="numero_cp"/>
+                    <field name="fecha_com_per"/>
+                    <field name="percepcion"/>
+                    <field name="t_comp"/>
+                    <field name="serie_comp"/>
+                    <field name="numero_comp"/>
+                    <field name="fecha_cp"/>
+                    <field name="montof"  sum="montof"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_book_perception_search" model="ir.ui.view">
+            <field name="name">account.book.perception.search</field>
+            <field name="model">account.book.perception</field>
+            <field name="arch" type="xml">
+                <search string="Detalle Percepciones">
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="fecha_uso"/>
+                    <field name="partner"/>
+                    <field name="ruc_agente"/>
+                    <field name="numero_cp"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+                        <filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+                        <filter string="Fecha Emision" name="fecha_uso" icon="terp-partner" context="{'group_by':'fecha_uso'}"/>
+                        <filter string="Partner" name="partner" icon="terp-partner" context="{'group_by':'partner'}"/>
+                        <filter string="Tipo de Documento" name="tipo_per" icon="terp-partner" context="{'group_by':'tipo_per'}"/>
+                        <filter string="Número Comprobante" name="numero_cp" icon="terp-partner" context="{'group_by':'numero_cp'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_book_perception_it" model="ir.actions.act_window">
+            <field name="name">Detalle Percepciones</field>
+            <field name="res_model">account.book.perception</field>
+            <field name="view_id" ref="view_account_book_perception_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_book_perception_search"/>
+        </record>
+
+    </data>
+</odoo>

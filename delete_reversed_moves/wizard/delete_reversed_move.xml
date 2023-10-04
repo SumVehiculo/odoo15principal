@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delete_reversed_move_form" model="ir.ui.view">
+        <field name="name">delete.reversed.move.form</field>
+        <field name="model">delete.reversed.move</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>Se eliminarán los asientos de Reversion generados por los Asientos de Cambio. ¿Desea continuar?</p>
+                </div>
+                <group>
+                    <field name="period_from" required="1"/>
+                    <field name="period_to" required="1"/>
+                </group>
+                <footer>
+                    <button name="delete_reversed_moves" string="Eliminar" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_delete_reversed_moves" model="ir.actions.act_window">
+        <field name="name">Eliminar Reversiones</field>
+        <field name="res_model">delete.reversed.move</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_delete_reversed_move"
+              parent="account.menu_finance_entries_actions"
+              action="action_delete_reversed_moves"
+              groups="account.group_account_manager"
+              sequence="98"/>
+</odoo>

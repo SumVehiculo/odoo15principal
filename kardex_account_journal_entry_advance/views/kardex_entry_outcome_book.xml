@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_kardex_entry_outcome_book_tree" model="ir.ui.view">
+            <field name="name">kardex.entry.outcome.book.tree</field>
+            <field name="model">kardex.entry.outcome.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Detalle de Salidas" create="false">
+                    <field name="fecha"/>
+                    <field name="tipo"/>
+                    <field name="serie"/>
+                    <field name="numero"/>
+                    <field name="doc_almacen"/>
+                    <field name="ruc"/>
+                    <field name="empresa"/>
+                    <field name="tipo_op"/>
+                    <field name="producto"/>
+                    <field name="default_code"/>
+                    <field name="unidad"/>
+                    <field name="qty" sum="qty"/>
+                    <field name="amount" sum="amount"/>
+					<field name="cta_debe"/>
+                    <field name="cta_haber"/>
+					<field name="origen"/>
+					<field name="destino"/>
+					<field name="almacen"/>
+					<field name="analytic_account_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_kardex_entry_outcome_book_it" model="ir.actions.act_window">
+            <field name="name">Detalle de Salidas</field>
+            <field name="res_model">kardex.entry.outcome.book</field>
+            <field name="view_id" ref="view_kardex_entry_outcome_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

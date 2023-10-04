@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ir_module_module_salesman,ir.module.module.salesman,base.model_ir_module_module,sales_team.group_sale_salesman,1,1,1,0
+access_ir_module_module_manger,ir.module.module.manager,base.model_ir_module_module,sales_team.group_sale_manager,1,1,1,1
+access_purchase_advance_payment_inv,purchase_advance_payment_inv,stock_move_picking_hook.model_purchase_advance_payment_inv,purchase.group_purchase_manager,1,1,1,1
+access_purchase_advance_payment_inv,purchase_advance_payment_inv,stock_move_picking_hook.model_purchase_advance_payment_inv,purchase.group_purchase_user,1,1,1,1

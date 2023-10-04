@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="multipayment_advance_it_form_view_inherit" model="ir.ui.view">
+		<field name="name">multipayment.advance.it.inherit</field>
+		<field name="model">multipayment.advance.it</field>
+		<field name="inherit_id" ref="account_multipayment_advance_it.multipayment_advance_it_form_view"/>
+		<field name="arch" type="xml">
+			<data>
+                <xpath expr="//header" position="inside">
+                    <button name="get_pay_detractions_wizard" string="TXT Detracciones" type="object" class="oe_highlight" attrs="{'invisible': [('is_detraction_payment', '=', False)]}"/>
+				</xpath>
+                <xpath expr="//field[@name='asiento_id']" position="before">
+					<field name="is_detraction_payment"/>
+                    <field name="detraction_lot_number" attrs="{'invisible': [('is_detraction_payment', '=', False)],'required': [('is_detraction_payment', '=', True)]}"/>
+				</xpath>
+				<xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_ids']/tree/field[@name='currency_id']" position="after">
+                    <field name="tc" attrs="{'column_invisible': [('parent.is_detraction_payment', '=', False)]}"/>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_asset_book_tree" model="ir.ui.view">
+            <field name="name">account.asset.book.tree</field>
+            <field name="model">account.asset.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Analisis de Depreciaciones" create="false">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="mes"/>
+                    <field name="period"/>
+                    <field name="cat_name"/>
+                    <field name="cta_analitica"/>
+                    <field name="eti_analitica"/>
+                    <field name="cta_activo"/>
+                    <field name="cta_gasto"/>
+                    <field name="cta_depreciacion"/>
+                    <field name="valor_dep"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_asset_book_search" model="ir.ui.view">
+            <field name="name">account.asset.book.search</field>
+            <field name="model">account.asset.book</field>
+            <field name="arch" type="xml">
+                <search string="Analisis de Depreciaciones">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="cat_name"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Categoria" name="cat_name" icon="terp-partner" context="{'group_by':'cat_name'}"/>
+                        <filter string="Periodo" name="period" icon="terp-partner" context="{'group_by':'period'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_asset_book_it" model="ir.actions.act_window">
+            <field name="name">Analisis de Depreciaciones</field>
+            <field name="res_model">account.asset.book</field>
+            <field name="view_id" ref="view_account_asset_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_asset_book_search"/>
+        </record>
+
+    </data>
+</odoo>

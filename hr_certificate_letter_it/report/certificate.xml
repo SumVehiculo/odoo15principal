@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_template_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br />
+                        <img t-if="doc.company_id.logo_web" t-att-src="image_data_uri(doc.company_id.logo_web)" alt="Logo"/>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <h4><center><u><b>CERTIFICADO DE TRABAJO</b></u></center></h4>
+                        <br />
+                        <br />
+                        <br />
+                        <p>El que suscribe, en representación de <span t-field="doc.company_id.name" />:</p>
+                        <br />
+                        <p><b>CERTIFICA:</b></p>
+                        <br />
+                        <p style="text-align: justify;">
+                            Que, <t t-esc="doc.des_empl" /> <span t-field="doc.employee_id.name" />, identificado con <span t-field="doc.employee_id.type_document_id" /> N° <span t-field="doc.employee_id.identification_id" />, laboró en esta empresa, desde el <span t-field="doc.date_ini" /> hasta el <span t-field="doc.date_fin" /> ocupando el cargo de <span t-field="doc.employee_id.job_id" />, demostrando durante su permanencia responsabilidad, honestidad y dedicación en las labores que le fueron encomendadas.
+                        </p>
+                        <br />
+                        <p style="text-align: justify;">
+                            Se expide el presente documento de acuerdo a ley, para los fines que el interesado crea conveniente.
+                        </p>
+
+                        <br />
+                        <p>
+                            <!-- <span t-if="doc.company_city!=''">
+                                <t t-esc="doc.company_city" />, <t t-esc="doc.day" /> de <t t-esc="doc.month" /> del <t t-esc="doc.year" />
+                            </span> -->
+                            <!-- <span t-else="">
+                                Arequipa, <t t-esc="doc.day" /> de <t t-esc="doc.month" /> del <t t-esc="doc.year" />
+                            </span> -->
+                            <t t-esc="doc.city" />, <t t-esc="doc.day" /> de <t t-esc="doc.month" /> del <t t-esc="doc.year" />
+                        </p>
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <p>
+                            <center>
+                                <img t-if="doc.main_parameter_id.signature" t-att-src="image_data_uri(doc.main_parameter_id.signature)"
+                                     alt="Firma" style="max-width: 400px; max-height: 150px;"/>
+                            </center>
+                            <center style="font-size: 14px;">
+                                <hr color="black" size="1" width="300" />
+                                <t t-esc="doc.main_parameter_id.reprentante_legal_id.name" />
+                                <br />
+                                <span t-field="doc.main_parameter_id.reprentante_legal_id.l10n_latam_identification_type_id.name" /> N°
+                                <t t-esc="doc.main_parameter_id.reprentante_legal_id.vat" />
+                            </center>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_certificate" model="report.paperformat">
+        <field name="name">Formato Certificado de Trabajo</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">33</field>
+        <field name="margin_right">33</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">50</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_certificate" model="ir.actions.report">
+		<field name="name">Certificado de Trabajo PDF</field>
+		<field name="model">hr.certificate.wizard</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hr_certificate_letter_it.report_template_certificate</field>
+		<field name="report_file">hr_certificate_letter_it.report_template_certificate</field>
+		<field name="print_report_name">'Certificado de Trabajo - %s' % (object.employee_id.name)</field>
+        <field name="paperformat_id" ref="hr_certificate_letter_it.paperformat_certificate"/>
+		<field name="binding_model_id" ref="model_hr_certificate_wizard"/>
+		<field name="binding_type">report</field>
+	</record>
+
+</odoo>

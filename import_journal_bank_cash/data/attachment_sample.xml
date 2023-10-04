@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="sample_file_journal_bank_cash_wizard_xls" model="ir.attachment">
+            <field name="name">sample_file_jounral_bank_cash.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_journal_bank_cash/sample_import_file/sample_file_jounral_bank_cash.xlsx"/>
+        </record>
+    </data>
+</odoo>

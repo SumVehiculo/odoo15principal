@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form" model="ir.ui.view">
+		<field name="name">account.main.parameter.form</field>
+		<field name="model">account.main.parameter</field>
+		<field name="arch" type="xml">
+			<form string="Account Main Parameter">
+				<sheet>
+					<group>
+						<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+					</group>
+					<notebook>
+						<page string="Cuentas">
+							<group>
+								<group>
+									<field name="customer_advance_account_nc"/>
+									<field name="customer_advance_account_fc"/>
+									<field name="supplier_advance_account_nc"/>
+									<field name="supplier_advance_account_fc"/>
+									<!--field name="retention_account_id"/-->
+								</group>
+								<group>
+									<field name="detractions_account"/>
+									<field name="customer_account_detractions"/>
+									<field name="free_transer_account_id"/>
+									<field name="rounding_gain_account"/>
+									<field name="rounding_loss_account"/>
+								</group>
+							</group>
+							<group>
+								<group>
+									<field name="customer_letter_account_nc"/>
+									<field name="customer_letter_account_fc"/>
+									<field name="supplier_letter_account_nc"/>
+									<field name="supplier_letter_account_fc"/>
+								</group>
+								<group>
+									<field name="balance_sheet_account"/>
+									<field name="lost_sheet_account"/>
+									<field name="lost_result_account"/>
+									<field name="profit_result_account"/>
+								</group>
+							</group>
+						</page>
+						<page string="Diarios">
+							<group>
+								<group>
+									<field name="detraction_journal"/>
+									<field name="credit_journal"/>
+									<field name="opening_close_journal_ids" widget="many2many_tags"/>
+								</group>
+							</group>
+							<group>
+								<group>
+									<field name="stock_journal_id"/>
+									<field name="destination_journal"/>
+									<field name="free_transfer_journal_id"/>
+								</group>
+							</group>
+						</page>
+						<page string="SUNAT">
+							<group>
+								<group>
+									<field name="exportation_document"/>
+									<field name="proff_payment_wa"/>
+									<field name="debit_note_wa"/>
+									<field name="credit_note_wa"/>
+								</group>
+								<group>
+									<field name="cancelation_partner"/>
+									<field name="cancelation_product"/>
+									<field name="sale_ticket_partner"/>
+									<field name="dt_national_credit_note"/>
+									<field name="td_recibos_hon"/>
+								</group>
+							</group>
+							<group>
+								<group>
+									<field name="free_transer_tax_ids" widget="many2many_tags"/>
+									<field name="account_plan_code"/>
+									<field name="cash_account_prefix"/>
+									<field name="bank_account_prefix"/>
+								</group>
+								<group>
+									<field name="tax_account"/>
+									<field name="dt_perception"/>
+									<!--field name="retention_precentage" widget="percentage"/-->
+								</group>
+							</group>
+						</page>
+						<page string="Reportes">
+							<group>
+								<group>
+									<field name="dir_create_file"/>
+								</group>
+							</group>
+						</page>
+						<page string="Configuraciones">
+							<group>
+								<group>
+									<field name="exchange_difference"/>
+								</group>
+							</group>
+							<group string="Metodos de Pago">
+								<group>
+									<field name="payment_method_id"/>
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_account_main_parameter_list" model="ir.ui.view">
+		<field name="name">account.main.parameter.list</field>
+		<field name="model">account.main.parameter</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_account_main_parameter_form" model="ir.actions.act_window">
+		<field name="name">Parametros Principales</field>
+		<field name="res_model">account.main.parameter</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_account_main_parameter_list"/>
+		<field name="domain">[]</field>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Parametros Principales aqui
+		  </p>
+		</field>
+	</record>
+
+	<record id="view_account_fiscal_year_uit_form" model="ir.ui.view">
+		<field name="name">account.fiscal.year.uit.form</field>
+		<field name="model">account.fiscal.year.uit</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="fiscal_year_id" required="1"/>
+						<field name="uit" required="1"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_account_fiscal_year_uit_list" model="ir.ui.view">
+		<field name="name">account.fiscal.year.uit.list</field>
+		<field name="model">account.fiscal.year.uit</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="fiscal_year_id"/>
+				<field name="uit"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_account_fiscal_year_uit_form" model="ir.actions.act_window">
+		<field name="name">UIT</field>
+		<field name="res_model">account.fiscal.year.uit</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_account_fiscal_year_uit_list"/>
+		<field name="domain">[]</field>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de UIT aqui
+		  </p>
+		</field>
+	</record>
+</odoo>

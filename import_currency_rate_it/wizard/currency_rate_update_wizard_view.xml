@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="import_currency_rate_wizard_form" model="ir.ui.view">
+            <field name="name">import.currency.rate.wizard.form</field>
+            <field name="model">import.currency.rate.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Date Range">
+                    <group>
+                         <group>
+                            <field name="name_file" invisible="1"/>
+						    <field name="file" filename="name_file" string="Excel"/>
+                         </group>
+                         <group>
+                            <field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+                         </group>
+                    </group>
+                    <footer>
+                        <button name="download_template" string="Descargar Plantilla" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+                        <button name="importar" string="Importar" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_import_currency_rate_wizard" model="ir.actions.act_window">
+			<field name="name">Importar Tipo de Cambio</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">import.currency.rate.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="action_import_currency_rate_wizard" 
+				  id="menu_action_import_currency_rate_wizard" 
+				  parent="account_base_import_it.menu_import_imports_partner"
+				  sequence="12"/>
+
+    </data>
+</odoo>

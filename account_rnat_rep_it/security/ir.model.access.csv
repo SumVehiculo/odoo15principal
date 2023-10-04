@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nature_result_group_root,nature.result.group.root,account_rnat_rep_it.model_nature_result,account_base_it.group_account_tables_user,1,1,1,1
+access_nature_result_wizard_group_root,nature.result.wizard.group.root,account_rnat_rep_it.model_nature_result_wizard,account_base_it.group_account_tables_user,1,1,1,1

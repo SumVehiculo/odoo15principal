@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <record id="sale.action_order_report_all" model="ir.actions.act_window">
+            <field name="view_mode">dashboard,pivot,graph,tree</field>
+        </record>
+                        
+        <record id="sale_report_tree" model="ir.ui.view">
+            <field name="name">sale.report.tree</field>
+            <field name="model">sale.report</field>
+            <field name="arch" type="xml">
+                <tree string="Análisis De Ventas">
+                    <field name="name"/>
+                    <field name="order_id"/>                    
+                    <field name="state"/>
+                    <field name="invoice_status" optional="show"/>
+                    <field name="date"/>                    
+                    <field name="product_id"/>
+                    <field name="categ_id" optional="show"/>
+                    <field name="product_tmpl_id" optional="show"/>
+                    <field name="product_uom" optional="show"/>
+                    <field name="product_uom_qty" optional="show"/>
+                    <field name="warehouse_id" optional="show"/>                    
+                    <field name="qty_to_deliver" optional="show"/>
+                    <field name="qty_delivered" optional="show"/>
+                    <field name="qty_to_invoice" optional="show"/>
+                    <field name="qty_invoiced" optional="show"/>
+                    <field name="partner_id"/>
+                    <field name="country_id"/>
+                    <field name="industry_id" optional="show"/>
+                    <field name="commercial_partner_id" optional="show"/>
+                    <field name="company_id" optional="show"/>
+                    <field name="user_id"/>
+                    <field name="pricelist_id"/>
+                    <field name="price_subtotal" optional="show"/>
+                    <field name="discount" optional="show"/>
+                    <field name="discount_amount"/>
+                    <field name="price_total"/>
+                    <field name="untaxed_amount_to_invoice" optional="show"/>
+                    <field name="untaxed_amount_invoiced" optional="show"/>
+                    <field name="campaign_id" optional="show"/>
+                    <field name="medium_id" optional="show"/>
+                    <field name="source_id" optional="show"/>                                                            
+                    <field name="nbr" optional="show"/>
+                    <field name="weight" optional="show"/>
+                    <field name="volume" optional="show"/>                            
+                    <field name="analytic_account_id" optional="show"/>
+                    <field name="team_id" optional="show"/>
+                </tree>
+            </field>
+        </record>        
+    </data>
+</odoo>

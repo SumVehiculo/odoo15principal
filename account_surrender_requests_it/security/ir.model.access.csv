@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_surrender_requests_it_group_user,account.surrender.requests.it.group.user,model_account_surrender_requests_it,account_base_it.group_account_tables_user,1,1,1,1
+access_menu_ren_account_surrender_requests_it_group_user,menu.ren.account.surrender.requests.it.group.user,model_account_surrender_requests_it,,1,1,1,1
+access_account_surrender_requests_invoice_line_group_user,account.surrender.requests.invoice.line.group.user,model_account_surrender_requests_invoice_line,account_base_it.group_account_tables_user,1,1,1,1
+access_menu_ren_account_surrender_requests_invoice_line_group_user,menu.ren.account.surrender.requests.invoice.line.group.user,model_account_surrender_requests_invoice_line,,1,1,1,1
+access_menu_render_main_parameter_group_user,render.main.parameter.group.user,model_render_main_parameter,,1,1,1,1
+access_menu_render_type_document_group_user,render.type.document.group.user,model_render_type_document,,1,1,1,1

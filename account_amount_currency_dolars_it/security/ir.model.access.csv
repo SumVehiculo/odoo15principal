@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_adjustment_account_account_group_user,adjustment.account.account.group.user,model_adjustment_account_account,account_base_it.group_account_tables_user,1,1,1,1
+access_account_different_tc_wizard_group_root,account.different.tc.wizard.group.root,model_account_different_tc_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_account_wrong_sign_wizard_group_root,account.wrong.sign.wizard.group.root,model_account_wrong_sign_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_update_rate_dolars_wizard_group_root,update.rate.dolars.wizard.group.root,model_update_rate_dolars_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_update_uneven_entries_wizard_group_root,update.uneven.entries.wizard.group.root,model_update_uneven_entries_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_account_journal_usd_book_group_user,account.journal.usd.book.group.user,model_account_journal_usd_book,account_base_it.group_account_tables_user,1,1,1,1

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_diff_destino_analitica_view_tree" model="ir.ui.view">
+            <field name="name">account.diff.destino.analitica.view.tree</field>
+            <field name="model">account.diff.destino.analitica.view</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="aml_id"/>
+                    <field name="am_id"/>
+                    <field name="fecha"/>
+                    <field name="diario"/>
+                    <field name="asiento"/>
+                    <field name="cuenta"/>
+                    <field name="monto_conta"/>
+                    <field name="monto_analiticas"/>
+                    <field name="diferencia"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_diff_destino_analitica_view_it" model="ir.actions.act_window">
+            <field name="name">Diferencia Analitica VS Contabilidad</field>
+            <field name="res_model">account.diff.destino.analitica.view</field>
+            <field name="view_id" ref="view_account_diff_destino_analitica_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

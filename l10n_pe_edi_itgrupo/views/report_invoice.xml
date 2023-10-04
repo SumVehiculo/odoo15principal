@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_einvoice_document" inherit_id="l10n_pe_edi_extended.report_einvoice_document">
+        <xpath expr="//h5[@name='invoice_sequence']" position="replace">
+            <h5 name="invoice_sequence"><span class="font-weight-bold" t-esc="o.ref"/></h5>
+        </xpath>
+        <xpath expr="//span[@name='invoice_ref_number_legal']" position="replace">
+            <span name="invoice_ref_number_legal" class="font-weight-bold" t-esc="o.ref or 'NO VALID'"/>
+        </xpath>
+        <xpath expr="//dl[@name='invoice_currency']" position="after">
+            <dl class="row mb-0" name="invoice_currency_rate" t-if="o.currency_id.name!='PEN'">
+                <dt class="col-6 col-sm-6 mb-0">
+                    TIPO DE CAMBIO:
+                </dt>
+                <dd class="col-auto col-6 col-sm-7 mb-0"><t t-esc="o.currency_rate"/></dd>
+            </dl>
+        </xpath>
+        <xpath expr="//dl[@name='related_document']" position="replace">
+            <dl class="row mb-0" name="related_document" t-if="o.l10n_latam_document_type_id.code in ['07','08']">
+                <dt class="col-auto col-6 col-sm-5 mb-0">
+                    DOCUMENTOS RELACIONADOS:
+                </dt>
+                <dd class="col-auto col-6 col-sm-7 mb-0">
+                    <t t-foreach="o.doc_invoice_relac" t-as="doc_rel">
+                        <t t-esc="doc_rel.type_document_id.name"/> <t t-esc="doc_rel.nro_comprobante"/>
+                    </t>
+                </dd>
+            </dl>
+        </xpath>
+    </template>
+</odoo>

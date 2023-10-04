@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_landed_cost_it_form" model="ir.ui.view">
+            <field name="name">landed.cost.it.form</field>
+            <field name="model">landed.cost.it</field>
+            <field name="arch" type="xml">
+                <form string="Gastos Vinculados">
+                    <header>
+                        <button string="Procesar" type="object" name="procesar" states="draft" class="oe_highlight"/>
+                        <button string="Volver Borrador" type="object" name="borrador" states="done" class="oe_highlight"/>
+                        <button string="Agregar Lineas" type="object" name="agregar_lineas" states="draft" />
+                        <button string="Traer información" type="object" name="get_info" states="draft" />
+                        <button string="Calcular" type="object" name="calcular" states="draft" />
+                        <button name="get_invoices" string="Selecciona Facturas" type="object" class="oe_highlight" attrs="{'invisible':[('state','not in','draft')]}"/>
+                        <button name="get_purchases" string="Selecciona Compras" type="object" class="oe_highlight" attrs="{'invisible':[('state','not in','draft')]}"/>
+                        <button name="generate_excel" string="Reporte GV" type="object" class="oe_highlight" attrs="{'invisible':[('state','in','draft')]}"/>
+                        <button name="get_excel_saldos" string="Reporte GV Distribuido" type="object" class="oe_highlight" attrs="{'invisible':[('state','in','draft')]}"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="date_kardex" attrs="{'readonly':[('state','=','done')]}"/>
+                                <field name="prorratear_en" required="1" attrs="{'readonly':[('state','=','done')]}"/>
+                            </group>
+                            <group>
+                                <field name="total_flete" readonly="1" force_save="1"/>
+                                <field name="total_flete_usd" readonly="1" force_save="1"/>
+                                <field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>  
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Detalle" name="detail">
+                                <field name="detalle_ids" attrs="{'readonly':[('state','=','done')]}">
+                                    <tree editable="bottom">
+                                        <field name="stock_move_id" invisible="1"/>
+                                        <field name="picking_rel" readonly="1"/>
+                                        <field name="origen_rel" readonly="1"/>
+                                        <field name="destino_rel" readonly="1"/>
+                                        <field name="producto_rel" readonly="1"/>
+                                        <field name="unidad_rel" readonly="1"/>
+                                        <field name="cantidad_rel" readonly="1" sum="cantidad_rel"/>
+                                        <field name="precio_unitario_rel" readonly="1" optional="hide"/>
+                                        <field name="precio_unit_signed" readonly="1" optional="show"/>
+                                        <field name="valor_rel_signed" readonly="1" sum="valor_rel_signed" optional="show"/>
+                                        <field name="valor_rel" readonly="1" sum="valor_rel" optional="hide"/>
+                                        <field name="factor" required="1" sum="factor"/>
+                                        <field name="flete" required="1" sum="flete"/>
+                                        <field name="flete_usd" required="1" sum="flete_usd" optional="show"/>
+                                        <field name="advalorem" required="1" sum="advalorem"/>
+                                        <field name="advalorem_usd" required="1" sum="advalorem_usd" optional="hide"/>
+                                        <field name="total" required="1" sum="total"/>
+                                        <field name="total_usd" required="1" sum="total_usd" optional="show"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Ingresos de almacen">
+                                <field name="picking_ids" attrs="{'readonly':[('state','=','done')]}" domain="[('state','in',['done'])]">
+                                    <tree editable="bottom">
+                                        <field name="name" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Facturas" name="invoices">
+                                <field name="invoice_ids" attrs="{'readonly':[('state','=','done')]}">
+                                    <tree editable="bottom" create="false" edit="false">
+                                        <field name="invoice_date"/>
+                                        <field name="type_document_id"/>
+                                        <field name="nro_comp"/>
+                                        <field name="date"/>
+                                        <field name="partner_id"/>
+                                        <field name="product_id"/>
+                                        <field name="type_landed_cost_id" optional="hide"/>
+                                        <field name="debit" sum="debit"/>
+                                        <field name="amount_currency" sum="amount_currency"/>
+                                        <field name="tc"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Compras" name="ordersp">
+                                <field name="purchase_ids" attrs="{'readonly':[('state','=','done')]}">
+                                    <tree editable="bottom" create="false" edit="false">
+                                        <field name="purchase_date"/>
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="product_id"/>
+                                        <field name="price_total_signed"/>
+                                        <field name="tc"/>
+                                        <field name="currency_id"/>
+                                        <field name="price_total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Advalorem" name="advalorem">
+                                <field name="advalorem_ids" attrs="{'readonly':[('state','=','done')]}" context="{'default_landed_id': id}">
+                                    <tree editable="bottom" decoration-danger="correct_product == False">
+                                        <field name="correct_product" invisible="1"/> 
+                                        <field name="picking_id" required="1"/>
+                                        <field name="product_id" required="1"/>
+                                        <field name="invoice_id"/>
+                                        <field name="valormn" required="1"/>
+                                        <field name="valorme"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_landed_cost_it_tree" model="ir.ui.view">
+            <field name="name">landed.cost.it.tree</field>
+            <field name="model">landed.cost.it</field>
+            <field name="arch" type="xml">
+                <tree string="Gastos Vinculados">
+                    <field name="name" />
+                    <field name="prorratear_en" />
+                    <field name="state" />
+					<field name="company_id" groups="base.group_multi_company"/>  
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_landed_cost_it_search" model="ir.ui.view">
+            <field name="name">landed.cost.it.search</field>
+            <field name="model">landed.cost.it</field>
+            <field name="arch" type="xml">
+                <search string="Gastos Vinculados">
+                    <filter name="draft" string="Borrador" domain="[('state', '=', 'draft')]" help="Borrador"/>
+                    <filter name="done" string="Realizado" domain="[('state', '=', 'done')]" help="Realizado"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_landed_cost_it" model="ir.actions.act_window">
+            <field name="name">Gastos Vinculados</field>
+            <field name="res_model">landed.cost.it</field>
+            <field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_landed_cost_it_tree"/>
+            <field name="domain">[]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primer Gasto Vinculado aqui
+			</p>
+			</field>
+        </record>
+
+        <menuitem action="action_landed_cost_it" 
+				  id="menu_landed_cost_it_account" 
+				  parent="account.menu_finance_payables"
+				  sequence="1"
+				  groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

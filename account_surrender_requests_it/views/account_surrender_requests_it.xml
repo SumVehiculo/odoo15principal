@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_surrender_requests_it_form" model="ir.ui.view">
+            <field name="name">account.surrender.requests.it.form</field>
+            <field name="model">account.surrender.requests.it</field>
+            <field name="arch" type="xml">
+                <form string="Solicitudes de Entrega">
+                    <header>
+                        <button string="Aprobar" type="object" name="action_done" states="draft" groups="account_surrender_requests_it.group_menu_surrender_approve_group_manager" class="oe_highlight"/>
+                        <button string="Volver Borrador" type="object" name="action_draft" states="cancel" class="oe_highlight"/>
+                        <button string="Cancelar" type="object" name="action_cancel" states="done" />
+                        <button string="Crear Facturas" type="object" name="create_invoices" states="done" class="oe_highlight" groups="account_surrender_requests_it.group_menu_surrender_approve_group_manager"/>
+                        <button string="Agregar a Rendicion" type="object" name="create_line_request" states="done" class="oe_highlight" groups="account_surrender_requests_it.group_menu_surrender_approve_group_manager"/>
+                        <button string="Generar Reporte" type="object" name="get_report" states="done" class="oe_highlight" groups="account_surrender_requests_it.group_menu_surrender_approve_group_manager"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                        <field name="count_moves" invisible="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" string="Facturas" name="open_entries"  type="object" icon="fa-list" attrs="{'invisible': [('count_moves','=', 0)]}"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="statement_id" readonly="1"/>
+                                <field name="dest_location"/>
+                                <field name="amount_render"/>
+                            </group>
+                            <group>
+                                <label for="date_from" string="Periodo"/>
+                                <div>
+                                    <div name="date_edit_only" class="o_row oe_edit_only">
+                                        <span>Desde <field name="date_from" class='oe_inline' attrs="{'readonly':[('state','!=','draft')]}"/></span>
+                                        <span>A <field name="date_to" class='oe_inline' attrs="{'readonly':[('state','!=','draft')]}"/></span>
+                                    </div>
+                                    <div name="date_read_only" class="o_row oe_read_only">
+                                        <span attrs="{'invisible': [('date_from', '=', False)]}">Desde <field name="date_from" class='oe_inline'/></span>
+                                        <span attrs="{'invisible': [('date_to', '=', False)]}">A <field name="date_to" class='oe_inline'/></span>
+                                    </div>
+                                </div>
+                                <field name="company_id" groups="base.group_multi_company" readonly="1" required="1" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <group string='Datos Rendicion'>
+                            <group>
+                                <field name="date" attrs="{'readonly':[('state','=','done')]}"/>
+                                <field name="employee_id" domain="[('is_employee', '=', True)]" attrs="{'readonly':[('state','=','done')]}"/>
+                                <field name="name" attrs="{'readonly':[('state','=','done')]}"/>
+                                <field name="journal_id" attrs="{'readonly':[('state','=','done')]}" domain="[('type', '=', 'cash'), ('check_surrender', '=', True)]"/>
+                            </group>
+                            <group>
+                                <field name="amount" attrs="{'readonly':[('state','=','done')]}"/>
+                                <field name="einvoice_catalog_payment_id" attrs="{'readonly':[('state','=','done')]}"/>
+                                <field name="user_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string='Facturas'>
+                                <field name="invoice_ids"  attrs="{'readonly':[('state','in',['cancel'])]}" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="vat" required="1" optional="show"/>
+                                        <field name="partner_id" optional="hide" force_save="1"/>
+                                        <field name="date" optional="hide" force_save="1"/>
+                                        <field name="invoice_date" optional="show"/>
+                                        <field name="invoice_date_due" optional="hide" force_save="1"/>
+                                        <field name="currency_id" required="1" optional="show"/>
+                                        <field name="render_type_document_id" required="1" optional="show"/>
+                                        <field name="nro_comp" required="1" optional="show"/>
+                                        <field name="product_id" optional="show" domain="[('surrender_ok', '=', True)]"/>
+                                        <field name="account_id" invisible="1" force_save="1"/>
+                                        <field name="name" force_save="1" optional="hide"/>
+                                        <field name="price" optional="show" sum="price"/>
+                                        <field name="tax_id" optional="show"/>
+                                        <field name="create_invoice_line" optional="show"/>
+                                        <field name="analytic_id" optional="hide"/>
+                                        <field name="invoice_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_surrender_requests_it_tree" model="ir.ui.view">
+            <field name="name">account.surrender.requests.it.tree</field>
+            <field name="model">account.surrender.requests.it</field>
+            <field name="arch" type="xml">
+                <tree string="Solicitudes de Entrega">
+                    <field name="date" />
+                    <field name="employee_id" />
+                    <field name="name" />
+                    <field name="user_id" />
+                    <field name="amount" />
+                    <field name="amount_use" />
+                    <field name="amount_render" />
+					<field name="company_id" groups="base.group_multi_company"/>  
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_surrender_requests_it" model="ir.actions.act_window">
+            <field name="name">Solicitudes de Entrega</field>
+            <field name="res_model">account.surrender.requests.it</field>
+            <field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_surrender_requests_it_tree"/>
+            <field name="domain">[('state', '=', 'draft')]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera Solicitudes de Entrega aqui
+			</p>
+			</field>
+        </record>
+
+        <record id="action_account_surrender_done_it" model="ir.actions.act_window">
+            <field name="name">Rendiciones</field>
+            <field name="res_model">account.surrender.requests.it</field>
+            <field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_surrender_requests_it_tree"/>
+            <field name="domain">[('state', 'in', ('done','cancel'))]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera Solicitudes de Entrega aqui
+			</p>
+			</field>
+        </record>
+
+        <menuitem action="action_account_surrender_requests_it" 
+				  id="menu_account_surrender_requests_it" 
+				  parent="account_menu_rendiciones_it.menu_finance_render"
+				  sequence="3"/>
+
+        <menuitem action="action_account_surrender_done_it" id="menu_action_account_surrender_done_it" parent="account_menu_rendiciones_it.menu_finance_render" sequence="6"/>
+
+        <record model="ir.actions.server" id="action_autocomplete_partner_account_surrender_requests_it">
+            <field name="name">Autocompletar Socios</field>
+            <field name="model_id" ref="account_surrender_requests_it.model_account_surrender_requests_it"/>
+            <field name="binding_model_id" ref="account_surrender_requests_it.model_account_surrender_requests_it" />
+            <field name="state">code</field>
+            <field name="code">action = records.action_autocomplete_partner()</field>
+        </record>
+	</data>
+</odoo>

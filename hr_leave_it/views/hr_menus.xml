@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <menuitem
+        id="menu_hr_leave_it_root"
+        name="Ausencias"
+        parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+        groups="hr_leave_it.group_hr_holidays_manager"
+        sequence="55"/>
+
+    <menuitem
+        id="menu_hr_leave_it_new_request"
+        parent="menu_hr_leave_it_root"
+        action="action_hr_leave_it_new_request"
+        sequence="1"/>
+
+    <menuitem
+        id="hr_holidays_menu_manager_approve_allocations"
+        name="Todas las Ausencias"
+        parent="menu_hr_leave_it_root"
+        action="action_hr_leave_it"
+        sequence="2"/>
+
+    <menuitem
+        id="hr_holidays_status_menu_configuration"
+        name="Tipos de Ausencias"
+        parent="menu_hr_leave_it_root"
+        action="action_hr_leave_type_it"
+        sequence="5"/>
+
+<!--	menu de vacaciones en beneficios sociales-->
+    <menuitem
+		id="menu_hr_vacation"
+		action="action_hr_vacation"
+		parent="hr_social_benefits.menu_hr_social_benefits"
+		sequence="3"
+		groups="hr_social_benefits.group_hr_social_benefits_root"
+	/>
+
+<!--	menus para reportes de vacaciones-->
+<!--	<menuitem-->
+<!--		id="menu_hr_vacation_manager"-->
+<!--		parent="hr_vacations_it.menu_hr_vacation"-->
+<!--		action="action_hr_vacation_manager"-->
+<!--		sequence="2"-->
+<!--		groups="hr_leave_it.group_hr_holidays_manager"-->
+<!--	/>-->
+
+<!--	<menuitem-->
+<!--		id="menu_hr_vacation_saldo"-->
+<!--		parent="hr_vacations_it.menu_hr_vacation"-->
+<!--		action="action_hr_vacation_saldo_wizard"-->
+<!--		sequence="3"-->
+<!--		groups="hr_leave_it.group_hr_holidays_manager"-->
+<!--	/>-->
+</odoo>

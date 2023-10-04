@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_kardex_entry_outcome_wizard_form">
+			<field name="name">kardex.entry.outcome.wizard.form</field>
+			<field name="model">kardex.entry.outcome.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Detalle de Salidas">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="period"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						<button string="Generar Asiento" name="make_invoice" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="kardex_entry_outcome_wizard_action" model="ir.actions.act_window">
+			<field name="name">Detalle de Salidas</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">kardex.entry.outcome.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="kardex_entry_outcome_wizard_action" 
+				  id="menu_action_kardex_entry_outcome_wizard" 
+				  parent="kardex_fisico_it.kardex_main_menu"
+				  sequence="106"/>
+	</data>
+</odoo>

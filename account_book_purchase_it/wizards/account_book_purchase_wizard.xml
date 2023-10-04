@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_book_purchase_wizard_form">
+			<field name="name">account.book.purchase.wizard.form</field>
+			<field name="model">account.book.purchase.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Registro de Compras">
+						<group>
+							<group>
+								<field name="company_id"/>
+                                <field name="fiscal_year_id"/>
+								<field name="date_from" attrs="{'invisible':[('show_by', '=', 'period')],'required':[('show_by', '=', 'date')]}"/>
+								<field name="date_to" attrs="{'invisible':[('show_by', '=', 'period')],'required':[('show_by', '=', 'date')]}"/>
+								<field name="period_from_id" attrs="{'invisible':[('show_by', '=', 'date')],'required':[('show_by', '=', 'period')]}" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+								<field name="period_to_id" attrs="{'invisible':[('show_by', '=', 'date')],'required':[('show_by', '=', 'period')]}" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+								<field name="show_header" attrs="{'invisible':[('type_show', '!=', 'excel')]}"/>
+								<field name="currency"/>
+								<field name="show_by" widget='radio'/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_book_purchase_wizard_action" model="ir.actions.act_window">
+			<field name="name">Registro de Compras</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.book.purchase.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_book_purchase_wizard_action" 
+				id="menu_action_account_book_purchase_wizard" 
+				parent="account_report_menu_it.menu_account_report_it" 
+				sequence="5" 
+				groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

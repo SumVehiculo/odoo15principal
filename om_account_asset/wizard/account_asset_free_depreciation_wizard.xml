@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_asset_free_depreciation_wizard" model="ir.ui.view">
+        <field name="name">account.asset.free.depreciation.wizard</field>
+        <field name="model">account.asset.free.depreciation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Compute Asset">
+                <div>
+                    <p>
+                        Este asistente libera el asiento de depreciacion para el periodo seleccionado.
+                    </p> 
+                </div>
+                <group>
+                    <field name="period"/>
+                </group>
+                <footer>
+                    <button string="Liberar Asiento" name="asset_compute" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+         </field>
+    </record>
+
+    <record id="action_account_asset_free_depreciation_wizard" model="ir.actions.act_window">
+        <field name="name">Liberar Lineas de Depreciacion</field>
+        <field name="res_model">account.asset.free.depreciation.wizard</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_account_asset_free_depreciation_wizard"/>
+        <field name="target">new</field>
+        <field name="context">{'asset_type': 'purchase'}</field>
+    </record>
+
+    <!--menuitem name="Liberar Lineas de Depreciacion"
+              action="action_account_asset_free_depreciation_wizard"
+              id="menu_account_asset_free_depreciation_wizard"
+              parent="om_account_asset.menu_finance_entries_generate_assets"
+              sequence="8"
+              groups="account.group_account_manager"/-->
+
+</odoo>

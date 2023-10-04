@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_move_form_detractions_inherit" model="ir.ui.view">
+		<field name="name">move.form.detractions.inherit</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form"/>
+		<field name="arch" type="xml">
+			<data>
+                <xpath expr="//notebook/page[@id='other_tab']/group/group/field[@name='inalterable_hash']" position="before">
+                    <field name="move_detraccion_id" readonly="1"/>
+				</xpath>
+                <xpath expr="//form//header" position="inside">
+                    <field name="state_detraction_button" invisible="1"/>
+                    <field name="move_type" invisible="1"/>
+                    <button name="create_detraccion_gastos"  type="object" string="Provision Detraccion" 
+					attrs="{'invisible': ['|','|',('state_detraction_button','!=',2),('payment_state','=','paid'),('move_type', 'not in', ['in_invoice','out_invoice'])] }"/>
+                    <button name="remove_detraccion_gastos"  type="object" string="Cancelar Detraccion" attrs="{'invisible':  [('state_detraction_button','!=',1)] }"/>
+                </xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

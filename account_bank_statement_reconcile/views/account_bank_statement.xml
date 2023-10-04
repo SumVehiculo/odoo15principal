@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_bank_statement_reg_form" model="ir.ui.view">
+			<field name="name">bank.statement.reg.form.</field>
+			<field name="model">account.bank.statement</field>
+			<field name="inherit_id" ref="account_fields_it.view_bank_statement_form_inherit"/>
+			<field name="arch" type="xml">
+				<xpath expr="//notebook/page[@name='render_data']" position="inside">
+					<button
+						name="create_journal_entry_surrender" type="object" string="Crear asiento de Entrega"
+						attrs="{'invisible':[('journal_check_surrender', '=', False)]}"/>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']" position="attributes">
+					<attribute name="attrs">{'readonly': [('state','=','confirm')]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='date']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='payment_ref']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='partner_id']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='ref']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='amount_currency']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='foreign_currency_id']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='amount']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='narration']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='transaction_type']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)], 'column_invisible': [('parent.journal_check_surrender', '=', True)]}</attribute>
+				</xpath>
+				<xpath expr="//notebook/page[@name='statement_line_ids']/field[@name='line_ids']/tree/field[@name='account_number']" position="attributes">
+					<attribute name="attrs">{'readonly': [('is_reconciled','=',True)], 'column_invisible': [('parent.journal_check_surrender', '=', True)]}</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.actions.server" id="reg_account_move_lines_it_account_bank_statement">
+			<field name="name">Regularizar Cuentas Corrientes</field>
+			<field name="model_id" ref="account.model_account_bank_statement"/>
+			<field name="binding_model_id" ref="account.model_account_bank_statement" />
+			<field name="state">code</field>
+			<field name="code">action = records.reg_account_move_lines_it()</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_kardex" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="kardex_account_journal_entry.view_account_main_parameter_form_inherit_kardex"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook/page[@name='kardex']" position="inside">
+				<group string="Entregas Gratuitas">
+					<group>
+						<field name="free_location_ids_csa" widget="many2many_tags" string="Ubicación Origen"/>
+						<field name="free_location_dest_ids_csa" widget="many2many_tags" string="Ubicación Destino"/>
+						<field name="free_operation_type_ids_csa" widget="many2many_tags" string="Tipo de Operación"/>
+					</group>
+				</group>
+			</xpath>
+		</field>
+	</record>
+</odoo>

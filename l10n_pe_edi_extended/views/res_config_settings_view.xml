@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_pe_form" model="ir.ui.view">
+        <field name="name">res_config_settings_view_cl_form.electronic.inv</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='invoicing_settings']" position="after">
+                <h2>Peruvian Electronic Invoicing</h2>
+                <field name="l10n_pe_country_code" invisible="1"/>
+                <div id="l10n_pe_section" name="peruvian_electronic_invoicing" attrs="{'invisible':[('l10n_pe_country_code', '!=', 'PE')]}" class="row mt16 o_settings_container" groups="account.group_account_manager">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Perú DTE Web Services</span>
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                            <div class="text-muted">
+                                Please choose your DTE service provider (values depend on Test or Production or PSE).
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <field name="l10n_pe_dte_service_provider" class="col-lg-8 o_light_label" widget="radio"/>
+                                </div>
+                            </div>
+                            <div id="einvoice_send">
+                                <span class="o_form_label">Send DTE's automatically</span>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." role="img" aria-label="Values set here are company-specific." groups="base.group_multi_company"/>
+                                <div class="text-muted">
+                                    Choose the period to send DTE's
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Interval" for="l10n_pe_dte_send_interval_unit" class="col-lg-3 o_light_label"/>
+                                        <field name="l10n_pe_dte_send_interval_unit"/>
+                                    </div>
+                                    <div class="mt8 row">
+                                        <label string="Next Run" for="l10n_pe_dte_send_next_execution_date" class="col-lg-3 o_light_label"/>
+                                        <field name="l10n_pe_dte_send_next_execution_date"/>
+                                        <button name="update_l10n_pe_dte_send_manually" type="object" class="btn-link">
+                                            <i title="Send now" role="img" aria-label="Send now" class="fa fa-fw fa-cloud-upload"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="l10n_pe_dte_check"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <div id="einvoice_check">
+                                <span class="o_form_label">Check DTE's automatically</span>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." role="img" aria-label="Values set here are company-specific." groups="base.group_multi_company"/>
+                                <div class="text-muted">
+                                    Choose the period to check DTE's
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Interval" for="l10n_pe_dte_check_interval_unit" class="col-lg-3 o_light_label"/>
+                                        <field name="l10n_pe_dte_check_interval_unit"/>
+                                    </div>
+                                    <div class="mt8 row">
+                                        <label string="Next Run" for="l10n_pe_dte_check_next_execution_date" class="col-lg-3 o_light_label"/>
+                                        <field name="l10n_pe_dte_check_next_execution_date"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="einvoice_check">
+                                <span class="o_form_label">Legal Informatión</span>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." role="img" aria-label="Values set here are company-specific." groups="base.group_multi_company"/>
+                                <div class="text-muted">
+                                    Please fill legal information about DTE's
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="SUNAT Exempt authorization message" for="l10n_pe_dte_authorization_message" class="col-lg-3 o_light_label"/>
+                                        <field name="l10n_pe_dte_authorization_message"/>
+                                    </div>
+                                    <div class="mt8 row">
+                                        <label string="DTE Control URL" for="l10n_pe_dte_control_url" class="col-lg-3 o_light_label"/>
+                                        <field name="l10n_pe_dte_control_url"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

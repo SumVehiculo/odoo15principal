@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="group_costos_producto" model="res.groups">
+        <field name="name">Ver Costos en Productos</field>
+        </record>
+        
+      <record id="product_template_only_form_view" model="ir.ui.view">
+        <field name="name">product.template.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                  <button string="Costos" type="object" name="get_ultimocosto" class="oe_highlight" groups="kardex_valorizado_stock.group_costos_producto" />
+                </xpath>
+        </field>
+      </record>
+
+
+        <record id="view_tree_kardex_stock_cost_tmp" model="ir.ui.view">
+            <field name="name">kardex.stock.cost.tmp.tree</field>
+            <field name="model">kardex.stock.cost.tmp</field>
+            <field name="arch" type="xml">
+                <tree string="Costos" create="0" delete="0">
+                    <field name="almacen" readonly="1" />
+                    <field name="producto" readonly="1" />
+                    <field name="costo" readonly="1" />
+                 </tree>
+             </field>
+        </record>
+
+
+        <record id="view_stock_balance_report_lote_costeo_tree" model="ir.ui.view">
+            <field name="name">stock.balance.report.lote.costeo.tree</field>
+            <field name="model">stock.balance.report.lote.costeo</field>
+            <field name="arch" type="xml">
+                <tree string="Costos" create="0" delete="0">
+                    <field name="producto"/>
+                    <field name="lote"/>
+                    <field name="codigo"/>
+                    <field name="unidad"/>
+                    <field name="categoria_1"/>
+                    <field name="categoria_2"/>
+                    <field name="categoria_3"/>
+                    <field name="almacen"/>
+                    <field name="entrada" sum="entrada"/>
+                    <field name="reservado" sum="reservado"/>
+                    <field name="saldo" sum="saldo"/>
+                    <field name="costeo" readonly="1" />
+                    <field name="tiempoutil" readonly="1" />
+                    <field name="rango_vencimiento" readonly="1" />
+                 </tree>
+             </field>
+        </record>
+
+
+
+        <record id="view_make_kardex_valorado_stock" model="ir.ui.view">
+            <field name="name">make.kardex.valorado.stock.form</field>
+            <field name="model">make.kardex.valorado.stock</field>
+            <field name="arch" type="xml">
+                <form string="Reporte de Saldos Valorado" version="7.0">
+                    <group>
+                        <field name="fini" invisible="1"/>
+                        <field name="ffin" invisible="1"/>
+                        <field name="fecha_ini_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="fecha_fin_mod" attrs="{'readonly':[('check_fecha', '=', False)],'required':[('check_fecha', '=', True)]}"/>
+                        <field name="check_fecha" />
+                        <field name="moneda" required="1"/>
+    
+                        <field name="allproducts"/>
+                        <field name="alllocations"/>
+                        <field name="analizador" invisible="1" />
+                    </group>
+                     <notebook>
+                            <page string="Productos">
+                                <field name="location_ids" string="Ubicaciones" domain="[('usage','in',['internal'])]" attrs="{'invisible':[('alllocations', '=', True)]}"/>
+                                <field name="products_ids" nolabel="True" domain="[('type','=','product')]" attrs="{'invisible':[('allproducts', '=', True)]}"/>
+                            </page>
+                        </notebook>
+                    <footer>
+                        <button name="do_csvtoexcel" string="Excel Saldo Valorado" type="object" class="oe_highlight"  onlyRead="1"/>
+                        or
+                        <button name="do_csvtoexcellotecosteado" string="Excel Saldo Valorado x Lote" type="object" class="oe_highlight"  onlyRead="1"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                 </form>
+             </field>
+        </record>
+
+        <record id="make_kardex_action_valorado_stock" model="ir.actions.act_window">
+            <field name="name">Reporte de Saldos Valorado</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">make.kardex.valorado.stock</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Reporte de Saldos Valorado" 
+                  id="kardex_sunat_val_menu_fisicovalorado_stock"
+                  parent="kardex_fisico_it.kardex_main_menu" 
+                  action="make_kardex_action_valorado_stock"
+                  sequence="3" />
+
+        <menuitem name="Reporte de Saldos Valorado" 
+                  id="purchase_menu_fisicovalorado_stock"
+                  parent="purchase.purchase_report" 
+                  action="make_kardex_action_valorado_stock"
+                  sequence="50" />
+        
+        <menuitem name="Reporte de Saldos Valorado" 
+                  id="stock_menu_fisicovalorado_stock"
+                  parent="stock.menu_warehouse_report" 
+                  action="make_kardex_action_valorado_stock"
+                  sequence="150" />
+
+    </data>
+</odoo>

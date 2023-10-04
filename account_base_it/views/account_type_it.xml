@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_type_it_form" model="ir.ui.view">
+		<field name="name">account.type.it.form</field>
+		<field name="model">account.type.it</field>
+		<field name="arch" type="xml">
+			<form string="Account Type It">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="group_balance"/>
+							<field name="group_nature"/>
+							<field name="group_function"/>
+						</group>
+						<group>
+							<field name="code" required="1"/>
+							<field name="order_balance"/>
+							<field name="order_nature"/>
+							<field name="order_function"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_account_type_it_list" model="ir.ui.view">
+		<field name="name">account.type.it.list</field>
+		<field name="model">account.type.it</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" optional="show"/>
+				<field name="code" optional="show"/>
+				<field name="group_balance" optional="show"/>
+				<field name="group_nature" optional="show"/>
+				<field name="group_function" optional="show"/>
+				<field name="order_balance" optional="show"/>
+				<field name="order_nature" optional="show"/>
+				<field name="order_function" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_account_type_it_form" model="ir.actions.act_window">
+		<field name="name">Tipo de Estado Financiero</field>
+		<field name="res_model">account.type.it</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_account_type_it_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Tipo de Estado Financiero aqui
+		  </p>
+		</field>
+	</record>
+</odoo>

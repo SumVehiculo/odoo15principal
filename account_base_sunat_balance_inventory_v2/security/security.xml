@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="make_invisible_sunat" model="res.groups">
+			<field name="name">Invisible Sunat</field>
+		</record>
+
+		<record id="sunat_table_data_38_comp_rule" model="ir.rule">
+			<field name="name">Tablas Sunat 3.8 multi-company</field>
+			<field name="model_id" ref="model_sunat_table_data_38"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="sunat_table_data_39_comp_rule" model="ir.rule">
+			<field name="name">Tablas Sunat 3.9 multi-company</field>
+			<field name="model_id" ref="model_sunat_table_data_39"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

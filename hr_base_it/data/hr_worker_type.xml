@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+	<data noupdate='1'>
+		<record model='hr.worker.type' id='worker_type_19'>
+			<field name='code'>19</field>
+			<field name='description'>EJECUTIVO</field>
+			<field name='name'>EJECUTIVO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_20'>
+			<field name='code'>20</field>
+			<field name='description'>OBRERO</field>
+			<field name='name'>OBRERO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_21'>
+			<field name='code'>21</field>
+			<field name='description'>EMPLEADO</field>
+			<field name='name'>EMPLEADO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_22'>
+			<field name='code'>22</field>
+			<field name='description'>TRABAJADOR PORTUARIO - LEY 27866</field>
+			<field name='name'>TRAB.PORTUARIO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_23'>
+			<field name='code'>23</field>
+			<field name='description'>PRACTICANTE SENATI - DEC. LEY 20151</field>
+			<field name='name'>PRACT. SENATI</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_24'>
+			<field name='code'>24</field>
+			<field name='description'>PENSIONISTA O CESANTE</field>
+			<field name='name'>PENSIONISTA O CESANTE</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_25'>
+			<field name='code'>25</field>
+			<field name='description'>BENEFICIARIO DE TRANSF DIRECTA EX PESCADPRES</field>
+			<field name='name'>BENEFICIARIO DE TDEP</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_26'>
+			<field name='code'>26</field>
+			<field name='description'>PENSIONISTA - LEY 28320</field>
+			<field name='name'>PENSIONISTA - LEY 28320</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_27'>
+			<field name='code'>27</field>
+			<field name='description'>CONSTRUCCIÓN CIVIL</field>
+			<field name='name'>CONSTRUCCIÓN CIVIL</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_28'>
+			<field name='code'>28</field>
+			<field name='description'>PILOTO Y COPILOTO DE AVIACIÓN COMERCIAL</field>
+			<field name='name'>PILOTO Y COPIL DE AVIA. COM.</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_29'>
+			<field name='code'>29</field>
+			<field name='description'>MARÍTIMO, FLUVIAL O LACUSTRE</field>
+			<field name='name'>MARÍT, FLUVIAL O LACUSTRE</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_30'>
+			<field name='code'>30</field>
+			<field name='description'>PERIODISTA</field>
+			<field name='name'>PERIODISTA</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_31'>
+			<field name='code'>31</field>
+			<field name='description'>TRABAJADOR DE LA INDUSTRIA DE CUERO</field>
+			<field name='name'>TRAB. DE LA IND. DE CUERO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_32'>
+			<field name='code'>32</field>
+			<field name='description'>MINERO DE MINA DE SOCAVÓN</field>
+			<field name='name'>MINERO DE SOCAVÓN</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_36'>
+			<field name='code'>36</field>
+			<field name='description'>TRABAJADOR PESQUERO </field>
+			<field name='name'>TRABAJADOR PESQUERO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_37'>
+			<field name='code'>37</field>
+			<field name='description'>MINERO DE TAJO ABIERTO</field>
+			<field name='name'>MINERO DE TAJO ABIERTO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_38'>
+			<field name='code'>38</field>
+			<field name='description'>MINERO DE INDUSTRIA MINERA METALÚRGICA Y/O SIDERÚRGICA</field>
+			<field name='name'>MINERO IND. MINERA METAL. Y/O SIDERUR</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_39'>
+			<field name='code'>39</field>
+			<field name='description'>TRABAJADOR PESQUERO – LEY 30003</field>
+			<field name='name'>TRAB. PESQUEROS – LEY 28320</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_56'>
+			<field name='code'>56</field>
+			<field name='description'>ARTISTA -  LEY 28131</field>
+			<field name='name'>ARTISTA -  LEY 28131</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_64'>
+			<field name='code'>64</field>
+			<field name='description'>AGRARIO DEPENDIENTE - LEY 27360</field>
+			<field name='name'>AGRARIO DEPEND.- LEY 27360</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_65'>
+			<field name='code'>65</field>
+			<field name='description'>TRABAJADOR ACTIVIDAD ACUÍCOLA - LEY 27460</field>
+			<field name='name'>TRAB. ACTIV.ACUÍCOLA LEY 27460</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_66'>
+			<field name='code'>66</field>
+			<field name='description'>PESCADOR Y PROCESADOR ARTESANAL INDEPENDIENTE  - LEY 27177 </field>
+			<field name='name'>PESC.Y PROC.ARTES.INDEP.</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_67'>
+			<field name='code'>67</field>
+			<field name='description'>REGIMEN  ESPECIAL D. LEG.1057 - CAS</field>
+			<field name='name'>REG. ESPECIAL D. LEG.1057 - CAS</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_71'>
+			<field name='code'>71</field>
+			<field name='description'>CONDUCTOR DE MICROEMPRESA REMYPE - D.LEG.1086</field>
+			<field name='name'>CONDUCT MICROEMP.REMYPE D.L.1086</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_73'>
+			<field name='code'>73</field>
+			<field name='description'>SOCIO DE COOPERATIVA AGRARIA – LEY N.° 29972</field>
+			<field name='name'>SOCIO COOPER. AGRAR. – LEY N.° 29972</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_82'>
+			<field name='code'>82</field>
+			<field name='description'>FUNCIONARIO PÚBLICO</field>
+			<field name='name'>FUNCIONARIO PÚBLICO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_83'>
+			<field name='code'>83</field>
+			<field name='description'>EMPLEADO DE CONFIANZA</field>
+			<field name='name'>EMPLEADO DE CONFIANZA</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_84'>
+			<field name='code'>84</field>
+			<field name='description'>SERVIDOR PÚBLICO - DIRECTIVO  SUPERIOR</field>
+			<field name='name'>SERVIDOR PÚB - DIRECT SUPERIOR</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_85'>
+			<field name='code'>85</field>
+			<field name='description'>SERVIDOR PÚBLICO - EJECUTIVO</field>
+			<field name='name'>SERVIDOR PÚB - EJECUTIVO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_86'>
+			<field name='code'>86</field>
+			<field name='description'>SERVIDOR PÚBLICO - ESPECIALISTA</field>
+			<field name='name'>SERVIDOR PÚB - ESPECIALISTA</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_87'>
+			<field name='code'>87</field>
+			<field name='description'>SERVIDOR PÚBLICO - DE APOYO</field>
+			<field name='name'>SERVIDOR PÚB - DE APOYO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_88'>
+			<field name='code'>88</field>
+			<field name='description'>PERSONAL DE LA ADMIN. PÚBLICA - ASIGNACIÓN ESPECIAL - D.U. 126-2001</field>
+			<field name='name'>PERS ADM PÚB - ASIG ESP DU 126-2001</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_89'>
+			<field name='code'>89</field>
+			<field name='description'>PERSONAL DE LAS FUERZAS ARMADAS Y POLICIALES (1)</field>
+			<field name='name'>PERS DE LAS FFAA Y POLICIALES</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_90'>
+			<field name='code'>90</field>
+			<field name='description'>GERENTES PÚBLICOS  - D. LEG. 1024</field>
+			<field name='name'>GERENTES PÚB.  - D.LEG 1024</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_91'>
+			<field name='code'>91</field>
+			<field name='description'>MIIEMBROS DE OTROS REG. ESPECIALES DEL SECTOR PÚBLICO</field>
+			<field name='name'>MIIEMBROS DE OTROS REG. ESPEC S.PUBLICO</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_92'>
+			<field name='code'>92</field>
+			<field name='description'>FUNCIONARIO PUBLICO - LEY 30057</field>
+			<field name='name'>FUNCIONARIO PÚBLICO - LEY 30057</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_93'>
+			<field name='code'>93</field>
+			<field name='description'>DIRECTIVO PÚBLICO - LEY 30057</field>
+			<field name='name'>DIRECTIVO PÚBLICO - LEY 30057</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_94'>
+			<field name='code'>94</field>
+			<field name='description'>SERVIDOR CIVIL DE CARRERA - LEY 30057</field>
+			<field name='name'>SERVIDOR CIVIL DE CARRERA - LEY 30057</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_95'>
+			<field name='code'>95</field>
+			<field name='description'>SERVIDOR DE ACTIVIDADES COMPLEMENTARIAS - LEY 30057</field>
+			<field name='name'>SERVIDOR DE ACT. COMPLEM. - LEY 30057</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_96'>
+			<field name='code'>96</field>
+			<field name='description'>MAGISTERIO - LEY 29944</field>
+			<field name='name'>MAGISTERIO - LEY 29944</field>
+		</record>
+		<record model='hr.worker.type' id='worker_type_98'>
+			<field name='code'>98</field>
+			<field name='description'>PERSONA QUE GENERA INGRESOS DE CUARTA - QUINTA CATEGORÍA</field>
+			<field name='name'>CUARTA - QUINTA CATEGORÍA</field>
+		</record>
+	</data>
+</odoo>

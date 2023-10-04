@@ -1,0 +1,11 @@
+<odoo>
+	<data noupdate="1">
+		<record model="hr.payroll.structure" id="base_structure">
+			<field name="name">BASE</field>
+			<field name="type_id" ref="monthly_salary_40"/>
+			<field name="use_worked_day_lines">True</field>
+			<field name="country_id" ref="base.pe"/>
+			<field name="schedule_pay">monthly</field>
+		</record>
+	</data>
+</odoo>

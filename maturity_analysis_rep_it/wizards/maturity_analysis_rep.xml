@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_maturity_analysis_receivable_rep_form">
+			<field name="name">maturity.analysis.receivable.rep.form</field>
+			<field name="model">maturity.analysis.rep</field>
+			<field name="arch" type="xml">
+				<form string="Analisis de Vencimiento">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="date"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+							<field name="mayor"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_receivable" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_maturity_analysis_payable_rep_form">
+			<field name="name">maturity.analysis.payable.rep.form</field>
+			<field name="model">maturity.analysis.rep</field>
+			<field name="arch" type="xml">
+				<form string="Analisis de Vencimiento">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="date"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+							<field name="mayor"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_payable" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="maturity_analysis_receivable_rep_action" model="ir.actions.act_window">
+			<field name="name">Vencimientos por Cobrar</field>
+			<field name="res_model">maturity.analysis.rep</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_maturity_analysis_receivable_rep_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<record id="maturity_analysis_payable_rep_action" model="ir.actions.act_window">
+			<field name="name">Vencimientos por Pagar</field>
+			<field name="res_model">maturity.analysis.rep</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_maturity_analysis_payable_rep_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="maturity_analysis_receivable_rep_action" 
+				id="menu_maturity_analysis_receivable_rep_action" 
+				parent="account_balance_doc_rep_it.menu_account_account_report" 
+				sequence="4" 
+				groups="account_base_it.group_account_tables_user"/>
+
+		<menuitem action="maturity_analysis_payable_rep_action" 
+				id="menu_maturity_analysis_payable_rep_action" 
+				parent="account_balance_doc_rep_it.menu_account_account_report" 
+				sequence="5" 
+				groups="account_base_it.group_account_tables_user"/>
+	
+	</data>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_landed_cost_closing_it_group_user,landed.cost.closing.it.group.user,model_landed_cost_closing_it,account_base_it.group_account_tables_user,1,1,1,1

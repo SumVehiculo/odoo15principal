@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+<!--		WIZARD PARA GENERACION DE ASIENTO CONTABLE-->
+		<record id="payslip_run_generation_move_wizard_form" model="ir.ui.view">
+			<field name="name">payslip.run.generation.move.wizard.form</field>
+			<field name="model">hr.payslip.run.move.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Generacion Asiento Planilla">
+					<group>
+						<group>
+							<field name="debit"/>
+							<field name="credit"/>
+							<field name="difference"/>
+						</group>
+						<group>
+							<field name="journal_id" required="1"/>
+							<field name="account_id" attrs="{'invisible': [('difference', '=', 0)], 'required': [('difference', '>', 0)]}"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Generar" name="generate_move" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+<!--		WIZARD PARA ANALISIS DE ASIENTO DE PLANILLAS-->
+		<record id="view_hr_payslip_run_move_wizard_form" model="ir.ui.view">
+			<field name="name">hr.payslip.run.move.wizard.form</field>
+			<field name="model">hr.payslip.run.move.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Analisis Asiento Planilla">
+					<group>
+						<group>
+							<field name="payslip_run_id" required="1"/>
+							<field name="option" required="1"/>
+						</group>
+						<group>
+							<field name="with_analytic"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_payslip_move_analysis" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="payslip_run_move_wizard_action" model="ir.actions.act_window">
+			<field name="name">Analisis Asiento Planilla</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.payslip.run.move.wizard</field>
+			<field name="view_id" ref="view_hr_payslip_run_move_wizard_form"/>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="hr_payslip_run_move_it.payslip_run_move_wizard_action" 
+				  id="menu_payslip_run_move_wizard" 
+				  parent="hr_payroll.menu_hr_payroll_report" 
+				  sequence="2"
+				  groups="hr_payroll.group_hr_payroll_manager"/>
+	</data>
+</odoo>

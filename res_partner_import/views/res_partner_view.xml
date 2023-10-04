@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="gen_partner_wizard_view_s" model="ir.ui.view">
+			<field name="name">Importar Contactos</field>
+			<field name="model">gen.partner.s</field>
+			<field name="arch" type="xml">
+				<form string="Importar Partner">
+                    <group>
+                        <field name="partner_option" widget="radio" />
+                    </group>
+					<group>
+						<field name="file" filename="file_name" />
+						<field name="file_name" invisible="1"/>
+					</group>
+					<footer>
+						<button class="fa fa-upload btn-primary" name="import_partner" string="Import" type="object"/>
+						<button class="fa fa-download btn-primary" name="download_template" string="Descargar Plantilla" type="object"/>
+                    	<button class="fa fa-filter btn-primary" invisible="1" name="verify_if_exists_partner" string="Verificar Duplicados" type="object" attrs="{'invisible': [('partner_option', 'not in', ['create'])]}"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_gen_partner_import_wizard_s" model="ir.actions.act_window">
+			<field name="name">Contacto</field>
+			<field name="res_model">gen.partner.s</field>			
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="gen_import_data_s" name="Importar" parent="contacts.menu_contacts" groups="res_partner_import.group_import_contact_view_s" sequence="4"/>
+		
+		<menuitem action="action_gen_partner_import_wizard_s" id="gen_partner_import_menu_s"
+			parent="gen_import_data_s" />
+
+	</data>
+</odoo>
+ 
+ 

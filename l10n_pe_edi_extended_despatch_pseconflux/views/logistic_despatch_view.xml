@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_logistic_despatch_form_edi" model="ir.ui.view">
+        <field name="name">view.logistic.despatch.form.l10n_pe_edi_pseconflux</field>
+        <field name="model">logistic.despatch</field>
+        <field name="inherit_id" ref="logistic.view_logistic_despatch_form" />
+        <field name="arch" type="xml">
+            <field name="l10n_pe_dte_partner_status" position="after">
+                <field name="l10n_pe_dte_conflux_uid"/>
+            </field>
+        </field>
+    </record>
+</odoo>

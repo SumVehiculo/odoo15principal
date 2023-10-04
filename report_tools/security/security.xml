@@ -1,0 +1,10 @@
+<odoo>
+	<record id="group_report_tools" model="res.groups">
+		<field name="name">Report Tools</field>
+	</record>
+	<record id="base.group_user" model="res.groups">
+		<field name="name">Employee</field>
+		<field name="users" eval="[(4, ref('base.user_root'))]"/>
+		<field name="implied_ids" eval="[(4, ref('group_report_tools'))]"></field>
+	</record>
+</odoo>

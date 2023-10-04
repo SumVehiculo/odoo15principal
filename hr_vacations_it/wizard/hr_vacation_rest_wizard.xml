@@ -1,0 +1,30 @@
+<odoo>
+	<data>
+		<record id="hr_vacation_rest_wizard_form" model="ir.ui.view">
+			<field name="name">hr_vacation_rest_wizard_form</field>
+			<field name="model">hr.vacation.rest.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<h1>Control de Vacaciones</h1>
+					<group>
+						<field name="company_id" readonly="1"/>
+<!--						<field name="fiscal_year_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>-->
+						<field name="showall"/>
+						<field name="employee_id" attrs="{'invisible':[('showall', '=', True)] }" options="{'no_create': True, 'no_create_edit':True}"/>
+					</group>
+					<footer>
+						<button string="Mostrar" name="make_vacation_rest" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_hr_vacation_rest_wizard" model="ir.actions.act_window">
+			<field name="name">Control de Vacaciones</field>
+			<field name="res_model">hr.vacation.rest.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

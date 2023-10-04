@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_cash_flow_book_advance_group_user,account.cash.flow.book.advance.group.user,model_account_cash_flow_book_advance,account_base_it.group_account_tables_user,1,1,1,1
+access_account_cash_flow_rep_advance_group_user,account.cash.flow.rep.advance.group.user,model_account_cash_flow_rep_advance,account_base_it.group_account_tables_user,1,1,1,1

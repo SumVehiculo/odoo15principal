@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_logistic_point_manager,logistic.logistic.point.manager,model_logistic_point,logistic.group_manager,1,1,1,1
+access_logistic_point_user,logistic.logistic.point.user,model_logistic_point,logistic.group_manager,1,0,0,0
+access_logistic_route_manager,logistic.logistic.route.manager,model_logistic_route,logistic.group_manager,1,1,1,1
+access_logistic_route_user,logistic.logistic.route.user,model_logistic_route,logistic.group_user,1,1,1,1
+access_logistic_despatch_manager,logistic.logistic.despatch.manager,model_logistic_despatch,logistic.group_manager,1,1,1,1
+access_logistic_despatch_user,logistic.logistic.despatch.user,model_logistic_despatch,logistic.group_user,1,1,1,0
+access_logistic_despatch_line_all,logistic.logistic.despatch.line,model_logistic_despatch_line,,1,1,1,1
+access_logistic_expedition_manager,logistic.logistic.expedition.manager,model_logistic_expedition,logistic.group_manager,1,1,1,1
+access_logistic_expedition_user,logistic.logistic.expedition.user,model_logistic_expedition,logistic.group_user,1,1,0,0

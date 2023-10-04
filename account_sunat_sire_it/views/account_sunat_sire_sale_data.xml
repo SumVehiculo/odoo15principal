@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_sunat_sire_sale_data_tree" model="ir.ui.view">
+            <field name="name">account.sunat.sire.sale.data.tree</field>
+            <field name="model">account.sunat.sire.sale.data</field>
+            <field name="arch" type="xml">
+                <tree string="SIRE Ventas" create="false" edit="false" delete="false">
+                    <field name="perPeriodoTributario"/>
+                    <field name="codCar"/>
+                    <field name="codTipoCDP"/>
+                    <field name="numSerieCDP"/>
+                    <field name="numCDP"/>
+                    <field name="codTipoCarga" optional="hide"/>
+                    <field name="codSituacion" optional="hide"/>
+                    <field name="fecEmision" optional="show"/>
+                    <field name="fecVencPag" optional="show"/>
+                    <field name="codTipoDocIdentidad" optional="show"/>
+                    <field name="numDocIdentidad" optional="show"/>
+                    <field name="nomRazonSocialCliente" optional="show"/>
+                    <field name="mtoValFactExpo" optional="show"/>
+                    <field name="mtoBIGravada" optional="show"/>
+                    <field name="mtoDsctoBI" optional="show"/>
+                    <field name="mtoIGV" optional="show"/>
+                    <field name="mtoDsctoIGV" optional="hide"/>
+                    <field name="mtoExonerado" optional="show"/>
+                    <field name="mtoInafecto" optional="show"/>
+                    <field name="mtoISC" optional="show"/>
+                    <field name="mtoBIIvap" optional="hide"/>
+                    <field name="mtoIvap" optional="hide"/>
+                    <field name="mtoIcbp" optional="show"/>
+                    <field name="mtoOtrosTrib" optional="show"/>
+                    <field name="mtoTotalCP" optional="show"/>
+                    <field name="codMoneda" optional="show"/>
+                    <field name="mtoTipoCambio" optional="show"/>
+                    <field name="codEstadoComprobante" optional="hide"/>
+                    <field name="desEstadoComprobante" optional="show"/>
+                    <field name="indOperGratuita" optional="hide"/>
+                    <field name="mtoValorOpGratuitas" optional="show"/>
+                    <field name="mtoValorFob" optional="show"/>
+                    <field name="indTipoOperacion" optional="hide"/>
+                    <field name="mtoPorcParticipacion" optional="hide"/>
+                    <field name="mtoValorFobDolar" optional="hide"/>
+                    <field name="fecEmisionMod" optional="hide"/>
+                    <field name="codTipoCDPMod" optional="hide"/>
+                    <field name="numSerieCDPMod" optional="hide"/>
+                    <field name="numCDPMod" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

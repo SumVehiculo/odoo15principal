@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="view_account_book_ledger_wizard_form">
+		<field name="name">account.book.ledger.wizard.form</field>
+		<field name="model">account.book.ledger.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Libro Mayor Analítico">
+				<notebook>
+					<page string="Datos">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id"/>
+								<field name="date_from" attrs="{'invisible':[('show_by', '=', 'period')],'required':[('show_by', '=', 'date')]}"/>
+								<field name="date_to" attrs="{'invisible':[('show_by', '=', 'period')],'required':[('show_by', '=', 'date')]}"/>
+								<field name="period_from_id" attrs="{'invisible':[('show_by', '=', 'date')],'required':[('show_by', '=', 'period')]}" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+								<field name="period_to_id" attrs="{'invisible':[('show_by', '=', 'date')],'required':[('show_by', '=', 'period')]}" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+								<field name="show_by" widget='radio'/>
+							</group>
+						</group>
+					</page>
+					<page string="Cuentas">
+						<group string="Cuentas">
+							<field name="content"/>
+							<field name="account_ids" attrs="{'invisible':[('content', '=', 'all')]}" />
+						</group>
+					</page>
+				</notebook>
+				<footer>
+					<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="account_book_ledger_wizard_action" model="ir.actions.act_window">
+		<field name="name">Libro Mayor Analítico</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">account.book.ledger.wizard</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+	
+	<menuitem id="menu_action_account_book_ledger_wizard"
+			parent="account_report_menu_it.menu_account_report_it"
+			action="account_book_ledger_wizard_action"
+			groups="account_base_it.group_account_tables_user"
+			sequence="2"/>
+</odoo>

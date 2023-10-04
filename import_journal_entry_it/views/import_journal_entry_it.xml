@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_import_journal_entry_it_form">
+			<field name="name">import.journal.entry.it.form</field>
+			<field name="model">import.journal.entry.it</field>
+			<field name="arch" type="xml">
+				<form string="Importar Asientos">
+					<header>
+            			<button string="Descargar Plantilla" name="download_template" icon="fa-download" type="object" states="draft" class="btn-primary oe_inline"/>
+		                <button string="Importar" name="importar" type="object" states="draft" class="oe_highlight" />
+		                <button string="Eliminar Importados" name="action_cancel" confirm="Se eliminarán los asientos importados. ¿Desea continuar?" states="import" type="object" class="oe_highlight" />
+		                <button string="Regresar Borrador" name="action_draft" states="cancel" type="object" class="oe_highlight" />
+						<field name="state" widget="statusbar" />               
+		            </header> 
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button class="oe_stat_button" string="Asientos Importados" name="open_entries"  type="object" icon="fa-list" attrs="{'invisible': [('state','!=','import')]}"/>
+						</div>
+						<div class="oe_title">
+                            <h1>
+                                <field name="name" class="oe_inline" readonly="1"/>
+                            </h1>
+                        </div>
+						<group>
+							<group>
+								<field name="type" widget="radio" attrs="{'readonly': [('state','!=','draft')]}"/>
+								<field name="ref" attrs="{'readonly': [('state','!=','draft')]}"/>
+							</group>
+							<group>
+								<field name="name_file" invisible="1"/>
+								<field name="document_file" filename="name_file" string="Excel"/>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="import_journal_entry_it_tree" model="ir.ui.view">
+            <field name="name">import.journal.entry.it.tree</field>
+            <field name="model">import.journal.entry.it</field>
+            <field name="arch" type="xml">
+                <tree string="Importar Asientos">
+                   <field name="name"/>
+				   <field name="company_id" groups="base.group_multi_company"/>  
+                </tree>
+            </field>
+        </record>
+
+		<record id="import_journal_entry_it_action" model="ir.actions.act_window">
+			<field name="name">Importar Asientos Contables</field>
+			<field name="res_model">import.journal.entry.it</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				No existe ninguna importacion de Asiento Contable
+			</p>
+			</field>
+		</record>
+		
+	</data>
+
+	<menuitem action="import_journal_entry_it_action"
+                    id="menu_import_journal_entry_it"
+			        parent="account.menu_finance_entries_accounting_miscellaneous"
+					sequence="5"/>
+
+
+</odoo>

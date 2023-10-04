@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_f1_balance_usd_tree">
+			<field name="name">f1.balance.usd.tree</field>
+			<field name="model">f1.balance.usd</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="mayor"/>
+					<field name="nomenclatura"/>
+					<field name="debe"/>
+					<field name="haber"/>
+					<field name="saldo_deudor"/>
+					<field name="saldo_acreedor"/>
+					<field name="activo"/>
+					<field name="pasivo"/>
+					<field name="perdinat"/>
+					<field name="ganannat"/>
+					<field name="perdifun"/>
+					<field name="gananfun"/>
+				</tree>
+			</field>
+		</record>
+	</data>
+</odoo>

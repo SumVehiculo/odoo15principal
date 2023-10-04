@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_balance_period_book_group_user,account.balance.period.book.group.user,model_account_balance_period_book,account_base_it.group_account_tables_user,1,1,1,1
+access_account_balance_period_rep_group_user,account.balance.period.rep.group.user,model_account_balance_period_rep,account_base_it.group_account_tables_user,1,1,1,1
+access_account_balance_detail_book_group_user,account.balance.detail.book.group.user,model_account_balance_detail_book,account_base_it.group_account_tables_user,1,1,1,1
+access_account_balance_detail_rep_group_user,account.balance.detail.rep.group.user,model_account_balance_detail_rep,account_base_it.group_account_tables_user,1,1,1,1

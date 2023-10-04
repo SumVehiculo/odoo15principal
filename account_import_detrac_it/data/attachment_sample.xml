@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+        <record id="import_doc_invoice_relac_example_xls" model="ir.attachment">
+            <field name="name">import_doc_invoice_relac_example.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="account_import_detrac_it/sample_import_file/import_doc_invoice_relac_example.xlsx"/>
+        </record>
+    </data>
+</odoo>

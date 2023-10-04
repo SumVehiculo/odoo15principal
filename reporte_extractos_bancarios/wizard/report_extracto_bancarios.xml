@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_extractos_bancarios_wizard_form">
+			<field name="name">view.report.extracto.bancario.wizard</field>
+			<field name="model">report.extracto.bancario</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="date_from" required="1"/>
+							<field name="date_to" required="1"/>
+							<field name="journal_id" required="1"/>
+						</group>						
+					</group>
+					<footer>
+						<button name="get_excel" string="Descargar" icon="fa-download" type="object" class="btn-primary" />
+						<button string="Cancelar" class="btn-default" special="cancel" />
+													
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_extractos_bancarios_wizard_action" model="ir.actions.act_window">
+			<field name="name">Extracto bancario</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">report.extracto.bancario</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		
+        <menuitem 
+                name="Informes" 
+				id="view_informes_menuitem" 
+				parent="account_treasury_it.menu_treasury_it2" 
+				sequence="4"/>
+        <menuitem 
+                action="view_extractos_bancarios_wizard_action" 
+				id="view_extractos_bancarios_wizard_menuitem" 
+				parent="reporte_extractos_bancarios.view_informes_menuitem" 
+				sequence="1"/>
+	</data>
+</odoo>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="kardex_save_detailed_tree_v_form" model="ir.ui.view">
+			<field name="name">kardex.save.detailed.tree.v.form</field>
+			<field name="model">kardex.save</field>
+			<field name="inherit_id" ref="kardex_save_period_final.kardex_save_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@name='button_box']" position="inside">            
+					<button class="oe_stat_button" icon="fa-file-text-o" name="action_get_detailed_tree_view_sr" type="object" attrs="{'invisible': [('detalles_count_view', '=', 0)]}">
+						<field name="detalles_count_view" widget="statinfo" string="Detalles"/>
+					</button>
+				</xpath>
+			</field>
+		</record>
+
+
+
+
+
+
+
+		<record id="kardex_save_period_form" model="ir.ui.view">
+			<field name="name">kardex.save.period.form</field>
+			<field name="model">kardex.save.period</field>
+			<field name="arch" type="xml">
+				<form string="Detalle Guardado Kardex" create="0" delete="0" edit="0">
+					<sheet>
+						<group>
+							<group>
+								<field name="almacen" readonly="1"/>
+								<field name="producto" readonly="1"/>
+								<field name="categoria" readonly="1"/>
+								<field name="code" readonly="1"/>
+								<field name="unidad" readonly="1"/>
+							</group>
+							<group>
+								<field name="fecha" readonly="1"/>
+								<field name="stock" readonly="1"/>
+								<field name="lote" readonly="1"/>
+								<field name="cprom" readonly="1"/>
+								<field name="cprom_dolar" readonly="1"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="kardex_save_period_tree" model="ir.ui.view">
+			<field name="name">kardex.save.period.tree</field>
+			<field name="model">kardex.save.period</field>
+			<field name="arch" type="xml">
+				<tree string="Detalle Guardado Kardex" create="0" delete="0" edit="0">
+					<field name="almacen" readonly="1"/>
+					<field name="producto" readonly="1"/>
+					<field name="categoria" string="Categoria" readonly="1"/>
+					<field name="code" string="Referencia Interna" readonly="1"/>
+					<field name="unidad" string="UDM" readonly="1"/>
+					<field name="fecha" readonly="1"/>
+					<field name="stock" readonly="1"/>
+					<field name="lote" readonly="1"/>
+					<field name="cprom" readonly="1"/>
+					<field name="cprom_dolar" readonly="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="kardex_save_period_search" model="ir.ui.view">
+			<field name="name">kardex.save.period.search</field>
+			<field name="model">kardex.save.period</field>
+			<field name="arch" type="xml">
+				<search string="Detalle Guardado Kardex">
+					<field name="almacen"/>
+					<field name="producto"/>
+					<field name="categoria" string="Categoria"/>
+					<field name="code" string="Referencia Interna"/>
+					<field name="fecha"/>
+					<field name="lote"/>
+					<group expand="1" string="Group By">
+						<filter string="Almacen" name="almacen" context="{'group_by':'almacen'}"/>
+						<filter string="Producto" name="producto" context="{'group_by':'producto'}"/>
+						<filter string="Fecha" name="fecha" context="{'group_by':'fecha'}"/>
+						<filter string="Lote" name="lote" context="{'group_by':'lote'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+
+
+
+
+
+
+
+
+
+
+		<record id="kardex_save_period_new_action" model="ir.actions.act_window">
+			<field name="name">Detalle Guardado Kardex</field>
+			<field name="res_model">kardex.save.period</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="kardex_save_period_view_detailed.kardex_save_period_search"/>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primer Detalle Guardado Kardex Aqui
+			</p>
+			</field>
+		</record>
+
+	</data>
+</odoo>

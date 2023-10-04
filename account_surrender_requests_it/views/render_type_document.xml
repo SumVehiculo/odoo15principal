@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_render_type_document_list" model="ir.ui.view">
+		<field name="name">render.type.document.list</field>
+		<field name="model">render.type.document</field>
+		<field name="arch" type="xml">
+			<tree editable="bottom">
+				<field name="code"/>
+				<field name="name"/>
+				<field name="type_document_id"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_render_type_document_form" model="ir.actions.act_window">
+		<field name="name">Tipos de Documento</field>
+		<field name="res_model">render.type.document</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_render_type_document_list"/>
+		<field name="domain">[]</field>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Tipos de Documento para Rendicion aqui
+		  </p>
+		</field>
+	</record>
+
+	<menuitem action="action_render_type_document_form" 
+	id="menu_action_render_type_document_form" 
+	parent="account_menu_rendiciones_it.menu_render_settings" 
+	sequence="29"/>
+</odoo>

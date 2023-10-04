@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+	<menuitem
+		id="menu_hr_social_benefits"
+		name="Beneficios Sociales"
+		parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+		sequence="70"
+		groups="hr_social_benefits.group_hr_social_benefits_root"
+	/>
+	<menuitem
+		id="menu_hr_gratification"
+		action="action_hr_gratification"
+		parent="menu_hr_social_benefits"
+		sequence="1"
+		groups="hr_social_benefits.group_hr_social_benefits_root"
+	/>
+	<menuitem
+		id="menu_hr_cts"
+		action="action_hr_cts"
+		parent="menu_hr_social_benefits"
+		sequence="2"
+		groups="hr_social_benefits.group_hr_social_benefits_root"
+	/>
+	<menuitem
+		id="menu_hr_liquidation"
+		action="action_hr_liquidation"
+		parent="menu_hr_social_benefits"
+		sequence="4"
+		groups="hr_social_benefits.group_hr_social_benefits_root"
+	/>
+</odoo>

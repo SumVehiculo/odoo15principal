@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="view_account_ple_purchase_book_tree" model="ir.ui.view">
+			<field name="name">account.ple.purchase.book.tree</field>
+			<field name="model">account.ple.purchase.book</field>
+			<field eval="1" name="priority"/>
+			<field name="arch" type="xml">
+				<tree string="Corrector PLE Compras" create="false">
+					<field name="periodo"/>
+					<field name="fecha_cont"/>
+					<field name="libro"/>
+					<field name="fecha_e"/>
+					<field name="td"/>
+					<field name="serie"/>
+					<field name="numero"/>
+					<field name="estado"/>
+					<field name="estado_c"/>
+					<button name="view_account_move" icon="fa-eye" string="Ver Factura" type="object"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="account_ple_purchase_book_search" model="ir.ui.view">
+			<field name="name">account.ple.purchase.book.search</field>
+			<field name="model">account.ple.purchase.book</field>
+			<field name="arch" type="xml">
+				<search string="Corrector PLE Compras">
+					<field name="libro"/>
+					<field name="td"/>
+					<separator/>
+					<group expand="1" string="Group By...">
+						<filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+						<filter string="Tipo de Documento" name="td" icon="terp-partner" context="{'group_by':'td'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_account_ple_purchase_book_it" model="ir.actions.act_window">
+			<field name="name">Corrector PLE Compras</field>
+			<field name="res_model">account.ple.purchase.book</field>
+			<field name="view_id" ref="view_account_ple_purchase_book_tree"/>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree</field>
+			<field name="search_view_id" ref="account_ple_purchase_book_search"/>
+		</record>
+
+		<record model="ir.actions.server" id="action_fix_ple_purchase">
+			<field name="name">Corregir Lineas</field>
+			<field name="model_id" ref="model_account_ple_purchase_book"/>
+			<field name="binding_model_id" ref="model_account_ple_purchase_book" />
+			<field name="state">code</field>
+			<field name="code">action = records.action_fix_ple_purchase()</field>
+		</record>
+
+	</data>
+</odoo>

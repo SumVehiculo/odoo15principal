@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_retencion" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit.retencion</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='free_transfer_journal_id']" position="after">
+				<field name="retention_journal_id"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

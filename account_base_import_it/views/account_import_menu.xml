@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- Top menu item -->
+		<menuitem name="Importadores"
+            id="menu_import_it"
+			action="contacts.action_contacts"
+            groups="group_import_it_accounting_menu"
+            web_icon="account_base_import_it,static/description/icon.png"
+            sequence="55"/>
+
+		
+		<menuitem id="menu_import_imports" 
+				name="Importadores" 
+				parent="menu_import_it" 
+				sequence="3"/>
+		
+		<menuitem id="menu_import_imports_partner" 
+				name="Partners" 
+				parent="menu_import_imports" 
+				sequence="3"/>
+		
+		<menuitem id="menu_import_imports_invoices" 
+				name="Facturas" 
+				parent="menu_import_imports" 
+				sequence="6"/>
+	</data>
+</odoo>

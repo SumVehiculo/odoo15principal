@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<menuitem id="menu_tables_sunat" 
+				name="Tablas" 
+				parent="account_base_sunat_it.menu_sunat" 
+				sequence="2"/>
+
+	</data>
+</odoo>

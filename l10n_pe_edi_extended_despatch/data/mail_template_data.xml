@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="0">
+        <!--Email template -->
+        <record id="email_template_edi_despatch" model="mail.template">
+            <field name="name">Electronic Despatch: Send by email</field>
+            <field name="model_id" ref="logistic.model_logistic_despatch"/>
+            <field name="email_from">${(object.despatch_user_id.email_formatted or user.email_formatted) |safe}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="subject">Electronic Despatch ${object.name or 'n/a'} | ${object.company_id.name} </field>
+            <field name="body_html" type="html">
+                <div class="o_layout o_default_theme">
+                    <table class="o_mail_wrapper">
+                        <tbody>
+                        <tr>
+                            <td class="o_mail_no_options o_mail_wrapper_td oe_structure">
+                                <div class="o_mail_block_title_sub" data-snippet="s_mail_block_title_sub" data-name="Title - Subtitle">
+                                    <div class="o_mail_snippet_general">
+                                    <table align="center" cellspacing="0" cellpadding="0" class="o_mail_table_styles">
+                                        <tbody>
+                                        <tr>
+                                            <td class="o_mail_h_padding o_mail_v_padding o_mail_no_colorpicker">
+                                            <h2 class="o_mail_no_margin o_default_snippet_text">
+                                                Electronic Despatch ${object.name or 'n/a'}
+                                            </h2>
+                                            <p class="o_mail_no_margin o_default_snippet_text">
+                                                Dear
+                                                % if object.partner_id.parent_id:
+                                                    ${object.partner_id.name} (${object.partner_id.parent_id.name}),
+                                                % else:
+                                                    ${object.partner_id.name},
+                                                % endif
+                                             </p>
+                                             <p>
+                                                Attached to this message is the 
+                                                % if object.name:
+                                                    Electronic Despatch <strong>${object.name or 'n/a'}</strong>
+                                                % else:
+                                                    Despatch
+                                                %endif
+                                                % if object.despatch_origin:
+                                                    (with reference: ${object.despatch_origin})
+                                                % endif
+                                            </p>
+                                            <ul>
+                                                <li>Date: <strong>${object.issue_date or 'n/a'}</strong></li>
+                                                <li>Start date: <strong>${object.start_date}</strong></li>
+                                                <li>Weight: <strong>${object.total_weight or 'n/a'} ${object.weight_uom.name or 'kg'}</strong></li>
+                                            </ul>
+                                            <p>
+                                                The electronic document in PDF and XML formats is attached to this message. 
+                                                The printed representation in PDF has the same validity as one issued in a traditional way.
+                                            </p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>                            
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>   
+            </field>
+            <field name="report_template" ref="logistic.logistic_despatchs"/>
+            <field name="report_name">Despatch_${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

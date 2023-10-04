@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="multipayment_advance_it_comp_rule" model="ir.rule">
+			<field name="name">Pagos multiples multi-company</field>
+			<field name="model_id" ref="model_multipayment_advance_it"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="account_template_multipayment_comp_rule" model="ir.rule">
+			<field name="name">Pagos multiples Plantilla Avanzados multi-company</field>
+			<field name="model_id" ref="model_account_template_multipayment"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="import_initial_customer_xls" model="ir.attachment">
+            <field name="name">import_initial_customer.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_saldos_iniciales_it/sample_import_file/import_initial_customer.xlsx"/>
+        </record>
+        <record id="import_initial_supplier_xls" model="ir.attachment">
+            <field name="name">import_initial_supplier.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="import_saldos_iniciales_it/sample_import_file/import_initial_supplier.xlsx"/>
+        </record>
+    </data>
+</odoo>

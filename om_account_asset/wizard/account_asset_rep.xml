@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_asset_rep_form">
+			<field name="name">account.asset.rep.form</field>
+			<field name="model">account.asset.rep</field>
+			<field name="arch" type="xml">
+				<form string="Analisis de Depreciaciones">
+						<group>
+							<group>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>  
+                                <field name="fiscal_year_id" required="1"/>
+                    			<field name="period_from" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+                    			<field name="period_to" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+							<group>
+								<field name="type_show"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_asset_rep_action" model="ir.actions.act_window">
+			<field name="name">Analisis de Depreciaciones</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.asset.rep</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="om_account_asset.account_asset_rep_action" 
+				id="menu_action_account_asset_rep" 
+				parent="om_account_asset.menu_asset_reports_it" 
+				sequence="4" 
+				groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

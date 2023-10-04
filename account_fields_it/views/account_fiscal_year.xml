@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="action_account_fiscal_year_form_inherit" model="ir.ui.view">
+			<field name="name">	account.fiscal.year.form.inherit</field>
+			<field name="model">account.fiscal.year</field>
+			<field name="inherit_id" ref="account_accountant.action_account_fiscal_year_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group" position="before">
+					<field name="period_ids" invisible="1"/>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" string="Periodos" name="open_periods"  type="object" icon="fa-calendar" attrs="{'invisible': [('period_ids','=',[])]}"/>
+					</div>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

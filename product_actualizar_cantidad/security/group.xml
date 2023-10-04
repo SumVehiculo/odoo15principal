@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="group_quant_just_admin" model="res.groups">
+            <field name="name">Stock Quant Solo Admin</field>            
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kardex_entry_income_book_group_user,kardex.entry.income.book.group.user,model_kardex_entry_income_book,account_base_it.group_account_tables_user,1,1,1,1
+access_kardex_entry_income_wizard_group_user,kardex.entry.income.wizard.group.user,model_kardex_entry_income_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_kardex_entry_income_it_group_user,kardex.entry.income.it.group.user,model_kardex_entry_income_it,account_base_it.group_account_tables_user,1,1,1,1
+access_kardex_entry_outcome_book_group_user,kardex.entry.outcome.book.group.user,model_kardex_entry_outcome_book,account_base_it.group_account_tables_user,1,1,1,1
+access_kardex_entry_outcome_wizard_group_user,kardex.entry.outcome.wizard.group.user,model_kardex_entry_outcome_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_kardex_entry_outcome_it_group_user,kardex.entry.outcome.it.group.user,model_kardex_entry_outcome_it,account_base_it.group_account_tables_user,1,1,1,1

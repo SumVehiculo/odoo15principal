@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_des_move_tree" model="ir.ui.view">
+            <field name="name">account.des.move.tree</field>
+            <field name="model">account.des.move</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Detalle Destinos" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="debe"/>
+                    <field name="haber"/>
+                    <field name="balance"/>
+                    <field name="cta_analitica"/>
+                    <field name="des_debe"/>
+                    <field name="des_haber"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_des_move_search" model="ir.ui.view">
+            <field name="name">account.des.move.search</field>
+            <field name="model">account.des.move</field>
+            <field name="arch" type="xml">
+                <search string="Detalle Destinos">
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="cta_analitica"/>
+                    <separator/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Libro" name="libro" icon="terp-partner" context="{'group_by':'libro'}"/>
+                        <filter string="Voucher" name="voucher" icon="terp-partner" context="{'group_by':'voucher'}"/>
+                        <filter string="Cuenta" name="cuenta" icon="terp-partner" context="{'group_by':'cuenta'}"/>
+                        <filter string="Cuenta Analitica" name="cta_analitica" icon="terp-partner" context="{'group_by':'cta_analitica'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_account_des_move_it" model="ir.actions.act_window">
+            <field name="name">Detalle Destinos</field>
+            <field name="res_model">account.des.move</field>
+            <field name="view_id" ref="view_account_des_move_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="account_des_move_search"/>
+        </record>
+
+    </data>
+</odoo>

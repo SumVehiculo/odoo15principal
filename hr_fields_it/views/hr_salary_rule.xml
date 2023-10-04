@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_salary_rule_form_inherit" model="ir.ui.view">
+		<field name="name">hr.salary.rule.form.inherit</field>
+		<field name="model">hr.salary.rule</field>
+		<field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+		<field name="arch" type="xml">
+			<field name="active" position="after">
+				<field name="sunat_code"/>
+<!--				<field name="is_subtotal"/>-->
+			</field>
+			<field name="analytic_account_id" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="not_computed_in_net" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+		</field>
+	</record>
+	<record id="hr_salary_rule_tree_inherit" model="ir.ui.view">
+		<field name="name">hr.salary.rule.tree.inherit</field>
+		<field name="model">hr.salary.rule</field>
+		<field name="inherit_id" ref="hr_payroll.hr_salary_rule_list"/>
+		<field name="arch" type="xml">
+			<field name="sequence" position="attributes">
+				<attribute name="invisible">0</attribute>
+			</field>
+			<field name="partner_id" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="partner_id" position="after">
+				<field name="company_id" optional="show" groups="base.group_multi_company"/>
+			</field>
+		</field>
+	</record>
+</odoo>

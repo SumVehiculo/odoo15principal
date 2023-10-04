@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <record id="purchase.action_purchase_order_report_all" model="ir.actions.act_window">
+            <field name="view_mode">dashboard,pivot,graph,tree</field>
+        </record>        
+        <record id="purchase_report_tree" model="ir.ui.view">
+            <field name="name">purchase.report.tree</field>
+            <field name="model">purchase.report</field>
+            <field name="arch" type="xml">
+                <tree string="Análisis De Compra">
+                    <field name="order_id"/>
+                    <field name="state"/>
+                    <field name="company_id"/>                    
+                    <field name="commercial_partner_id" optional="show"/>                    
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="country_id" optional="show"/>                    
+                    <field name="date_order"/>                    
+                    <field name="date_approve"/>                                        
+                    <field name="currency_id"/>
+                    <field name="product_id"/>
+                    <field name="product_tmpl_id" optional="show"/>
+                    <field name="category_id" optional="show"/>
+                    <field name="picking_type_id"/>                    
+                    <field name="effective_date" optional="show"/>                                                            
+                    <field name="weight" optional="show"/>
+                    <field name="volume" optional="show"/>
+                    <field name="product_uom"/>                    
+                    <field name="delay" optional="show"/>
+                    <field name="delay_pass" optional="show"/>                                        
+                    <field name="untaxed_total"/>
+                    <field name="price_total"/>                                        
+                    <field name="price_average"/>
+                    <field name="nbr_lines" optional="show"/>                                                                                                    
+                    <field name="fiscal_position_id" optional="show"/>
+                    <field name="account_analytic_id" optional="show"/>
+                    <field name="qty_ordered" optional="show"/>
+                    <field name="qty_received" optional="show"/>
+                    <field name="qty_billed" optional="show"/>
+                    <field name="qty_to_be_billed" optional="show"/>
+                </tree>
+            </field>
+        </record>        
+    </data>
+</odoo>

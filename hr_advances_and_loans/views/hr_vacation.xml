@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="hr_vacation_form_inherit" model="ir.ui.view">
+		<field name="name">hr.vacation.form.inherit</field>
+		<field name="model">hr.vacation</field>
+		<field name="inherit_id" ref="hr_leave_it.hr_vacation_form"/>
+		<field name="arch" type="xml">
+			<button name="compute_fifth" position="before">
+				<button name="import_advances" string="Importar Adelantos" type="object" class="oe_highlight" states="draft"/>
+				<button name="import_loans" string="Importar Prestamos" type="object" class="oe_highlight" states="draft"/>
+			</button>
+		</field>
+	</record>
+
+	<record id="hr_vacation_line_tree_inherit" model="ir.ui.view">
+		<field name="name">hr.vacation.line.tree.inherit</field>
+		<field name="model">hr.vacation.line</field>
+		<field name="inherit_id" ref="hr_leave_it.hr_vacation_line_tree"/>
+		<field name="arch" type="xml">
+			<field name="neto_total" position="after">
+				<field name="advance_amount" sum="advance_amount" optional="hide"/>
+				<field name="loan_amount" sum="loan_amount" optional="hide"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="hr_vacation_line_form_inherit" model="ir.ui.view">
+		<field name="name">hr.vacation.line.form.inherit</field>
+		<field name="model">hr.vacation.line</field>
+		<field name="inherit_id" ref="hr_leave_it.hr_vacation_line_form"/>
+		<field name="arch" type="xml">
+			<field name="neto_total" position="after">
+				<field name="advance_amount"/>
+				<field name="loan_amount"/>
+			</field>
+		</field>
+	</record>
+
+</odoo>

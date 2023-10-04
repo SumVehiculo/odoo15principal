@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="sample_file_account_multipayment_invoice_line_xls" model="ir.attachment">
+            <field name="name">sample_file_account_multipayment_invoice_line.xlsx</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="account_multipayment_advance_it/sample_import_file/sample_file_account_multipayment_invoice_line.xlsx"/>
+        </record>
+    </data>
+</odoo>

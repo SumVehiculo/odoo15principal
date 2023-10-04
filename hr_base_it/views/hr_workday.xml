@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_workday_form" model="ir.ui.view">
+		<field name="name">hr.workday.form</field>
+		<field name="model">hr.workday</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="code"/>
+							<field name="name"/>
+						</group>
+						<group>
+							<field name="days"/>
+							<field name="record_days"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_workday_tree" model="ir.ui.view">
+		<field name="name">hr.workday.tree</field>
+		<field name="model">hr.workday</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="code" optional="show"/>
+				<field name="name" optional="show"/>
+				<field name="days" optional="show"/>
+				<field name="record_days" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_workday" model="ir.actions.act_window">
+		<field name="name">Jornada Laboral</field>
+		<field name="res_model">hr.workday</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Jornada Laboral aqui
+			</p>
+		</field>
+	</record>
+</odoo>

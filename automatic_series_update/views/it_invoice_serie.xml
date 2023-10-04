@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_it_invoice_serie_form_inherit" model="ir.ui.view">
+			<field name="name">it.invoice.serie.form</field>
+			<field name="model">it.invoice.serie</field>
+			<field name="inherit_id" ref="account_base_it.view_it_invoice_serie_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button name="create_sequence" type="object" string="Generar Secuencia" class="oe_highlight"/>
+					</header>
+				</xpath>
+				<field name="sequence_id" position="before">
+						<field name="prefix"/>
+				</field>
+				<field name="sequence_id" position="attributes">
+					<attribute name="readonly">1</attribute>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

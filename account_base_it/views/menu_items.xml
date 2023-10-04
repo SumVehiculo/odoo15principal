@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem id="menu_account_base_it" name="Tablas" parent="account.menu_finance_configuration" sequence="10" groups="account_base_it.group_account_tables_user">
+		<menuitem action="account_base_it.action_account_cash_flow_form" id="menu_action_account_cash_flow_form" sequence="1"/>
+        <menuitem action="account_base_it.action_account_efective_type_form" id="menu_action_account_efective_type_form" sequence="2"/>
+        <menuitem action="account_base_it.action_account_patrimony_type_form" id="menu_action_account_patrimony_type_form" sequence="3"/>
+		<menuitem action="account_base_it.action_account_type_it_form" id="menu_action_account_type_it_form" sequence="4"/>
+		<menuitem action="account_base_it.action_account_period_form" id="menu_action_account_period_form" sequence="5"/>
+		<menuitem action="account_base_it.action_einvoice_catalog_payment_form" id="menu_action_einvoice_catalog_payment_form" sequence="6"/>
+		<menuitem action="account_base_it.action_it_invoice_serie_form" id="menu_action_it_invoice_serie_form" sequence="7"/>
+		<menuitem action="account_base_it.action_detractions_catalog_percent_form" id="action_detractions_catalog_percent_menu" sequence="8" />
+		<menuitem action="account_base_it.action_einvoice_catalog_06_form" id="menu_action_einvoice_catalog_06_form" sequence="11"/>
+		<menuitem action="account_base_it.action_account_main_parameter_form" id="menu_action_account_main_parameter_form" sequence="12"/>
+		<menuitem action="account_base_it.action_account_fiscal_year_uit_form" id="menu_action_account_fiscal_year_uit_form" sequence="13"/>
+	</menuitem>
+</odoo>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="logistic_root"
+              name="Logistic"
+              sequence="11"
+              />
+        <menuitem id="logistic_operations"
+              parent="logistic_root" 
+              name="Operations"
+              sequence="1"
+              />
+        <menuitem id="logistic_reports"
+              parent="logistic_root" 
+              name="Reports"
+              sequence="2"
+              />
+        <menuitem id="logistic_settings"
+              parent="logistic_root" 
+              name="Settings"
+              sequence="3"
+              />
+        <record id="view_logistic_point_form" model="ir.ui.view">
+            <field name="name">logistic.point.form</field>
+            <field name="model">logistic.point</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <group>
+                        <field name="warehouse_ids"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_logistic_point_tree" model="ir.ui.view">
+            <field name="name">logistic.point.tree</field>
+            <field name="model">logistic.point</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_logistic_point_search" model="ir.ui.view">
+            <field name="name">logistic.point.search</field>
+            <field name="model">logistic.point</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_logistic_point_tree" model="ir.actions.act_window">
+            <field name="name">Logistic points</field>
+            <field name="res_model">logistic.point</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create an expedition point.
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_logistic_point_tree" id="menu_action_logistic_point_tree" parent="logistic_settings"/>
+
+
+        <record id="view_logistic_route_form" model="ir.ui.view">
+            <field name="name">logistic.route.form</field>
+            <field name="model">logistic.route</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="logistic_point_departure_id"/>
+                        <field name="logistic_point_delivery_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_logistic_route_tree" model="ir.ui.view">
+            <field name="name">logistic.route.tree</field>
+            <field name="model">logistic.route</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="logistic_point_departure_id"/>
+                    <field name="logistic_point_delivery_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_logistic_route_search" model="ir.ui.view">
+            <field name="name">logistic.route.search</field>
+            <field name="model">logistic.route</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_logistic_route_tree" model="ir.actions.act_window">
+            <field name="name">Logistic Route</field>
+            <field name="res_model">logistic.route</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create an expedition route.
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_logistic_route_tree" id="menu_action_logistic_route_tree" parent="logistic_settings"/>
+
+        <record id="view_logistic_expedition_form" model="ir.ui.view">
+            <field name="name">logistic.expedition.form</field>
+            <field name="model">logistic.expedition</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_open" states="draft" string="Authorize" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,done,cancel" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                                <field name="route_id"/>
+                            </group>
+                            <group>
+                                <field name="date_order"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="tracking_code"/>
+                            </group>
+                            <group>
+                                <field name="vehicle_id"/>
+                                <field name="driver_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="picking_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="despatch_id"/>
+                                    <field name="origin"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" name="expedition_totals">
+                                <field name="net_weight"/>
+                                <field name="gross_weight"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_logistic_expedition_tree" model="ir.ui.view">
+            <field name="name">logistic.expedition.tree</field>
+            <field name="model">logistic.expedition</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_order"/>
+                    <field name="route_id"/>
+                    <field name="net_weight"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_logistic_expedition_search" model="ir.ui.view">
+            <field name="name">logistic.expedition.search</field>
+            <field name="model">logistic.expedition</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_logistic_expedition_tree" model="ir.actions.act_window">
+            <field name="name">Expedition</field>
+            <field name="res_model">logistic.expedition</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="logistic.view_logistic_expedition_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create an expedition.
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_logistic_expedition_tree" id="menu_action_logistic_expedition_tree" parent="logistic_operations"/>
+    </data>
+</odoo>

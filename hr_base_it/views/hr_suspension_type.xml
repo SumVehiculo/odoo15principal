@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_suspension_type_form" model="ir.ui.view">
+		<field name="name">hr.suspension.type.form</field>
+		<field name="model">hr.suspension.type</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="description"/>
+							<field name="code"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="hr_suspension_type_tree" model="ir.ui.view">
+		<field name="name">hr.suspension.type.tree</field>
+		<field name="model">hr.suspension.type</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" optional="show"/>
+				<field name="description" optional="show"/>
+				<field name="code" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_hr_suspension_type" model="ir.actions.act_window">
+		<field name="name">Tipo de Suspension (Tabla 21)</field>
+		<field name="res_model">hr.suspension.type</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Tipo de Suspension aqui
+			</p>
+		</field>
+	</record>
+</odoo>

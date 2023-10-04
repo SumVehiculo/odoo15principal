@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_payroll_structure_form_inherit" model="ir.ui.view">
+		<field name="name">hr.payroll.structure.form.inherit</field>
+		<field name="model">hr.payroll.structure</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//sheet" position="before">
+				<header>
+					<button name="get_wizard" string="Generar Estructuras" type="object" class="oe_highlight"/>
+				</header>
+			</xpath>
+			<xpath expr="//notebook/page[2]" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//notebook/page[@name='salary_rules']/field/tree/field[@name='partner_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//notebook/page[@name='other_input']/field/tree" position="inside">
+				<field name="struct_ids" widget="many2many_tags" optional="show"/>
+			</xpath>
+			<xpath expr="//notebook" position="inside">
+				<page name="worked_days" string="Worked Days">
+					<field name="wd_types_ids" context="{'tree_view_ref':'hr_base_it.hr_payslip_worked_days_type_tree'}"/>
+				</page>
+			</xpath>
+		</field>
+	</record>
+	<record id="hr_payroll_structure_list_inherit" model="ir.ui.view">
+		<field name="name">hr.payroll.structure.list.inherit</field>
+		<field name="model">hr.payroll.structure</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payroll_structure_list_view"/>
+		<field name="arch" type="xml">
+			<field name="country_id" position="after">
+				<field name="company_id" optional="show" groups="base.group_multi_company"/>
+			</field>
+		</field>
+	</record>
+<!--	<record id="hr_payroll.action_view_hr_payroll_structure_list_form" model="ir.actions.act_window">-->
+<!--        <field name="context">{}</field>-->
+<!--    </record>-->
+</odoo>

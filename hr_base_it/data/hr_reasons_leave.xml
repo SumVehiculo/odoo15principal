@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.reasons.leave' id="reasons_01">
+			<field name='code'>01</field>
+			<field name='description'>RENUNCIA</field>
+			<field name='name'>RENUNCIA</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_02">
+			<field name='code'>02</field>
+			<field name='description'>RENUNCIA CON INCENTIVOS</field>
+			<field name='name'>RENUNCIA CON INCENTIVOS</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_03">
+			<field name='code'>03</field>
+			<field name='description'>DESPIDO O DESTITUCIÓN</field>
+			<field name='name'>DESPIDO O DESTITUCIÓN</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_04">
+			<field name='code'>04</field>
+			<field name='description'>CESE COLECTIVO</field>
+			<field name='name'>CESE COLECTIVO</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_05">
+			<field name='code'>05</field>
+			<field name='description'>JUBILACIÓN</field>
+			<field name='name'>JUBILACIÓN</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_06">
+			<field name='code'>06</field>
+			<field name='description'>INVALIDEZ ABSOLUTA PERMANENTE</field>
+			<field name='name'>INVALIDEZ ABSOLUTA PERMAN</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_07">
+			<field name='code'>07</field>
+			<field name='description'>TERMINACIÓN DE LA OBRA O SERVICIO, CUMPLIMIENTO CONDICIÓN RESOLUTORIA O VENCIMIENTO DEL PLAZO</field>
+			<field name='name'>TERMIN OBRA/SERV, CUMPLIM CONDIC RESOL. O VENC PLAZO</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_08">
+			<field name='code'>08</field>
+			<field name='description'>MUTUO DISENSO</field>
+			<field name='name'>MUTUO DISENSO</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_09">
+			<field name='code'>09</field>
+			<field name='description'>FALLECIMIENTO</field>
+			<field name='name'>FALLECIMIENTO</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_10">
+			<field name='code'>10</field>
+			<field name='description'>SUSPENSIÓN DE LA PENSIÓN (1)</field>
+			<field name='name'>SUSPENSIÓN DE LA PENSIÓN</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_11">
+			<field name='code'>11</field>
+			<field name='description'>REASIGNACIÓN SERVIDOR DE LA ADMINISTRACIÓN PÚBLICA(2)</field>
+			<field name='name'>REASIGNACIÓN</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_12">
+			<field name='code'>12</field>
+			<field name='description'>PERMUTA SERVIDOR DE LA ADMINISTRACIÓN PÚBLICA (2)</field>
+			<field name='name'>PERMUTA</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_13">
+			<field name='code'>13</field>
+			<field name='description'>TRANSFERENCIA SERVIDOR DE LA ADMINISTRACIÓN PÚBLICA (2)</field>
+			<field name='name'>TRANSFERENCIA</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_14">
+			<field name='code'>14</field>
+			<field name='description'>BAJA POR SUCESIÓN EN POSICIÓN DEL EMPLEADOR</field>
+			<field name='name'>BAJA POR SUC. EN POSIC DEL EMPLEADOR</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_15">
+			<field name='code'>15</field>
+			<field name='description'>EXTINCIÓN O LIQUIDACIÓN DEL EMPLEADOR</field>
+			<field name='name'>EXTINCIÓN O LIQUID. DEL EMPLEADOR</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_16">
+			<field name='code'>16</field>
+			<field name='description'>OTROS MOTIVOS DE CADUCIDAD DE LA PENSIÓN (1)</field>
+			<field name='name'>OTR MOTIV CADUC PENSIÓN</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_17">
+			<field name='code'>17</field>
+			<field name='description'>NO SE INICIÓ LA RELACIÓN LABORAL O PRESTACIÓN EFECTIVA DE SERVICIOS</field>
+			<field name='name'>NO SE INICIÓ LA REL.  LABORAL O PREST. DE SERVICIOS</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_18">
+			<field name='code'>18</field>
+			<field name='description'>LÍMITE DE EDAD 70 AÑOS</field>
+			<field name='name'>LÍMITE DE EDAD 70 AÑOS</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_19">
+			<field name='code'>19</field>
+			<field name='description'>OTRAS CAUSALES RÉGIMEN PÚBLICO GENERAL SERVICIO CIVIL - LEY 30057</field>
+			<field name='name'>OTRAS CAUSALES - LEY 30057</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_20">
+			<field name='code'>20</field>
+			<field name='description'>INHABILITACIÓN PARA EL EJERCICIO PROFESIONAL O DE LA FUNCIÓN PÚBLICA POR MÁS DE TRES MESES - LEY 30057</field>
+			<field name='name'>INHABILITAC. PARA EJERC. PROF. O FUNC. PÚB. POR MÁS DE 3 MESES - LEY 30057</field>
+		</record>
+		<record model='hr.reasons.leave' id="reasons_99">
+			<field name='code'>99</field>
+			<field name='description'>SIN VÍNCULO LABORAL - HABILITADO PARA PDT PLAME</field>
+			<field name='name'>SVL -HABILITADO PARA PDT PLAME (3)</field>
+		</record>
+	</data>
+</odoo>

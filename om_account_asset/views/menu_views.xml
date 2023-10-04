@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- Top menu item -->
+		<menuitem name="Activos"
+            id="menu_asset_it"
+            groups="group_account_asset_it_user"
+            web_icon="om_account_asset,static/description/icon.png"
+            sequence="35"/>
+
+		<menuitem id="menu_asset_asset_it" 
+				name="Activos" 
+				parent="menu_asset_it" 
+				sequence="1"/>
+		
+		<menuitem id="menu_asset_reports_it" 
+				name="Informes" 
+				parent="menu_asset_it" 
+				sequence="10"/>
+
+		<menuitem id="menu_asset_settings_it" 
+				name="Configuración" 
+				parent="menu_asset_it" 
+				sequence="20"/>
+	</data>
+</odoo>

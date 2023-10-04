@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<menuitem id="menu_account_report_it" 
+						name="Libros Contables" 
+						parent="account.menu_finance_reports" 
+						sequence="101"/>
+		
+		<menuitem id="menu_account_worksheet" 
+				  name="Estados Financieros Peruanos" 
+				  parent="account.menu_finance_reports" 
+				  sequence="102"/>
+	</data>
+</odoo>
