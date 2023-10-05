@@ -46,8 +46,9 @@ class stock_picking(models.Model):
 
     def write(self,vals):
         res = super(stock_picking, self).write(vals)
-        for i in self:
-            i.verify_op_sunat_transito()
+        if "picking_type_id" in vals or "location_dest_id" in vals or "location_id":
+            for i in self:
+                i.verify_op_sunat_transito()
         return res
 
     @api.model
