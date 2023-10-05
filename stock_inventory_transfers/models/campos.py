@@ -22,6 +22,12 @@ class stock_location(models.Model):
 
 
 
+class stock_picking_type(models.Model):
+    _inherit = 'stock.picking.type'
+    usar_en_recepciondetransito = fields.Boolean(string="Usar en recepcion de Transito",copy=False)
+
+
+
 
 class stock_move(models.Model):
     _inherit = 'stock.move'
@@ -35,7 +41,7 @@ class stock_picking(models.Model):
     origin_transit_id = fields.Many2one("stock.picking",string="Transito Origen",copy=False)
     destiny_transit_id = fields.One2many("stock.picking","origin_transit_id",string="Transitos Creados",copy=False)
 
-    @api.onchange("picking_type_id","location_dest_id")
+    @api.onchange("picking_type_id","location_dest_id","location_id")
     def verify_op_sunat_transito(self):
         for i in self:
             if i.location_dest_id.use_in_transit or i.location_id.use_in_transit:
@@ -46,7 +52,7 @@ class stock_picking(models.Model):
 
     def write(self,vals):
         res = super(stock_picking, self).write(vals)
-        if "picking_type_id" in vals or "location_dest_id" in vals or "location_id":
+        if "picking_type_id" in vals or "location_dest_id" in vals or "location_id" in vals:
             for i in self:
                 i.verify_op_sunat_transito()
         return res
@@ -54,9 +60,8 @@ class stock_picking(models.Model):
     @api.model
     def create(self,vals):
         t = super(stock_picking,self).create(vals)
-        if "picking_type_id" in vals or "location_dest_id" in vals or "location_id":
-            for i in self:
-                i.verify_op_sunat_transito()
+        for i in t:
+            i.verify_op_sunat_transito()
         return t
 
 
@@ -66,7 +71,7 @@ class stock_picking(models.Model):
         t = super(stock_picking,self).button_validate()
         for i in self:
             if i.location_dest_id.use_in_transit:
-                type_operation = self.env["stock.picking.type"].sudo().search([("default_location_src_id","=",i.location_dest_id),("company_id","in",[i.env.company.id,False])])
+                type_operation = self.env["stock.picking.type"].sudo().search([("usar_en_recepciondetransito","=",True),("default_location_src_id","=",i.location_dest_id.id),("company_id","in",[i.env.company.id,False])])
                 if len(type_operation)>1:
                     raise UserError("Multiples Tipos de Operación con ubicacion origen de transito a almacen")
                 if len(type_operation)==0:
