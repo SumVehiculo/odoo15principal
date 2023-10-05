@@ -83,7 +83,8 @@ class stock_picking(models.Model):
                     "picking_type_id":type_operation.id,
                     "location_id":type_operation.default_location_src_id.id,
                     "location_dest_id":type_operation.default_location_dest_id.id,
-                    "origin_transit_id":i.id
+                    "origin_transit_id":i.id,
+                    "state":"draft"
                 }
                 pick_destino = self.env["stock.picking"].sudo().create(vls_create)
 
@@ -101,6 +102,7 @@ class stock_picking(models.Model):
                         "location_id":type_operation.default_location_src_id.id,
                         "location_dest_id":type_operation.default_location_dest_id.id,
                         "origin_move_id":lin.id,
+                        "state":"draft"
                     }
                     self.env["stock.move"].sudo().create(vls_move)
                 pick_destino.sudo().action_confirm()
@@ -109,7 +111,7 @@ class stock_picking(models.Model):
                     move = self.env["stock.move"].sudo().search([("origin_move_id","=",sml.move_id.id),("picking_id","=",pick_destino.id)])
                     if len(move)!=1:
                         #en teoria nunca deberia pasar
-                        raise UserError()
+                        raise UserError("No se encontro un movimiento origen")
                     vls_move_line = {
                         "product_id":sml.product_id.id,
                         "move_id":move.id,
@@ -122,7 +124,7 @@ class stock_picking(models.Model):
                         "lot_name":sml.lot_name if not sml.lot_id.id else False,
                         "product_uom_id":sml.product_uom_id.id,
                     }
-                self.env["stock.move.line"].sudo().create(vls_move_line)
+                    self.env["stock.move.line"].sudo().create(vls_move_line)
         return t
 
 
