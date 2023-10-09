@@ -7,16 +7,16 @@ class stock_location(models.Model):
 
     use_in_transit = fields.Boolean(string="Se usa en Transito",copy=False)
 
-    @api.constrains("use_in_transit","company_id")
-    def _check_field_model(self):
-        for i in self:
-            if i.use_in_transit:
-                if i.company_id.id:
-                    for srch in i.env["stock.location"].sudo().search([("company_id","in",[False,i.company_id.id]),("use_in_transit","=",True),("id","!=",i.id)]):
-                        raise UserError("Solo Puede Existir 1 ubicacion para usar en transito")
-                else:
-                    for srch in i.env["stock.location"].sudo().search([("use_in_transit","=",True),("id","!=",i.id)]):
-                        raise UserError("Solo Puede Existir 1 ubicacion para usar en transito")
+#    @api.constrains("use_in_transit","company_id")
+#    def _check_field_model(self):
+#        for i in self:
+#            if i.use_in_transit:
+#                if i.company_id.id:
+#                    for srch in i.env["stock.location"].sudo().search([("company_id","in",[False,i.company_id.id]),("use_in_transit","=",True),("id","!=",i.id)]):
+#                        raise UserError("Solo Puede Existir 1 ubicacion para usar en transito")
+#                else:
+#                    for srch in i.env["stock.location"].sudo().search([("use_in_transit","=",True),("id","!=",i.id)]):
+#                        raise UserError("Solo Puede Existir 1 ubicacion para usar en transito")
 
 
 
@@ -37,11 +37,11 @@ class stock_move(models.Model):
 
 class stock_picking(models.Model):
     _inherit = 'stock.picking'
-    op_sunat_transito = fields.Boolean(string="OP Sunat Transito")
+    op_sunat_transito = fields.Boolean(string="OP Sunat Transito",compute="verify_op_sunat_transito",store=True)
     origin_transit_id = fields.Many2one("stock.picking",string="Transito Origen",copy=False)
     destiny_transit_id = fields.One2many("stock.picking","origin_transit_id",string="Transitos Creados",copy=False)
 
-    @api.onchange("picking_type_id","location_dest_id","location_id")
+    @api.depends("picking_type_id","location_dest_id","location_dest_id.use_in_transit","location_id","location_id.use_in_transit")
     def verify_op_sunat_transito(self):
         for i in self:
             if i.location_dest_id.use_in_transit or i.location_id.use_in_transit:
@@ -49,20 +49,6 @@ class stock_picking(models.Model):
             else:
                 i.op_sunat_transito = False
 
-
-    def write(self,vals):
-        res = super(stock_picking, self).write(vals)
-        if "picking_type_id" in vals or "location_dest_id" in vals or "location_id" in vals:
-            for i in self:
-                i.verify_op_sunat_transito()
-        return res
-
-    @api.model
-    def create(self,vals):
-        t = super(stock_picking,self).create(vals)
-        for i in t:
-            i.verify_op_sunat_transito()
-        return t
 
 
 
