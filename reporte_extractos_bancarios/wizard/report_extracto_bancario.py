@@ -90,15 +90,15 @@ class report_extracto_bancario(models.TransientModel):
 				saldo_i = line['balance_start']
 			else:
 				saldo_f = line['balance_end_real']
-			
-			worksheet.write(x,0,line['date'] if line['date'] else '',formats['dateformat'])
-			worksheet.write(x,1,line['payment_ref'] if line['payment_ref'] else '',formats['especial1'])
-			worksheet.write(x,2,line['partner_id'] if line['partner_id'] else '',formats['especial1'])
-			worksheet.write(x,3,line['type_document_id'] if line['type_document_id'] else '',formats['especial1'])
-			worksheet.write(x,4,line['ref'] if line['ref'] else '',formats['especial1'])
+			worksheet.write(x,0,line['id'] if line['id'] else '',formats['especial1'])
+			worksheet.write(x,1,line['date'] if line['date'] else '',formats['dateformat'])
+			worksheet.write(x,2,line['payment_ref'] if line['payment_ref'] else '',formats['especial1'])
+			worksheet.write(x,3,line['partner_id'] if line['partner_id'] else '',formats['especial1'])
+			worksheet.write(x,4,line['type_document_id'] if line['type_document_id'] else '',formats['especial1'])
+			worksheet.write(x,5,line['ref'] if line['ref'] else '',formats['especial1'])
 			worksheet.write(x,5,line['catalog_payment_id'] if line['catalog_payment_id'] else '',formats['especial1'])
-			worksheet.write(x,6,line['amount'] if line['amount'] else '0.00',formats['numberdos'])
-			worksheet.write(x,7,'SI' if line['is_reconciled'] else 'NO',formats['especial1'])
+			worksheet.write(x,7,line['amount'] if line['amount'] else '0.00',formats['numberdos'])
+			worksheet.write(x,8,'SI' if line['is_reconciled'] else 'NO',formats['especial1'])
 					
 			#tot += line.amount if line.amount else 0
 			x += 1
@@ -108,7 +108,7 @@ class report_extracto_bancario(models.TransientModel):
 		worksheet.write(4,4,str(saldo_f),formats['numberdosespecial'])
 		
 		
-		widths = [10,50,46,10,23,20,15,18]
+		widths = [10,10,50,46,10,23,20,15,18]
 		worksheet = ReportBase.resize_cells(worksheet,widths)
 		workbook.close()
 
@@ -119,14 +119,15 @@ class report_extracto_bancario(models.TransientModel):
 
 	def get_header(self):
 	
-		HEADERS = ['FECHA','DESCRIPCIÓN','PARTNER','TD','REFERENCIA','MEDIO DE PAGO','MONTO','CONCILIADO']
+		HEADERS = ['ID','FECHA','DESCRIPCIÓN','PARTNER','TD','REFERENCIA','MEDIO DE PAGO','MONTO','CONCILIADO']
 	
 		return HEADERS
 
 
 	def _get_sql(self):
 		
-		sql = """SELECT am.date,
+		sql = """SELECT absl.id as id,
+						am.date,
 						abs.balance_start,
 						abs.balance_end_real,  
 						absl.payment_ref, 
@@ -145,6 +146,7 @@ class report_extracto_bancario(models.TransientModel):
 					WHERE (am.date BETWEEN '%s' AND '%s')
 							AND abs.company_id = %d
 							AND abs.journal_id = %d
+       					order by am.date
 				""" % (	self.date_from.strftime('%Y/%m/%d'),
 						self.date_to.strftime('%Y/%m/%d'),
 						self.company_id.id,
