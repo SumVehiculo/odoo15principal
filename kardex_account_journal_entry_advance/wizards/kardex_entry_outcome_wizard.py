@@ -31,7 +31,7 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 		
 		self.env.cr.execute("""DELETE FROM kardex_entry_outcome_book""")
 		self.env.cr.execute("""
-		INSERT INTO kardex_entry_outcome_book (fecha,tipo,serie,numero,doc_almacen,ruc,empresa,tipo_op,tipo_name, producto, default_code, unidad, qty, amount, cta_debe, cta_haber, origen, destino, almacen, analytic_account_id) 
+		INSERT INTO kardex_entry_outcome_book (fecha,tipo,serie,numero,doc_almacen,ruc,empresa,tipo_op,tipo_name, producto, default_code, unidad, qty, amount, cta_debe, cta_haber, origen, destino, almacen, analytic_account_id,analytic_tag_id) 
 		("""+self._get_sql(self.period.date_start,self.period.date_end,self.company_id.id)+""")""")
 		if self.type_show == 'pantalla':
 			return {
@@ -70,7 +70,7 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 		worksheet.set_tab_color('blue')
 
 		HEADERS = [u'FECHA','TIPO','SERIE',u'NÚMERO',u'DOC. ALMACÉN',u'RUC',u'EMPRESA',u'T. OP.',u'PRODUCTO',u'CODIGO PRODUCTO',u'UNIDAD','CANTIDAD','COSTO',
-		'CTA DEBE','CTA HABER',u'UBICACIÓN ORIGEN',u'UBICACIÓN DESTINO',u'ALMACÉN',u'CTA ANALÍTICA']
+		'CTA DEBE','CTA HABER',u'UBICACIÓN ORIGEN',u'UBICACIÓN DESTINO',u'ALMACÉN',u'CTA ANALÍTICA','ETIQUETA ANALITICA']
 
 		worksheet = ReportBase.get_headers(worksheet,HEADERS,0,0,formats['boldbord'])
 		x=1
@@ -97,9 +97,10 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 			worksheet.write(x,16,line.destino if line.destino else '',formats['especial1'])
 			worksheet.write(x,17,line.almacen if line.almacen else '',formats['especial1'])
 			worksheet.write(x,18,line.analytic_account_id.name if line.analytic_account_id else '',formats['especial1'])
+			worksheet.write(x,19,line.analytic_tag_id.name if line.analytic_tag_id else '',formats['especial1'])
 			x += 1
 
-		widths = [10,6,7,9,16,12,48,8,41,20,9,11,14,15,15,33,33,11,22]
+		widths = [10,6,7,9,16,12,48,8,41,20,9,11,14,15,15,33,33,11,22,20]
 
 		worksheet = ReportBase.resize_cells(worksheet,widths)
 		workbook.close()
@@ -110,7 +111,7 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 	def make_invoice(self):
 		self.env.cr.execute("""DELETE FROM kardex_entry_outcome_book""")
 		self.env.cr.execute("""
-		INSERT INTO kardex_entry_outcome_book (fecha,tipo,serie,numero,doc_almacen,ruc,empresa,tipo_op,tipo_name, producto, default_code, unidad, qty, amount, cta_debe, cta_haber, origen, destino, almacen, analytic_account_id) 
+		INSERT INTO kardex_entry_outcome_book (fecha,tipo,serie,numero,doc_almacen,ruc,empresa,tipo_op,tipo_name, producto, default_code, unidad, qty, amount, cta_debe, cta_haber, origen, destino, almacen, analytic_account_id,analytic_tag_id) 
 		("""+self._get_sql(self.period.date_start,self.period.date_end,self.company_id.id)+""")""")
 		self.env.cr.execute("""select tipo_op from kardex_entry_outcome_book
 		group by tipo_op""")
@@ -135,9 +136,9 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 			'period_id': self.period.id})
 		
 		for top in res:
-			self.env.cr.execute("""select tipo_name,cta_debe, sum(round(coalesce(amount,0),2)) as debit from kardex_entry_outcome_book
+			self.env.cr.execute("""select tipo_name,cta_debe,analytic_account_id,analytic_tag_id, sum(round(coalesce(amount,0),2)) as debit from kardex_entry_outcome_book
 			where tipo_op = '%s'
-			group by tipo_name,cta_debe"""%top['tipo_op'])
+			group by tipo_name,almacen,cta_debe,analytic_account_id,analytic_tag_id"""%top['tipo_op'])
 			dic_debit = self.env.cr.dictfetchall()
 			lineas = []
 			for elem in dic_debit:
@@ -146,12 +147,14 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 					'name':elem['tipo_name'],
 					'debit': elem['debit'],
 					'credit': 0,
+					'analytic_account_id': elem['analytic_account_id'],
+					'analytic_tag_ids': [(6, 0, [elem['analytic_tag_id']])] if elem['analytic_tag_id'] else None,
 					'company_id': self.company_id.id,
 				})
 				lineas.append(vals)
-			self.env.cr.execute("""select tipo_name,cta_haber,SUM(round(coalesce(amount,0),2)) as credit from kardex_entry_outcome_book
+			self.env.cr.execute("""select tipo_name,cta_haber,analytic_account_id,analytic_tag_id,SUM(round(coalesce(amount,0),2)) as credit from kardex_entry_outcome_book
 			where tipo_op = '%s'
-			group by tipo_name,cta_haber"""%top['tipo_op'])
+			group by tipo_name,almacen,cta_haber,analytic_account_id,analytic_tag_id"""%top['tipo_op'])
 			dic_credit = self.env.cr.dictfetchall()
 			for elem in dic_credit:
 				vals = (0,0,{
@@ -159,6 +162,8 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 					'name': elem['tipo_name'],
 					'debit': 0,
 					'credit': elem['credit'],
+					'analytic_account_id': elem['analytic_account_id'],
+					'analytic_tag_ids': [(6, 0, [elem['analytic_tag_id']])] if elem['analytic_tag_id'] else None,
 					'company_id': self.company_id.id,
 				})
 				lineas.append(vals)
@@ -208,14 +213,19 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 				GKV.unidad,
 				GKV.salida as qty,
 				round(GKV.credit,6) as amount,
-				ei12.account_id as cta_debe,
+				CASE WHEN ei12.category_account = TRUE THEN (
+				CASE WHEN vst_output.account_id IS NOT NULL THEN vst_output.account_id 
+				WHEN vst_output.category_id IS NOT NULL AND vst_output.account_id IS NULL THEN NULL
+				ELSE (SELECT account_id FROM vst_property_stock_account_output WHERE company_id = {company} AND category_id IS NULL LIMIT 1) END
+				) ELSE ei12.account_id END as cta_debe,
 				CASE WHEN vst_valuation.account_id IS NOT NULL THEN vst_valuation.account_id 
 				ELSE (SELECT account_id FROM vst_property_stock_valuation_account WHERE company_id = {company} AND category_id IS NULL LIMIT 1)
 				END AS cta_haber,
 				GKV.origen,
 				GKV.destino,
 				GKV.almacen,
-				SM.analytic_account_id
+				SM.analytic_account_id,
+				SM.analytic_tag_id
 				FROM get_kardex_v({date_start_s},{date_end_s},(select array_agg(id) from product_product),(select array_agg(id) from stock_location),{company}) GKV
 				LEFT JOIN stock_move SM on SM.id = GKV.stock_moveid
 				LEFT JOIN stock_picking SP on  SP.id = SM.picking_id
@@ -229,6 +239,9 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 				LEFT JOIN (SELECT category_id,account_id
 				FROM vst_property_stock_valuation_account 
 				WHERE company_id = {company}) vst_valuation ON vst_valuation.category_id = PT.categ_id
+				LEFT JOIN (SELECT category_id,account_id
+				FROM vst_property_stock_account_output 
+				WHERE company_id = {company}) vst_output ON vst_output.category_id = PT.categ_id
 				WHERE (GKV.fecha::date BETWEEN '{date_ini}' AND '{date_end}') and coalesce(GKV.credit,0) > 0)T
 	
 		""".format(
