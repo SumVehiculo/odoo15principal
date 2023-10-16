@@ -25,3 +25,4 @@ class KardexEntryOutcomeBook(models.Model):
 	destino = fields.Char(string=u'Ubicación Destino')
 	almacen = fields.Char(string=u'Almacén')
 	analytic_account_id = fields.Many2one('account.analytic.account',string=u'Cuenta Analítica')
+	analytic_tag_id = fields.Many2one('account.analytic.tag',string=u'Etiqueta Analítica')

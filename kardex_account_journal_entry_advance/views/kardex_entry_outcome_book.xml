@@ -26,6 +26,7 @@
 					<field name="destino"/>
 					<field name="almacen"/>
 					<field name="analytic_account_id"/>
+					<field name="analytic_tag_id"/>
                 </tree>
             </field>
         </record>

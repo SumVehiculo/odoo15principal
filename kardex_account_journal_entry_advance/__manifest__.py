@@ -3,7 +3,7 @@
 	'name': 'Detalle de Movimientos en Asientos Contables',
 	'category': 'stock',
 	'author': 'ITGRUPO,Glenda Julia Merma Mayhua',
-	'depends': ['account_fields_it','kardex_fields_it','kardex_fisico_it','kardex_valorizado_cuentas_contables_it'],
+	'depends': ['account_fields_it','kardex_fields_it','kardex_fisico_it','kardex_valorizado_cuentas_contables_it','kardex_account_journal_entry'],
 	'version': '1.0',
 	'description':"""
 	- Detalle de Movimientos en Asientos Contables
