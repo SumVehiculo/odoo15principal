@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+
+    <record id="view_form_query_ruc_sunat_wizard_it" model="ir.ui.view">
+        <field name="name">query.ruc.sunat.wizard.it.view.form</field>
+        <field name="model">query.ruc.sunat.wizard.masiva.it</field>
+        <field name="arch" type="xml">
+            <form string="CONSULTA MASIVA">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name_file" invisible="1"/>
+                            <field name="document_file" filename="name_file" string="Excel"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="download_template" string="Descargar Plantilla" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+
+                    <button name="up_data" string="Cargar" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+            o
+                    <button string="Cancelar" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_query_ruc_sunat_masiva_it" model="ir.actions.act_window">
+        <field name="name">Consulta Masiva</field>
+        <field name="res_model">query.ruc.sunat.wizard.masiva.it</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="menu_action_query_ruc_sunat_multi_it" parent="query_ruc_sunat_it.parent_menu_query_ruc_sunat_it" action="action_query_ruc_sunat_masiva_it" sequence="2" />
+
+</odoo>

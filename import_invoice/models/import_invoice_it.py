@@ -6,6 +6,7 @@ import xlrd
 from datetime import date, datetime
 from odoo.exceptions import UserError
 from odoo import models, fields, api, _
+import base64
 
 class ImportInvoiceIt(models.Model):
 	_name = "import.invoice.it"
@@ -414,6 +415,48 @@ class ImportInvoiceIt(models.Model):
 		i_date = datetime.strptime(date, DATETIME_FORMAT).date()
 		return i_date
 
+	#NUEVA FUNCIONALIDAD
+	def get_excel_not_partner(self,partner):			
+		import io
+		from xlsxwriter.workbook import Workbook
+		ReportBase = self.env['report.base']
+
+		direccion = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).dir_create_file
+
+		if not direccion:
+			raise UserError(u'No existe un Directorio Exportadores configurado en Parametros Principales de Contabilidad para su Compañía')
+
+		namefile = 'partners_missing.xlsx'
+		
+		workbook = Workbook(direccion + namefile)
+		workbook, formats = ReportBase.get_formats(workbook)
+
+		import importlib
+		import sys
+		importlib.reload(sys)
+
+		worksheet = workbook.add_worksheet("PARTNER")
+
+		worksheet.set_tab_color('blue')
+
+		HEADERS = [u'NRO PARTNER']
+
+		worksheet = ReportBase.get_headers(worksheet,HEADERS,0,0,formats['boldbord'])
+		x=1
+  
+		for line in partner:
+			worksheet.write(x,0,line if line else '',formats['especial1'])
+			x += 1
+
+		widths = [15]
+
+		worksheet = ReportBase.resize_cells(worksheet,widths)
+		workbook.close()
+
+		f = open(direccion + namefile, 'rb')
+		return self.env['popup.it'].get_file(u'Partner no encontrados.xlsx',base64.encodebytes(b''.join(f.readlines())))
+
+	
 	def import_invoice(self):
 		if not self.type_import:
 			raise UserError('Falta escoger Tipo')
@@ -431,6 +474,24 @@ class ImportInvoiceIt(models.Model):
 			sheet = workbook.sheet_by_index(0)
 		except Exception:
 			raise UserError(_("Please select an XLS file or You have selected invalid file"))
+		
+  		#NUEVA FUNCIONALIDAD
+		partner = []
+		for row_vali in range(sheet.nrows):			
+			if row_vali <= 0:
+				continue
+			else:
+				valid = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_vali)))
+				partner_obj = self.env['res.partner']
+				
+				if str(valid[1]):
+					s=str(valid[1])
+					vat = s.rstrip('0').rstrip('.') if '.' in s else s
+					partner_search = partner_obj.search([('vat', '=', str(vat)),('parent_id','=',False)],limit=1)
+					if not partner_search:
+						partner.append(vat)
+		if partner:
+			return self.get_excel_not_partner(partner)
 
 		for row_no in range(sheet.nrows):
 			val = {}

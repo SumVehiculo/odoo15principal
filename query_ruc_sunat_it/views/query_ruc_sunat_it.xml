@@ -5,9 +5,11 @@
         <field name="model">query.ruc.sunat.it</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="name"/>
                 <field name="numero_ruc" />
                 <field name="estado_contribuyente"/>
                 <field name="condicion_contribuyente"/>
+                <field name="type_partner"/>
             </tree>
         </field>
     </record>
@@ -19,11 +21,12 @@
             <form>
                 <header>
                     <button string="Consultar RUC" type="object" name="query_ruc" class="btn-primary"/>
-		    <button string="Crear Partner" type="object" name="get_create_partner" class="btn-primary" attrs="{'invisible':[('numero_ruc', '=', False)]}"/>
+                    <button string="Crear Partner" type="object" name="get_create_partner" class="btn-primary" attrs="{'invisible':[('numero_ruc', '=', False)]}"/>
                 </header>
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="type_partner"/>                        
                         <field name="numero_ruc"/>
                         <field name="tipo_contribuyente"/>
                         <field name="nombre_comercial"/>
@@ -51,28 +54,48 @@
     </record>
 
     <record id="action_query_ruc_sunat_it" model="ir.actions.act_window">
-        <field name="name">Consulta RUC</field>
+        <field name="name">Consulta Individual</field>
         <field name="res_model">query.ruc.sunat.it</field>
-        <field name="view_mode">tree,form</field><field name="help" type="html">
-			  <p class="o_view_nocontent_smiling_face">
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_tree_query_ruc_sunat_it"/>
+
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
 				Crea tu primer registro de Consulta RUC aqui
-			  </p>
-			</field>
+            </p>
+        </field>
     </record>
 
-    <menuitem
-        id="parent_menu_query_ruc_sunat_it"
-        name="Consulta RUC"
-        sequence="22"
-        web_icon="query_ruc_sunat_it,static/src/img/icon.png"
-        groups="query_ruc_sunat_it.group_query_ruc_sunat_it"
-    />
+    <menuitem id="parent_menu_query_ruc_sunat_it" name="Consulta RUC" sequence="22" web_icon="query_ruc_sunat_it,static/src/img/icon.png" groups="query_ruc_sunat_it.group_query_ruc_sunat_it" />
 
-    <menuitem 
-        id="menu_action_query_ruc_sunat_it"
-        parent="query_ruc_sunat_it.parent_menu_query_ruc_sunat_it"
-        action="action_query_ruc_sunat_it"
-        sequence="1"
-    />
+    <menuitem id="menu_action_query_ruc_sunat_it" parent="query_ruc_sunat_it.parent_menu_query_ruc_sunat_it" action="action_query_ruc_sunat_it" sequence="1" />
+
+    <record model="ir.actions.server" id="action_query_validate">
+        <field name="name">Consulta RUC</field>
+        <field name="model_id" ref="model_query_ruc_sunat_it"/>
+        <field name="binding_model_id" ref="model_query_ruc_sunat_it" />
+        <field name="state">code</field>
+        <field name="code">action = records.query_ruc()</field>
+    </record>
+    <record model="ir.actions.server" id="action_query_create_partner">
+        <field name="name">Crear Partner</field>
+        <field name="model_id" ref="model_query_ruc_sunat_it"/>
+        <field name="binding_model_id" ref="model_query_ruc_sunat_it" />
+        <field name="state">code</field>
+        <field name="code">action = records.get_create_partner_masiva()</field>
+    </record>
+    <record id="view_tree_query_ruc_sunat_it_editable" model="ir.ui.view">
+    <field name="name">query.ruc.sunat.it.view.tree.editable</field>
+    <field name="model">query.ruc.sunat.it</field>
+    <field name="arch" type="xml">
+        <tree editable="bottom">
+            <field name="name" readonly="1"/>
+            <field name="numero_ruc" readonly="1"/>
+            <field name="estado_contribuyente" readonly="1"/>
+            <field name="condicion_contribuyente" readonly="1"/>
+            <field name="type_partner"/>
+        </tree>
+    </field>
+</record>
 
 </odoo>

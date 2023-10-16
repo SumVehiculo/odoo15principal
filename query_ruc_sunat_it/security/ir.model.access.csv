@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_query_ruc_sunat_it_group,query_ruc_sunat_it_user,model_query_ruc_sunat_it,base.group_user,1,1,1,1
+access_query_ruc_sunat_wizard_masiva_it_group,query_ruc_sunat_wizard_masiva_it_user,model_query_ruc_sunat_wizard_masiva_it,base.group_user,1,1,1,1

@@ -9,9 +9,11 @@
         'base', 'query_ruc_dni'
     ],
     'data': [ 
+        'data/attachment_sample.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/query_ruc_sunat_it.xml',
+        'wizard/query_ruc_sunat_wizard_it.xml'
     ],
     'auto_install': False,
     'application': True,
