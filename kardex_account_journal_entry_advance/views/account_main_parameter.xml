@@ -5,7 +5,7 @@
 		<field name="model">account.main.parameter</field>
 		<field name="inherit_id" ref="kardex_account_journal_entry.view_account_main_parameter_form_inherit_kardex"/>
 		<field name="arch" type="xml">
-			<xpath expr="//notebook/page[@name='kardex']/group[@name='params']" position="replace">
+			<xpath expr="//notebook/page[@name='kardex']" position="inside">
 				<group string="Detalle Ingresos/Salidas" name="params">
 					<group>
 						<field name="type_operation_outproduction"/>
