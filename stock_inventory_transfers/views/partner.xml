@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record model="ir.ui.view" id="view_location_form_inherit">
+        <field name="name">view_location_form.inherit</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='return_location']" position="after">
+				      <field name="use_in_transit"/>
+            </xpath>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="view_picking_form_inherit">
+        <field name="name">view_picking_form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="kardex_valorado_it.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tc']" position="after">
+				      <field name="op_sunat_transito" readonly="1" force_save="1"/>
+            </xpath>
+        </field>
+      </record>
+
+
+
+      <record model="ir.ui.view" id="vpicktree_inherit">
+        <field name="name">vpicktree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='json_popover']" position="after">
+				      <field name="op_sunat_transito" readonly="1"/>
+            </xpath>
+        </field>
+      </record>
+
+
+
+
+      <record model="ir.ui.view" id="view_picking_internal_search_inherit">
+        <field name="name">view_picking_internal_search.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+				      <filter string="Transito" name="op_sunat_transito" domain="[]" context="{'group_by': 'op_sunat_transito'}"/>
+            </xpath>
+        </field>
+      </record>
+
+
+      <record model="ir.ui.view" id="view_picking_type_form_inherit">
+        <field name="name">view_picking_type_form.inherit</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='use_existing_lots']" position="after">
+				      <field name="usar_en_recepciondetransito"/>
+            </xpath>
+        </field>
+      </record>
+
+
+
+
+
+
+
+
+
+
+
+</odoo>
