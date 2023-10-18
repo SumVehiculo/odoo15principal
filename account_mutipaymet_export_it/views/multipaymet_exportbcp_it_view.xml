@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_multipaymet_exportbcp_config_tree">
+			<field name="name">multipaymet.exportbcp.config.tree</field>
+			<field name="model">multipaymet.exportbcp.config</field>
+			<field name="arch" type="xml">
+				<tree string="Configuración para exportador del BCP" >
+                    <field name="pen_currency_id"  required="1"/>
+					<field name="dolar_currency_id"  required="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_multipaymet_exportbcp_config_form">
+			<field name="name">multipaymet.exportbcp.config.form</field>
+			<field name="model">multipaymet.exportbcp.config</field>
+			<field name="arch" type="xml">
+				<form string="Configuración para exportador del BCP" >
+                    <sheet>				
+						<div class="oe_title">
+							<h1>
+								<div> Configuración para exportador del BCP</div>
+							</h1>
+						</div>
+						<group string="Código de monedas">
+							<field name="pen_currency_id"  required="1"/>
+							<field name="dolar_currency_id"  required="1"/>
+						</group>
+						<notebook>
+							<page string="Códigos de Documentos">
+								<field name="docsids" editable="bottom" create="1" >
+									<tree editable="bottom" create="1" >
+										<field name="base_doc"  required="1"/>
+										<field name="cod_exporta"  required="1"/>
+									</tree>
+								</field>
+							</page>
+                        </notebook>
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="config_bcp_action" model="ir.actions.act_window">
+			<field name="name">Conf. Export. BCP</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">multipaymet.exportbcp.config</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem 
+			id="menu_config_bcp" 
+			name="Conf. Export. BCP" 
+			sequence="99" 
+			action="config_bcp_action" 
+			parent="account_menu_other_configurations.menu_other_configurations"
+			/>
+	
+		<record id="multipayment_advance_it_sunat_view_inherit" model="ir.ui.view">
+			<field name="name">multipayment.advance.it.sunat.inherit</field>
+			<field name="model">multipayment.advance.it</field>
+			<field name="inherit_id" ref="account_multipayment_advance_it.multipayment_advance_it_form_view"/>
+			<field name="arch" type="xml">
+				<data>
+	                <xpath expr="//header" position="inside">
+	                    <button name="make_data_bcp" string="Exportar BCP" type="object" class="oe_highlight"/>
+	                    <button name="make_data_bcp_excel" string="Exportar BCP Excel" type="object" class="oe_highlight"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<record id="res_partner_bank_bcp_view_inherit" model="ir.ui.view">
+			<field name="name">res.partner.bank.form.bcp.inherit</field>
+			<field name="model">res.partner.bank</field>
+			<field name="inherit_id" ref="base.view_partner_bank_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<field name="company_id" position="after">
+						<field name="acc_type_bcp"/>
+						<field name="activo"/>
+					</field>
+					
+				</data>
+			</field>
+		</record>
+
+	</data>
+</odoo>
