@@ -56,7 +56,7 @@ class stock_picking(models.Model):
     def button_validate(self):
         t = super(stock_picking,self).button_validate()
         for i in self:
-            if i.location_dest_id.use_in_transit:
+            if i.location_dest_id.use_in_transit and i.state=="done":
                 type_operation = self.env["stock.picking.type"].sudo().search([("usar_en_recepciondetransito","=",True),("default_location_src_id","=",i.location_dest_id.id),("company_id","in",[i.env.company.id,False])])
                 if len(type_operation)>1:
                     raise UserError("Multiples Tipos de Operación con ubicacion origen de transito a almacen")
