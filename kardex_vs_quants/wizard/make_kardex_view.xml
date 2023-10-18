@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="group_kardex_vs_quant" model="res.groups">
+        <field name="name">Ver Reporte de Quant vs Reporte</field>
+        </record>
+        
+
+
+        <record id="kardex_vs_quant_view_tree" model="ir.ui.view">
+            <field name="name">kardex.vs.quant.view.tree</field>
+            <field name="model">kardex.vs.quant.view</field>
+            <field name="arch" type="xml">
+                <tree string="Kardex Vs Quant Descuadre" create="0" delete="0">
+                    <field name="motivo" readonly="1" />
+                    <field name="product_id" readonly="1" />
+                    <field name="lot_id" readonly="1" />
+                    <field name="location_id" readonly="1" />
+                    <field name="qty_odoo" readonly="1" />
+                    <field name="qty_reservado_odoo" readonly="1" />
+                    <field name="qty_kardex" readonly="1" />
+                    <field name="qty_reservado_kardex" readonly="1" />
+                 </tree>
+             </field>
+        </record>
+
+        <record id="kardex_vs_quant_wizard_form" model="ir.ui.view">
+            <field name="name">kardex.vs.quant.wizard.form</field>
+            <field name="model">kardex.vs.quant.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Kardex vs Quant Wizard" >
+                    <group>
+                    </group>
+                    <footer>
+                        <button name="mostrar_diferencia" string="Mostrar Diferencias" type="object" class="oe_highlight"  onlyRead="1"/>
+                        or
+                        <button name="actualizar_diferencia" string="Corregir Quants" type="object" class="oe_highlight"  onlyRead="1"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+                    </footer>
+                 </form>
+             </field>
+        </record>
+
+        <record id="kardex_vs_quant_wizard_action" model="ir.actions.act_window">
+            <field name="name">Kardex Vs Quant</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">kardex.vs.quant.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Kardex Vs Quants" 
+                  id="kardex_vs_quant_wizard_menu"
+                  parent="kardex_fisico_it.kardex_main_menu" 
+                  action="kardex_vs_quant_wizard_action"
+                  groups="kardex_vs_quants.group_kardex_vs_quant"
+                  sequence="3" />
+
+    </data>
+</odoo>
