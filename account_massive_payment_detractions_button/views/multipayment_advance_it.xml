@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="multipayment_advance_it_form_view_inherit_button_txt" model="ir.ui.view">
+		<field name="name">multipayment.advance.it.inherit.button.txt</field>
+		<field name="model">multipayment.advance.it</field>
+		<field name="inherit_id" ref="account_massive_payment_detractions_it.multipayment_advance_it_form_view_inherit"/>
+		<field name="arch" type="xml">
+			<data>
+                <xpath expr="//header/button[@name='get_pay_detractions_wizard']" position="attributes">
+					<attribute name="attrs">{'invisible': ['|',('is_detraction_payment', '=', False),('txt_emited','=',True)]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='amount']" position="after">
+					<field name="can_edit_txt_emited" invisible="1"/>
+					<field name="txt_emited" attrs="{'readonly':[('can_edit_txt_emited','=',False)]}"/>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>
