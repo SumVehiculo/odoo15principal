@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="can_edit_txt_emited_detraction_multipayment_group" model="res.groups">
+			<field name="name">Aprobar emision de TXT detraccion (mas de una vez)</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+	</data>
+</odoo>
