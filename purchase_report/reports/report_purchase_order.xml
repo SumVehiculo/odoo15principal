@@ -3,7 +3,7 @@
 
     <data>
 
-        <template id="inherit_orde_compra_origin_pr" inherit_id="purchase.report_purchaseorder_document">
+        <template id="inherit_order_purchase_new" inherit_id="purchase.report_purchaseorder_document">
             <xpath expr="//t[@t-if='o.dest_address_id']" position="replace"></xpath>
             <xpath expr="//div[@class='page']" position="replace">                
                 <center><h2 t-if="o.state in ['draft', 'sent', 'to approve']">SOLICITUD DE COMPRA N° <span t-field="o.name"/></h2></center>
