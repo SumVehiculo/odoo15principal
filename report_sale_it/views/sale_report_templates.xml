@@ -12,37 +12,22 @@
                                                      alt="Logo" style="width: 150px; top: 0 ; vertical-align: baseline;"
                                                      class="mt-0 pt-0"
                                                 />
-hola
+                                                <center>CSI - Av Alfonso Ugarte N 521 - Arequipa - Tlf.<br/>
+                                                (054)281728 - Fax (054)201288 </center>
+
                                 </div>
                                 <div class="col-8">
-                                    <span class="font-weight-bold" t-field="doc.company_id.name"/><br/>
-                                    <span class="text-left" t-if="doc.company_id.vat">R.U.C. </span><span t-if="doc.company_id.vat" t-field="doc.company_id.vat"/><br t-if="doc.company_id.vat"  />
-                                                <!-- <span class="text-left">Direcciòn Fiscal: </span> -->
-                                    <span class="text-left "  t-if="doc.company_id.partner_id.contact_address" t-field="doc.company_id.partner_id.contact_address"/><br t-if="doc.partner_id.contact_address"  />
-                                    <span class="text-right" t-if="doc.company_id.email" t-field="doc.company_id.email"/><br  t-if="doc.company_id.email" />
-                                    <span class="text-right" t-if="doc.company_id.phone" t-field="doc.company_id.phone"/><br  t-if="doc.company_id.phone" />
-
+                                    <h1>
+                                                       <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                                                           <span t-if="doc.state not in ['draft','sent']">PEDIDO</span>
+                                                           <span t-if="doc.state in ['draft','sent']" >PRESUPUESTO</span>
+                                                       </t>
+                                    </h1>
                                 </div>
 
 
                             </div>
                             <div class="col-4 pt-0" >
-                                <div class="text-center p-2 font-weight-bold"
-                                     style="font-size:20px; border: 1px solid gray; background-color :  rgba(188,205,197,0.30)">
-                                                    <p>
-                                                       <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
-                                                           <span t-if="doc.state not in ['draft','sent']"  >ORDEN Nº:  </span>
-                                                           <span t-if="doc.state in ['draft','sent']" >COTIZACIÓN Nº: </span>
-                                                       </t>
-                                                       <t t-if="env.context.get('proforma', False) or is_pro_forma">
-                                                           <span>Pro-Forma Invoice # </span>
-                                                       </t>
-                                                        <br/>
-                                                    </p>
-                                                    <p style="font-size:30px">
-                                                       <span t-field="doc.name"/>
-                                                    </p>
-                                </div>
                             </div>
                         </div>
             </div>
@@ -57,7 +42,7 @@ hola
                         <div  class="col-7" >
                             <div  class="row" >
                                 <div  class="col-3 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">Cliente:</span> </p>
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Cliente - Contacto:</span> </p>
                                 </div>
                                 <div  class="col-9 " >
                                     <p  class="m-0 p-1"><span  t-field="doc.partner_id.name"/></p>
@@ -65,15 +50,7 @@ hola
                             </div>
                             <div  class="row" >
                                 <div  class="col-3 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">RUC:</span> </p>
-                                </div>
-                                <div  class="col-9 " >
-                                    <p  class="m-0 p-1"><span  t-field="doc.partner_id.vat"/></p>
-                                </div>
-                            </div>
-                            <div  class="row" >
-                                <div  class="col-3 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">Dirección:</span> </p>
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Lugar:</span> </p>
                                 </div>
                                 <div  class="col-9 " >
                                     <p  class="m-0 p-1"><span  t-field="doc.partner_id.contact_address"/></p>
@@ -84,7 +61,15 @@ hola
                         <div class="col-5">
                             <div  class="row" >
                                 <div  class="col-5 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">Fecha Validez: </span></p>
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Nro. PPTO: </span></p>
+                                </div>
+                                <div  class="col-7 " >
+                                    <p  class="m-0 p-1"><span  t-field="doc.name" /></p>
+                                </div>
+                            </div>
+                            <div  class="row" >
+                                <div  class="col-5 " >
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Aprobación: </span></p>
                                 </div>
                                 <div  class="col-7 " >
                                     <p  class="m-0 p-1"><span  t-field="doc.validity_date" /></p>
@@ -96,41 +81,6 @@ hola
                                 </div>
                                 <div  class="col-7 " >
                                     <p  class="m-0 p-1"><span  t-field="doc.date_order"  t-options='{"format": "dd/MM/yyyy"}' /></p>
-                                </div>
-                            </div>
-                            <div  class="row" >
-                                <div  class="col-5 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">Plazos de Pago: </span></p>
-                                </div>
-                                <div  class="col-7 " >
-                                    <p  class="m-0 p-1"><span  t-field="doc.payment_term_id.name" /></p>
-                                </div>
-                            </div>
-                            <div  class="row" >
-                                <div  class="col-5 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">Vendedor: </span></p>
-                                </div>
-                                <div  class="col-7 " >
-                                    <p  class="m-0 p-1"><span  t-field="doc.user_id.name"/></p>
-                                </div>
-                            </div>
-                            <div  class="row" >
-                                <div  class="col-5 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">Telf : </span></p>
-                                </div>
-                                <div  class="col-7 " >
-                                    <p  class="m-0 p-1"><span  t-field="doc.user_id.phone"/>
-                                        <span class="ml-2 mr-2" t-if="not doc.user_id.mobile" >/</span>
-                                        <span  t-field="doc.user_id.mobile"/>
-                                    </p>
-                                </div>
-                            </div>
-                            <div  class="row" t-if="doc.user_id.email">
-                                <div  class="col-5 " >
-                                    <p  class="m-0 p-1"><span class="font-weight-bold">E-mail : </span></p>
-                                </div>
-                                <div  class="col-7 " >
-                                    <p  class="m-0 p-1"><span  t-field="doc.user_id.email"/></p>
                                 </div>
                             </div>
 
