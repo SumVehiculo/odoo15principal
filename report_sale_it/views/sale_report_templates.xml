@@ -151,7 +151,7 @@
                         <div class="col-6">                                    
                             <center>
                                 Atentamente,<br/>
-                                <t t-field="doc.user_id" />
+                                <span t-field="doc.user_id" />
                             </center>
                         </div>
                         <div class="col-6" style="border-top:2px black;border-left:2px black;border-right:2px black;border-bottom:2px black;">                                    
