@@ -151,9 +151,6 @@
                             <th name="th_description" class="text-center">Descripción</th>
                             <th name="th_um" class="text-right">UM</th>
                             <th name="th_quantity" class="text-right">Cant.</th>
-                                groups="product.group_discount_per_so_line">
-                                <span>Desc.%</span>
-                            </th>
                             <!--<th name="th_taxes" class="text-right">Impuestos</th> -->
                             <th name="th_subtotal" class="text-right">
                                 Total
