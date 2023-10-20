@@ -11,14 +11,20 @@
                             <div class="col-12 pt-0 row">
                                 <div class="col-6">
                                     <center><img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
-                                                     alt="Logo" style="width: 250px; top: 0 ; vertical-align: baseline;"
+                                                     alt="Logo" style="width: 200px; top: 0 ; margin_right: -30px;vertical-align: baseline;"
                                                      class="mt-0 pt-0"
                                                 /></center>
                                                 
 
                                 </div>
                                 <div class="col-8">
-                                   <table>
+                                   
+                                </div>
+
+
+                            </div>
+                            <div class="col-4 pt-0" >
+                                    <table>
                                         <tbody>
                                             <tr>
                                                 <td><b>OC</b></td>
@@ -34,11 +40,6 @@
                                             </tr>
                                         </tbody>
                                    </table>
-                                </div>
-
-
-                            </div>
-                            <div class="col-4 pt-0" >
                             </div>
                         </div>
             </div>
@@ -48,9 +49,9 @@
             <div class="article o_report_layout_standard" style="font-family: Arial;font-size:12px">
                 <div class="page">
                     <div class="oe_structure"/>
-                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']">SOLICITUD DE COMPRA N° <span t-field="doc.name"/></h2></center>
-                        <center><h2 t-if="doc.state in ['purchase', 'done']">ORDEN DE COMPRA N° <span t-field="doc.name"/></h2></center>
-                        <center><h2 t-if="doc.state == 'cancel'">ORDEN DE COMPRA CANCELADA N° <span t-field="doc.name"/></h2></center>
+                        <center><b><h2 t-if="doc.state in ['draft', 'sent', 'to approve']">SOLICITUD DE COMPRA N° <span t-field="doc.name"/></h2></b></center>
+                        <center><b><h2 t-if="doc.state in ['purchase', 'done']">ORDEN DE COMPRA N° <span t-field="doc.name"/></h2></b></center>
+                        <center><b><h2 t-if="doc.state == 'cancel'">ORDEN DE COMPRA CANCELADA N° <span t-field="doc.name"/></h2></b></center>
                         <table>
                             <tbody>
                                 <tr>    
@@ -58,17 +59,17 @@
                                     <td style="width: 80%" colspan='3'><b>: </b>  <span t-field="doc.partner_id.name"/></td>
                                 </tr>
                                 <tr>    
-                                    <td style="width: 20%">RUC</td>
+                                    <td style="width: 20%"><b>RUC</b></td>
                                     <td style="width: 80%" colspan='3'><b>: </b>  <span t-field="doc.partner_id.vat"/></td>
                                 </tr>
                                 <tr>    
-                                    <td style="width: 20%">DIRECCIÓN</td>
-                                    <td style="width: 30%"><b>: </b>  <span t-field="doc.partner_id.street"/></td>
-                                    <td style="width: 20%">TELÉFONO</td>
-                                    <td style="width: 30%"><b>: </b>  <span t-field="doc.partner_id.phone"/></td>
+                                    <td style="width: 20%"><b>DIRECCIÓN</b></td>
+                                    <td style="width: 50%"><b>: </b>  <span t-field="doc.partner_id.street"/></td>
+                                    <td style="width: 10%"><b>TELÉFONO</b></td>
+                                    <td style="width: 20%"><b>: </b>  <span t-field="doc.partner_id.phone"/></td>
                                 </tr>
                                 <tr>    
-                                    <td style="width: 20%">CONTACTO</td>
+                                    <td style="width: 20%"><b>CONTACTO</td>
                                     <td style="width: 80%" colspan='3'>:</td>
                                 </tr>
                             </tbody>
@@ -79,7 +80,7 @@
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                         <thead style="display: table-row-group">
                             <tr>
-                                <th style="  width: 10% !important;">N°</th>
+                                <th style="  width: 5% !important;">N°</th>
                                 <th class="text-right">CANTIDAD</th>
                                 <th class="text-right">UND MED</th>
                                 <th class="text-right">CODIGO</th>
@@ -130,7 +131,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td colspan=''>SUBTOTAL</td>
+                            <td colspan=''><b>SUBTOTAL</b></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -139,7 +140,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td colspan=''>IGV</td>
+                            <td colspan=''><b>IGV</b></td>
                             <td></td>
                         </tr>
                         <tr>
@@ -148,7 +149,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td colspan=''>TOTAL</td>
+                            <td colspan=''><b>TOTAL</b></td>
                             <td></td>
                         </tr>
                     </tfooter>
@@ -157,21 +158,22 @@
                     <br/>
                     <tbody>
                         <tr>    
-                            <td>MONEDA</td>
+                            <td><b>MONEDA</b></td>
                             <td></td>
                         </tr>
                         <tr>    
-                            <td>OBSERVACIONES</td>
+                            <td><b>OBSERVACIONES</b></td>
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
                 <br/>
+                <br/>
                 <table>
                     <tbody>
                         <tr>    
-                            <td>FACTURAR A NOMBRE DE</td>
-                            <td>:</td>
+                            <td><b>FACTURAR A NOMBRE DE :</b></td>
+                            <td></td>
                         </tr>
                         <tr>    
                             <td>RAZON SOCIAL</td>
@@ -194,7 +196,7 @@
                 <table>
                     <tbody>
                         <tr>    
-                            <td></td>
+                            <td style="witdh: 60%"></td>
                             <td></td>
                             <td>FECHA</td>
                             <td>:</td>
@@ -202,7 +204,11 @@
                        
                     </tbody>
                 </table>
-                <center><h3>ESTIMADOS PROVEEDORES</h3></center>
+                <br/>
+                <br/>
+                <br/>
+                
+                <center><b><h5>ESTIMADOS PROVEEDORES</h5></b></center>
                 <p>Se les informa que la recepción de factura física en Jirón Monterrey N° 341, Interior 302, Urb Chacarilla, Surco.<br/>
                 Tener presente que la factura física y/o electrónica debe contar con el siguiente sustento:<br/>
                 <b>- ORDEN DE COMPRA<br/>
@@ -210,9 +216,9 @@
                 - LA FACTURA DEBE INDICAR EL NÚMERO DE LA ORDEN DE COMPRA.<br/>
                 - GUÍA REMISIÓN DEBIDAMENTE FIRMADA Y SELLADA VALIDANDO LA RECEPCIÓN POR EL PERSONAL DE ALMACÉN DE SUM VEHICULOS.<br/>
                 - LA DESCRIPCIÓN DE LA FACTURA: ITEM, CANTIDAD, PRECIO UNITARIO Y TOTALES DEBEN SER IGUALES A LAS DETALLADAS EN LA ORDEN DE COMMPRA.<br/>
-                - LAS CONDICIONES DE PAGO SE APLICARÁN A PARTIR DE LA FECHA DE RECEPCIÓN A ENTERA SATISFACCIÓN DE LA FACTURA O BOLETA DE VENTA CON EL SUSTENTO INDICADO<br/></b>
+                - LAS CONDICIONES DE PAGO SE APLICARÁN A PARTIR DE LA FECHA DE RECEPCIÓN A ENTERA SATISFACCIÓN DE LA FACTURA O BOLETA DE VENTA CON EL SUSTENTO INDICADO</b>
                 De lunes a viernes de 8:00 a 13:00 o de 14:00 a 17:00 horas.<br/>
-                En caso que la <b>Factura sea electrónica, </b>se debe enviar los formatos PDF y XML, junto con los documentos mencionados anteriormente (en archivos PDF) a los correos:<br/>
+                En caso que la <b>Factura sea electrónica, </b>se debe enviar los formatos PDF y XML, junto con los documentos mencionados anteriormente (en archivos PDF) a los correos:
                 asistente@sum.pe; compras@sum.pe<br/></p>
                  </div>  
                 
