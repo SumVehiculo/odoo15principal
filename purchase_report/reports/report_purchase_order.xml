@@ -21,7 +21,7 @@
                                    <table>
                                         <tbody>
                                             <tr>
-                                                <td><b>OC</b><td>
+                                                <td><b>OC</b></td>
                                                 <td><b>: </b> <span t-field="doc.name"/></td>
                                             </tr>
                                             <tr>
