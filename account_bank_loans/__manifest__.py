@@ -3,7 +3,7 @@
 	'name': 'PRESTAMOS',
 	'category': 'account',
 	'author': 'ITGRUPO, Moises L',
-	'depends': ['account_treasury_it','mail','account_multipayment_supplier_retentions'],
+	'depends': ['account_treasury_it','mail','reporte_extractos_bancarios'],
 	'version': '1.0',
 	'description':"""
 		Modulo de Prestamos

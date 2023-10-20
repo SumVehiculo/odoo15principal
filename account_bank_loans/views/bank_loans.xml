@@ -138,7 +138,7 @@
         <field name="view_mode">tree</field>
     </record>
 
-    <menuitem id="menu_bank_loans_lines" name="Detalle de Prestamos" parent="account_multipayment_supplier_retentions.sub_menu_treasury_reports_it" action="action_bank_loans_lines" sequence="99"/>
+    <menuitem id="menu_bank_loans_lines" name="Detalle de Prestamos" parent="reporte_extractos_bancarios.view_informes_menuitem" action="action_bank_loans_lines" sequence="99"/>
 
 
 
