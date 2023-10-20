@@ -98,7 +98,7 @@
                                 <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
 
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                    <t t-if="not line.display_type">
+                                   
                                         <td></td>
                                         <td  class="text-right" style="padding: 3px !important; margin: 0px !important;" >
                                             <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}'/></td>
@@ -114,10 +114,11 @@
                                                   groups="account.group_show_line_subtotals_tax_excluded"/>
                                             <span t-field="line.price_total"
                                                   t-options='{"widget": "float", "precision": 2}'
-                                                  groups="account.group_show_line_subtotals_tax_included"/></td>
-                                      
+                                                  groups="account.group_show_line_subtotals_tax_included"/>
                                         </td>
-                                    </t>
+                                      
+                                        
+                                  
                                 </tr>
 
                             </t>
