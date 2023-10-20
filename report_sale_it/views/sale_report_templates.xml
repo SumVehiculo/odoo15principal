@@ -7,7 +7,7 @@
                         <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
                             <div class="col-12 pt-0 row">
-                                <div class="col-6">
+                                <div class="col-5">
                                     <center><img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
                                                      alt="Logo" style="width: 150px; top: 0 ; vertical-align: baseline;"
                                                      class="mt-0 pt-0"
@@ -16,7 +16,7 @@
                                                 (054)281728 - Fax (054)201288 </center>
 
                                 </div>
-                                <div class="col-8">
+                                <div class="col-7">
                                     <h1><center>
                                                        <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
                                                            <span t-if="doc.state not in ['draft','sent']">PEDIDO</span>
@@ -25,10 +25,6 @@
                                         </center>
                                     </h1>
                                 </div>
-
-
-                            </div>
-                            <div class="col-4 pt-0" >
                             </div>
                         </div>
             </div>
@@ -87,7 +83,7 @@
                         </div>
                     </div>
 
-
+                    <br/>
                     <table class="table table-sm o_main_table">
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                         <thead style="display: table-row-group">
@@ -142,10 +138,15 @@
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
                     <b>
                             Los Precios No Incluyen Impuestos de Ley<br/>
                             <t t-esc="doc.pricelist_id.currency_id.full_name" />
                     </b>
+                    <br/>
+                    <br/>
+                    <br/>
                     <br/>
                     <div class="row">
                         <div class="col-6">                                    
@@ -154,7 +155,7 @@
                                 <span t-field="doc.user_id" />
                             </center>
                         </div>
-                        <div class="col-6" style="border-top:2px black;border-left:2px black;border-right:2px black;border-bottom:2px black;">                                    
+                        <div class="col-6" style="border-top:2px solid black;border-left:2px solid black;border-right:2px solid black;border-bottom:2px solid black;">                                    
                             <center>                                
                                 APROBACION CLIENTE<br/><br/><br/><br/><br/><br/><br/><br/>
                             </center>
@@ -170,7 +171,27 @@
             </div>
             <div class="footer">
                 <div class="oe_structure"/>
-                Pie pequeño
+                <div class="row">
+                    <div class="col-6">                                    
+                        <b>
+                            Arequipa
+                        </b>
+                    </div>
+                    <div class="col-6">                                    
+                        <b>
+                            Lima
+                        </b>
+                    </div>
+                </div>
+                <div class="row" style="border-top:2px solid black;border-bottom:2px solid black;">
+                    <div class="col-6">                                    
+                            Av. Alfonso Ugarte Nro. 521 - Cercado  (51 54)281728 - (51 54)201288
+                    </div>
+                    <div class="col-6">                                                              
+                            Calle Andres Reyes #204 - San Isidro (51 1)4221440 - (51 1)2213233  
+                    </div>
+                </div>
+                    
             </div>
     </template>
 
@@ -190,12 +211,12 @@
             <field name="page_height">297</field>
             <field name="page_width">210</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">50</field>
+            <field name="margin_top">40</field>
             <field name="margin_bottom">15</field>
             <field name="margin_left">10</field>
             <field name="margin_right">10</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">40</field>
+            <field name="header_spacing">30</field>
             <field name="dpi">90</field>
     </record>
 
