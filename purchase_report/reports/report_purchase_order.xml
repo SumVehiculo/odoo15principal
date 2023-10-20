@@ -69,7 +69,7 @@
                                     <td style="width: 20%"><b>: </b>  <span t-field="doc.partner_id.phone"/></td>
                                 </tr>
                                 <tr>    
-                                    <td style="width: 20%"><b>CONTACTO</td>
+                                    <td style="width: 20%"><b>CONTACTO</b></td>
                                     <td style="width: 80%" colspan='3'>:</td>
                                 </tr>
                             </tbody>
@@ -207,7 +207,7 @@
                 <br/>
                 <br/>
                 <br/>
-                
+
                 <center><b><h5>ESTIMADOS PROVEEDORES</h5></b></center>
                 <p>Se les informa que la recepción de factura física en Jirón Monterrey N° 341, Interior 302, Urb Chacarilla, Surco.<br/>
                 Tener presente que la factura física y/o electrónica debe contar con el siguiente sustento:<br/>
