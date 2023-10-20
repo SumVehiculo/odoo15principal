@@ -36,5 +36,6 @@ class AccountBankStatementLine(models.Model):
 		for i in self:
 			if i.statement_id.journal_id:
 				if i.statement_id.on_limit==True and i.statement_id.journal_id.amount_max>0 and i.statement_id.journal_type=='cash':
-					if i.amount > i.statement_id.journal_id.amount_max:
-						raise UserError("NO SE PERMITE GASTOS MAYORES A %s"%(str(i.statement_id.journal_id.amount_max)))
+					if i.amount<0: 
+						if abs(i.amount) >= i.statement_id.journal_id.amount_max:
+							raise UserError("NO SE PERMITE GASTOS MAYORES A %s"%(str(i.statement_id.journal_id.amount_max)))
