@@ -40,9 +40,9 @@
             <div class="article o_report_layout_standard" style="font-family: Arial;font-size:12px">
                 <div class="page">
                     <div class="oe_structure"/>
-                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']">SOLICITUD DE COMPRA N° <span t-field="o.name"/></h2></center>
-                        <center><h2 t-if="doc.state in ['purchase', 'done']">ORDEN DE COMPRA N° <span t-field="o.name"/></h2></center>
-                        <center><h2 t-if="doc.state == 'cancel'">ORDEN DE COMPRA CANCELADA N° <span t-field="o.name"/></h2></center>
+                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']">SOLICITUD DE COMPRA N° <span t-field="doc.name"/></h2></center>
+                        <center><h2 t-if="doc.state in ['purchase', 'done']">ORDEN DE COMPRA N° <span t-field="doc.name"/></h2></center>
+                        <center><h2 t-if="doc.state == 'cancel'">ORDEN DE COMPRA CANCELADA N° <span t-field="doc.name"/></h2></center>
                         <table>
                             <tbody>
                                 <tr>    
