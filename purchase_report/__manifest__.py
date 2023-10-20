@@ -3,7 +3,7 @@
 	'name': 'Reporte de compras',
 	'category': 'purchase',
 	'author': 'ITGRUPO,berth',
-	'depends': ['purchase_request','purchase'],
+	'depends': ['purchase'],
 	'version': '1.0',
 	'description':"""
 	Reporte solicitudes de requerimiento Interno
