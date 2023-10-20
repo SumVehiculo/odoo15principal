@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <template id="inherit_orde_compra_origin_pr" inherit_id="purchase.report_purchaseorder_document">
+            <xpath expr="//t[@t-if='o.dest_address_id']" position="replace"></xpath>
+            <xpath expr="//div[@class='page']" position="replace">                
+                <center><h2 t-if="o.state in ['draft', 'sent', 'to approve']">SOLICITUD DE COMPRA N° <span t-field="o.name"/></h2></center>
+                <center><h2 t-if="o.state in ['purchase', 'done']">ORDEN DE COMPRA N° <span t-field="o.name"/></h2></center>
+                <center><h2 t-if="o.state == 'cancel'">ORDEN DE COMPRA CANCELADA N° <span t-field="o.name"/></h2></center>
+                <table>
+                    <tbody>
+                        <tr>    
+                            <td>PROVEEDOR</td>
+                            <td colspan='3'>:</td>
+                        </tr>
+                        <tr>    
+                            <td>RUC</td>
+                            <td colspan='3'>:</td>
+                        </tr>
+                        <tr>    
+                            <td>DIRECCIÓN</td>
+                            <td>:</td>
+                            <td>TELÉFONO</td>
+                            <td>:</td>
+                        </tr>
+                        <tr>    
+                            <td>CONTACTO</td>
+                            <td colspan='3'>:</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Por la presente orden, agradecemos dispones de los siguientes artículos según cotización</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>N°</td>
+                            <td>CANTIDAD</td>
+                            <td>UND MED</td>
+                            <td>CODIGO</td>
+                            <td>DESCRIPCIÓN</td>
+                            <td>PRECIO</td>
+                            <td>TOTAL</td>
+                        </tr>
+                    </thead>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <tbody>
+                    <tfooter>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td colspan=''>SUBTOTAL</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td colspan=''>IGV</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td colspan=''>TOTAL</td>
+                            <td></td>
+                        </tr>
+                    </tfooter>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>    
+                            <td>MONEDA</td>
+                            <td></td>
+                        </tr>
+                        <tr>    
+                            <td>OBSERVACIONES</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>    
+                            <td>FACTURAR A NOMBRE DE</td>
+                            <td>:</td>
+                        </tr>
+                        <tr>    
+                            <td>RAZON SOCIAL</td>
+                            <td>:</td>
+                        </tr>
+                        <tr>    
+                            <td>RUC</td>
+                            <td>:</td>
+                        </tr>
+                        <tr>    
+                            <td>DIRECCIÓN</td>
+                            <td>:</td>
+                        </tr>
+                        <tr>    
+                            <td>CONDICIÓN DE PAGO</td>
+                            <td>:</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>    
+                            <td></td>
+                            <td></td>
+                            <td>FECHA</td>
+                            <td>:</td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+                <center><h3>ESTIMADOS PROVEEDORES</h3></center>
+                <p>Se les informa que la recepción de factura física en Jirón Monterrey N° 341, Interior 302, Urb Chacarilla, Surco.</p>
+                <p>Tener presente que la factura física y/o electrónica debe contar con el siguiente sustento:</p>
+                <p>- ORDEN DE COMPRA</p>
+                <p>- NOTA DE INGRESO DEL ALMACÉN, DEBIDAMENTE FIRMADA Y SELLADA VALIDANDO LA RECEPCIÓN DEL PERSONAL DE ALMACÉN DE SUM VEHICULOS.</p>
+                <p>- LA FACTURA DEBE INDICAR EL NÚMERO DE LA ORDEN DE COMPRA.</p>
+                <p>- GUÍA REMISIÓN DEBIDAMENTE FIRMADA Y SELLADA VALIDANDO LA RECEPCIÓN POR EL PERSONAL DE ALMACÉN DE SUM VEHICULOS.</p>
+                <p>- LA DESCRIPCIÓN DE LA FACTURA: ITEM, CANTIDAD, PRECIO UNITARIO Y TOTALES DEBEN SER IGUALES A LAS DETALLADAS EN LA ORDEN DE COMMPRA.</p>
+                <p>- LAS CONDICIONES DE PAGO SE APLICARÁN A PARTIR DE LA FECHA DE RECEPCIÓN A ENTERA SATISFACCIÓN DE LA FACTURA O BOLETA DE VENTA CON EL SUSTENTO INDICADO</p>
+                <p>De lunes a viernes de 8:00 a 13:00 o de 14:00 a 17:00 horas.</p>
+                <p>En caso que la </p><p>Factura sea electrónica, </p><p>se debe enviar los formatos PDF y XML, junto con los documentos mencionados anteriormente (en archivos PDF) a los correos:</p>
+                <p>asistente@sum.pe; compras@sum.pe</p>
+            </xpath>
+        </template>
+    
+    </data>
+    
+
+</odoo>
