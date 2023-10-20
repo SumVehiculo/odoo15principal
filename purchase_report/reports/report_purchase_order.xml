@@ -21,16 +21,12 @@
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td><b>OC</b></td>
-                                                <td><b>: </b> <span t-field="doc.name"/></td>
+                                                <td style=" font-size: 14pt;"><b>OC</b></td>
+                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-field="doc.name"/></td>
                                             </tr>
                                             <tr>
-                                                <td><b>FECHA</b></td>
-                                                <td><b>: </b> <span t-field="doc.date_planned"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>HORA</b></td>
-                                                <td><b>: </b> </td>
+                                                <td  style=" font-size: 14pt;"><b>FECHA</b></td>
+                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-field="doc.date_planned"/></td>
                                             </tr>
                                         </tbody>
                                    </table>
@@ -75,6 +71,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <br/>
                         <p>Por la presente orden, agradecemos dispones de los siguientes artículos según cotización</p>
                     
                     <table class="table table-sm o_main_table">
@@ -83,8 +80,8 @@
                             <tr>
                                 <th style="  width: 5% !important;">N°</th>
                                 <th class="text-right">CANTIDAD</th>
-                                <th class="text-right">UND MED</th>
-                                <th class="text-right">CODIGO</th>
+                                <th class="text-center">UND MED</th>
+                                <th class="text-center">CODIGO</th>
                                 <th style="width: 30%" class="text-center">DESCRIPCIÓN</th>
                                 <th class="text-right">PRECIO</th>
                                 <th class="text-right">TOTAL</th>
@@ -93,15 +90,15 @@
                         <tbody class="sale_tbody">
 
                             <t t-set="current_subtotal" t-value="0"/>
-
+                            <t t-set="counter" t-value="0"/>
                             <t t-foreach="doc.order_line" t-as="line">
-
+                                <t t-set="counter" t-value="counter + 1"/>
                                 <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
                                 <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
 
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                    
-                                        <td  style="  width: 5% !important;"></td>
+                                        <td  style="  width: 5% !important;"><t t-esc="counter"/></td>
                                         <td  class="text-right" >
                                             <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}'/></td>
                                         <td  class="text-center"><span t-field="line.product_uom"/></td>
@@ -109,7 +106,7 @@
                                                 <span t-field="line.product_id.default_code"/>
                                             </t></td>
                                         <td style="width: 30%" class="text-center"><span t-field="line.name"/></td>
-                                        <td></td>
+                                        <td><span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}'/></td>
                                         <td name="td_subtotal" class="text-right o_price_total"  >
                                             <span t-field="line.price_subtotal"
                                                   t-options='{"widget": "float", "precision": 2}'
@@ -133,8 +130,9 @@
                             <td></td>
                             <td></td>
                             <td colspan=''><b>SUBTOTAL</b></td>
-                            <td></td>
+                            <td> <span t-field="doc.amount_untaxed"/></td>
                         </tr>
+                        <t t-set="igv" t-value="doc.amount_total - doc.amount_untaxed"/>
                         <tr>
                             <td></td>
                             <td></td>
@@ -142,7 +140,7 @@
                             <td></td>
                             <td></td>
                             <td colspan=''><b>IGV</b></td>
-                            <td></td>
+                            <td> <span t-esc="igv"/></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -151,7 +149,7 @@
                             <td></td>
                             <td></td>
                             <td colspan=''><b>TOTAL</b></td>
-                            <td></td>
+                            <td> <span t-field="doc.amount_total"/></td>
                         </tr>
                     </tfooter>
                     </table>
@@ -173,7 +171,7 @@
                 <table>
                     <tbody>
                         <tr>    
-                            <td style="width: 10%;"><b>FACTURAR A NOMBRE DE</b></td>
+                            <td style="width: 20%;"><b>FACTURAR A NOMBRE DE</b></td>
                             <td></td>
                         </tr>
                         <tr>    
