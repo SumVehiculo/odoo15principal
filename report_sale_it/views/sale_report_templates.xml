@@ -145,11 +145,6 @@
                     <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                     <thead style="display: table-row-group">
                         <tr>
-                            <th name="th_code_kit" class="text-left"
-                                style="  width: 10% !important;"
-                                t-if="doc.have_code_kit" >
-                                Codigo KIT
-                            </th>
                             <th name="th_code_product"
                                 style="  width: 10% !important;"
                                 class="text-left">Cod. Articulo</th>
@@ -178,13 +173,6 @@
 
                             <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                 <t t-if="not line.display_type">
-                                    <td name="td_code_kit"
-                                        style="padding: 3px !important; margin: 0px !important;"
-                                        t-if="doc.have_code_kit">
-                                        <t t-if="line.producto_kit">
-                                            <span t-field="line.producto_kit.default_code" />
-                                        </t>
-                                    </td>
                                     <td name="td_code_product"
                                         style="padding: 3px !important; margin: 0px !important;"  >
                                         <t t-if="line.product_id">
