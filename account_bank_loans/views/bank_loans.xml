@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_bank_loans_tree" model="ir.ui.view">
+        <field name="name">bank.loans.tree</field>
+        <field name="model">bank.loans</field>
+        <field name="arch" type="xml">
+            <tree string="Prestamos">
+                <field name="name" invisible="1"/>
+                <field name="partner_id"/>
+                <field name="date_loan"/>
+                <field name="rate_int"/>
+                <field name="cuotas"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_bank_loans_form" model="ir.ui.view">
+        <field name="name">bank.loans.form</field>
+        <field name="model">bank.loans</field>
+        <field name="arch" type="xml">
+            <form string="Prestamo">
+                <header>
+                    <button string="Importar Lineas" type="object" name="action_wizard" class="oe_highlight" attrs="{'invisible': [('state','!=','draft')]}"/>
+                    <button string="Validar" type="object" state="done" name="action_post" class="oe_highlight" attrs="{'invisible': [('state','!=','draft')]}"/>
+                    <button string="Asiento Prestamo" type="object" name="create_account" class="oe_highlight" attrs="{'invisible':['|',('state', '!=', 'done'),('move_id', '!=', False)]}"/>
+                    <button string="Volver a Borrador" type="object" name="action_draft" class="oe_highlight" attrs="{'invisible':[('state', '!=', 'done')]}"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" string="Asiento" name="open_move" type="object" icon="fa-book" attrs="{'invisible': [('move_id','=',False)]}"/>
+                        <field name="move_id" invisible="1"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="partner_id" attrs="{'readonly': [('state','=','done')]}"/>
+                            <field name="date_loan" attrs="{'readonly': [('state','=','done')]}"/>
+                            <field name="rate_int" widget="percentage" force_save="1" attrs="{'readonly': [('state','=','done')]}"/>
+                            <field name="cuotas" attrs="{'readonly': [('state','=','done')]}"/>
+                            <field name="nro_comp" attrs="{'readonly': [('state','=','done')]}"/>
+
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="cap_pres" attrs="{'readonly': [('state','=','done')]}"/>
+                            <field name="inters" attrs="{'readonly': [('state','=','done')]}"/>
+                            <field name="amount_total_debt"/>
+                            <field name="bal_init" attrs="{'readonly': [('state','=','done')]}"/>
+                            <field name="amount_total_amort"/>
+                            <field name="amount_debt"/>
+                            <field name="currency_id" />
+                            <field name="tc" attrs="{'readonly': [('state','=','done')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detalle">
+                            <field name="lines_ids" attrs="{'readonly': [('state','=','done')]}">
+                                <tree string="Detalle" editable="bottom">
+                                    <field name="month"/>
+                                    <field name="date"/>
+                                    <field name="amount_amort"/>
+                                    <field name="inters"/>
+                                    <field name="quota"/>
+                                    <field name="amount_debt"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="move_id" invisible="1"/>
+                                    <button string="Asiento Pago" type="object" name="create_account" class="oe_highlight" attrs="{'invisible':[('move_id', '!=', False)]}"/>
+                                    <button name="view_account_move" icon="fa-eye" string="Ver Asiento" type="object" attrs="{'invisible':[('move_id', '=', False)]}"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Contabilidad">
+                            <group>
+                                <group>
+                                    <field name="journal_id" attrs="{'readonly': [('state','=','done')]}"/>
+                                    <field name="interest_account_id" attrs="{'readonly': [('state','=','done')]}"/>
+                                    <field name="expense_account_id" attrs="{'readonly': [('state','=','done')]}"/>
+                                    <field name="due_account_id" attrs="{'readonly': [('state','=','done')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bank_loans" model="ir.actions.act_window">
+        <field name="name">Prestamos</field>
+        <field name="res_model">bank.loans</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_bank_loans" name="Prestamos" parent="account_treasury_it.sub_menu_treasury_it2" action="action_bank_loans" sequence="27" groups="account_bank_loans.group_bank_loans"/>
+
+
+    <record model="ir.actions.server" id="action_genere_account_loans_lines">
+        <field name="name">Generar Asiento</field>
+        <field name="model_id" ref="model_bank_loans_lines"/>
+        <field name="binding_model_id" ref="model_bank_loans_lines" />
+        <field name="state">code</field>
+        <field name="code">action = records.create_account()</field>
+    </record>
+
+    <record id="view_bank_loans_lines_tree" model="ir.ui.view">
+        <field name="name">bank.loans.lines.tree</field>
+        <field name="model">bank.loans.lines</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0">
+                <field name="month"/>
+                <field name="date"/>
+                <field name="amount_amort"/>
+                <field name="inters"/>
+                <field name="quota"/>
+                <field name="amount_debt"/>
+                <field name="company_id" optional="hide"/>
+                <field name="move_id" invisible="0"/>
+                <field name="state" widget="badge" invisible="0" decoration-success="(state == 'posted')" decoration-muted="(state == 'draft')" decoration-danger="(state == 'cancel')"/>
+                <button name="view_account_move" icon="fa-eye" string="Ver Asiento" type="object" attrs="{'invisible':[('move_id', '=', False)]}"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_bank_loans_lines" model="ir.actions.act_window">
+        <field name="name">Detalle de Prestamos</field>
+        <field name="res_model">bank.loans.lines</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_bank_loans_lines" name="Detalle de Prestamos" parent="account_multipayment_supplier_retentions.sub_menu_treasury_reports_it" action="action_bank_loans_lines" sequence="99"/>
+
+
+
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="group_bank_loans" model="res.groups">
+        <field name="name">Tesoreria: Prestamos</field>
+        <field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+    </record>
+
+    <record id="module_bank_loans_rule" model="ir.rule">
+        <field name="name">Prestamos</field>
+        <field name="model_id" ref="model_bank_loans"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="module_bank_loans_lines_rule" model="ir.rule">
+        <field name="name">Prestamos Lineas</field>
+        <field name="model_id" ref="model_bank_loans_lines"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

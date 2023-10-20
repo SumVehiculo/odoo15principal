@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bank_loans_user,Bank Loans User,model_bank_loans,account_bank_loans.group_bank_loans,1,1,1,1
+access_bank_loans_lines_user,Bank Loans Lines User,model_bank_loans_lines,account_bank_loans.group_bank_loans,1,1,1,1
+access_bank_loans_lines_import_admin,Bank Loans Lines Import Admin,model_bank_loans_lines_import,,1,1,1,1

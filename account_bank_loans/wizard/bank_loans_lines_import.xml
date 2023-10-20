@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bank_loans_lines_import_form" model="ir.ui.view">
+        <field name="name">bank.loans.lines.import.form</field>
+        <field name="model">bank.loans.lines.import</field>
+        <field name="arch" type="xml">
+            <form string="Importador Lineas de Prestamos Wizard">
+                <group>
+                    <field name="loan_id" required="1" readonly="1"/>
+                    <field name="file" filename="name_file"/>
+                </group>
+                <footer>
+                    <button name="download_template" string="Descargar Plantilla" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+            		<button name="importar" string="Importar" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+            		o
+            		<button string="Cancelar" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+   
+</odoo>
