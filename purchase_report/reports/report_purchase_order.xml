@@ -25,11 +25,11 @@
                                                 <td><b>: </b> <span t-field="doc.name"/></td>
                                             </tr>
                                             <tr>
-                                                <td><b>FECHA</b><td>
+                                                <td><b>FECHA</b></td>
                                                 <td><b>: </b> <span t-field="doc.date_planned"/></td>
                                             </tr>
                                             <tr>
-                                                <td><b>HORA</b><td>
+                                                <td><b>HORA</b></td>
                                                 <td><b>: </b> </td>
                                             </tr>
                                         </tbody>
