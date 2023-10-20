@@ -6,7 +6,7 @@
 	'description': """Agregar pestaña de ubicacion en productos para que se pueda observar la ubicacion teorica""",
 	'version': '1.0',
 	'summary': 'Modificaciones personalizadas para product',
-	'depends': ['sale_add_dpc','stock'],
+	'depends': ['stock'],
 	'data': [
 		'security/ir.model.access.csv',
 		'views/add_new_ubication.xml',
