@@ -11,7 +11,7 @@
                             <div class="col-12 pt-0 row">
                                 <div class="col-6">
                                     <center><img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
-                                                     alt="Logo" style="width: 200px; top: 0 ; margin_right: -30px;vertical-align: baseline;"
+                                                     alt="Logo" style="width: 200px; top: 0 ; margin-left: -30px;vertical-align: baseline;"
                                                      class="mt-0 pt-0"
                                                 /></center>
                                                 
@@ -49,9 +49,9 @@
             <div class="article o_report_layout_standard" style="font-family: Arial;font-size:12px">
                 <div class="page">
                     <div class="oe_structure"/>
-                        <center><b><h2 t-if="doc.state in ['draft', 'sent', 'to approve']">SOLICITUD DE COMPRA N° <span t-field="doc.name"/></h2></b></center>
-                        <center><b><h2 t-if="doc.state in ['purchase', 'done']">ORDEN DE COMPRA N° <span t-field="doc.name"/></h2></b></center>
-                        <center><b><h2 t-if="doc.state == 'cancel'">ORDEN DE COMPRA CANCELADA N° <span t-field="doc.name"/></h2></b></center>
+                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']"><b>SOLICITUD DE COMPRA N° </b><span t-field="doc.name"/></h2></center>
+                        <center><h2 t-if="doc.state in ['purchase', 'done']"><b>ORDEN DE COMPRA N° </b><span t-field="doc.name"/></h2></center>
+                        <center><h2 t-if="doc.state == 'cancel'"><b>ORDEN DE COMPRA CANCELADA N° </b><span t-field="doc.name"/></h2></center>
                         <table>
                             <tbody>
                                 <tr>    
@@ -100,14 +100,14 @@
 
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                    
-                                        <td></td>
+                                        <td  style="  width: 5% !important;"></td>
                                         <td  class="text-right" style="padding: 3px !important; margin: 0px !important;" >
                                             <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}'/></td>
-                                        <td style="padding: 3px !important; margin: 0px !important;" ><span t-field="line.product_uom"/></td>
+                                        <td ><span t-field="line.product_uom"/></td>
                                         <td><t t-if="line.product_id">
                                                 <span t-field="line.product_id.default_code"/>
                                             </t></td>
-                                        <td style="padding: 3px !important; margin: 0px !important;"  ><span t-field="line.name"/></td>
+                                        <td><span t-field="line.name"/></td>
                                         <td></td>
                                         <td name="td_subtotal" class="text-right o_price_total" style="padding: 3px !important; margin: 0px !important;" >
                                             <span t-field="line.price_subtotal"
@@ -172,7 +172,7 @@
                 <table>
                     <tbody>
                         <tr>    
-                            <td><b>FACTURAR A NOMBRE DE :</b></td>
+                            <td><b>FACTURAR A NOMBRE DE:</b></td>
                             <td></td>
                         </tr>
                         <tr>    
@@ -208,7 +208,7 @@
                 <br/>
                 <br/>
 
-                <center><b><h5>ESTIMADOS PROVEEDORES</h5></b></center>
+                <center><h6><b>ESTIMADOS PROVEEDORES</b></h6></center>
                 <p>Se les informa que la recepción de factura física en Jirón Monterrey N° 341, Interior 302, Urb Chacarilla, Surco.<br/>
                 Tener presente que la factura física y/o electrónica debe contar con el siguiente sustento:<br/>
                 <b>- ORDEN DE COMPRA<br/>
