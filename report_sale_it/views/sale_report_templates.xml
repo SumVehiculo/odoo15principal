@@ -151,7 +151,6 @@
                             <th name="th_description" class="text-center">Descripción</th>
                             <th name="th_um" class="text-right">UM</th>
                             <th name="th_quantity" class="text-right">Cant.</th>
-                            <th name="th_priceunit" class="text-right" t-if="doc.print_price_unit" >P. Unit.</th>
                             <th name="th_discount" t-if="doc.print_desc" class="text-right"
                                 groups="product.group_discount_per_so_line">
                                 <span>Desc.%</span>
@@ -183,11 +182,6 @@
                                     <td name="td_um" style="padding: 3px !important; margin: 0px !important;" ><span t-field="line.product_uom"/></td>
                                     <td name="td_quantity" class="text-right" style="padding: 3px !important; margin: 0px !important;" >
                                         <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}' />
-                                    </td>
-                                    <td name="td_priceunit" class="text-right"
-                                        t-if="doc.print_price_unit"
-                                        style="padding: 3px !important; margin: 0px !important;" >
-                                        <span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}' />
                                     </td>
                                     <td t-if="doc.print_desc"  class="text-right"
                                         style="padding: 3px !important; margin: 0px !important;"
