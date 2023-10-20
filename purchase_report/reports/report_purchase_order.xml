@@ -262,7 +262,7 @@
             <field name="print_report_name">
                 (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
                 'Purchase Order - %s' % (object.name))</field>
-            <field name="binding_model_id" ref="model_purchase_order"/>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
             <field name="binding_type">report</field>
         </record>
 
