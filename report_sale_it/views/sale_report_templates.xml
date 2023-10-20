@@ -3,7 +3,6 @@
     
 
     <template id="report_saleorder_document">
-        <div class="page" style="font-family: Arial;font-size:12px">
             <div class="header">
                         <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
@@ -50,7 +49,7 @@ hola
             
 
 
-            <div class="content" style="font-family: Arial;font-size:12px">
+            <div class="page" style="font-family: Arial;font-size:12px">
                 <div class="oe_structure"/>
 
                 <div class="row pt-2" >
@@ -217,7 +216,6 @@ hola
                 <div class="oe_structure"/>
                 Pie pequeño
             </div>
-        </div>
     </template>
 
     <template id="sale.report_saleorder">
