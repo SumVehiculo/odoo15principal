@@ -165,7 +165,7 @@
                         </tr>
                         <tr>    
                             <td><b>OBSERVACIONES </b></td>
-                            <td>  <span t-field="doc.note"/></td>
+                            <td>  <span t-field="doc.notes"/></td>
                         </tr>
                     </tbody>
                 </table>
