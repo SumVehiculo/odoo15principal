@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ubicacion_view_tree" model="ir.ui.view">
+        <field name="name">ubicacion.view.tree</field>
+        <field name="model">ubicacion</field>
+        <field name="arch" type="xml">
+			<!-- <tree string="Journal Items" create="0" edit="0" delete="0"> -->
+            <tree string="Ubicación de producto">
+                <field name="almacen"/>
+                <field name="name"/>
+				<field name="posicion"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ubicacion_view_form" model="ir.ui.view">
+        <field name="name">ubicacion.view.form</field>
+        <field name="model">ubicacion</field>
+        <field name="arch" type="xml">
+            <form string="Código de operación">
+                <sheet>
+                    <group col="2">
+                        <group col="2">
+                            <field name="almacen"/>
+                        </group>
+                        <group col="2">
+                            <field name="name"/>
+                        </group>
+                    </group>
+                    <group col="2">
+                        <field name="posicion"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ubicacion_action" model="ir.actions.act_window">
+        <field name="name">Código de operación</field>
+        <field name="res_model">ubicacion</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="view_id" ref="project_binnacle_report_view_tree"/> -->
+    </record>
+
+    <!-- <menuitem
+        id="presetancion_ubicacion_menu"
+        name="Presentación"
+        action="product_template_ubication.ubicacion_action"
+        parent="sale.menu_sale_config"
+        sequence="12"
+    /> -->
+
+</odoo>

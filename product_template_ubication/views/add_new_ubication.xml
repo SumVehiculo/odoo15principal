@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="agregar_pestaña_ubicacion" model="ir.ui.view">
+            <field name="name">agregar.pestaña.ubicacion</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='invoicing']" position="after">
+                    <page string="Adicional">
+                        <group>
+                            <field name="tabla_ubicacion" editable="top"/>
+                        </group>
+                        <group>
+                            <field name="cdg_barras_cm"/>
+                            <field name="t_caja_largo"/>
+                            <field name="t_caja_ancho"/>
+                            <field name="t_caja_alto"/>
+                            <field name="p_caja"/>
+                            <field name="c_pack"/>
+                            <field name="conversion_litros"/>
+                            <field name="img" widget="url" invisible="1"/>
+                            <field name="fic_tec" widget="url"/>
+                            <field name="fic_seg" widget="url"/>
+                        </group>
+                    </page>
+                    <!-- <field name="cantidad_disponible" readonly="1"/>
+                    <field name="cantidad_reservada" readonly="1"/> -->
+                </xpath>
+            </field>
+        </record>
+        <record id="agregar_pestaña_ubicacion_product_product" model="ir.ui.view">
+            <field name="name">agregar.pestaña.ubicacion</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='invoicing']" position="after">
+                    <page string="Adicional">
+                        <group>
+                            <field name="tabla_ubicacion" editable="top"/>
+                        </group>
+                        <group>
+                            <field name="cdg_barras_cm"/>
+                            <field name="t_caja_largo"/>
+                            <field name="t_caja_ancho"/>
+                            <field name="t_caja_alto"/>
+                            <field name="p_caja"/>
+                            <field name="c_pack"/>
+                            <field name="conversion_litros"/>
+                            <field name="img" widget="url" invisible="1"/>
+                            <field name="fic_tec" widget="url"/>
+                            <field name="fic_seg" widget="url"/>
+                        </group>
+                    </page>
+                    <!-- <field name="cantidad_disponible" readonly="1"/>
+                    <field name="cantidad_reservada" readonly="1"/> -->
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
