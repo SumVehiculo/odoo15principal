@@ -217,7 +217,7 @@ hola
                 <div class="oe_structure"/>
                 Pie pequeño
             </div>
-        </t>
+        </div>
     </template>
 
     <template id="sale.report_saleorder">
