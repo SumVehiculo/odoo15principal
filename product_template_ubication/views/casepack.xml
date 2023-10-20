@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="casepack_view_tree" model="ir.ui.view">
+        <field name="name">casepack.view.tree</field>
+        <field name="model">casepack</field>
+        <field name="arch" type="xml">
+			<!-- <tree string="Journal Items" create="0" edit="0" delete="0"> -->
+            <tree string="Case Pack">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="casepack_view_form" model="ir.ui.view">
+        <field name="name">casepack.view.form</field>
+        <field name="model">casepack</field>
+        <field name="arch" type="xml">
+            <form string="Código de operación">
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="casepack_action" model="ir.actions.act_window">
+        <field name="name">Case Pack</field>
+        <field name="res_model">casepack</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="view_id" ref="project_binnacle_report_view_tree"/> -->
+    </record>
+
+    <menuitem
+        id="Casepack_menu"
+        name="Case Pack"
+        action="product_template_ubication.casepack_action"
+        parent="sale.menu_sale_config"
+        sequence="12"
+    />
+
+</odoo>
