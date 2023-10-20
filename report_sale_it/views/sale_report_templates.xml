@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+    <template id="report_saleorder_document">
+            <div class="header">
+                        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+                        <div class="row pt-2" style="font-family: Arial;font-size:11px">
+                            <div class="col-12 pt-0 row">
+                                <div class="col-5">
+                                    <center><img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                                                     alt="Logo" style="width: 150px; top: 0 ; vertical-align: baseline;"
+                                                     class="mt-0 pt-0"
+                                                /></center>
+                                                <center>CSI - Av Alfonso Ugarte N 521 - Arequipa - Tlf.<br/>
+                                                (054)281728 - Fax (054)201288 </center>
+
+                                </div>
+                                <div class="col-7">
+                                    <h1><center>
+                                                       <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                                                           <span t-if="doc.state not in ['draft','sent']">PEDIDO</span>
+                                                           <span t-if="doc.state in ['draft','sent']" >PRESUPUESTO</span>
+                                                       </t>
+                                        </center>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            
+
+
+            <div class="article o_report_layout_standard" style="font-family: Arial;font-size:12px">
+                <div class="page">
+                    <div class="oe_structure"/>
+
+                    <div class="row pt-2" >
+                        <div  class="col-7" >
+                            <div  class="row" >
+                                <div  class="col-3 " >
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Cliente - Contacto:</span> </p>
+                                </div>
+                                <div  class="col-9 " >
+                                    <p  class="m-0 p-1"><span  t-field="doc.partner_id.name"/></p>
+                                </div>
+                            </div>
+                            <div  class="row" >
+                                <div  class="col-3 " >
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Lugar:</span> </p>
+                                </div>
+                                <div  class="col-9 " >
+                                    <p  class="m-0 p-1"><span  t-field="doc.partner_id.contact_address"/></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div  class="row" >
+                                <div  class="col-5 " >
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Nro. PPTO: </span></p>
+                                </div>
+                                <div  class="col-7 " >
+                                    <b><p  class="m-0 p-1"><span  t-field="doc.name" /></p></b>
+                                </div>
+                            </div>
+                            <div  class="row" >
+                                <div  class="col-5 " >
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Aprobación: </span></p>
+                                </div>
+                                <div  class="col-7 " >
+                                    <p  class="m-0 p-1"><span  t-field="doc.validity_date" /></p>
+                                </div>
+                            </div>
+                            <div  class="row" >
+                                <div  class="col-5 " >
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Fecha Emisión:</span> </p>
+                                </div>
+                                <div  class="col-7 " >
+                                    <p  class="m-0 p-1"><span  t-field="doc.date_order"  t-options='{"format": "dd/MM/yyyy"}' /></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <br/>
+                    <table class="table table-sm o_main_table">
+                        <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                        <thead style="display: table-row-group">
+                            <tr>
+                                <th name="th_description" class="text-center">Descripción</th>
+                                <th name="th_um" class="text-right">Unid.</th>
+                                <th name="th_quantity" class="text-right">P. Unit. <t t-esc="doc.pricelist_id.currency_id.symbol" /></th>
+                                <th name="th_subtotal" class="text-right">Cantidad </th>
+                                <th name="th_subtotal" class="text-right">Valor  <t t-esc="doc.pricelist_id.currency_id.symbol" /></th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+
+                            <t t-foreach="doc.order_line" t-as="line">
+
+                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="not line.display_type">
+                                        <td name="td_code_product"
+                                            style="padding: 3px !important; margin: 0px !important;"  >
+                                                <span t-field="line.product_id"/>
+                                        </td>
+                                        <td name="td_um" style="padding: 3px !important; margin: 0px !important;" ><span t-field="line.product_uom"/></td>
+                                        <td name="td_priceunit" class="text-right" style="padding: 3px !important; margin: 0px !important;" >
+                                            <span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}' />
+                                        </td>
+                                        <td name="td_quantity" class="text-right" style="padding: 3px !important; margin: 0px !important;" >
+                                            <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}' />
+                                        </td>
+                                        <td name="td_subtotal" class="text-right o_price_total" style="padding: 3px !important; margin: 0px !important;" >
+                                            <span t-field="line.price_subtotal"
+                                                  t-options='{"widget": "float", "precision": 2}'
+                                                  groups="account.group_show_line_subtotals_tax_excluded"/>
+                                            <span t-field="line.price_total"
+                                                  t-options='{"widget": "float", "precision": 2}'
+                                                  groups="account.group_show_line_subtotals_tax_included"/>
+                                        </td>
+                                    </t>
+                                </tr>
+
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div class="clearfix" name="so_total_summary">
+                        <div id="total" class="row" name="total">
+                            <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                                <table class="table table-sm">
+                                    <!-- Tax totals -->
+                                    <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)"/>
+                                    <t t-call="account.document_tax_totals"/>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <b>
+                            Los Precios No Incluyen Impuestos de Ley<br/>
+                            <t t-esc="doc.pricelist_id.currency_id.full_name" />
+                    </b>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6">                                    
+                            <center>
+                                Atentamente,<br/>
+                                <span t-field="doc.user_id" />
+                            </center>
+                        </div>
+                        <div class="col-6" style="border-top:2px solid black;border-left:2px solid black;border-right:2px solid black;border-bottom:2px solid black;">                                    
+                            <center>                                
+                                APROBACION CLIENTE<br/><br/><br/><br/><br/><br/><br/><br/>
+                            </center>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+
+                </div>
+            </div>
+            <div class="footer" style="font-family: Arial;font-size:12px">
+                <div class="oe_structure"/>
+                <div class="row">
+                    <div class="col-6">                                    
+                        <b>
+                            Arequipa
+                        </b>
+                    </div>
+                    <div class="col-6">                                    
+                        <b>
+                            Lima
+                        </b>
+                    </div>
+                </div>
+                <div class="row" style="border-top:2px solid black;border-bottom:2px solid black;">
+                    <div class="col-6">                                    
+                            Av. Alfonso Ugarte Nro. 521 - Cercado  (51 54)281728 - (51 54)201288
+                    </div>
+                    <div class="col-6">                                                              
+                            Calle Andres Reyes #204 - San Isidro (51 1)4221440 - (51 1)2213233  
+                    </div>
+                </div>
+                    
+            </div>
+    </template>
+
+    <template id="sale.report_saleorder">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="report_sale_it.report_saleorder_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="paperformat_id_cp" model="report.paperformat">
+            <field name="name">Purchase Order Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+    </record>
+
+    <report
+            id="sale.action_report_saleorder"
+            string="Quotation / Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="sale.report_saleorder"
+            name="sale.report_saleorder"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+            paperformat="report_sale_it.paperformat_id_cp"
+    />
+
+</odoo>
