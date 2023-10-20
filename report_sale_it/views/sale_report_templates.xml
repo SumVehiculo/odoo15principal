@@ -6,22 +6,23 @@
             <div class="header">
                         <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
-                            <div class="col-8 pt-0 row">
-                                <div class="col-4">
-                                    <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                            <div class="col-12 pt-0 row">
+                                <div class="col-6">
+                                    <center><img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
                                                      alt="Logo" style="width: 150px; top: 0 ; vertical-align: baseline;"
                                                      class="mt-0 pt-0"
-                                                />
+                                                /></center>
                                                 <center>CSI - Av Alfonso Ugarte N 521 - Arequipa - Tlf.<br/>
                                                 (054)281728 - Fax (054)201288 </center>
 
                                 </div>
                                 <div class="col-8">
-                                    <h1>
+                                    <h1><center>
                                                        <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
                                                            <span t-if="doc.state not in ['draft','sent']">PEDIDO</span>
                                                            <span t-if="doc.state in ['draft','sent']" >PRESUPUESTO</span>
                                                        </t>
+                                        </center>
                                     </h1>
                                 </div>
 
@@ -56,7 +57,6 @@
                                     <p  class="m-0 p-1"><span  t-field="doc.partner_id.contact_address"/></p>
                                 </div>
                             </div>
-
                         </div>
                         <div class="col-5">
                             <div  class="row" >
@@ -64,7 +64,7 @@
                                     <p  class="m-0 p-1"><span class="font-weight-bold">Nro. PPTO: </span></p>
                                 </div>
                                 <div  class="col-7 " >
-                                    <p  class="m-0 p-1"><span  t-field="doc.name" /></p>
+                                    <b><p  class="m-0 p-1"><span  t-field="doc.name" /></p></b>
                                 </div>
                             </div>
                             <div  class="row" >
@@ -77,7 +77,7 @@
                             </div>
                             <div  class="row" >
                                 <div  class="col-5 " >
-                                    <p  class="m-0 p-0"><span class="font-weight-bold">Fecha Emisión:</span> </p>
+                                    <p  class="m-0 p-1"><span class="font-weight-bold">Fecha Emisión:</span> </p>
                                 </div>
                                 <div  class="col-7 " >
                                     <p  class="m-0 p-1"><span  t-field="doc.date_order"  t-options='{"format": "dd/MM/yyyy"}' /></p>
@@ -87,52 +87,35 @@
                         </div>
                     </div>
 
-                    <!-- Is there a discount on at least one line? -->
-                    <t t-set="display_discount" t-value="any(l.discount for l in doc.order_line)"/>
 
                     <table class="table table-sm o_main_table">
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                         <thead style="display: table-row-group">
                             <tr>
-                                <th name="th_code_product"
-                                    style="  width: 10% !important;"
-                                    class="text-left">Cod. Articulo</th>
                                 <th name="th_description" class="text-center">Descripción</th>
-                                <th name="th_um" class="text-right">UM</th>
-                                <th name="th_quantity" class="text-right">Cant.</th>
-                                <!--<th name="th_taxes" class="text-right">Impuestos</th> -->
-                                <th name="th_subtotal" class="text-right">
-                                    Total
-                                </th>
+                                <th name="th_um" class="text-right">Unid.</th>
+                                <th name="th_quantity" class="text-right">P. Unit. <t t-esc="doc.pricelist_id.currency_id.symbol" /></th>
+                                <th name="th_subtotal" class="text-right">Cantidad </th>
+                                <th name="th_subtotal" class="text-right">Valor  <t t-esc="doc.pricelist_id.currency_id.symbol" /></th>
                             </tr>
                         </thead>
                         <tbody class="sale_tbody">
 
-                            <t t-set="current_subtotal" t-value="0"/>
-
                             <t t-foreach="doc.order_line" t-as="line">
-
-                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
 
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                     <t t-if="not line.display_type">
                                         <td name="td_code_product"
                                             style="padding: 3px !important; margin: 0px !important;"  >
-                                            <t t-if="line.product_id">
-                                                <span t-field="line.product_id.default_code"/>
-                                            </t>
+                                                <span t-field="line.product_id"/>
                                         </td>
-                                        <td name="td_name" style="padding: 3px !important; margin: 0px !important;"  ><span t-field="line.name"/></td>
                                         <td name="td_um" style="padding: 3px !important; margin: 0px !important;" ><span t-field="line.product_uom"/></td>
+                                        <td name="td_priceunit" class="text-right" style="padding: 3px !important; margin: 0px !important;" >
+                                            <span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}' />
+                                        </td>
                                         <td name="td_quantity" class="text-right" style="padding: 3px !important; margin: 0px !important;" >
                                             <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}' />
                                         </td>
-                                        <!--
-                                        <td name="td_taxes" class="text-right">
-                                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_id))"/>
-                                        </td>
-                                        -->
                                         <td name="td_subtotal" class="text-right o_price_total" style="padding: 3px !important; margin: 0px !important;" >
                                             <span t-field="line.price_subtotal"
                                                   t-options='{"widget": "float", "precision": 2}'
@@ -159,9 +142,30 @@
                             </div>
                         </div>
                     </div>
+                    <b>
+                            Los Precios No Incluyen Impuestos de Ley<br/>
+                            <t t-esc="doc.pricelist_id.currency_id.full_name" />
+                    </b>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6">                                    
+                            <center>
+                                Atentamente,<br/>
+                                <t t-field="doc.user_id" />
+                            </center>
+                        </div>
+                        <div class="col-6" style="border-top:2px black;border-left:2px black;border-right:2px black;border-bottom:2px black;">                                    
+                            <center>                                
+                                APROBACION CLIENTE<br/><br/><br/><br/><br/><br/><br/><br/>
+                            </center>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
 
-                    <div class="oe_structure"/>
-                    <p t-field="doc.note" />
+
                 </div>
             </div>
             <div class="footer">
@@ -186,12 +190,12 @@
             <field name="page_height">297</field>
             <field name="page_width">210</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">60</field>
+            <field name="margin_top">50</field>
             <field name="margin_bottom">15</field>
             <field name="margin_left">10</field>
             <field name="margin_right">10</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">50</field>
+            <field name="header_spacing">40</field>
             <field name="dpi">90</field>
     </record>
 
