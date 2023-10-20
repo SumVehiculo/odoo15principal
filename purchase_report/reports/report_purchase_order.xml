@@ -9,7 +9,7 @@
                         <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
                             <div class="col-12 pt-0 row">
-                                <div class="col-6">
+                                <div class="col-8">
                                     <center><img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
                                                      alt="Logo" style="width: 200px; top: 0 ; margin-left: -30px;vertical-align: baseline;"
                                                      class="mt-0 pt-0"
@@ -17,13 +17,7 @@
                                                 
 
                                 </div>
-                                <div class="col-8">
-                                   
-                                </div>
-
-
-                            </div>
-                            <div class="col-4 pt-0" >
+                                <div class="col-4">
                                     <table>
                                         <tbody>
                                             <tr>
@@ -40,6 +34,12 @@
                                             </tr>
                                         </tbody>
                                    </table>
+                                </div>
+
+
+                            </div>
+                            <div class="col-4 pt-0" >
+                                   
                             </div>
                         </div>
             </div>
@@ -49,9 +49,10 @@
             <div class="article o_report_layout_standard" style="font-family: Arial;font-size:12px">
                 <div class="page">
                     <div class="oe_structure"/>
-                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']"><b>SOLICITUD DE COMPRA N° </b><span t-field="doc.name"/></h2></center>
-                        <center><h2 t-if="doc.state in ['purchase', 'done']"><b>ORDEN DE COMPRA N° </b><span t-field="doc.name"/></h2></center>
-                        <center><h2 t-if="doc.state == 'cancel'"><b>ORDEN DE COMPRA CANCELADA N° </b><span t-field="doc.name"/></h2></center>
+                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']"><b>SOLICITUD DE COMPRA N° <span t-field="doc.name"/></b></h2></center>
+                        <center><h2 t-if="doc.state in ['purchase', 'done']"><b>ORDEN DE COMPRA N° <span t-field="doc.name"/></b></h2></center>
+                        <center><h2 t-if="doc.state == 'cancel'"><b>ORDEN DE COMPRA CANCELADA N° <span t-field="doc.name"/></b></h2></center>
+                        <br/>
                         <table>
                             <tbody>
                                 <tr>    
@@ -101,15 +102,15 @@
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                    
                                         <td  style="  width: 5% !important;"></td>
-                                        <td  class="text-right" style="padding: 3px !important; margin: 0px !important;" >
+                                        <td  class="text-right" >
                                             <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}'/></td>
                                         <td ><span t-field="line.product_uom"/></td>
                                         <td><t t-if="line.product_id">
                                                 <span t-field="line.product_id.default_code"/>
                                             </t></td>
-                                        <td><span t-field="line.name"/></td>
+                                        <td style="width: 30%" class="text-center"><span t-field="line.name"/></td>
                                         <td></td>
-                                        <td name="td_subtotal" class="text-right o_price_total" style="padding: 3px !important; margin: 0px !important;" >
+                                        <td name="td_subtotal" class="text-right o_price_total"  >
                                             <span t-field="line.price_subtotal"
                                                   t-options='{"widget": "float", "precision": 2}'
                                                   groups="account.group_show_line_subtotals_tax_excluded"/>
