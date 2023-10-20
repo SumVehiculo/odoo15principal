@@ -10,10 +10,10 @@
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
                             <div class="col-12 pt-0 row">
                                 <div class="col-8">
-                                    <center><img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
-                                                     alt="Logo" style="width: 200px; top: 0 ; margin-left: -30px;vertical-align: baseline;"
+                                    <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                                                     alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;"
                                                      class="mt-0 pt-0"
-                                                /></center>
+                                                />
                                                 
 
                                 </div>
@@ -104,8 +104,8 @@
                                         <td  style="  width: 5% !important;"></td>
                                         <td  class="text-right" >
                                             <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}'/></td>
-                                        <td ><span t-field="line.product_uom"/></td>
-                                        <td><t t-if="line.product_id">
+                                        <td  class="text-center"><span t-field="line.product_uom"/></td>
+                                        <td  class="text-center"><t t-if="line.product_id">
                                                 <span t-field="line.product_id.default_code"/>
                                             </t></td>
                                         <td style="width: 30%" class="text-center"><span t-field="line.name"/></td>
@@ -173,7 +173,7 @@
                 <table>
                     <tbody>
                         <tr>    
-                            <td><b>FACTURAR A NOMBRE DE:</b></td>
+                            <td style="width: 10%;"><b>FACTURAR A NOMBRE DE</b></td>
                             <td></td>
                         </tr>
                         <tr>    
