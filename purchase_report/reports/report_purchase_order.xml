@@ -174,36 +174,29 @@
                 <table>
                     <tbody>
                         <tr>    
-                            <td style="width: 50%;"><b>FACTURAR A NOMBRE DE</b></td>
+                            <td style="width: 30%;"><b>FACTURAR A NOMBRE DE</b></td>
                             <td></td>
                         </tr>
                         <tr>    
-                            <td  style="width: 20%;">RAZON SOCIAL</td>
+                            <td  style="width: 30%;">RAZON SOCIAL</td>
                             <td>: <span t-field="doc.company_id"/></td>
                         </tr>
-                        <tr  style="width: 20%;">    
+                        <tr  style="width: 30%;">    
                             <td>RUC</td>
                             <td>:<span t-field="doc.company_id.vat"/></td>
                         </tr>
-                        <tr  style="width: 20%;">    
+                        <tr  style="width: 30%;">    
                             <td>DIRECCIÓN</td>
                             <td>:<span t-field="doc.company_id.partner_id.street"/></td>
                         </tr>
-                        <tr  style="width: 20%;">    
+                        <tr  style="width: 30%;">    
                             <td>CONDICIÓN DE PAGO</td>
                             <td>:<span t-field="doc.company_id.partner_id.property_supplier_payment_term_id"/></td>
                         </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <tbody>
-                        <tr>    
-                            <td style="witdh: 60%"></td>
-                            <td></td>
+                        <tr  style="width: 30%;">    
                             <td>FECHA</td>
                             <td>:<span t-esc="doc.effective_date.strftime('%d/%m/%Y')"/></td>
                         </tr>
-                       
                     </tbody>
                 </table>
                 <br/>
