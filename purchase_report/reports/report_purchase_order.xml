@@ -26,7 +26,7 @@
                                             </tr>
                                             <tr>
                                                 <td  style=" font-size: 14pt;"><b>FECHA</b></td>
-                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-field="doc.date_planned"/></td>
+                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-esc="doc.date_planned.strftime('%d/%m/%Y')"/></td>
                                             </tr>
                                             <tr>
                                                 <td  style=" font-size: 14pt;"><b>PÁGINA</b></td>
@@ -133,7 +133,7 @@
                             <td></td>
                             <td></td>
                             <td colspan=''><b>SUBTOTAL</b></td>
-                            <td> <span t-field="doc.amount_untaxed"/></td>
+                            <td class="text-right"> <span t-field="doc.amount_untaxed"/></td>
                         </tr>
                         <t t-set="igv" t-value="doc.amount_total - doc.amount_untaxed"/>
                         <tr>
@@ -143,7 +143,7 @@
                             <td></td>
                             <td></td>
                             <td colspan=''><b>IGV</b></td>
-                            <td>S/ <span t-esc="igv" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td class="text-right">S/ <span t-esc="igv" t-options='{"widget": "float", "precision": 2}'/></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -152,7 +152,7 @@
                             <td></td>
                             <td></td>
                             <td colspan=''><b>TOTAL</b></td>
-                            <td> <span t-field="doc.amount_total"/></td>
+                            <td class="text-right"> <span t-field="doc.amount_total"/></td>
                         </tr>
                     </tfooter>
                     </table>
@@ -179,19 +179,19 @@
                         </tr>
                         <tr>    
                             <td  style="width: 20%;">RAZON SOCIAL</td>
-                            <td>:</td>
+                            <td>: <span t-field="doc.company_id"/></td>
                         </tr>
                         <tr  style="width: 20%;">    
                             <td>RUC</td>
-                            <td>:</td>
+                            <td>:<span t-field="doc.company_id.vat"/></td>
                         </tr>
                         <tr  style="width: 20%;">    
                             <td>DIRECCIÓN</td>
-                            <td>:</td>
+                            <td>:<span t-field="doc.company_id.partner_id.street"/></td>
                         </tr>
                         <tr  style="width: 20%;">    
                             <td>CONDICIÓN DE PAGO</td>
-                            <td>:</td>
+                            <td>:<span t-field="doc.company_id.partner_id.property_supplier_payment_term_id"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -201,7 +201,7 @@
                             <td style="witdh: 60%"></td>
                             <td></td>
                             <td>FECHA</td>
-                            <td>:</td>
+                            <td>:<span t-esc="doc.effective_date.strftime('%d/%m/%Y')"/></td>
                         </tr>
                        
                     </tbody>
