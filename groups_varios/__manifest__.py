@@ -8,7 +8,7 @@
 	'demo': [],
 	'data':	[
 		'security/security.xml',
-		'views/grupo.xml'
+		'views/grupos.xml'
 	],
 	'installable': True,
 	'license': 'LGPL-3'
