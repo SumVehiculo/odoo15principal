@@ -20,6 +20,9 @@
 				<xpath expr="//div[hasclass('oe_button_box')]//button[@name='action_view_picking']"  position="attributes">
 					<attribute name="groups" >groups_varios.group_recepcionar_producto_menu</attribute>
 				</xpath>
+				<xpath expr="//header/button[@name='action_view_picking']" position="attributes">
+					<attribute name="groups" >groups_varios.group_recepcionar_producto_menu</attribute>
+				</xpath>				
 			</field>
 		</record>
 	</data>
