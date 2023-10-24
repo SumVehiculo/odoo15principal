@@ -26,7 +26,7 @@
                                             </tr>
                                             <tr>
                                                 <td  style=" font-size: 14pt;"><b>FECHA</b></td>
-                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-esc="doc.date_planned.strftime('%d/%m/%Y')"/></td>
+                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-esc="doc.date_planned.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
                                             </tr>
                                             <tr>
                                                 <td  style=" font-size: 14pt;"><b>PÁGINA</b></td>
@@ -195,7 +195,7 @@
                         </tr>
                         <tr  style="width: 30%;">    
                             <td>FECHA</td>
-                            <td>:<span t-esc="doc.effective_date.strftime('%d/%m/%Y')"/></td>
+                            <td>:<span t-esc="doc.effective_date.strftime('%d/%m/%Y') if doc.effective_date else ''"/></td>
                         </tr>
                     </tbody>
                 </table>
