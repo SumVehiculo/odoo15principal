@@ -4,10 +4,31 @@
         <xpath expr="//dl[@name='related_document']" position="after">
             <dl class="row mb-0" name="detraction" t-if="o.l10n_pe_dte_is_detraction">
                 <dt class="col-6 col-sm-5 mb-0">
-                    OPERACIÓN SUJETA A DETRACCIÓN (Tasa <t t-esc="o.l10n_pe_dte_detraction_percent"/>%):
+                    
                 </dt>
-                <dd class="col-6 col-sm-7 mb-0"><t t-esc="o.l10n_pe_dte_detraction_amount"/> (<span t-field="o.l10n_pe_dte_detraction_code"/>)</dd>
+                <dd class="col-6 col-sm-7 mb-0">Operación sujeta al Sistema de pago de Obligaciones Tributarias: BANCO DE LA NACIÓN</dd>
             </dl>
+        </xpath>
+        <xpath expr="//table[@name='invoice_payment_fees']" position="after">
+            <table class="table table-sm" name="invoice_detraction" t-if="o.l10n_pe_dte_is_detraction">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="text-center">DETRACCION</th>
+                    </tr>
+                    <tr>
+                        <th>%</th>
+                        <th class="text-right">IMPORTE</th>
+                        <th class="text-right">NOMBRE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-right"><span t-field="o.l10n_pe_dte_detraction_percent"/></td>
+                        <td class="text-right"><span t-esc="'{0:,.2f}'.format(o.l10n_pe_dte_detraction_amount)"/></td>
+                        <td class="text-right"><span t-field="o.l10n_pe_dte_detraction_code"/></td>
+                    </tr>
+                </tbody>
+            </table>
         </xpath>
     </template>
 </odoo>
