@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from odoo import models, fields, api, _
 import logging
+import math
 log = logging.getLogger(__name__)
 
 
@@ -123,7 +124,7 @@ class AccountInvoice(models.Model):
         if self.currency_id.name!='PEN':
             currency_rate_tmp = abs(total_untaxed/total_untaxed_currency) if total_untaxed_currency!=0 else 1
         self.l10n_pe_dte_detraction_base = self.amount_total if self.currency_id.name == 'PEN' else self.amount_total*currency_rate_tmp
-        self.l10n_pe_dte_detraction_amount = round(self.l10n_pe_dte_detraction_percent*self.l10n_pe_dte_detraction_base/100,2)
+        self.l10n_pe_dte_detraction_amount = math.ceil(self.l10n_pe_dte_detraction_percent*self.l10n_pe_dte_detraction_base/100)
 
     def l10n_pe_dte_credit_amount_single_fee(self):
         res = super(AccountInvoice, self).l10n_pe_dte_credit_amount_single_fee()
