@@ -23,7 +23,7 @@ class ImportProductIt(models.TransientModel):
 			result = []
 			workbook = xlrd.open_workbook(fp.name)
 		except Exception:
-				raise exceptions.Warning(_("Sube un archivo .xlsx!")) 
+				raise UserError("Sube un archivo .xlsx!") 
 		sheet = workbook.sheet_by_index(0)
 		for row_no in range(sheet.nrows):
 			val = {}
@@ -97,7 +97,7 @@ class ImportProductIt(models.TransientModel):
 			res = {}
 			workbook = xlrd.open_workbook(fp.name)
 		except Exception:
-				raise exceptions.Warning(_("Sube un archivo .xlsx!")) 
+				raise UserError("Sube un archivo .xlsx!") 
 		sheet = workbook.sheet_by_index(0)
 		for row_no in range(sheet.nrows):
 			val = {}
@@ -128,7 +128,7 @@ class ImportProductIt(models.TransientModel):
 					product_categ_obj = self.env['product.category']
 					product_uom_obj = self.env['uom.uom']
 					if line[2]=='':
-						raise Warning('Campo CATEGORIA no puede estar vacío')
+						raise UserError('Campo CATEGORIA no puede estar vacío')
 					else:
 						categ_id = product_categ_obj.search([('name','=',line[2])])
 					if line[3] == 'Consumible':
@@ -197,7 +197,7 @@ class ImportProductIt(models.TransientModel):
 												'property_account_income_id':income_account_id,
 												'property_account_expense_id': expense_account_id})
 						else:
-							raise Warning(_('Producto "%s" no encontrado.') % line[1]) 
+							raise UserError(('Producto "%s" no encontrado.') % line[1]) 
 					else:
 						product_ids = self.env['product.template'].search([('name','=', line[0])])
 						if product_ids:
@@ -217,7 +217,7 @@ class ImportProductIt(models.TransientModel):
 												'property_account_income_id':income_account_id,
 												'property_account_expense_id': expense_account_id})
 						else:
-							raise Warning(_('Producto %s no encontrado.') % line[0])  
+							raise UserError(('Producto %s no encontrado.') % line[0])  
 	
 					
 		return self.env['popup.it'].get_message('SE IMPORTARON LOS PRODUCTOS DE MANERA CORRECTA.')
@@ -228,14 +228,14 @@ class ImportProductIt(models.TransientModel):
 		product_uom_obj = self.env['uom.uom']
 		type = ''
 		if values.get('categ_id')=='':
-			raise Warning('Campo CATEGORIA no puede estar vacío.')
+			raise UserError('Campo CATEGORIA no puede estar vacío.')
 		else:
 			categ_id = product_categ_obj.search([('name','=',values.get('categ_id'))])
 			if categ_id :
 				categ_id = categ_id
 				
 			else :
-				raise Warning(_('No existe la Categoria %s.') % values.get('categ_id'))  
+				raise UserError(('No existe la Categoria %s.') % values.get('categ_id'))  
 		
 		if values.get('type') == 'Consumible':
 			type ='consu'
@@ -244,7 +244,7 @@ class ImportProductIt(models.TransientModel):
 		elif values.get('type') == 'Almacenable':
 			type ='product'
 		else:
-			raise Warning(_('%s no es un Tipo de Producto.') % values.get('type'))
+			raise UserError(('%s no es un Tipo de Producto.') % values.get('type'))
 		
 		if values.get('uom_id')=='':
 			uom_id = 1
@@ -313,7 +313,7 @@ class ImportProductIt(models.TransientModel):
 		if account_search:
 			return account_search.id
 		else:
-			raise Warning(_('No existe una Cuenta con el Codigo "%s" en esta Compañia') % code)
+			raise UserError(('No existe una Cuenta con el Codigo "%s" en esta Compañia') % code)
 
 	def download_template(self):
 		return {
