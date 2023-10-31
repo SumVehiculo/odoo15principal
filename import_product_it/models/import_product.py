@@ -125,12 +125,14 @@ class ImportProductIt(models.TransientModel):
 								})
 					res = self.product_create(values)
 				else:
-					product_categ_obj = self.env['product.category']
+					product_categ_obj = self.env['product.category'].search([])
 					product_uom_obj = self.env['uom.uom']
 					if line[2]=='':
 						raise UserError('Campo CATEGORIA no puede estar vacío')
 					else:
-						categ_id = product_categ_obj.search([('name','=',line[2])])
+						for elem in product_categ_obj:
+							if elem.name_get()[0][1] == line[2]
+							categ_id = elem
 					if line[3] == 'Consumible':
 						type ='consu'
 					elif line[3] == 'Servicio':
