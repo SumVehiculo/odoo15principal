@@ -232,13 +232,16 @@ class ImportProductIt(models.TransientModel):
 		if values.get('categ_id')=='':
 			raise UserError('Campo CATEGORIA no puede estar vacío.')
 		else:
-			categ_id = product_categ_obj.search([('name','=',values.get('categ_id'))])
-			if categ_id :
-				categ_id = categ_id
-				
-			else :
-				raise UserError(('No existe la Categoria %s.') % values.get('categ_id'))  
-		
+			categ_id = False
+			xproduct_categ_obj = self.env['product.category'].search([])
+			if values.get('categ_id')=='':
+				raise UserError('Campo CATEGORIA no puede estar vacío')
+			else:
+				for elem in product_categ_obj:
+					if elem.name_get()[0][1] == line[2]:
+						categ_id = elem
+			if categ_id == False:
+				raise UserError('No existe la categoria: ' + values.get('categ_id'))
 		if values.get('type') == 'Consumible':
 			type ='consu'
 		elif values.get('type') == 'Servicio':
