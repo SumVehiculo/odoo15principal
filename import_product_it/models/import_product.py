@@ -131,8 +131,8 @@ class ImportProductIt(models.TransientModel):
 						raise UserError('Campo CATEGORIA no puede estar vacío')
 					else:
 						for elem in product_categ_obj:
-							if elem.name_get()[0][1] == line[2]
-							categ_id = elem
+							if elem.name_get()[0][1] == line[2]:
+								categ_id = elem
 					if line[3] == 'Consumible':
 						type ='consu'
 					elif line[3] == 'Servicio':
