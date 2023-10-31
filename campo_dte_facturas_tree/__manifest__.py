@@ -3,9 +3,10 @@
     'name': 'Campo "Estado de DTE en SUNAT" en facturas tree',
     'version': '1.0',
     'description': 'Agrega el campo "Estado de DTE en SUNAT" a la vista tree en facturas.',
-    'author': 'ITRGUPO, Jhorel Revilla Calderon',
+    'author': 'ITGRUPO, Jhorel Revilla Calderon',
     'license': 'LGPL-3',
     'depends': [
+        'account',
         'account_edi'
     ],
     'data': [
