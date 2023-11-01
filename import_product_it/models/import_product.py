@@ -230,7 +230,7 @@ class ImportProductIt(models.TransientModel):
 		if values.get('categ_id')=='':
 			raise UserError('Campo CATEGORIA no puede estar vacío.')
 		else:
-			categ_id = product_categ_obj.search([('display_name','=',values.get('categ_id'))])
+			categ_id = product_categ_obj.search([('complete_name','=',values.get('categ_id'))])
 			if categ_id :
 				categ_id = categ_id
 				
