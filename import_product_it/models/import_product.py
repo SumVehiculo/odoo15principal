@@ -125,12 +125,11 @@ class ImportProductIt(models.TransientModel):
 								})
 					res = self.product_create(values)
 				else:
-					product_categ_obj = self.env['product.category']
 					product_uom_obj = self.env['uom.uom']
 					if line[2]=='':
 						raise UserError('Campo CATEGORIA no puede estar vacío')
 					else:
-						categ_id = product_categ_obj.search([('complete_name','=',line[2])])
+						categ_id = self.find_category(line[2])
 					if line[3] == 'Consumible':
 						type ='consu'
 					elif line[3] == 'Servicio':
@@ -224,13 +223,12 @@ class ImportProductIt(models.TransientModel):
 	
 	def product_create(self, values):
 		product_obj = self.env['product.template']
-		product_categ_obj = self.env['product.category']
 		product_uom_obj = self.env['uom.uom']
 		type = ''
 		if values.get('categ_id')=='':
 			raise UserError('Campo CATEGORIA no puede estar vacío.')
 		else:
-			categ_id = product_categ_obj.search([('complete_name','=',values.get('categ_id'))])
+			categ_id = self.find_category(values.get('categ_id'))
 			if categ_id :
 				categ_id = categ_id
 				
@@ -314,6 +312,14 @@ class ImportProductIt(models.TransientModel):
 			return account_search.id
 		else:
 			raise UserError('No existe una Cuenta con el Codigo "%s" en esta Compañia' % code)
+		
+	def find_category(self, name):
+		category_obj = self.env['product.category']
+		category_search = category_obj.search([('name','=',name)],limit=1)
+		if category_search:
+			return category_search
+		else:
+			raise UserError('No existe una Categoria con el nombre "%s"' % name)
 
 	def download_template(self):
 		return {
