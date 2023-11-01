@@ -130,7 +130,7 @@ class ImportProductIt(models.TransientModel):
 					if line[2]=='':
 						raise UserError('Campo CATEGORIA no puede estar vacío')
 					else:
-						categ_id = product_categ_obj.search([('name','=',line[2])])
+						categ_id = product_categ_obj.search([('complete_name','=',line[2])])
 					if line[3] == 'Consumible':
 						type ='consu'
 					elif line[3] == 'Servicio':
