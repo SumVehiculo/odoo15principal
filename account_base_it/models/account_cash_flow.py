@@ -4,7 +4,7 @@ from odoo import models, fields, api
 
 class AccountCashFlow(models.Model):
 	_name = 'account.cash.flow'
-			
+	
 	name = fields.Char(string='Rubro',required=True)
 	code = fields.Char(string='Codigo',size=6)
 	group = fields.Char(string='Grupo')
