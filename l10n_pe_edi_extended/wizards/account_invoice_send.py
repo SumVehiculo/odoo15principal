@@ -20,7 +20,7 @@ class AccountInvoiceSend(models.TransientModel):
                 if invoice.l10n_pe_dte_is_einvoice:
                     conf = self.env['ir.config_parameter']
                     #pdf_format_odoo = bool(conf.sudo().get_param('account.l10n_pe_dte_pdf_use_odoo_%s' % invoice.company_id.id,False))
-                    pdf_format_odoo = False
+                    pdf_format_odoo = True
                     einvoice_attachments = []
                     attachment_old = wizard.composer_id.attachment_ids.ids
                     if invoice.l10n_pe_dte_pdf_file and not pdf_format_odoo:
