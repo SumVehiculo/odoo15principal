@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<record id="email_template_edi_invoice" model="mail.template">
+	<record id="l10n_pe_edi_extended.email_template_edi_invoice" model="mail.template">
 		<field name="body_html" type="html">
 			<div style="margin: 0px; padding: 0px;">
 				<p style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -107,6 +107,7 @@
 						<t t-if="object.payment_reference">
 							<br />
 							<br />
+                            <!-- Cambio a ref -->
 							Please use the following communication for your payment:
 							<strong t-out="object.ref or ''">
 								INV/2021/05/0005
