@@ -143,7 +143,7 @@
                             <td></td>
                             <td></td>
                             <td colspan=''><b>IGV</b></td>
-                            <td class="text-right">S/ <span t-esc="igv" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td class="text-right"> <span t-esc="doc.currency_id.symbol" />  <span t-esc="igv" t-options='{"widget": "float", "precision": 2}'/></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -191,11 +191,15 @@
                         </tr>
                         <tr  style="width: 30%;">    
                             <td>CONDICIÓN DE PAGO</td>
-                            <td>:<span t-field="doc.company_id.partner_id.property_supplier_payment_term_id"/></td>
+                            <td>:<span t-field="doc.payment_term_id"/></td>
                         </tr>
                         <tr  style="width: 30%;">    
                             <td>FECHA</td>
-                            <td>:<span t-esc="doc.effective_date.strftime('%d/%m/%Y') if doc.effective_date else ''"/></td>
+                            <td>:<span t-esc="doc.date_planned.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
+                        </tr>
+                        <tr  style="width: 30%;">    
+                            <td>VENCIMIENTO</td>
+                            <td>:<span t-esc="( (   (   doc.date_planned + datetime.timedelta(days=doc.payment_term_id.line_ids[0].days)   ).strftime('%d/%m/%Y')    if len(doc.payment_term_id.line_ids)>0 else  doc.date_planned.strftime('%d/%m/%Y')    )       if doc.payment_term_id.id else doc.date_planned.strftime('%d/%m/%Y')   ) if doc.date_planned else ''"/></td>
                         </tr>
                     </tbody>
                 </table>
