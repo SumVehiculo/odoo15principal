@@ -2,8 +2,8 @@
 {
 	'name': 'Detracciones Automáticas',
 	'category': 'account',
-	'author': 'ITGRUPO,Glenda Julia Merma Mayhua',
-	'depends': ['account_report_menu_it','account_consistencia_rep_it'],
+	'author': 'ITGRUPO, Sebastian Moises Loraico Lopez',
+	'depends': ['account_fields_it','account_invoice_detracciones_it'],
 	'version': '1.0',
 	'description':"""
 		Genera la Detraccion automatica segun el producto
@@ -13,7 +13,7 @@
 	'data':	[
 		
 		'views/account_main_parameter.xml',
-		'views/account_des_move.xml'
+		'views/product_template.xml'
 	],
 	'installable': True,
 	'license': 'LGPL-3'
