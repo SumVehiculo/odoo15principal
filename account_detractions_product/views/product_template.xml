@@ -10,7 +10,9 @@
 			<field name="arch" type="xml">
 				<data>
 					<group name="properties" position="inside">
-						<field name="is_afecto_detraction"/>
+						<group name="afecto_detrac" string="Sujeto a Detracción">
+							<field name="is_afecto_detraction"/>
+						</group>
 					</group>
 				</data>
 			</field>

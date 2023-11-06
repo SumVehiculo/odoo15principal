@@ -8,12 +8,29 @@ class account_move(models.Model):
 
 	check_vali_detraction = fields.Boolean('VALIDADOR DETRACCIÓN', compute='_compute_check_vali_detraction')
 
-	@api.depends('check_vali_detraction')
+
+	def write(self, vals):
+		res = super(account_move,self).write(vals)
+		for i in self:
+			if 'tax_country_id' in vals:
+				i._onchange_check_vali_detraction()
+		return res
+
+	@api.model
+	def create(self, vals):
+		res = super(account_move,self).create(vals)		
+		for i  in res:
+			i._onchange_check_vali_detraction()
+		return res
+	
+
 	def _onchange_check_vali_detraction(self):
 		for i in self:
 			if i.check_vali_detraction:
 				i.linked_to_detractions = True
-				i.detraction_percent_id =  self.env['detractions.catalog.percen'].sudo().search([('percentage','=',12)],limit=1)
+				i.detraction_percent_id =  self.env['detractions.catalog.percent'].sudo().search([('code','=','012')],limit=1).id
+			else:
+				i.linked_to_detractions = False
 
 	@api.depends('invoice_line_ids','invoice_line_ids.product_id','amount_total')
 	def _compute_check_vali_detraction(self):
