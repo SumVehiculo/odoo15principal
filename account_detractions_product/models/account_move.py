@@ -17,7 +17,9 @@ class account_move(models.Model):
 
 	@api.depends('invoice_line_ids','invoice_line_ids.product_id')
 	def _compute_check_vali_detraction(self):
-		for i in self:			
+		for i in self:	
+			i.check_vali_detraction = False
+		
 			for line in i.invoice_line_ids.filtered(lambda l: l.product_id.product_tmpl_id.is_afecto_detraction):
 				i.check_vali_detraction = True
 
