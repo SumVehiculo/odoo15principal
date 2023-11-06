@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_balance_report_tree_inherit" model="ir.ui.view">
+        <field name="name">view.stock.balance.report.tree.inherit</field>
+        <field name="model">stock.balance.report</field>
+        <field name="inherit_id" ref="stock_balance_report.view_stock_balance_report_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='almacen']" position="after">
+                <field name="rack"/>
+				<field name="posicion"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_balance_report_tree_inherit_search" model="ir.ui.view">
+        <field name="name">view.stock.balance.report.tree.inherit.search</field>
+        <field name="model">stock.balance.report</field>
+        <field name="inherit_id" ref="stock_balance_report.stock_balance_report_filter" />
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='almacen']" position="after">
+                <field name="rack"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Rack" name="rack_s" domain="[]" context="{'group_by': 'rack'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+
+
+
+
+
+<record id="view_stock_balance_report_tree_inherit_lot" model="ir.ui.view">
+        <field name="name">view.stock.balance.report.tree.inherit.lot</field>
+        <field name="model">stock.balance.report.lote</field>
+        <field name="inherit_id" ref="stock_balance_report_lote.view_stock_balance_report_tree_lote"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='almacen']" position="after">
+                <field name="rack"/>
+				<field name="posicion"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_balance_report_tree_inherit_search_lot" model="ir.ui.view">
+        <field name="name">view.stock.balance.report.tree.inherit.search.lot</field>
+        <field name="model">stock.balance.report.lote</field>
+        <field name="inherit_id" ref="stock_balance_report_lote.stock_balance_report_filter_lote"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='almacen']" position="after">
+                <field name="rack"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Rack" name="rack_s" domain="[]" context="{'group_by': 'rack'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

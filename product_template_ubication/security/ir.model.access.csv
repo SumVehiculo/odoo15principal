@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ubicacion,ubicacion,model_ubicacion,,1,1,1,1
+access_casepack,casepack,model_casepack,,1,1,1,1
