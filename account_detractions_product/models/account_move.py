@@ -11,7 +11,7 @@ class account_move(models.Model):
 	@api.onchange('check_vali_detraction')
 	def _onchange_check_vali_detraction(self):
 		for i in self:
-			if i.check_vali_detraction and abs(i.amount_total) > self.env['account.main.parameter'].sudo().search([('company_id','=',self.env.company.id)],limit=1).max_detracion:
+			if i.check_vali_detraction:
 				i.linked_to_detractions = True
 				i.detraction_percent_id =  self.env['detractions.catalog.percen'].sudo().search([('percentage','=',12)],limit=1)
 
@@ -21,7 +21,8 @@ class account_move(models.Model):
 			i.check_vali_detraction = False
 		
 			for line in i.invoice_line_ids.filtered(lambda l: l.product_id.product_tmpl_id.is_afecto_detraction):
-				i.check_vali_detraction = True
+				if abs(i.amount_total) > self.env['account.main.parameter'].sudo().search([('company_id','=',self.env.company.id)],limit=1).max_detracion:
+					i.check_vali_detraction = True
 
 
 	def action_post(self):
