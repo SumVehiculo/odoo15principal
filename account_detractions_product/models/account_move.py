@@ -28,7 +28,7 @@ class account_move(models.Model):
 		for i in self:
 			if i.check_vali_detraction:
 				i.linked_to_detractions = True
-				i.detraction_percent_id =  self.env['detractions.catalog.percent'].sudo().search([('code','=','012')],limit=1).id
+				#i.detraction_percent_id =  self.env['detractions.catalog.percent'].sudo().search([('code','=','012')],limit=1).id
 			else:
 				i.linked_to_detractions = False
 
