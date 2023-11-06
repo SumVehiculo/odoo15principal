@@ -8,18 +8,17 @@ class account_move(models.Model):
 
 	check_vali_detraction = fields.Boolean('VALIDADOR DETRACCIÓN', compute='_compute_check_vali_detraction')
 
-	@api.onchange('check_vali_detraction')
+	@api.depends('check_vali_detraction')
 	def _onchange_check_vali_detraction(self):
 		for i in self:
 			if i.check_vali_detraction:
 				i.linked_to_detractions = True
 				i.detraction_percent_id =  self.env['detractions.catalog.percen'].sudo().search([('percentage','=',12)],limit=1)
 
-	@api.depends('invoice_line_ids','invoice_line_ids.product_id')
+	@api.depends('invoice_line_ids','invoice_line_ids.product_id','amount_total')
 	def _compute_check_vali_detraction(self):
 		for i in self:	
-			i.check_vali_detraction = False
-		
+			i.check_vali_detraction = False		
 			for line in i.invoice_line_ids.filtered(lambda l: l.product_id.product_tmpl_id.is_afecto_detraction):
 				if abs(i.amount_total) > self.env['account.main.parameter'].sudo().search([('company_id','=',self.env.company.id)],limit=1).max_detracion:
 					i.check_vali_detraction = True
