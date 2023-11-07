@@ -12,17 +12,18 @@ class product_category(models.Model):
 class PurchaseReport(models.Model):
     _inherit = "purchase.report"
 
-    account_analytic_id = fields.Many2one("account.analytic.account",string="Cuenta Analítica")
+#    account_analytic_id = fields.Many2one("account.analytic.account",string="Cuenta Analítica")
     analytic_tag_ids = fields.Many2many("account.analytic.tag",string="Etiquetas Analíticas")
 
     def _select(self):
         t = super(PurchaseReport,self)._select()
-        t += ", l.account_analytic_id as account_analytic_id, array_agg(rel_etiq.account_analytic_tag_id) as analytic_tag_ids"
+        t += ", array_agg(rel_etiq.account_analytic_tag_id) as analytic_tag_ids"
         return t
-    def _group_by(self):
-        t = super(PurchaseReport,self)._group_by()
-        t += ", l.account_analytic_id"
-        return t
+
+#    def _group_by(self):
+#        t = super(PurchaseReport,self)._group_by()
+#        t += ", l.account_analytic_id"
+#        return t
 
     def _from(self):
         t = super(PurchaseReport,self)._from()
