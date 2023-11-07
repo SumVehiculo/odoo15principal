@@ -17,7 +17,7 @@ class PurchaseReport(models.Model):
 
     def _select(self):
         t = super(PurchaseReport,self)._select()
-        t += ", l.account_analytic_id, array_agg(rel_etiq.account_analytic_tag_id) as analytic_tag_ids"
+        t += ", l.account_analytic_id as account_analytic_id, array_agg(rel_etiq.account_analytic_tag_id) as analytic_tag_ids"
         return t
     def _group_by(self):
         t = super(PurchaseReport,self)._group_by()
@@ -38,6 +38,6 @@ class SaleReport(models.Model):
     analytic_tag_ids = fields.Many2many("account.analytic.tag",string="Etiquetas Analíticas")
 
     def _query(self, with_clause='', fields={}, groupby='', from_clause=''):
-        fields['account_analytic_id'] = ", array_agg(rel_etiq.account_analytic_tag_id) as analytic_tag_ids"
+        fields['analytic_tag_ids'] = ", array_agg(rel_etiq.account_analytic_tag_id) as analytic_tag_ids"
         from_clause += 'left join account_analytic_tag_sale_order_line_rel rel_etiq on rel_etiq.sale_order_line_id = l.id'
         return super(SaleReport, self)._query(with_clause, fields, groupby, from_clause)
