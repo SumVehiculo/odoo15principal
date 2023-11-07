@@ -9,7 +9,7 @@
     'author': "ITGRUPO",
     'category': 'sale',
     'version': '0.1',
-    'depends': ['product'],
+    'depends': ['product','sale','purchase'],
     'data': [
         'views/partner.xml',
     ],
