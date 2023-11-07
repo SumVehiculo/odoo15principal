@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_category_form_view" model="ir.ui.view">
+        <field name="name">product_category_form_view.inherit</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='first']" position="replace">
+                <group name="first">
+                    <group>
+                        <field name="parent_id" class="oe_inline"/>
+                    </group>
+                    <group>
+                        <field name="empresa_field"/>
+                    </group> 
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_category_list_view" model="ir.ui.view">
+        <field name="name">product_category_list_view.inherit</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_list_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="empresa_field"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="product_category_search_view" model="ir.ui.view">
+        <field name="name">product_category_search_view.inherit</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="empresa_field"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>
