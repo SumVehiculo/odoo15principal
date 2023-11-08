@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="access_sale_crea_invoice" model="res.groups">
+        <field name="name">Grupo Restringido bloquear crear factura de ventas</field>
+    </record>
+</odoo>
