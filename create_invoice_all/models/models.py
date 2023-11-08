@@ -25,6 +25,9 @@ class AccountMove(models.Model):
 	def create(self, vals):
 		request = super(AccountMove, self).create(vals)
 		for i in request:
-			if i.move_type in ["in_invoice","in_refund"] and not self.env.has_group('create_invoice_all.access_sale_crea_invoice'):
+			user = self.env.user
+			bu = user.has_group('create_invoice_all.access_sale_crea_invoice')			
+			if any(move.move_type in ["out_invoice", "in_refund"] for move in request) and bu:
 				raise UserError ('Usted no tiene acceso a crear facturas de tipo venta')
+			# raise UserError (f'test {i.move_type}')
 		return request
