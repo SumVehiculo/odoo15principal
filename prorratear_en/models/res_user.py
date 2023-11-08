@@ -6,4 +6,4 @@ from odoo.exceptions import UserError
 class LandedCostIt(models.Model):
 	_inherit = 'landed.cost.it'
 
-	prorratear_en = fields.Selection([('valor', 'Por Valor')],string='Prorratear en funcion', required=True, default='valor')
+	prorratear_en = fields.Selection([('cantidad', ''), ('valor', 'Por Valor')],string='Prorratear en funcion', required=True, default='valor')
