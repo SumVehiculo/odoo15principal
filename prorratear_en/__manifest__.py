@@ -6,6 +6,7 @@
     'author': 'IT GRUPO, berth',
     'depends': ['landed_cost_it'],
     'data': [
+        'views/stock_pincking.xml'
     ],
     'license': 'LGPL-3',
     'installable': True,
