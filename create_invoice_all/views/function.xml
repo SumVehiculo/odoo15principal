@@ -3,36 +3,4 @@
     <record id="access_sale_crea_invoice" model="res.groups">
         <field name="name">Grupo Restringido crear Factura ventas</field>
     </record>
-    <record id="access_purchase_crea_invoice" model="res.groups">
-        <field name="name">Grupo Restringido crear Factura compras</field>
-    </record>
-
-
-    <record id="btn_create_invoice_sale_it_domain" model="ir.ui.view">
-        <field name="name">btn.create.invoice.sale.it.domain</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//button[3]" position="attributes">
-                <attribute name="groups">create_invoice_all.access_sale_crea_invoice</attribute>
-            </xpath>
-            <xpath expr="//button[4]" position="attributes">
-                <attribute name="groups">create_invoice_all.access_sale_crea_invoice</attribute>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="btn_create_invoice_purchase_it_domain" model="ir.ui.view">
-        <field name="name">btn.create.invoice.purchase.it.domain</field>
-        <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//button[6]" position="attributes">
-                <attribute name="groups">create_invoice_all.access_purchase_crea_invoice</attribute>
-            </xpath>
-            <xpath expr="//button[12]" position="attributes">
-                <attribute name="groups">create_invoice_all.access_purchase_crea_invoice</attribute>
-            </xpath>
-        </field>
-    </record>
 </odoo>
