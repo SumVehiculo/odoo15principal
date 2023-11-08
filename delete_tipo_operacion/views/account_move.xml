@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='l10n_pe_dte_operation_type']" position="attributes">
                    
-                    <attribute name="invisible">1</attribute>
+                    <attribute name="attrs">{'invisible':[('move_type','in',('in_invoice','in_refund'))]}</attribute>
                 </xpath>
                 
             </field>
