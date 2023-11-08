@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_move_form_l10n_pe_edi_extended" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="name">account.move.form.l10n_pe_edi.fixc</field>
+            <field name="inherit_id" ref="l10n_pe_edi_extended.view_move_form" />
+            <field name="arch" type="xml">
+                <field name="l10n_pe_dte_operation_type" position="attributes">
+                    <attribute name="attrs">{'invisible': [('move_type', 'not in', ['out_invoice','out_refund'])]}</attribute>
+                </field>
+                <button name="%(l10n_pe_edi_extended.l10n_pe_dte_move_cancel_action)d" position="attributes">
+                    <attribute name="attrs">{'invisible':['|','|',('state','!=','posted'), ('l10n_pe_dte_is_einvoice', '=', 'False'), ('move_type', 'not in', ['out_invoice','out_refund'])]}</attribute>
+                </button>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/button[@name='show_detail_anticipo']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('id','=',False),('parent.move_type', 'not in', ['out_invoice','out_refund'])]}</attribute>
+                </xpath>
+                <xpath expr="//sheet/group[@id='pe_dte_retention']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('move_type', 'not in', ['out_invoice','out_refund'])]}</attribute>
+                </xpath>
+                <field name="invoice_payment_fee_ids" position="replace">
+                </field>
+                <field name="l10n_pe_dte_debit_note_type" position="replace">
+                </field>
+            </field>
+        </record>
+
+        <record id="view_move_form_l10n_pe_edi_extended_detraction" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="name">account.move.form.l10n_pe_edi_detraction.fixc</field>
+            <field name="inherit_id" ref="l10n_pe_edi_extended_detraction.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group[@id='pe_dte_detraction']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('move_type', 'not in', ['out_invoice','out_refund'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_form_l10n_pe_edi_extended_transportrefs" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="name">account.move.form.l10n_pe_edi_extended_transportrefs.fixc</field>
+            <field name="inherit_id" ref="l10n_pe_edi_extended_transportrefs.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group[@id='pe_dte_transportref']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('move_type', 'not in', ['out_invoice','out_refund'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_form_inherit_fields" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="name">account.move.form.fields.fixc</field>
+            <field name="inherit_id" ref="account_fields_it.view_move_form_inherit" />
+            <field name="arch" type="xml">
+                <field name="currency_rate" position="after">
+                    <field name="l10n_pe_dte_debit_note_type" attrs="{'invisible': [('move_type', 'not in', ['out_refund'])],'readonly': [('state', '!=', 'draft')]}"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

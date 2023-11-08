@@ -1,0 +1,13 @@
+<odoo>
+	<data>
+	   <record id="view_account_move_reversal" model="ir.ui.view">
+			<field name="name">account.move.reversal.form.fixc</field>
+			<field name="model">account.move.reversal</field>
+			<field name="inherit_id" ref="l10n_pe_edi_extended.view_account_move_reversal"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='l10n_pe_dte_credit_note_type']" position="replace">
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
