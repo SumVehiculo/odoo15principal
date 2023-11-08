@@ -14,10 +14,10 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[3]" position="attributes">
-                <attribute name="attrs">{'groups': 'create_invoice_all.access_sale_crea_invoice'}</attribute>
+                <attribute name="groups">create_invoice_all.access_sale_crea_invoice</attribute>
             </xpath>
             <xpath expr="//button[4]" position="attributes">
-                <attribute name="attrs">{'groups': 'create_invoice_all.access_sale_crea_invoice'}</attribute>
+                <attribute name="groups">create_invoice_all.access_sale_crea_invoice</attribute>
             </xpath>
         </field>
     </record>
@@ -27,11 +27,11 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[5]" position="attributes">
-                <attribute name="attrs">{'groups': 'create_invoice_all.access_purchase_crea_invoice'}</attribute>
+            <xpath expr="//button[6]" position="attributes">
+                <attribute name="groups">create_invoice_all.access_purchase_crea_invoice</attribute>
             </xpath>
-            <xpath expr="//button[11]" position="attributes">
-                <attribute name="attrs">{'groups': 'create_invoice_all.access_purchase_crea_invoice'}</attribute>
+            <xpath expr="//button[12]" position="attributes">
+                <attribute name="groups">create_invoice_all.access_purchase_crea_invoice</attribute>
             </xpath>
         </field>
     </record>
