@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="landed_cost_it_fechkardex_form" model="ir.ui.view">
+        <field name="name">landed.cost.it.fechkardex.form</field>
+        <field name="model">landed.cost.it</field>
+        <field name="inherit_id" ref="landed_cost_it.view_landed_cost_it_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_ids']" position="attributes">
+                <attribute name="context">{'tree_view_ref': 'prorratear_en.stock_picking_fec_tree'}</attribute>
+            </xpath>
+          
+        </field>
+    </record>
+
+    <record id="stock_picking_fec_tree" model="ir.ui.view">
+        <field name="name">stock.picking.fec.tree</field>
+        <field name="model">stock.picking</field>
+        <field eval="1" name="priority"/>
+        <field name="arch" type="xml">
+            <tree string="Agregar: Albaranes" create="false">
+                
+                <field name="name"/>
+                <field name="location_id"/>
+                <field name="location_dest_id"/>
+                <field name="partner_id"/>
+                <field name="scheduled_date"/>
+                <field name="kardex_date"/>
+                <field name="origin"/>
+                <field name="company_id"/>
+                <field name="state"/>
+                <field name="op_sunat_transito"/>
+                
+            </tree>
+        </field>
+    </record>
+    
+</odoo>
