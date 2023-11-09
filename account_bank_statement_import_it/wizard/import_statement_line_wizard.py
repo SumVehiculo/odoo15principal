@@ -61,12 +61,7 @@ class ImportStatementLineWizard(models.TransientModel):
 					if line[0] == '':
 						raise UserError('Por favor ingresa el campo Fecha')
 					else:
-						fecha_base = datetime(1900, 1, 1, tzinfo=pytz.timezone('UTC'))
-						delta = timedelta(days=int(float(line[0]))-2)
-						date_format = fecha_base + delta
-						#raise UserError(int(float(line[0])))
-					
-
+						date_format = self.convert_date(line[0])
 					ref = ''
 					if line[2] != '':
 						texto = line[2]
@@ -167,3 +162,18 @@ class ImportStatementLineWizard(models.TransientModel):
 			 'url': '/web/binary/download_template_statement_line',
 			 'target': 'new',
 			 }
+	
+	def convert_date(self, date):
+		try:
+			numeric_date = float(str(date))
+			seconds = (numeric_date - 25569) * 86400.0
+			d = datetime.utcfromtimestamp(seconds)
+			return d.strftime('%Y-%m-%d')  
+		except ValueError:
+			for fmt in ("%d-%m-%Y", "%Y/%m/%d", "%b %d, %Y", "%d %B %Y","%d/%m/%Y"):
+				try:
+					return datetime.strptime(str(date), fmt).strftime("%Y-%m-%d")
+				except ValueError:
+					continue
+			raise UserError(f"Formato no reconocido para la fecha: {str(date)}")
+	
