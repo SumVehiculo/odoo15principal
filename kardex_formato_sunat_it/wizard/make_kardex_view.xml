@@ -7,7 +7,7 @@
             <field name="name">make.kardex.valorado.formato.sunat.form</field>
             <field name="model">make.kardex.valorado.formato.sunat</field>
             <field name="arch" type="xml">
-                <form string="Kardex Valorado" version="7.0">
+                <form string="Registro de Inventario Permanente Valorizado" version="7.0">
                     <group>
                         <field name="fini" invisible="1"/>
                         <field name="ffin" invisible="1"/>
@@ -26,11 +26,11 @@
                             </page>
                         </notebook>
                     <footer>
-                        <button name="reportpdf_sunat" string="Formato Sunat PDF" type="object" class="oe_highlight"  onlyRead="1"/>
+                        <button name="reportpdf_sunat" string="PDF" type="object" class="oe_highlight"  onlyRead="1"/>
                         or
-                        <button name="report_txt" string="Formato Sunat TXT" type="object" class="oe_highlight"  onlyRead="1"/>
+                        <button name="report_txt" string="TXT" type="object" class="oe_highlight"  onlyRead="1"/>
                         or
-                        <button name="report_xls" string="Formato Sunat Excel" type="object" class="oe_highlight"  onlyRead="1"/>
+                        <button name="report_xls" string="Excel" type="object" class="oe_highlight"  onlyRead="1"/>
                         or
                         <button string="Cancelar" class="oe_link" special="cancel"/>
                     </footer>
@@ -39,7 +39,7 @@
         </record>
 
         <record id="make_kardex_action_valorado_formato_sunat" model="ir.actions.act_window">
-            <field name="name">Kardex Formato Sunat</field>
+            <field name="name">Registro de Inventario Permanente Valorizado 13.1</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">make.kardex.valorado.formato.sunat</field>
             <field name="view_mode">form</field>
@@ -47,7 +47,7 @@
             <field name="context">{'tipo':'valorado','type_product':'product'}</field>
         </record>
 
-        <menuitem name="Kardex Formato Sunat" id="menu_kardex_formato_sunat"
+        <menuitem name="Registro de Inventario Permanente Valorizado 13.1" id="menu_kardex_formato_sunat"
                  parent="kardex_fisico_it.kardex_main_menu" action="make_kardex_action_valorado_formato_sunat"
                  sequence="3" />
 
