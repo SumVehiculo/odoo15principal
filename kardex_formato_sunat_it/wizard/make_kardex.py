@@ -588,10 +588,11 @@ class make_kardex_valorado_formato_sunat(models.TransientModel):
 			xnumero = line[4] if line[4] else ''
 			if line[25] and line[25]>0:
 				move = self.env['stock.move'].browse(line[25])
-				if xtipo == '' and move.picking_id.guia_recepcion:
+				guia = move.picking_id.nro_guia_compra or move.picking_id.despatch_id.name
+				if xtipo == '' and guia:
 					xtipo = '09'
-					xserie = move.picking_id.guia_recepcion.split('-')[0]
-					xnumero = move.picking_id.guia_recepcion.split('-')[1]
+					xserie = guia.split('-')[0]
+					xnumero = guia.split('-')[1] if len(guia.split('-'))>1 else ''
 				elif move.picking_id.id:					
 					xtipo = '09'
 					xserie = move.picking_id.name.split('/')[0]

@@ -3,11 +3,11 @@
     <data>
 
 
-        <record id="view_make_kardex_formato_sunat" model="ir.ui.view">
-            <field name="name">make.kardex.valorado.formato.sunat.form</field>
-            <field name="model">make.kardex.valorado.formato.sunat</field>
+        <record id="view_make_kardex_formato_sunat_v12_inherit" model="ir.ui.view">
+            <field name="name">view_make_kardex_formato_sunat_v12_inherit</field>
+            <field name="model">make.kardex.valorado.formato.sunat.v12</field>
             <field name="arch" type="xml">
-                <form string="Registro de Inventario Permanente Valorizado" version="7.0">
+                <form string="FORMATO SUNAT 12.1" version="7.0">
                     <group>
                         <field name="fini" invisible="1"/>
                         <field name="ffin" invisible="1"/>
@@ -22,15 +22,14 @@
                      <notebook>
                             <page string="Productos">
                                 <field name="location_ids" string="Ubicaciones" domain="[('usage','in',['internal'])]" attrs="{'invisible':[('alllocations', '=', True)]}"/>
-                                <field name="products_ids" nolabel="True" domain="[('type','=',context['type_product'])]" attrs="{'invisible':[('allproducts', '=', True)]}"/>
+                                <field name="products_ids_it" nolabel="True" domain="[('type','=',context['type_product'])]" attrs="{'invisible':[('allproducts', '=', True)]}"/>
                             </page>
                         </notebook>
                     <footer>
                         <button name="reportpdf_sunat" string="PDF" type="object" class="oe_highlight"  onlyRead="1"/>
-                        or
+                        <button name="reportxls_sunat" string="XLS" type="object" class="oe_highlight"  onlyRead="1"/>
                         <button name="report_txt" string="TXT" type="object" class="oe_highlight"  onlyRead="1"/>
-                        or
-                        <button name="report_xls" string="Excel" type="object" class="oe_highlight"  onlyRead="1"/>
+
                         or
                         <button string="Cancelar" class="oe_link" special="cancel"/>
                     </footer>
@@ -38,18 +37,18 @@
              </field>
         </record>
 
-        <record id="make_kardex_action_valorado_formato_sunat" model="ir.actions.act_window">
-            <field name="name">Registro de Inventario Permanente Valorizado 13.1</field>
+        <record id="make_kardex_action_valorado_formato_sunat_v12_inherit" model="ir.actions.act_window">
+            <field name="name">FORMATO SUNAT 12.1</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">make.kardex.valorado.formato.sunat</field>
+            <field name="res_model">make.kardex.valorado.formato.sunat.v12</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
             <field name="context">{'tipo':'valorado','type_product':'product'}</field>
         </record>
 
-        <menuitem name="Registro de Inventario Permanente Valorizado 13.1" id="menu_kardex_formato_sunat"
-                 parent="kardex_fisico_it.kardex_main_menu" action="make_kardex_action_valorado_formato_sunat"
-                 sequence="3" />
+        <menuitem name="FORMATO SUNAT 12.1" id="menu_kardex_formato_sunat_v12"
+                 parent="kardex_fisico_it.kardex_main_menu" action="make_kardex_action_valorado_formato_sunat_v12_inherit"
+                 sequence="4" />
 
     </data>
 </odoo>
