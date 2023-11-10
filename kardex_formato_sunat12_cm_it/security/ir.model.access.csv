@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_make_kardex_valorado_formato_sunat_v12_user,make.kardex.valorado.formato.sunat.v12.user,kardex_formato_sunat12_cm_it.model_make_kardex_valorado_formato_sunat_v12,group_account_tables_userrrs_v12,1,1,1,1
+

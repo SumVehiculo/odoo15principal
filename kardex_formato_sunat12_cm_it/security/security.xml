@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="group_account_tables_userrrs_v12" model="res.groups">
+			<field name="name">Show Accounting v12</field>
+		</record>
+		
+	</data>
+</odoo>
+
