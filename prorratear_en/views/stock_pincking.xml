@@ -19,7 +19,7 @@
         <field name="model">stock.picking</field>
         <field eval="1" name="priority"/>
         <field name="arch" type="xml">
-            <tree string="Agregar: Albaranes" create="false">
+            <tree string="Agregar: Albaranes" create="true">
                 
                 <field name="name"/>
                 <field name="location_id"/>
