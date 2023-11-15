@@ -1,12 +1,13 @@
 # -*- encoding:ut-8 -*-
 {
-    'name': 'Grupo-Pedidos de Compra: Crear, Editar y Borrar',
+    'name': 'Grupo-Albaranes: Crear, Editar y Borrar',
     'version': '1.0',
-    'description': 'Modulo que agrega un grupo solo ver la SDP y PDC.',
+    'description': 'Modulo que agrega un grupo para solo ver transferencias.',
     'author': 'ITGRUPO, Jhorel Revilla Calderon',
     'license': 'LGPL-3',
     'depends': [
-        'purchase'
+        'stock',
+        'prorratear_en'
     ],
     'data': [
         'security/grupo.xml',
