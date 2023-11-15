@@ -16,6 +16,15 @@
             <xpath expr="//header" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//button[@name='actualizar_kardex_date_b']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='change_mostrar_b']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='actualizar_priceunit']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
 		</field>
 	</record>
     <!-- TREE -->
