@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <record id="group_albaranes_solo_ver" model="res.groups">
-        <field name="name">Albaranes: Solo Ver </field>
+        <field name="name">Albaranes: Solo lectura </field>
     </record>
     <record id="access_stock_picking_solo_vista" model="ir.model.access">
         <field name="name">access.stock.picking.solo.vista</field>
