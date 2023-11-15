@@ -39,7 +39,7 @@
         <field name="inherit_id" ref="purchase.view_purchase_order_kanban"/>
         <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//kanban" position="attributes">
                 <attribute name="create">false</attribute>
                 <attribute name="edit">false</attribute>
                 <attribute name="delete">false</attribute>
@@ -88,7 +88,7 @@
         <field name="inherit_id" ref="purchase.view_purchase_order_kanban"/>
         <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//kanban" position="attributes">
                 <attribute name="create">false</attribute>
                 <attribute name="edit">false</attribute>
                 <attribute name="delete">false</attribute>

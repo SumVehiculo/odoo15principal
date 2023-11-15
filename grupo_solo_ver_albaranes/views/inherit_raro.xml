@@ -39,7 +39,7 @@
         <field name="inherit_id" ref="stock.stock_picking_kanban"/>
         <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_albaranes.group_albaranes_solo_ver')])]"/>
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//kanban" position="attributes">
                 <attribute name="create">false</attribute>
                 <attribute name="edit">false</attribute>
                 <attribute name="delete">false</attribute>
