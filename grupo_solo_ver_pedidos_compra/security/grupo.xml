@@ -6,7 +6,7 @@
     <record id="access_purchase_order_solo_vista" model="ir.model.access">
         <field name="name">access.purchase.order.solo.vista</field>
         <field name="model_id" ref="purchase.model_purchase_order" />
-        <field name="group_id" ref="grupo_pedidos_compra.group_pedidos_compra" />
+        <field name="group_id" ref="grupo_solo_ver_pedidos_compra.group_pedidos_compra" />
         <field name="perm_read" eval="1" />
         <field name="perm_write" eval="0" />
         <field name="perm_create" eval="0" />
