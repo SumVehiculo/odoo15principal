@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-    <record id="group_restablecer_borrador_menu" model="res.groups">
-        <field name="name">Restablecer a Borrador</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
-    </record>
+ 
     <record id="group_recepcionar_producto_menu" model="res.groups">
         <field name="name">Recepcionar Producto</field>
         <field name="category_id" ref="base.module_category_hidden"/>
