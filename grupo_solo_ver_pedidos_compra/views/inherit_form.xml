@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_view_form_solo_visualizar" model="ir.ui.view">
+		<field name="name">purchase.order.form.inherit.solo.visualizar</field>
+		<field name="model">purchase.order</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+		<field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>        
+            <xpath expr="//header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+		</field>
+	</record>
+
+    <record id="purchase_order_view_list_inherit_solo_visualizar" model="ir.ui.view">
+        <field name="name">purchase.order.list.inherit.solo.visualizar</field>
+        <field name="model">purchase.order</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+	<record id="purchase_order_solo_visualizar" model="ir.actions.act_window">
+		<field name="name">Pedidos de Compra</field>
+		<field name="res_model">purchase.order</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('grupo_pedidos_compra.purchase_order_view_list_inherit_solo_visualizar')}), (0, 0, {'view_mode': 'form', 'view_id': ref('grupo_pedidos_compra.purchase_order_view_form_solo_visualizar')})]" />
+		<!-- <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('grupo_pedidos_compra.purchase_order_view_list_inherit_solo_visualizar')})]" /> -->
+
+	</record>
+
+	<menuitem id="purchase_order_solo_visualizar_menu" name="Pedidos de Compra" action="purchase_order_solo_visualizar" groups="grupo_pedidos_compra.group_pedidos_compra" sequence="10" />
+</odoo>

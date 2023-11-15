@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="purchase_order_view_form_solo_visualizar" model="ir.ui.view">
+		<field name="name">purchase.order.form.inherit.solo.visualizar</field>
+		<field name="model">purchase.order</field>
+        <!-- <field name="mode">primary</field> -->
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_pedidos_compra.group_pedidos_compra')])]"/>
+		<field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>        
+            <xpath expr="//header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+		</field>
+	</record>
+
+    <record id="purchase_order_view_list_inherit_solo_visualizar" model="ir.ui.view">
+        <field name="name">purchase.order.list.inherit.solo.visualizar</field>
+        <field name="model">purchase.order</field>
+        <!-- <field name="mode">primary</field> -->
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_pedidos_compra.group_pedidos_compra')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
