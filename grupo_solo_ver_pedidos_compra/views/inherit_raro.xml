@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Pedidos de compra  -->
+    <!-- FORM -->
+    <record id="purchase_order_view_form_solo_visualizar_pdc" model="ir.ui.view">
+		<field name="name">purchase.order.form.inherit.solo.visualizar.pdc</field>
+		<field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
+		<field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>        
+            <xpath expr="//header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+		</field>
+	</record>
+    <!-- TREE -->
+    <record id="purchase_order_view_list_inherit_solo_visualizar_pdc" model="ir.ui.view">
+        <field name="name">purchase.order.list.inherit.solo.visualizar.pdc</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- KANBAN -->
+    <record id="purchase_order_view_kanban_inherit_solo_visualizar_pdc" model="ir.ui.view">
+        <field name="name">purchase.order.kanban.inherit.solo.visualizar.pdc</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_kanban"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- Solicitudes de presupuesto  -->
+    <!-- FORM -->
+    <record id="purchase_order_view_form_solo_visualizar_sdp" model="ir.ui.view">
+		<field name="name">purchase.order.form.inherit.solo.visualizar.sdp</field>
+		<field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
+		<field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>        
+            <xpath expr="//header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+		</field>
+	</record>
+    <!-- TREE -->
+    <record id="purchase_order_view_list_inherit_solo_visualizar_sdp" model="ir.ui.view">
+        <field name="name">purchase.order.list.inherit.solo.visualizar.sdp</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- KANBAN -->
+    
+    <record id="purchase_order_view_kanban_inherit_solo_visualizar_sdp" model="ir.ui.view">
+        <field name="name">purchase.order.kanban.inherit.solo.visualizar.sdp</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_kanban"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_pedidos_compra.group_pedidos_compra')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

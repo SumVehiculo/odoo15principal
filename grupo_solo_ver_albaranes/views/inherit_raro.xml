@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Transferencias  -->
+    <!-- FORM -->
+    <record id="stock_picking_form_inherit_solo_visualizar_transferencias" model="ir.ui.view">
+		<field name="name">stock.picking.form.inherit.solo.visualizar.transferencias</field>
+		<field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_albaranes.group_albaranes_solo_ver')])]"/>
+		<field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>        
+            <xpath expr="//header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='actualizar_kardex_date_b']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='change_mostrar_b']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='actualizar_priceunit']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+            <xpath expr="//button[@name='get_read_lotes']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_put_in_pack']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+            <xpath expr="//page[2]//tree//button" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <xpath expr="//page[2]//tree//button[2]" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <xpath expr="//page[2]//tree//button[5]" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            
+            <xpath expr="//page[2]//button[@name='action_put_in_pack']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            
+
+
+		</field>
+	</record>
+    <!-- TREE -->
+    <record id="stock_picking_list_inherit_solo_visualizar_transferencias" model="ir.ui.view">
+        <field name="name">stock.picking.list.inherit.solo.visualizar.transferencias</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="prorratear_en.stock_picking_fec_tree"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_albaranes.group_albaranes_solo_ver')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- KANBAN -->
+    <record id="stock_picking_kanban_inherit_solo_visualizar_transferencias" model="ir.ui.view">
+        <field name="name">stock.picking.kanban.inherit.solo.visualizar.transferencias</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_albaranes.group_albaranes_solo_ver')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Solicitudes de presupuesto  -->
+    <!-- FORM -->
+    <!-- <record id="purchase_order_view_form_solo_visualizar_sdp" model="ir.ui.view">
+		<field name="name">stock.picking.form.inherit.solo.visualizar.sdp</field>
+		<field name="model">stock.picking</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_albaranes.group_albaranes_solo_ver')])]"/>
+		<field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>        
+            <xpath expr="//header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+		</field>
+	</record> -->
+    <!-- TREE -->
+    <!-- <record id="purchase_order_view_list_inherit_solo_visualizar_sdp" model="ir.ui.view">
+        <field name="name">stock.picking.list.inherit.solo.visualizar.sdp</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="groups_id" eval="[(6, 0, [ref('grupo_solo_ver_albaranes.group_albaranes_solo_ver')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="delete">false</attribute>
+            </xpath>
+        </field>
+    </record> -->
+</odoo>
