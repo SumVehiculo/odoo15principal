@@ -25,6 +25,31 @@
             <xpath expr="//button[@name='actualizar_priceunit']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+
+
+            <xpath expr="//button[@name='get_read_lotes']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_put_in_pack']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+            <xpath expr="//page[2]//tree//button" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <xpath expr="//page[2]//tree//button[2]" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            <xpath expr="//page[2]//tree//button[5]" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            
+            <xpath expr="//page[2]//button[@name='action_put_in_pack']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+            
+
+
 		</field>
 	</record>
     <!-- TREE -->
