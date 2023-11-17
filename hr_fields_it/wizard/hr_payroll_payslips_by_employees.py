@@ -8,7 +8,19 @@ class HrPayslipEmployees(models.TransientModel):
 	_inherit = 'hr.payslip.employees'
 
 	def _get_available_contracts_domain(self):
-		return [('contract_ids.state', 'in', ('open', 'close')), ('company_id', '=', self.env.company.id)]
+		if not self.env.context.get('active_id'):
+			from_date = fields.Date.to_date(self.env.context.get('default_date_start'))
+			end_date = fields.Date.to_date(self.env.context.get('default_date_end'))
+			payslip_run = self.env['hr.payslip.run'].create({
+				'name': from_date.strftime('%B %Y'),
+				'date_start': from_date,
+				'date_end': end_date,
+			})
+		else:
+			payslip_run = self.env['hr.payslip.run'].browse(self.env.context.get('active_id'))
+		return [('contract_ids.state', 'in', ('open', 'close')), ('company_id', '=', self.env.company.id),
+				('contract_ids.date_start', '<=', payslip_run.date_end),'|', ('contract_ids.date_end', '=', False),
+				('contract_ids.date_end', '>=', payslip_run.date_start)]
 		# return [('contract_ids.state', 'in', ('open', 'close'))]
 
 	structure_id = fields.Many2one(domain=lambda self:[('company_id', '=', self.env.company.id)],
@@ -25,7 +37,7 @@ class HrPayslipEmployees(models.TransientModel):
 			domain = wizard._get_available_contracts_domain()
 			# if wizard.type_id:
 			# 	domain = [('contract_ids.structure_type_id', '=', self.type_id.id)]
-				# print("domain",domain)
+			# print("domain",domain)
 			wizard.employee_ids = self.env['hr.employee'].search(domain)
 
 	def compute_sheet(self):

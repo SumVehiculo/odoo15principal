@@ -132,7 +132,7 @@ class HrImportWdWizard(models.TransientModel):
 				if WD:
 					WD.number_of_days = sheet.cell_value(i, 2)
 					hour = sheet.cell_value(i, 3)
-					if hour <= 1:
+					if hour < 1:
 						hour = int(hour * 24 * 3600)
 						hour = time(hour//3600, (hour % 3600)//60, hour % 60)
 						WD.number_of_hours = hour.hour + hour.minute/60

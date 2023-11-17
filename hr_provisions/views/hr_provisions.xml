@@ -6,7 +6,7 @@
             <field name="arch" type="xml">
                 <form string="Provisiones">
                     <header>
-                        <button name="actualizar" type="object" string="Actualizar" class="oe_highlight"/>
+                        <button name="actualizar" type="object" string="Procesar" class="oe_highlight"/>
                         <button name="get_provisions_wizard" type="object" string="Generar Asiento" class="oe_highlight"/>
                         <button name="get_provisiones_excel" type="object" string="Generar Excel" class="oe_highlight"/>
                     </header>
@@ -58,20 +58,20 @@
                             <page string="CTS">
                                 <field name="cts_lines">
                                     <tree editable="bottom" create="0">
-                                        <field name="nro_doc"/>
+                                        <field name="nro_doc" optional="show"/>
                                         <field name="employee_id"/>
                                         <field name="fecha_ingreso"/>
-                                        <field name="distribution_id"/>
+                                        <field name="distribution_id" optional="hide"/>
                                         <field name="basico" sum="basico"/>
                                         <field name="asignacion" sum="asignacion"/>
 
-                                        <field name="commission" sum="commission"/>
-                                        <field name="bonus" sum="bonus"/>
-                                        <field name="extra_hours" sum="extra_hours"/>
+                                        <field name="commission" sum="commission" optional="show"/>
+                                        <field name="bonus" sum="bonus" optional="show"/>
+                                        <field name="extra_hours" sum="extra_hours" optional="show"/>
 
-                                        <field name="un_sexto_grati" sum="un_sexto_grati"/>
-                                        <field name="provisiones_cts" sum="provisiones_cts"/>
-                                        <field name="total_cts" sum="total_cts"/>
+                                        <field name="un_sexto_grati" sum="un_sexto_grati" optional="show"/>
+                                        <field name="provisiones_cts" sum="provisiones_cts" optional="show"/>
+                                        <field name="total_cts" sum="total_cts" optional="hide"/>
                                         <button name="get_wizard" type="object" icon="fa-file-text-o"/>
                                     </tree>
                                 </field>
@@ -79,21 +79,21 @@
                             <page string="Gratificaciones">
                                 <field name="grati_lines">
                                     <tree editable="bottom" create="0">
-                                        <field name="nro_doc"/>
+                                        <field name="nro_doc" optional="show"/>
                                         <field name="employee_id"/>
                                         <field name="fecha_ingreso"/>
-                                        <field name="distribution_id"/>
+                                        <field name="distribution_id" optional="hide"/>
                                         <field name="basico" sum="basico"/>
                                         <field name="asignacion" sum="asignacion"/>
 
-                                        <field name="commission" sum="commission"/>
-                                        <field name="bonus" sum="bonus"/>
-                                        <field name="extra_hours" sum="extra_hours"/>
+                                        <field name="commission" sum="commission" optional="show"/>
+                                        <field name="bonus" sum="bonus" optional="show"/>
+                                        <field name="extra_hours" sum="extra_hours" optional="show"/>
 
-                                        <field name="provisiones_grati" sum="provisiones_grati"/>
-                                        <field name="boni_grati" sum="boni_grati"/>
-                                        <field name="total" sum="total"/>
-                                        <field name="total_grati" sum="total_grati"/>
+                                        <field name="provisiones_grati" sum="provisiones_grati" optional="show"/>
+                                        <field name="boni_grati" sum="boni_grati" optional="show"/>
+                                        <field name="total" sum="total" optional="show"/>
+                                        <field name="total_grati" sum="total_grati" optional="hide"/>
                                         <button name="get_wizard" type="object" icon="fa-file-text-o"/>
                                     </tree>
                                 </field>
@@ -101,19 +101,19 @@
                             <page string="Vacaciones">
                                 <field name="vaca_lines">
                                     <tree editable="bottom" create="0">
-                                        <field name="nro_doc"/>
+                                        <field name="nro_doc" optional="show"/>
                                         <field name="employee_id"/>
                                         <field name="fecha_ingreso"/>
-                                        <field name="distribution_id"/>
+                                        <field name="distribution_id" optional="hide"/>
                                         <field name="basico" sum="basico"/>
                                         <field name="asignacion" sum="asignacion"/>
 
-                                        <field name="commission" sum="commission"/>
-                                        <field name="bonus" sum="bonus"/>
-                                        <field name="extra_hours" sum="extra_hours"/>
+                                        <field name="commission" sum="commission" optional="show"/>
+                                        <field name="bonus" sum="bonus" optional="show"/>
+                                        <field name="extra_hours" sum="extra_hours" optional="show"/>
 
-                                        <field name="provisiones_vaca" sum="provisiones_vaca"/>
-                                        <field name="total_vaca" sum="total_vaca"/>
+                                        <field name="provisiones_vaca" sum="provisiones_vaca" optional="show"/>
+                                        <field name="total_vaca" sum="total_vaca" optional="hide"/>
                                         <button name="get_wizard" type="object" icon="fa-file-text-o"/>
                                     </tree>
                                 </field>

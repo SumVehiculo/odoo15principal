@@ -104,9 +104,9 @@
 				<header>
 					<button name="get_cts" string="Procesar" type="object" class="oe_highlight" states="draft"/>
 					<button name="compute_cts_line_all" string="Recalcular" type="object" states="draft"/>
-					<button name="get_excel_cts" string="Generar Excel" type="object" class="oe_highlight"/>
-					<button name="cts_by_lot" string="Certificados CTS" type="object" class="oe_highlight"/>
 					<button name="export_cts" string="Exportar CTS" type="object" class="oe_highlight" confirm="¿Esta seguro que desea exportar los montos de CTS a su respectivo Lote de Nominas?" states="draft"/>
+					<button name="cts_by_lot" string="Certificados CTS" type="object" class="oe_highlight"/>
+					<button name="get_excel_cts" string="Generar Excel" type="object" class="oe_highlight"/>
 					<button name="turn_draft" string="Volver a Borrador" type="object" class="oe_highlight" states="exported"/>
 					<field name="state" widget="statusbar"/>
 				</header>

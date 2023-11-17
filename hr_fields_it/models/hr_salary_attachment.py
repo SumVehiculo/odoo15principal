@@ -49,7 +49,7 @@ class HrSalaryAttachment(models.Model):
     # has_similar_attachment = fields.Boolean(compute='_compute_has_similar_attachment')
     # has_similar_attachment_warning = fields.Char(compute='_compute_has_similar_attachment')
 
-    enviado = fields.Boolean('Enviado', default=False)
+    enviado = fields.Boolean('Enviado', default=False, copy=False)
 
     @api.model
     def create(self, vals):
@@ -82,108 +82,50 @@ class HrSalaryAttachment(models.Model):
                 # print("write 2 partner_ids",partner_ids)
         return res
 
-    def action_invoice_sent(self):
-        # res = {}
-        self.ensure_one()
-        Employee = self.employee_id
-        data_record = self.attachment
-        ir_values = {
-            'name': '%s %s.pdf' % (self.description,Employee.name),
-            'type': 'binary',
-            'datas': data_record,
-            'store_fname': data_record,
-            'mimetype': 'application/pdf',
-            'res_model': 'hr.salary.attachment',
-        }
-        # print("ir_values",ir_values)
-        invoice_report_attachment_id = self.env['ir.attachment'].sudo().create(ir_values)
-        if invoice_report_attachment_id:
-            email_template = self.env.ref('hr_fields_it.email_template_hr_documentos')
-            # print("self.employee_id.address_home_id.email",self.employee_id.address_home_id.email)
-            if not self.employee_id.address_home_id.email:
-                raise UserError(u'El contacto del empleado %s no tiene un correo establecido' % self.employee_id.name)
-            else:
-                email = self.employee_id.address_home_id.email
-                # email = 'admin@example.com'
-            if email_template and email:
-                email_values = {
-                    'email_to': email,
-                    'email_cc': False,
-                    'scheduled_date': False,
-                    'recipient_ids': [],
-                    'partner_ids': [],
-                    'auto_delete': True,
-                }
-                email_template.attachment_ids = [(4, invoice_report_attachment_id.id)]
-                # print("email_template",email_template)
-                email_template.with_context(partner=self.employee_id.address_home_id, inv=self).send_mail(
-                    self.id, email_values=email_values, force_send=True)
-                email_template.attachment_ids = [(5, 0, 0)]
-
-                body_html = """
-                <div style="margin: 0px; padding: 0px;">
-                    <h2 style="margin:0px 0 10px 0;font-size: 1.325rem;line-height:1.2;font-weight: 600;text-align:center;color:rgb(112,141,204);text-transform:uppercase;">
-                        <b>
-                            <font class="text-primary">
-                                DOCUMENTO
-                                <br />
-                                {description}
-                            </font>
-                        </b>
-                    </h2>
-                    <hr align="left" size="1" width="100%" color="#e8e7e7" />
-                    <p>Señor(es) : {employee_id},</p>
-                    <br />
-                    <p>Por la presente les comunicamos que la empresa {company}, le ha enviado el siguiente documento:</p>
-                    <br />
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td> Empleado </td>
-                                <td> : </td>
-                                <td> {employee_id} </td>
-                            </tr>
-                            <tr>
-                                <td> DNI del Empleado </td>
-                                <td> : </td>
-                                <td> {dni} </td>
-                            </tr>
-                            <tr>
-                                <td> Fecha</td>
-                                <td> : </td>
-                                <td> {date_start} </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                """.format( description = self.description,
-                            employee_id = self.employee_id.name,
-                            company = self.company_id.name,
-                            dni = self.employee_id.identification_id,
-                            date_start = self.date_start.strftime('%d-%m-%Y')
-                            )
-                self.message_post(body=body_html, attachment_ids=[invoice_report_attachment_id.id])
-        return True
-
-    def action_send_mass_mail(self):
-        # today = fields.Date.context_today(self)
+    def send_documento_by_email(self):
         issues = []
         for documento in self:
-            # print("documento.attachment",documento.attachment)
             if not documento.enviado:
                 if not documento.attachment:
                     raise UserError(u'Este Documento %s no tiene un adjunto' % documento.description)
                 else:
+
+                    template_mail_id = self.env.ref('hr_fields_it.email_template_hr_documentos', False)
+                    attachment_ids = []
+                    Employee = documento.employee_id
+
+                    attach = {
+                        'name': '%s %s.pdf' % (documento.description,Employee.name),
+                        'type': 'binary',
+                        'datas': documento.attachment,
+                        'store_fname': documento.attachment,
+                        'mimetype': 'application/pdf',
+                        'res_model': 'mail.compose.message',
+                    }
+                    # print("ir_values",ir_values)
+                    attachment_id = self.env['ir.attachment'].sudo().create(attach)
+
+
+                    # attach = {}
+                    # attach['name'] = '%s %s.pdf' % (documento.description,Employee.name),
+                    # attach['type'] = 'binary'
+                    # attach['datas'] = documento.attachment
+                    # attach['res_model'] = 'mail.compose.message'
+                    # # print("attach", attach)
+                    # attachment_id = self.env['ir.attachment'].sudo().create(attach)
+                    attachment_ids.append(attachment_id.id)
+
                     try:
-                        documento.action_invoice_sent()
-                        documento.enviado = True
-                        # print("mail_id",mail_id)
+                        if documento.employee_id.work_email and documento.employee_id.address_home_id.email:
+                            template_mail_id.send_mail(documento.id, force_send=True, email_values={'attachment_ids': attachment_ids})
+                            # payslip.message_post_with_template(template_mail_id.id, composition_mode='comment', email_layout_xmlid="mail.mail_notification_paynow")
+                            # payslip.message_post(body=body_html, attachment_ids=attachment_ids)
+                            # payslip.enviado = True
+                            documento.enviado = True
                     except:
-                        issues.append(documento.employee_id.name)
+                        issues.append(Employee.name)
             else:
                 raise UserError(u'Este Documento %s ya ha sido enviado' % documento.description)
-
         if issues:
             return self.env['popup.it'].get_message('No se pudieron enviar los documentos de los siguientes Empleados: \n %s' % '\n'.join(issues))
         else:

@@ -117,9 +117,9 @@
 				<header>
 					<button name="get_vacation" string="Procesar" type="object" class="oe_highlight" states="draft"/>
 					<button name="compute_vaca_line_all" string="Recalcular" type="object" states="draft"/>
-<!--					<button name="get_excel_cts" string="Generar Excel" type="object" class="oe_highlight"/>-->
 					<button name="compute_fifth" string="Importar Quinta" type="object" class="oe_highlight" states="draft"/>
 					<button name="export_vacation" string="Exportar Vacaciones" type="object" class="oe_highlight" states="draft" confirm="¿Esta seguro que desea exportar los montos de Vacaciones a su respectivo Lote de Nominas?"/>
+					<button name="get_excel_vacation" string="Descargar Excel" type="object" class="oe_highlight"/>
 					<button name="turn_draft" string="Volver a Borrador" type="object" class="oe_highlight" states="exported"/>
 					<field name="state" widget="statusbar"/>
 				</header>

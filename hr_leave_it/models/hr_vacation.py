@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 from datetime import *
 from calendar import *
 from dateutil.relativedelta import relativedelta
+import base64
 
 class HrVacation(models.Model):
 	_name = 'hr.vacation'
@@ -120,7 +121,6 @@ class HrVacation(models.Model):
 					for Lot in Lots:
 						# print('Lot',Lot.name)
 						EmployeeSlips = Lot.slip_ids.filtered(lambda slip: slip.employee_id == Employee)
-						SalaryRules = EmployeeSlips.mapped('line_ids')
 						WorkedDays = EmployeeSlips.mapped('worked_days_line_ids')
 						WorkingWD =	sum(WorkedDays.filtered(lambda line: line.wd_type_id in MainParameter.working_wd_ids).mapped('number_of_days'))
 						if WorkingWD >= 30:
@@ -133,7 +133,8 @@ class HrVacation(models.Model):
 						lacks += LackWD
 					# print("lacks",lacks)
 					# print("total_dias",total_dias)
-					date_limit_to = compute_date_final
+					# date_limit_to = compute_date_final
+					date_limit_to = leave_vacations.request_date_from
 					# print('date_limit_to',date_limit_to)
 					date_limit_from = self.get_date_limit_from(date_limit_to)
 					# print('date_limit_from',date_limit_from)
@@ -191,8 +192,8 @@ class HrVacation(models.Model):
 						'workday_id': MonthSlip.contract_id.workday_id.id,
 						'distribution_id': MonthSlip.contract_id.distribution_id.name,
 						'admission_date': admission_date,
-						'compute_date_ini': compute_date,
-						'compute_date_fin': compute_date_final,
+						'compute_date_ini': leave_vacations.request_date_from,
+						'compute_date_fin': leave_vacations.request_date_to,
 						'membership_id': membership.id,
 						'months': months,
 						'days': days,
@@ -239,9 +240,112 @@ class HrVacation(models.Model):
 	def compute_fifth(self):
 		return self.line_ids.compute_quinta_line(self.payslip_run_id)
 
+	def get_excel_vacation(self):
+		import io
+		from xlsxwriter.workbook import Workbook
+		MainParameter = self.env['hr.main.parameter'].get_main_parameter()
+		route = MainParameter.dir_create_file
+
+		if not route:
+			raise UserError(u'No existe un Directorio Exportadores configurado en Parametros Principales de Nomina para su Compañía')
+		doc_name = '%s.xlsx' % ('Vacaciones')
+		workbook = Workbook(route + doc_name)
+		self.get_vacation_sheet(workbook, self.line_ids)
+		workbook.close()
+		f = open(route + doc_name, 'rb')
+		return self.env['popup.it'].get_file(doc_name, base64.encodebytes(b''.join(f.readlines())))
+
+	def get_vacation_sheet(self, workbook, lines):
+		ReportBase = self.env['report.base']
+		workbook, formats = ReportBase.get_formats(workbook)
+
+		import importlib
+		import sys
+		importlib.reload(sys)
+
+		worksheet = workbook.add_worksheet('VACACIONES')
+		worksheet.set_tab_color('yellow')
+
+		#### I'm separating this array of headers 'cause i need a dynamic limiter to set the totals at the end of the printing, i will use the HEADER variable to get the lenght and this will be my limiter'
+		HEADERS = ['NRO. DOCUMENTO', 'APELLIDO MATERNO', 'APELLIDO PATERNO', 'NOMBRES', 'FECHA INGRESO',
+				   'FECHA DE COMPUTO', 'FECHA DE CESE', 'AFILIACION', 'DISTRIBUCION ANALITICA',
+				   'MES', 'DIAS', 'FALTAS']
+
+		HEADERS_WITH_TOTAL = ['SUELDO', 'ASIGNACION FAMILIAR', 'PROMEDIO COMISION',
+							  'PROMEDIO BONIFICACION', 'PROMEDIO HRS EXTRAS', 'REMUNERACION COMPUTABLE',
+							  'MONTO POR MES', 'VAC. POR DIAS', 'VAC. DEVENGADAS',
+							  'TOTAL VAC.', 'ONP', 'AFP JUB', 'AFP SI', 'AFP COM. MIXTA',
+							  'AFP COM. FIJA', 'NETO TOTAL', 'RETENCION QUINTA', 'TOTAL A PAGAR']
+		worksheet = ReportBase.get_headers(worksheet, HEADERS + HEADERS_WITH_TOTAL, 0, 0, formats['boldbord'])
+		x, y = 1, 0
+		totals = [0] * len(HEADERS_WITH_TOTAL)
+		limiter = len(HEADERS)
+		for line in lines:
+			worksheet.write(x, 0, line.identification_id or '', formats['especial1'])
+			worksheet.write(x, 1, line.last_name or '', formats['especial1'])
+			worksheet.write(x, 2, line.m_last_name or '', formats['especial1'])
+			worksheet.write(x, 3, line.names or '', formats['especial1'])
+			worksheet.write(x, 4, line.admission_date or '', formats['reverse_dateformat'])
+			worksheet.write(x, 5, line.compute_date_ini or '', formats['reverse_dateformat'])
+			worksheet.write(x, 6, line.compute_date_fin or '', formats['reverse_dateformat'])
+			worksheet.write(x, 7, line.membership_id.name or '', formats['especial1'])
+			worksheet.write(x, 8, line.distribution_id or '', formats['especial1'])
+			worksheet.write(x, 9, line.months or 0, formats['number'])
+			worksheet.write(x, 10, line.days or 0, formats['number'])
+			worksheet.write(x, 11, line.lacks or 0, formats['number'])
+			worksheet.write(x, 12, line.wage or 0, formats['numberdos'])
+			worksheet.write(x, 13, line.household_allowance or 0, formats['numberdos'])
+			worksheet.write(x, 14, line.commission or 0, formats['numberdos'])
+			worksheet.write(x, 15, line.bonus or 0, formats['numberdos'])
+			worksheet.write(x, 16, line.extra_hours or 0, formats['numberdos'])
+			worksheet.write(x, 17, line.computable_remuneration or 0, formats['numberdos'])
+			worksheet.write(x, 18, line.months or 0, formats['numberdos'])
+			worksheet.write(x, 19, line.days or 0, formats['numberdos'])
+			worksheet.write(x, 20, line.accrued_vacation or 0, formats['numberdos'])
+			worksheet.write(x, 21, line.total_vacation or 0, formats['numberdos'])
+			worksheet.write(x, 22, line.onp or 0, formats['numberdos'])
+			worksheet.write(x, 23, line.afp_jub or 0, formats['numberdos'])
+			worksheet.write(x, 24, line.afp_si or 0, formats['numberdos'])
+			worksheet.write(x, 25, line.afp_mixed_com or 0, formats['numberdos'])
+			worksheet.write(x, 26, line.afp_fixed_com or 0, formats['numberdos'])
+			worksheet.write(x, 27, line.neto_total or 0, formats['numberdos'])
+			worksheet.write(x, 28, line.quinta or 0, formats['numberdos'])
+			worksheet.write(x, 29, line.total or 0, formats['numberdos'])
+
+			totals[0] += line.wage
+			totals[1] += line.household_allowance
+			totals[2] += line.commission
+			totals[3] += line.bonus
+			totals[4] += line.extra_hours
+			totals[5] += line.computable_remuneration
+			totals[6] += line.months
+			totals[7] += line.days
+			totals[8] += line.accrued_vacation
+			totals[9] += line.total_vacation
+			totals[10] += line.onp
+			totals[11] += line.afp_jub
+			totals[12] += line.afp_si
+			totals[13] += line.afp_mixed_com
+			totals[14] += line.afp_fixed_com
+			totals[15] += line.neto_total
+			totals[16] += line.quinta
+			totals[17] += line.total
+
+			x += 1
+		x += 1
+		for total in totals:
+			worksheet.write(x, limiter, total, formats['numbertotal'])
+			limiter += 1
+		widths = [13, 13, 13, 20, 10, 11, 11, 15, 15, 5, 5,
+				  8, 11, 16, 13, 16, 14, 16, 11, 11, 10,
+				  10, 15, 15, 15, 9, 9, 9, 8, 10, 10,
+				  10, 10, 10]
+		worksheet = ReportBase.resize_cells(worksheet, widths)
+
 class HrVacationLine(models.Model):
 	_name = 'hr.vacation.line'
 	_description = 'Vacation Line'
+	_order = 'employee_id'
 
 	vacation_id = fields.Many2one('hr.vacation', ondelete='cascade')
 	employee_id = fields.Many2one('hr.employee', string='Empleado')
@@ -251,8 +355,8 @@ class HrVacationLine(models.Model):
 	m_last_name = fields.Char(related='employee_id.m_last_name', string='Apellido Materno')
 	names = fields.Char(related='employee_id.names', string='Nombres')
 	admission_date = fields.Date(string='Fecha de Ingreso')
-	compute_date_ini = fields.Date(string='Fecha Comp Inicial')
-	compute_date_fin = fields.Date(string='Fecha Comp Final')
+	compute_date_ini = fields.Date(string='Desde')
+	compute_date_fin = fields.Date(string='Hasta')
 	membership_id = fields.Many2one(related='contract_id.membership_id', string='Afiliacion')
 	workday_id = fields.Many2one('hr.workday', string='Jornada Laboral')
 	distribution_id = fields.Char(string='Distribucion Analitica')

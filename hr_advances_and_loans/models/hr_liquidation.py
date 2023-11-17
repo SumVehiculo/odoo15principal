@@ -178,10 +178,10 @@ class HrLiquidation(models.Model):
             cts_line.amount = line.total_cts
         for line in self.vacation_line_ids:
             Slip = Lot.slip_ids.filtered(lambda slip: slip.employee_id == line.employee_id)
-            vac_line = Slip.input_line_ids.filtered(lambda inp: inp.input_type_id == MainParameter.vacation_input_id)
+            # vac_line = Slip.input_line_ids.filtered(lambda inp: inp.input_type_id == MainParameter.vacation_input_id)
             trunc_vac_line = Slip.input_line_ids.filtered(lambda inp: inp.input_type_id == MainParameter.truncated_vacation_input_id)
-            vac_line.amount = line.accrued_vacation
-            trunc_vac_line.amount = line.truncated_vacation
+            # vac_line.amount = line.accrued_vacation
+            trunc_vac_line.amount = line.total_vacation
 
         # inp_adv = MainParameter.liqui_advance_id.input_id
         # inp_loan = MainParameter.liqui_loan_id.input_id

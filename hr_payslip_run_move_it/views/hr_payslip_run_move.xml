@@ -6,11 +6,11 @@
 			<field name="model">hr.payslip.run.move</field>
 			<field name="arch" type="xml">
 				<tree create="0" edit="0" delete="0">
-					<field name="sequence"/>
-					<field name="description"/>
+					<field name="sequence" optional="hide"/>
+					<field name="description" optional="show"/>
 <!--					<field name="code"/>-->
+					<field name="account_id" optional="show"/>
 					<field name="analytic_account_id" invisible="context.get('with_analytic') == False"/>
-					<field name="account_id"/>
 					<field name="debit" sum="debit"/>
 					<field name="credit" sum="credit"/>
 				</tree>

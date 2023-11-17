@@ -294,7 +294,7 @@ class HrEmployee(models.Model):
 				[Paragraph('Motivo de Cese', style_left),Paragraph(': %s' % Last_Contract.situation_reason_id.name.title() or '', style_left),
 				 Paragraph('CTS', style_left),Paragraph('=> Años: 0 Meses: %d Dias: %d' % (Cts_Line.months or 0,Cts_Line.days or 0) or '', style_left)],
 				[Paragraph('Regimen Laboral', style_left),Paragraph(': %s' % dict(Last_Contract._fields['labor_regime'].selection).get(Last_Contract.labor_regime) or '', style_left),
-				 Paragraph('VACACIONES', style_left),Paragraph('=> Años: 0 Meses: %d Dias: %d' % (Vacation_Line.months or 0,Vacation_Line.days or 0) or '', style_left)],
+				 Paragraph('VACACIONES', style_left),Paragraph('=> Años: %d Meses: %d Dias: %d' % (Vacation_Line.months/12 if Vacation_Line.months>12 else 0,Vacation_Line.months if Vacation_Line.months<=12 else Vacation_Line.months%12,Vacation_Line.days or 0) or '', style_left)],
 				[Paragraph(u'Afiliación', style_left),Paragraph(': %s' % Last_Contract.membership_id.name or '', style_left),
 				 Paragraph('GRATIFICACION', style_left),Paragraph('=> Años: 0 Meses: %d Dias: %d' % (Gratification_Line.months or 0, Gratification_Line.days or 0) or '', style_left)]
 		]

@@ -65,7 +65,7 @@ class HrCts(models.Model):
 
 	def set_amounts(self, line_ids, Lot, MainParameter):
 		inp_cts = MainParameter.cts_input_id
-		for line in line_ids:
+		for line in line_ids.filtered(lambda linea: not linea.less_than_one_month):
 			Slip = Lot.slip_ids.filtered(lambda slip: slip.employee_id == line.employee_id)
 			cts_line = Slip.input_line_ids.filtered(lambda inp: inp.input_type_id == inp_cts)
 			cts_line.amount = line.total_cts
@@ -211,6 +211,7 @@ class HrCts(models.Model):
 class HrCtsLine(models.Model):
 	_name = 'hr.cts.line'
 	_description = 'Hr Cts Line'
+	_order = 'employee_id'
 
 	liquidation_id = fields.Many2one('hr.liquidation', ondelete='cascade')
 	cts_id = fields.Many2one('hr.cts', ondelete='cascade')
@@ -422,29 +423,28 @@ class HrCtsLine(models.Model):
 			[Paragraph('2. <u>PERIODO QUE SE LIQUIDA</u>:', styles["LeftBold"]), '', ''],
 			[Paragraph(period, styles["Tab"]), '', ''],
 			[Paragraph('3. <u>REMUNERACION COMPUTABLE</u>:', styles["LeftBold"]), '', ''],
-			[Paragraph('-  Básico', styles["Tab"]), 'S/.', Paragraph(str(self.wage), styles["Right"])],
-			[Paragraph('-  Asignación Familiar', styles["Tab"]), 'S/.', Paragraph(str(self.household_allowance), styles["Right"])],
-			[Paragraph('-  Horas Extra', styles["Tab"]), 'S/.', Paragraph(str(self.extra_hours), styles["Right"])],
-			[Paragraph('-  Gratificaciones', styles["Tab"]), 'S/.', Paragraph(str(self.sixth_of_gratification), styles["Right"])],
-			[Paragraph('-  Bonificación', styles["Tab"]), 'S/.', Paragraph(str(self.bonus), styles["Right"])],
-			[Paragraph('-  Comisión', styles["Tab"]), 'S/.', Paragraph(str(self.commission), styles["Right"])],
-			[Paragraph('-  Feriados Trabajados', styles["Tab"]), 'S/.', Paragraph('0.0', styles["Right"])]
+			[Paragraph('-  Básico', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.wage or 0.00), styles["Right"])],
+			[Paragraph('-  Asignación Familiar', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.household_allowance or 0.00), styles["Right"])],
+			[Paragraph('-  Horas Extra', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.extra_hours or 0.00), styles["Right"])],
+			[Paragraph('-  Gratificaciones', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.sixth_of_gratification or 0.00), styles["Right"])],
+			[Paragraph('-  Bonificación', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.bonus or 0.00), styles["Right"])],
+			[Paragraph('-  Comisión', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.commission or 0.00), styles["Right"])],
 		]
 
-		datat += [[Paragraph('TOTAL', styles["RightBold"]), 'S/.', Paragraph(str(self.computable_remuneration), styles["RightBold"])],
+		datat += [[Paragraph('TOTAL', styles["RightBold"]), 'S/.', Paragraph('{:,.2f}'.format(self.computable_remuneration or 0.00), styles["RightBold"])],
 				  [Paragraph('<u>CALCULO</u>', styles["LeftBold"]), '', ''],
 				  [Paragraph('  -  Por los meses completos:', styles["LeftBold"]), '', ''],
-				  [Paragraph("S/. {0} ÷ 12 x {1} mes(es)".format(self.computable_remuneration, self.months), styles["Tab"]),
-				   'S/.', Paragraph(str(self.cts_per_month), styles["Right"])],
+				  [Paragraph("S/. %s ÷ 12 x %d mes(es)" % ('{:,.2f}'.format(self.computable_remuneration or 0.00), self.months or 0), styles["Tab"]),
+				   'S/.', Paragraph('{:,.2f}'.format(self.cts_per_month or 0.00), styles["Right"])],
 				  [Paragraph('  -  Por los dias completos:', styles["LeftBold"]), '', ''],
-				  [Paragraph("S/. {0} ÷ 12 ÷ 30 x {1} día(s)".format(self.computable_remuneration, self.days), styles["Tab"]),
-				   'S/.', Paragraph(str(self.cts_per_day), styles["Right"])],
+				  [Paragraph("S/. %s ÷ 12 ÷ 30 x %d día(s)" % ('{:,.2f}'.format(self.computable_remuneration or 0.00), self.days or 0), styles["Tab"]),
+				   'S/.', Paragraph('{:,.2f}'.format(self.cts_per_day or 0.00), styles["Right"])],
 				  [Paragraph('  -  Faltas:', styles["LeftBold"]), '', ''],
-				  [Paragraph("S/. {0} ÷ 12 ÷ 30 x {1} día(s)".format(self.computable_remuneration, self.lacks), styles["Tab"]),
-				   'S/. ', Paragraph(str(-self.amount_per_lack), styles["Right"])],
-				  [Paragraph('  -  Interes CTS:', styles["LeftBold"]), 'S/. ', Paragraph(str(self.cts_interest), styles["Right"])],
-				  [Paragraph('  -  Otros Descuentos:', styles["LeftBold"]), 'S/. ', Paragraph(str(-self.other_discounts), styles["Right"])],
-				  [Paragraph('TOTAL', styles["RightBold"]), 'S/.', Paragraph(str(self.cts_soles), styles["RightBold"])],
+				  [Paragraph("S/. %s ÷ 12 ÷ 30 x %d día(s)" % ('{:,.2f}'.format(self.computable_remuneration or 0.00), self.lacks or 0), styles["Tab"]),
+				   'S/. ', Paragraph('{:,.2f}'.format(-self.amount_per_lack or 0.00), styles["Right"])],
+				  [Paragraph('  -  Interes CTS:', styles["LeftBold"]), 'S/. ', Paragraph('{:,.2f}'.format(self.cts_interest or 0.00), styles["Right"])],
+				  [Paragraph('  -  Otros Descuentos:', styles["LeftBold"]), 'S/. ', Paragraph('{:,.2f}'.format(-self.other_discounts or 0.00), styles["Right"])],
+				  [Paragraph('TOTAL', styles["RightBold"]), 'S/.', Paragraph('{:,.2f}'.format(self.total_cts or 0.00), styles["RightBold"])],
 				  ['', '', ''], ]
 
 		table2 = Table(datat, colWidths=[350, 20, 80])

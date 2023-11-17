@@ -61,10 +61,10 @@ class HrLiquidation(models.Model):
             cts_line.amount = line.total_cts
         for line in self.vacation_line_ids:
             Slip = Lot.slip_ids.filtered(lambda slip: slip.employee_id == line.employee_id)
-            vac_line = Slip.input_line_ids.filtered(lambda inp: inp.input_type_id == MainParameter.vacation_input_id)
+            # vac_line = Slip.input_line_ids.filtered(lambda inp: inp.input_type_id == MainParameter.vacation_input_id)
             trunc_vac_line = Slip.input_line_ids.filtered(lambda inp: inp.input_type_id == MainParameter.truncated_vacation_input_id)
-            vac_line.amount = line.accrued_vacation
-            trunc_vac_line.amount = line.truncated_vacation
+            # vac_line.amount = line.accrued_vacation
+            trunc_vac_line.amount = line.total_vacation
 
         for line in self.liq_ext_concept_ids:
             Slip = Lot.slip_ids.filtered(lambda slip: slip.employee_id == line.employee_id)
@@ -137,153 +137,146 @@ class HrLiquidation(models.Model):
 
         for Employee in Employees:
             # print('empleados',Employee.name)
-            bonus_months = months = days = lacks = 0
-            Commissions = Bonus = ExtraHours = self.env['hr.payslip.line']
-            # print('comisiones',Commissions)
             MonthSlip = MonthLot.slip_ids.filtered(lambda slip: slip.employee_id == Employee)
-            # print('MonthSlip',MonthSlip)
             admission_date = self.env['hr.contract'].get_first_contract(Employee, MonthSlip.contract_id).date_start
-            # print('admission_date',admission_date)
-            compute_date = date(year, admission_date.month, admission_date.day)
-            # print("date",year, admission_date.month, admission_date.day)
-            # print('compute_date',compute_date)
-            # wage = MonthSlip.line_ids.filtered(lambda line: line.salary_rule_id == MainParameter.basic_sr_id).total
-            # wage= MonthSlip.contract_id.wage
-            wage= MonthSlip.wage
-            # print('wage',wage)
-            household_allowance = MonthSlip.line_ids.filtered(lambda line: line.salary_rule_id == MainParameter.household_allowance_sr_id).total
-            # print('household_allowance',household_allowance)
-            compute_payslip_date = date(compute_date.year, compute_date.month, 1)
-            # print('compute_payslip_date',compute_payslip_date)
-            # print('MonthSlip.date_to',MonthSlip.date_to)
-            Lots = self.env['hr.payslip.run'].search([('date_start', '>=', compute_payslip_date),
-                                                      ('date_end', '<=', MonthSlip.date_to)])
-            # print('Lots primero',Lots)
-            for Lot in Lots:
-                # print('Lot',Lot.name)
-                EmployeeSlips = Lot.slip_ids.filtered(lambda slip: slip.employee_id == Employee)
-                SalaryRules = EmployeeSlips.mapped('line_ids')
-                WorkedDays = EmployeeSlips.mapped('worked_days_line_ids')
-                WorkingWD =	sum(WorkedDays.filtered(lambda line: line.wd_type_id in MainParameter.working_wd_ids).mapped('number_of_days'))
-                if WorkingWD >= 30:
-                    months += 1
-                else:
-                    days += WorkingWD
+            if admission_date <= MonthSlip.date_from:
+                bonus_months = months = days = lacks = 0
+                Commissions = Bonus = ExtraHours = self.env['hr.payslip.line']
+                # print('comisiones',Commissions)
+                compute_date = date(year, admission_date.month, admission_date.day)
+                # print('compute_date',compute_date)
+                # wage = MonthSlip.line_ids.filtered(lambda line: line.salary_rule_id == MainParameter.basic_sr_id).total
+                # wage= MonthSlip.contract_id.wage
+                wage= MonthSlip.wage
+                # print('wage',wage)
+                household_allowance = MonthSlip.line_ids.filtered(lambda line: line.salary_rule_id == MainParameter.household_allowance_sr_id).total
+                # print('household_allowance',household_allowance)
+                compute_payslip_date = date(compute_date.year, compute_date.month, 1)
+                # print('compute_payslip_date',compute_payslip_date)
+                Lots = self.env['hr.payslip.run'].search([('date_start', '>=', compute_payslip_date),
+                                                          ('date_end', '<=', MonthSlip.date_to)])
+                # print('Lots primero',Lots)
+                for Lot in Lots:
+                    EmployeeSlips = Lot.slip_ids.filtered(lambda slip: slip.employee_id == Employee)
+                    SalaryRules = EmployeeSlips.mapped('line_ids')
+                    WorkedDays = EmployeeSlips.mapped('worked_days_line_ids')
+                    WorkingWD =	sum(WorkedDays.filtered(lambda line: line.wd_type_id in MainParameter.working_wd_ids).mapped('number_of_days'))
+                    if WorkingWD >= 30:
+                        months += 1
+                    else:
+                        days += WorkingWD
 
-                LackWD = sum(WorkedDays.filtered(lambda line: line.wd_type_id == MainParameter.lack_wd_id).mapped('number_of_days'))
-                lacks += LackWD
-            # print("lacks",lacks)
-            # print("meses",months)
-            # print("days",days)
-            date_limit_to = MonthSlip.contract_id.date_end
-            # print('date_limit_to',date_limit_to)
-            date_limit_from = self.get_date_limit_from(date_limit_to)
-            # print('date_limit_from',date_limit_from)
-            Lots = self.env['hr.payslip.run'].search([('date_start', '>=', date_limit_from),
-                                                      ('date_end', '<=', date_limit_to)])
-            # print('Lots',Lots)
-            bonus_months = len(Lots.mapped('slip_ids').filtered(lambda slip: slip.employee_id == Employee))
-            for Lot in Lots:
-                # print('Lot',Lot.name)
-                EmployeeSlips = Lot.slip_ids.filtered(lambda slip: slip.employee_id == Employee)
-                SalaryRules = EmployeeSlips.mapped('line_ids')
-                Commissions += SalaryRules.filtered(lambda line: line.salary_rule_id in MainParameter.commission_sr_ids and line.total > 0)
-                Bonus += SalaryRules.filtered(lambda line: line.salary_rule_id in MainParameter.bonus_sr_ids and line.total > 0)
-                ExtraHours += SalaryRules.filtered(lambda line: line.salary_rule_id == MainParameter.extra_hours_sr_id and line.total > 0)
-            # 	months += 1
-            # print("month",months)
-            commission = MainParameter.calculate_bonus(admission_date, date_limit_from, bonus_months, Commissions)
-            bonus = MainParameter.calculate_bonus(admission_date, date_limit_from, bonus_months, Bonus)
-            extra_hours = MainParameter.calculate_bonus(admission_date, date_limit_from, bonus_months, ExtraHours)
-            computable_remuneration = wage + household_allowance + commission + bonus + extra_hours
-            medical_days, excess_medical_rest = MainParameter.calculate_excess_medical_rest(year, Employee)
-            # print('computable_remuneration',computable_remuneration)
-            days = days + medical_days
-            # print('days',days)
-            if days >= 30:
-                days, months = MainParameter.get_months_of_30_days(days, months)
-            # print('days: ',days,'    months:',months)
-            amount_per_month = computable_remuneration/12 if MonthSlip.contract_id.labor_regime == 'general' else computable_remuneration/24
-            # print('amount_per_month',amount_per_month)
-            amount_per_day = amount_per_month/30
-            # print('amount_per_day',amount_per_day)
-            amount_per_lack = amount_per_day * lacks
-            vacation_per_month = ReportBase.custom_round(amount_per_month * months, 2)
-            # print('vacation_per_month',vacation_per_month)
-            vacation_per_day = ReportBase.custom_round(amount_per_day * days, 2)
-            # print('vacation_per_day',vacation_per_day)
-            truncated_vacation = ReportBase.custom_round((vacation_per_month + vacation_per_day) - amount_per_lack, 2)
-            total_vacation = truncated_vacation
-            # print('vacacion trunca',total_vacation)
-            membership = MonthSlip.contract_id.membership_id
-            onp = afp_jub = afp_si = afp_mixed_com = afp_fixed_com = 0
-            if membership.is_afp:
-                afp_jub = ReportBase.custom_round(membership.retirement_fund/100 * total_vacation, 2)
-                afp_si = ReportBase.custom_round(membership.prima_insurance/100 * total_vacation, 2)
-                if MonthSlip.contract_id.commision_type == 'mixed':
-                    afp_mixed_com = ReportBase.custom_round(membership.mixed_commision/100 * total_vacation, 2)
-                    afp_fixed_com =0
-                elif MonthSlip.contract_id.commision_type == 'flow':
-                    afp_fixed_com = ReportBase.custom_round(membership.fixed_commision /100 * total_vacation, 2)
-                    afp_mixed_com =0
-            else:
-                onp = ReportBase.custom_round(membership.retirement_fund/100 * total_vacation, 2)
-            total = ReportBase.custom_round(total_vacation - afp_jub - afp_si - afp_mixed_com - afp_fixed_com - onp, 2)
-            vals = {
-                'liquidation_id': self.id,
-                'employee_id': Employee.id,
-                'contract_id': MonthSlip.contract_id.id,
-                'distribution_id': MonthSlip.contract_id.distribution_id.name,
-                'admission_date': admission_date,
-                'compute_date': compute_date,
-                'cessation_date': MonthSlip.contract_id.date_end,
-                'membership_id': membership.id,
-                'months': months,
-                'days': days,
-                'lacks': lacks,
-                'wage': wage,
-                'household_allowance': household_allowance,
-                'commission': commission,
-                'bonus': bonus,
-                'extra_hours': extra_hours,
-                'computable_remuneration': computable_remuneration,
-                'amount_per_month': amount_per_month,
-                'amount_per_day': amount_per_day,
-                'vacation_per_month': vacation_per_month,
-                'vacation_per_day': vacation_per_day,
-                'truncated_vacation': truncated_vacation,
-                'total_vacation': total_vacation,
-                'onp': onp,
-                'afp_jub': afp_jub,
-                'afp_si': afp_si,
-                'afp_mixed_com': afp_mixed_com,
-                'afp_fixed_com': afp_fixed_com,
-                'total': total
-            }
-            self.env['hr.liquidation.vacation.line'].create(vals)
+                    LackWD = sum(WorkedDays.filtered(lambda line: line.wd_type_id == MainParameter.lack_wd_id).mapped('number_of_days'))
+                    lacks += LackWD
+                # print("lacks",lacks)
+                # print("meses",months)
+                # print("days",days)
+                date_limit_to = MonthSlip.contract_id.date_end
+                # print('date_limit_to',date_limit_to)
+                date_limit_from = self.get_date_limit_from(date_limit_to)
+                # print('date_limit_from',date_limit_from)
+                Lots = self.env['hr.payslip.run'].search([('date_start', '>=', date_limit_from),
+                                                          ('date_end', '<=', date_limit_to)])
+                # print('Lots',Lots)
+                bonus_months = len(Lots.mapped('slip_ids').filtered(lambda slip: slip.employee_id == Employee))
+                for Lot in Lots:
+                    # print('Lot',Lot.name)
+                    EmployeeSlips = Lot.slip_ids.filtered(lambda slip: slip.employee_id == Employee)
+                    SalaryRules = EmployeeSlips.mapped('line_ids')
+                    Commissions += SalaryRules.filtered(lambda line: line.salary_rule_id in MainParameter.commission_sr_ids and line.total > 0)
+                    Bonus += SalaryRules.filtered(lambda line: line.salary_rule_id in MainParameter.bonus_sr_ids and line.total > 0)
+                    ExtraHours += SalaryRules.filtered(lambda line: line.salary_rule_id == MainParameter.extra_hours_sr_id and line.total > 0)
+                # 	months += 1
+                # print("month",months)
+                commission = MainParameter.calculate_bonus(admission_date, date_limit_from, bonus_months, Commissions)
+                bonus = MainParameter.calculate_bonus(admission_date, date_limit_from, bonus_months, Bonus)
+                extra_hours = MainParameter.calculate_bonus(admission_date, date_limit_from, bonus_months, ExtraHours)
+                computable_remuneration = wage + household_allowance + commission + bonus + extra_hours
+                medical_days, excess_medical_rest = MainParameter.calculate_excess_medical_rest(year, Employee)
+                # print('computable_remuneration',computable_remuneration)
+                days = days + medical_days
+                # print('days',days)
+                if days >= 30:
+                    days, months = MainParameter.get_months_of_30_days(days, months)
+                # print('days: ',days,'    months:',months)
+                amount_per_month = computable_remuneration/12 if MonthSlip.contract_id.labor_regime == 'general' else computable_remuneration/24
+                # print('amount_per_month',amount_per_month)
+                amount_per_day = amount_per_month/30
+                # print('amount_per_day',amount_per_day)
+                amount_per_lack = amount_per_day * lacks
+                vacation_per_month = ReportBase.custom_round(amount_per_month * months, 2)
+                # print('vacation_per_month',vacation_per_month)
+                vacation_per_day = ReportBase.custom_round(amount_per_day * days, 2)
+                # print('vacation_per_day',vacation_per_day)
+                truncated_vacation = ReportBase.custom_round((vacation_per_month + vacation_per_day) - amount_per_lack, 2)
+                total_vacation = truncated_vacation
+                # print('vacacion trunca',total_vacation)
+                membership = MonthSlip.contract_id.membership_id
+                onp = afp_jub = afp_si = afp_mixed_com = afp_fixed_com = 0
+                if membership.is_afp:
+                    afp_jub = ReportBase.custom_round(membership.retirement_fund/100 * total_vacation, 2)
+                    afp_si = ReportBase.custom_round(membership.prima_insurance/100 * total_vacation, 2)
+                    if MonthSlip.contract_id.commision_type == 'mixed':
+                        afp_mixed_com = ReportBase.custom_round(membership.mixed_commision/100 * total_vacation, 2)
+                        afp_fixed_com =0
+                    elif MonthSlip.contract_id.commision_type == 'flow':
+                        afp_fixed_com = ReportBase.custom_round(membership.fixed_commision /100 * total_vacation, 2)
+                        afp_mixed_com =0
+                else:
+                    onp = ReportBase.custom_round(membership.retirement_fund/100 * total_vacation, 2)
+                total = ReportBase.custom_round(total_vacation - afp_jub - afp_si - afp_mixed_com - afp_fixed_com - onp, 2)
+                vals = {
+                    'liquidation_id': self.id,
+                    'employee_id': Employee.id,
+                    'contract_id': MonthSlip.contract_id.id,
+                    'distribution_id': MonthSlip.contract_id.distribution_id.name,
+                    'admission_date': admission_date,
+                    'compute_date': compute_date,
+                    'cessation_date': MonthSlip.contract_id.date_end,
+                    'membership_id': membership.id,
+                    'months': months,
+                    'days': days,
+                    'lacks': lacks,
+                    'wage': wage,
+                    'household_allowance': household_allowance,
+                    'commission': commission,
+                    'bonus': bonus,
+                    'extra_hours': extra_hours,
+                    'computable_remuneration': computable_remuneration,
+                    'amount_per_month': amount_per_month,
+                    'amount_per_day': amount_per_day,
+                    'vacation_per_month': vacation_per_month,
+                    'vacation_per_day': vacation_per_day,
+                    'truncated_vacation': truncated_vacation,
+                    'total_vacation': total_vacation,
+                    'onp': onp,
+                    'afp_jub': afp_jub,
+                    'afp_si': afp_si,
+                    'afp_mixed_com': afp_mixed_com,
+                    'afp_fixed_com': afp_fixed_com,
+                    'total': total
+                }
+                self.env['hr.liquidation.vacation.line'].create(vals)
 
     def get_extra_concepts_lines(self):
         MonthLot = self.payslip_run_id
-        Employees = MonthLot.slip_ids.filtered(lambda slip: slip.contract_id.labor_regime in ['general', 'small'] and
-                                                            slip.contract_id.situation_id.code == '0' and
-                                                            slip.date_from <= slip.contract_id.date_end and
-                                                            slip.date_to >= slip.contract_id.date_end).mapped(
-            'employee_id')
-        self.employee_ids = [(6, 0, Employees.ids)]
-        Employees = MonthLot.slip_ids.filtered(lambda slip: slip.contract_id.labor_regime in ['general', 'small'] and
+
+        Employees = MonthLot.slip_ids.filtered(lambda slip: slip.contract_id.labor_regime in ['general', 'small','micro'] and
                                                             slip.contract_id.situation_id.code == '0' and
                                                             slip.date_from <= slip.contract_id.date_end and
                                                             slip.date_to >= slip.contract_id.date_end and
                                                             not slip.contract_id.less_than_four).mapped('employee_id')
+        self.employee_ids = [(6, 0, Employees.ids)]
         for Employee in Employees:
             Contract = MonthLot.mapped('slip_ids').filtered(lambda slip: slip.employee_id == Employee).contract_id
             admission_date = self.env['hr.contract'].get_first_contract(Employee, Contract).date_start
-            vals = {'liquidation_id': self.id,
-                    'employee_id': Employee.id,
-                    'contract_id': Contract.id,
-                    'admission_date': admission_date,
-                    'cessation_date': Contract.date_end}
-            self.env['hr.liquidation.extra_concepts'].create(vals)
+            if admission_date <= MonthLot.date_start:
+                vals = {'liquidation_id': self.id,
+                        'employee_id': Employee.id,
+                        'contract_id': Contract.id,
+                        'admission_date': admission_date,
+                        'cessation_date': Contract.date_end}
+                self.env['hr.liquidation.extra_concepts'].create(vals)
 
     def get_liquidation(self):
         # self.gratification_line_ids.unlink()
@@ -308,8 +301,7 @@ class HrLiquidation(models.Model):
         #         'employee_id': emp.id,
         #     })
 
-        preservados = self.env['hr.gratification.line'].search(
-            [('liquidation_id', '=', self.id), ('preserve_record', '=', True)])
+        preservados = self.env['hr.gratification.line'].search([('liquidation_id', '=', self.id), ('preserve_record', '=', True)])
         empleados_pre = []
         for j in preservados:
             if j.employee_id.id not in empleados_pre:
@@ -349,8 +341,7 @@ class HrLiquidation(models.Model):
         for l in eliminar:
             l.unlink()
 
-        preservados = self.env['hr.liquidation.extra_concepts'].search(
-            [('liquidation_id', '=', self.id), ('preserve_record', '=', True)])
+        preservados = self.env['hr.liquidation.extra_concepts'].search([('liquidation_id', '=', self.id), ('preserve_record', '=', True)])
         empleados_pre = []
         for j in preservados:
             if j.employee_id.id not in empleados_pre:
@@ -515,6 +506,7 @@ class HrLiquidation(models.Model):
 class HrLiquidationVacationLine(models.Model):
     _name = 'hr.liquidation.vacation.line'
     _description = 'Liquidation Vacation Line'
+    _order = 'employee_id'
 
     liquidation_id = fields.Many2one('hr.liquidation', ondelete='cascade')
     employee_id = fields.Many2one('hr.employee', string='Empleado')
@@ -612,6 +604,7 @@ class HrLiquidationVacationLine(models.Model):
 class HrLiquidationExtraConcepts(models.Model):
     _name = 'hr.liquidation.extra_concepts'
     _description = 'Hr Liquidation Extra Concepts'
+    _order = 'employee_id'
 
     liquidation_id = fields.Many2one('hr.liquidation', ondelete='cascade')
     employee_id = fields.Many2one('hr.employee', string='Empleado')

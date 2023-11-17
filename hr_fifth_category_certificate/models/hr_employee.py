@@ -37,10 +37,9 @@ from (select hpl.employee_id,
       from hr_payslip_line hpl
                inner join hr_payslip hp on hp.id = hpl.slip_id
       where hpl.date_from >= '{0}'
---        and hpl.date_from < '{1}'
         and hpl.employee_id = {1}
         and hpl.salary_rule_id in ({2},{3})
-		and hp.company_id < {4}
+		and hp.company_id = {4}
         and hp.payslip_run_id is not null)T
 group by T.employee_id
 				""".format(date_from, self.id,
@@ -59,7 +58,6 @@ group by T.employee_id
 		if grat_july:
 			grat_july_total=(grat_july.total_grat+grat_july.bonus_essalud)
 		else:
-			# grat_july=last_contract.grat_july_proyected
 			grat_july_total=0
 
 		grat_december = self.env['hr.gratification.line'].search([
@@ -88,10 +86,9 @@ from (select hpl.employee_id,
       from hr_payslip_line hpl
                inner join hr_payslip hp on hp.id = hpl.slip_id
       where hpl.date_from >= '{0}'
---        and hpl.date_from < '{1}'
         and hpl.employee_id = {1}
         and hpl.salary_rule_id = {2}
-        and hp.company_id < {3}
+        and hp.company_id = {3}
         and hp.payslip_run_id is not null)T
 group by T.employee_id
 				""".format(date_from, self.id, sr_quinta_id.id,  self.env.company.id)

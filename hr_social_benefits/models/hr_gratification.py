@@ -207,6 +207,7 @@ class HrGratification(models.Model):
 class HrGratificationLine(models.Model):
 	_name = 'hr.gratification.line'
 	_description = 'Gratification Line'
+	_order = 'employee_id'
 
 	liquidation_id = fields.Many2one('hr.liquidation', ondelete='cascade', string='Periodo')
 	gratification_id = fields.Many2one('hr.gratification', ondelete='cascade')

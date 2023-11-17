@@ -55,12 +55,22 @@ class HrRestImport(models.TransientModel):
 			else:
 				line = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
 
-				if str(line[0])[-2:]=='.0':
-					year = str(line[0])[:-2]
+				# if str(line[0])[-2:]=='.0':
+				# 	year = str(line[0])[:-2]
+				# else:
+				# 	year = str(line[0])
+				# date_time_str = year+'-01-01 00:00:00'
+				# date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
+				if line[0] == '':
+					raise UserError(_('Por favor Ingrese una fecha'))
 				else:
-					year = str(line[0])
-				date_time_str = year+'-01-01 00:00:00'
-				date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
+					a1 = int(float(line[0]))
+					as_datetime = datetime(*xlrd.xldate_as_tuple(a1, workbook.datemode))
+					date_time_obj = as_datetime.date().strftime('%Y-%m-%d')
+
+				# date_time_obj = line[0]
+				# date_time_obj = datetime.strptime(date_time_obj, '%Y-%m-%d')
+				# print("date_time_obj",date_time_obj)
 
 				if str(line[1])[-2:]=='.0':
 					cad = str(line[1])[:-2]
@@ -75,38 +85,38 @@ class HrRestImport(models.TransientModel):
 				empl_exist = self.env['hr.employee'].search([('identification_id','=',cad),('company_id','=',self.env.company.id)])
 				
 				if not empl_exist:
-					caderror=caderror+'No existe el documento:' +cad+'\n'
+					caderror=caderror+'No existe el documento: ' +cad+'\n'
 					continue
 				if int(caddays)<0:
 					# print("caddays",caddays)
 					vals={
 						'employee_id':empl_exist.id,
-						'date_aplication':date_time_obj.date(),
-						'date_from':date_time_obj.date(),
-						'date_end':date_time_obj.date(),
+						'date_aplication':date_time_obj,
+						'date_from':date_time_obj,
+						'date_end':date_time_obj,
 						'internal_motive':'rest',
 						'motive':'Saldo Ajuste Adelantos',
 						'days':0,
 						'days_rest':int(caddays),
 						'amount':0,
 						'amount_rest':float(line[3]) if line[3] else 0,
-						'year':year,
+						'year':date_time_obj[0:4],
 						'company_id':self.env.company.id
 					}
 					self.env['hr.vacation.rest'].create(vals)
 				else:
 					vals={
 						'employee_id':empl_exist.id,
-						'date_aplication':date_time_obj.date(),
-						'date_from':date_time_obj.date(),
-						'date_end':date_time_obj.date(),
+						'date_aplication':date_time_obj,
+						'date_from':date_time_obj,
+						'date_end':date_time_obj,
 						'internal_motive':'rest',
 						'motive':'Saldo acumulado anterior',
 						'days':0,
 						'days_rest':int(caddays),
 						'amount':0,
 						'amount_rest':float(line[3]) if line[3] else 0,
-						'year':year,
+						'year':date_time_obj[0:4],
 						'company_id':self.env.company.id
 					}
 					self.env['hr.vacation.rest'].create(vals)

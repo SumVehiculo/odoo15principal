@@ -16,7 +16,7 @@ class HrPayslipRunMove(models.Model):
 	account_id = fields.Many2one('account.account', string='Cuenta Contable')
 	debit = fields.Float(string='Debe')
 	credit = fields.Float(string='Haber')
-	partner_id = fields.Many2one('res.partner','Socio')
+	partner_id = fields.Many2one('res.partner','Empleado')
 
 	# def init(self):
 	# 	tools.drop_view_if_exists(self.env.cr, self._table)

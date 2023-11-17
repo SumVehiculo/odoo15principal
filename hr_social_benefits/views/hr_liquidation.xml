@@ -146,8 +146,8 @@
 				<header>
 					<button name="get_liquidation" string="Procesar" type="object" class="oe_highlight" states="draft"/>
 					<button name="compute_liquidation_all" string="Recalcular" type="object" states="draft"/>
-					<button name="get_excel_liquidation" string="Generar Excel" type="object" class="oe_highlight"/>
 					<button name="export_liquidation" string="Exportar Liquidacion" type="object" class="oe_highlight" confirm="¿Esta seguro que desea exportar los montos de Liquidacion a su respectivo Lote de Nominas?" states="draft"/>
+					<button name="get_excel_liquidation" string="Generar Excel" type="object" class="oe_highlight"/>
 					<button name="turn_draft" string="Volver a Borrador" type="object" class="oe_highlight" states="exported"/>
 					<field name="state" widget="statusbar"/>
 				</header>

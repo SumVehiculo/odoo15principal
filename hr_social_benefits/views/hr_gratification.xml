@@ -92,9 +92,9 @@
 				<header>
 					<button name="get_gratification" string="Procesar" type="object" class="oe_highlight" states="draft"/>
 					<button name="compute_grati_line_all" string="Recalcular" type="object" states="draft"/>
-					<button name="get_excel_gratification" string="Generar Excel" type="object" class="oe_highlight"/>
-					<button name="grati_by_lot" string="Boletas Gratificacion" type="object" class="oe_highlight"/>
 					<button name="export_gratification" string="Exportar Gratificacion" type="object" class="oe_highlight" states="draft" confirm="¿Esta seguro que desea exportar los montos de Gratificacion a su respectivo Lote de Nominas?"/>
+					<button name="grati_by_lot" string="Boletas Gratificacion" type="object" class="oe_highlight"/>
+					<button name="get_excel_gratification" string="Generar Excel" type="object" class="oe_highlight"/>
 					<button name="turn_draft" string="Volver a Borrador" type="object" class="oe_highlight" states="exported"/>
 					<field name="state" widget="statusbar"/>
 				</header>

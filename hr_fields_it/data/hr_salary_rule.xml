@@ -575,7 +575,7 @@ result = TINGR - TDES
 			<field name='struct_id' ref='hr_base_it.base_structure'/>
 		</record>
 		<record model='hr.salary.rule' id="salary_rule_AESSALUD">
-			<field name='name'>Afectos Essalud</field>
+			<field name='name'>Ingresos Afectos Essalud</field>
 			<field name='code'>AESSALUD</field>
 			<field name='sunat_code'></field>
 			<field name='sequence'>88</field>

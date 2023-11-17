@@ -230,16 +230,14 @@ class HrLeaveIt(models.Model):
 
     # envio de data a nomina central
     def prepare_suspension_data(self,contract_id):
-        vals={}
-        if self.work_suspension_id:
-            vals = {
-                'suspension_type_id': self.work_suspension_id.id,
-                'reason': self.leave_type_id.ausencia_wd_id.name,
-                'days': self.number_of_days,
-                'payslip_run_id': self.payslip_run_id.id,
-                'leave_id': self.id,
-                'contract_id': contract_id.id,
-            }
+        vals = {
+            'suspension_type_id': self.work_suspension_id.id,
+            'reason': self.leave_type_id.ausencia_wd_id.name,
+            'days': self.number_of_days,
+            'payslip_run_id': self.payslip_run_id.id,
+            'leave_id': self.id,
+            'contract_id': contract_id.id,
+        }
         return vals
 
     def prepare_payslip_data(self,slip):
@@ -258,12 +256,14 @@ class HrLeaveIt(models.Model):
     def send_data_to_payslip(self):
         MainParameter = self.env['hr.main.parameter'].get_main_parameter()
         for l in self:
+            if not l.payslip_run_id:
+                raise UserError(u'La ausencia %s de %s no tiene asignada una planilla Mensual' % (l.name, l.employee_id.name))
             if l.payslip_status == False:
                 if l.state=='validate':
                     slip = self.env['hr.payslip'].search([('payslip_run_id','=',l.payslip_run_id.id),('employee_id','=',l.employee_id.id)])
                     if len(slip)==0:
-                        raise UserError(u'El empleado seleccionado no existe en la nómina de ese periodo')
-                    if l.leave_type_id.ausencia_wd_id:
+                        raise UserError(u'El empleado %s no existe en la Planilla de %s' % (l.employee_id.name,l.payslip_run_id.name.name))
+                    if l.work_suspension_id:
                         vals = l.prepare_suspension_data(slip.contract_id)
                         # print("vals",vals)
                         self.env['hr.work.suspension'].create(vals)
@@ -287,8 +287,6 @@ class HrLeaveIt(models.Model):
                             dia_line.number_of_days = 30-sum(total_dias_vaca)-sum(total_dias_dm)
 
                     elif l.work_suspension_id.id == MainParameter.suspension_dm_type_id.id:
-                        # vals=l.prepare_payslip_data(slip)
-                        # print("slip",slip)
                         total_dias_vaca = self.env['hr.accrual.vacation'].search([('slip_id', '=', slip.id)]).mapped('days')
                         total_dias_dm = self.env['hr.work.suspension'].search([('payslip_run_id', '=', l.payslip_run_id.id),('contract_id', '=',l.contract_id.id),('suspension_type_id', '=',MainParameter.suspension_dm_type_id.id)]).mapped('days')
                         # print("total_dias_dm",total_dias_dm)
@@ -300,6 +298,12 @@ class HrLeaveIt(models.Model):
                         vaca_line.number_of_days = sum(total_dias_vaca)
                         dm_line.number_of_days = sum(total_dias_dm)
                         dia_line.number_of_days = 30-sum(total_dias_vaca)-sum(total_dias_dm)
+                    elif not l.work_suspension_id.id:
+                        vals=l.prepare_payslip_data(slip)
+                        # print(vals)
+                        self.env['hr.accrual.vacation'].create(vals)
+                        wd_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == l.leave_type_id.ausencia_wd_id)
+                        wd_line.number_of_days = l.number_of_days
                     else:
                         DIAS_FAL = slip.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_dnlab.mapped('code')).mapped('code')
                         dia_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.payslip_working_wd)
@@ -310,8 +314,10 @@ class HrLeaveIt(models.Model):
                             wd_line.number_of_days = l.number_of_days
                             dia_line.number_of_days = 30 - l.number_of_days
                     l.payslip_status = True
+                else:
+                    raise UserError(u'Para reportar a la planilla, primero debe de confirmar esta ausencia: %s de %s.' % (l.name, l.employee_id.name))
             else:
-                raise UserError(u'Esta ausencia %s de %s ya fue enviada a la planilla Mensual' % (l.name, l.employee_id.name))
+                raise UserError(u'La ausencia %s de %s ya fue enviada a la planilla Mensual' % (l.name, l.employee_id.name))
         return self.env['popup.it'].get_message(u'Se mandó al Lote de Nóminas exitosamente.')
 
     # metodos nativos

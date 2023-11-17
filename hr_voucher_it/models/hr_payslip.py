@@ -26,39 +26,239 @@ except:
 class HrPayslip(models.Model):
 	_inherit = 'hr.payslip'
 
+	date_emision = fields.Datetime(string='Fecha de Emision')
+	date_send = fields.Datetime(string='Fecha de Envio Boletas')
+
+	# @api.model
+	# def create(self, vals):
+	# 	lead_res = super(HrPayslip, self).create(vals)
+	# 	for rec in lead_res:
+	# 		partner_ids = []
+	# 		if rec.employee_id.address_home_id:
+	# 			partner_ids.append(rec.employee_id.address_home_id.id)
+	# 		if partner_ids:
+	# 			rec.message_subscribe(partner_ids, None)
+	# 	return lead_res
+	#
+	# def write(self, vals):
+	# 	res = super(HrPayslip, self).write(vals)
+	# 	for rec in self:
+	# 		partner_ids = []
+	# 		if rec.employee_id.address_home_id:
+	# 			#message_unsubscribe
+	# 			message_partner_ids = rec.message_partner_ids.ids
+	# 			est_ids = [rec.employee_id.address_home_id.id] + [self.env.ref('base.partner_root').id]
+	# 			unsub_partners = set(message_partner_ids) - set(est_ids)
+	# 			if list(unsub_partners):
+	# 				rec.message_unsubscribe(list(unsub_partners))
+	#
+	# 			partner_ids.append(rec.employee_id.address_home_id.id)
+	# 			partner_ids.append(self.env.user.partner_id.id)
+	# 			rec.message_subscribe(partner_ids, None)
+	# 	return res
+
+	def emision_boletas(self):
+		MainParameter = self.env['hr.main.parameter'].get_main_parameter()
+		route = MainParameter.dir_create_file + 'Boleta.pdf'
+		issues = []
+		for payslip in self:
+			if payslip.state in ('done','paid'):
+				Employee = payslip.employee_id
+				if MainParameter.type_boleta== '1':
+					doc = SimpleDocTemplate(route, pagesize=letter,
+						rightMargin=30,
+						leftMargin=30,
+						topMargin=30,
+						bottomMargin=20,
+						encrypt=Employee.identification_id)
+					doc.build(payslip.generate_voucher())
+				elif MainParameter.type_boleta == '2':
+					objeto_canvas = canvas.Canvas(route, pagesize=A4, encrypt=Employee.identification_id)
+					payslip.generate_voucher_v2(objeto_canvas)
+					objeto_canvas.save()
+				f = open(route, 'rb')
+
+				attachment_ids = []
+				Employee = payslip.employee_id
+
+				attach = {
+					'name': 'Boleta de Pago %s.pdf' % Employee.name,
+					'type': 'binary',
+					'datas': base64.encodebytes(b''.join(f.readlines())),
+					'store_fname': base64.encodebytes(b''.join(f.readlines())),
+					'mimetype': 'application/pdf',
+					'res_model': 'mail.compose.message',
+				}
+				# print("ir_values",ir_values)
+				attachment_id = self.env['ir.attachment'].sudo().create(attach)
+				attachment_ids.append(attachment_id.id)
+				try:
+					body_html = """ 
+					<div style="margin: 0px; padding: 0px;">
+						<h2 style="margin:0px 0 10px 0;font-size: 1.325rem;line-height:1.2;font-weight: 600;text-align:center;color:rgb(112,141,204);text-transform:uppercase;">
+							<b>
+								<font class="text-primary">
+									BOLETA DE REMUNERACIONES
+									<br />
+									{periodo}
+								</font>
+							</b>
+						</h2>
+						<hr align="left" size="1" width="100%" color="#e8e7e7" />
+						<p>Estimado (a) : {name},</p>
+						<br />
+						<p>Por la presente les comunicamos que la empresa {company}, le ha emitido la siguiente Boleta:</p>
+						<br />
+						<table>
+							<tbody>
+								<tr>
+									<td style="width:150px;"> Tipo de Comprobante </td>
+									<td style="width:12px;"> : </td>
+									<td> Boleta de Pago de Remuneraciones </td>
+								</tr>
+								<tr>
+									<td> Número </td>
+									<td> : </td>
+									<td> {number} </td>
+								</tr>
+								<tr>
+									<td> Empleado </td>
+									<td> : </td>
+									<td> {name} </td>
+								</tr>
+								<tr>
+									<td> DNI del Empleado </td>
+									<td> : </td>
+									<td> {dni} </td>
+								</tr>
+								<tr>
+									<td> Fecha de envio</td>
+									<td> : </td>
+									<td> {date} </td>
+								</tr>
+								<tr>
+									<td> Nota </td>
+									<td> : </td>
+									<td> <strong>Para abrir su boleta es necesario colocar su dni como clave</strong> </td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					""".format(periodo=payslip.payslip_run_id.name.name,
+							   number=payslip.number,
+							   name=payslip.employee_id.name,
+							   company=payslip.company_id.name,
+							   dni=payslip.employee_id.identification_id,
+							   date=fields.Datetime.now()
+							   )
+					payslip.message_post(body=body_html, attachment_ids=attachment_ids)
+					payslip.date_emision = fields.Datetime.now()
+					f.close()
+
+				except:
+					issues.append(Employee.name)
+			else:
+				return self.env['popup.it'].get_message('Primero debe de cerrar su planilla.')
+		if issues:
+			return self.env['popup.it'].get_message('No se pudieron emitir las Boletas de los siguientes Empleados: \n %s' % '\n'.join(issues))
+		else:
+			return self.env['popup.it'].get_message('Se emitieron todas las Boletas satisfactoriamente.')
+
 	def send_vouchers_by_email(self):
 		MainParameter = self.env['hr.main.parameter'].get_main_parameter()
 		route = MainParameter.dir_create_file + 'Boleta.pdf'
 		issues = []
 		for payslip in self:
-			Employee = payslip.employee_id
-			if MainParameter.type_boleta== '1':
-				doc = SimpleDocTemplate(route, pagesize=letter,
-					rightMargin=30,
-					leftMargin=30,
-					topMargin=30,
-					bottomMargin=20,
-					encrypt=Employee.identification_id)
-				doc.build(payslip.generate_voucher())
-			elif MainParameter.type_boleta == '2':
-				objeto_canvas = canvas.Canvas(route, pagesize=A4, encrypt=Employee.identification_id)
-				payslip.generate_voucher_v2(objeto_canvas)
-				objeto_canvas.save()
-			f = open(route, 'rb')
-			try:
-				self.env['mail.mail'].create({
-						'subject': 'Boleta del Periodo: %s - %s' % (payslip.date_from, payslip.date_to),
-						'body_html':'Estimado (a) %s,<br/>'
-									'Estamos adjuntando la Boleta de Pago del %s al %s,<br/>'
-									'<strong>Nota: Para abrir su boleta es necesario colocar su dni como clave</strong>' % (Employee.name, payslip.date_from, payslip.date_to),
-						'email_to': Employee.work_email,
-						'attachment_ids': [(0, 0, {'name': 'Boleta de Pago %s.pdf' % Employee.name,
-												   'datas': base64.encodebytes(b''.join(f.readlines()))}
-										)]
-					}).send()
-				f.close()
-			except:
-				issues.append(Employee.name)
+			if payslip.state in ('done','paid'):
+				Employee = payslip.employee_id
+				if MainParameter.type_boleta== '1':
+					doc = SimpleDocTemplate(route, pagesize=letter,
+						rightMargin=30,
+						leftMargin=30,
+						topMargin=30,
+						bottomMargin=20,
+						encrypt=Employee.identification_id)
+					doc.build(payslip.generate_voucher())
+				elif MainParameter.type_boleta == '2':
+					objeto_canvas = canvas.Canvas(route, pagesize=A4, encrypt=Employee.identification_id)
+					payslip.generate_voucher_v2(objeto_canvas)
+					objeto_canvas.save()
+				f = open(route, 'rb')
+
+				try:
+					if payslip.employee_id.work_email:
+						self.env['mail.mail'].create({
+								'subject': 'Boleta de Remuneraciones del Periodo %s' % (payslip.payslip_run_id.name.name),
+								'body_html':""" 
+					<div style="margin: 0px; padding: 0px;">
+						<h2 style="margin:0px 0 10px 0;font-size: 1.325rem;line-height:1.2;font-weight: 600;text-align:center;color:rgb(112,141,204);text-transform:uppercase;">
+							<b>
+								<font class="text-primary">
+									BOLETA DE REMUNERACIONES
+									<br />
+									{periodo}
+								</font>
+							</b>
+						</h2>
+						<hr align="left" size="1" width="100%" color="#e8e7e7" />
+						<p>Estimado (a) : {name},</p>
+						<br />
+						<p>Por la presente les comunicamos que la empresa {company}, le ha emitido la siguiente Boleta:</p>
+						<br />
+						<table>
+							<tbody>
+								<tr>
+									<td style="width:150px;"> Tipo de Comprobante </td>
+									<td style="width:12px;"> : </td>
+									<td> Boleta de Pago de Remuneraciones </td>
+								</tr>
+								<tr>
+									<td> Número </td>
+									<td> : </td>
+									<td> {number} </td>
+								</tr>
+								<tr>
+									<td> Empleado </td>
+									<td> : </td>
+									<td> {name} </td>
+								</tr>
+								<tr>
+									<td> DNI del Empleado </td>
+									<td> : </td>
+									<td> {dni} </td>
+								</tr>
+								<tr>
+									<td> Fecha de envio</td>
+									<td> : </td>
+									<td> {date} </td>
+								</tr>
+								<tr>
+									<td> Nota </td>
+									<td> : </td>
+									<td> <strong>Para abrir su boleta es necesario colocar su dni como clave</strong> </td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					""".format(periodo=payslip.payslip_run_id.name.name,
+							   number=payslip.number,
+							   name=payslip.employee_id.name,
+							   company=payslip.company_id.name,
+							   dni=payslip.employee_id.identification_id,
+							   date=fields.Datetime.now()
+							   ),
+								'email_to': Employee.work_email,
+								'attachment_ids': [(0, 0, {'name': 'Boleta de Pago %s.pdf' % Employee.name,
+														   'datas': base64.encodebytes(b''.join(f.readlines()))}
+												)]
+							}).send()
+						payslip.date_send = fields.Datetime.now()
+					f.close()
+
+				except:
+					issues.append(Employee.name)
+			else:
+				return self.env['popup.it'].get_message('Primero debe de cerrar su planilla.')
 		if issues:
 			return self.env['popup.it'].get_message('No se pudieron enviar las Boletas de los siguientes Empleados: \n %s' % '\n'.join(issues))
 		else:

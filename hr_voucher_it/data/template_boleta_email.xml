@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!--Las plantillas de correo se declaran en un bloque NOUPDATE para que los usuarios puedan personalizarlas o eliminarlas libremente. -->
+    <data noupdate="0">
+        <!--Email template -->
+        <record id="email_template_boleta_pago" model="mail.template">
+            <field name="name">Boleta Pago: Enviar por correo electrónico</field>
+            <field name="model_id" ref="hr_voucher_it.model_hr_payslip" />
+            <field name="email_from">{{ (user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.employee_id.address_home_id.id }}</field>
+            <field name="subject">Boleta de Remuneraciones del Periodo {{object.payslip_run_id.name.name or 'n/a'}}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <h2 style="margin:0px 0 10px 0;font-size: 1.325rem;line-height:1.2;font-weight: 600;text-align:center;color:rgb(112,141,204);text-transform:uppercase;">
+                        <b>
+                            <font class="text-primary">
+                                BOLETA DE REMUNERACIONES
+                                <br />
+                                <t t-esc="object.payslip_run_id.name.name"></t>
+                            </font>
+                        </b>
+                    </h2>
+                    <hr align="left" size="1" width="100%" color="#e8e7e7" />
+                    <p>Estimado (a) : <t t-esc="object.employee_id.name"></t>,</p>
+                    <br />
+                    <p>Por la presente les comunicamos que la empresa <t t-esc="object.company_id.name"></t>, le ha emitido la siguiente boleta:</p>
+                    <br />
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="width:150px;"> Tipo de Comprobante </td>
+                                <td style="width:12px;"> : </td>
+                                <td> Boleta de Pago de Remuneraciones </td>
+                            </tr>
+                            <tr>
+                                <td> Número </td>
+                                <td> : </td>
+                                <td> <t t-esc="object.number"></t> </td>
+                            </tr>
+                            <tr>
+                                <td> Empleado </td>
+                                <td> : </td>
+                                <td> <t t-esc="object.employee_id.name"></t> </td>
+                            </tr>
+                            <tr>
+                                <td> DNI del Empleado </td>
+                                <td> : </td>
+                                <td> <t t-esc="object.employee_id.identification_id"></t> </td>
+                            </tr>
+                            <tr>
+                                <td> Fecha de Envio</td>
+                                <td> : </td>
+                                <td> <t t-esc="datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')"></t> </td>
+                            </tr>
+                            <tr>
+                                <td> Nota </td>
+	                            <td> : </td>
+	                            <td> <strong>Para abrir su boleta es necesario colocar su dni como clave</strong> </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </field>
+
+            <field name="report_name">Invoice_${(object.name or '').replace('/','_')}${object.state == 'verify' and '_draft' or ''}</field>
+<!--            <field name="lang">${object.partner_id.lang}</field>-->
+<!--            <field name="user_signature" eval="False" />-->
+            <field name="auto_delete" eval="True" />
+        </record>
+
+    </data>
+</odoo>

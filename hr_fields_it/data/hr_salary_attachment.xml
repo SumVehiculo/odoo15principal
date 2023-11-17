@@ -6,10 +6,10 @@
         <!--Email template -->
         <record id="email_template_hr_documentos" model="mail.template">
             <field name="name">Documentos RRHH: Enviar por correo electrónico</field>
-            <field name="model_id" ref="hr_payroll.model_hr_salary_attachment"/>
-            <field name="email_from">${(user.email_formatted) |safe}</field>
+            <field name="model_id" ref="hr_fields_it.model_hr_salary_attachment"/>
+            <field name="email_from">{{ (user.email_formatted) }}</field>
             <field name="partner_to">{{ object.employee_id.address_home_id.id }}</field>
-            <field name="subject">${object.company_id.name} Documento (N° ${object.description or 'n/a'})</field>
+            <field name="subject">{{ object.company_id.name}} Documento ({{object.description or 'n/a'}})</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <h2 style="margin:0px 0 10px 0;font-size: 1.325rem;line-height:1.2;font-weight: 600;text-align:center;color:rgb(112,141,204);text-transform:uppercase;">
@@ -17,14 +17,14 @@
                             <font class="text-primary">
                                 DOCUMENTO
                                 <br />
-                                ${object.description or ''}
+                                <t t-esc="object.description"></t>
                             </font>
                         </b>
                     </h2>
                     <hr align="left" size="1" width="100%" color="#e8e7e7" />
-                    <p>Señor(es) : ${object.employee_id.name},</p>
+                    <p>Señor(es) : <t t-esc="object.employee_id.name"></t>,</p>
                     <br />
-                    <p>Por la presente les comunicamos que la empresa ${object.company_id.name}, le ha enviado el siguiente documento:</p>
+                    <p>Por la presente les comunicamos que la empresa <t t-esc="object.company_id.name"></t>, le ha enviado el siguiente documento:</p>
                     <br />
                     <table>
                         <tbody>
@@ -41,17 +41,17 @@
                             <tr>
                                 <td> Empleado </td>
                                 <td> : </td>
-                                <td> ${object.employee_id.name} </td>
+                                <td> <t t-esc="object.employee_id.name"></t> </td>
                             </tr>
                             <tr>
                                 <td> DNI del Empleado </td>
                                 <td> : </td>
-                                <td> ${object.employee_id.identification_id} </td>
+                                <td> <t t-esc="object.employee_id.identification_id"></t> </td>
                             </tr>
                             <tr>
                                 <td> Fecha</td>
                                 <td> : </td>
-                                <td> ${object.date_start.strftime('%d-%m-%Y')} </td>
+                                <td> <t t-esc="object.date_start.strftime('%d-%m-%Y')"></t> </td>
                             </tr>
 <!--                            <tr>-->
 <!--                                <td> Importe Total </td>-->

@@ -334,8 +334,7 @@ class HrImportWizard(models.TransientModel):
 					'email': employee_sheet.cell_value(i, 5),
 					'phone': self.parse_xls_float(employee_sheet.cell_value(i, 4)),
 					'mobile': self.parse_xls_float(employee_sheet.cell_value(i, 3)),
-					'l10n_latam_identification_type_id': self.env['l10n_latam.identification.type'].search(
-						[('name', '=', employee_sheet.cell_value(i, 10))], limit=1).id,
+					'l10n_latam_identification_type_id': self.env['l10n_latam.identification.type'].search([('name', '=', employee_sheet.cell_value(i, 10))], limit=1).id,
 					'vat': self.parse_xls_float(employee_sheet.cell_value(i, 11)),
 					'ref': self.parse_xls_float(employee_sheet.cell_value(i, 11)),
 					'is_employee': True,

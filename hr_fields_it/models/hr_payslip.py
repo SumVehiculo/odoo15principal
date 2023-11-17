@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 
 class HrPayslip(models.Model):
 	_inherit = 'hr.payslip'
+	_order = 'employee_id'
 
 	income = fields.Monetary(compute='_compute_basic_net', string='Ingresos')
 	worker_contributions = fields.Monetary(compute='_compute_basic_net', string='Aportes Trabajador')
@@ -39,6 +40,7 @@ class HrPayslip(models.Model):
 	salary_attachment_count = fields.Integer(compute='')
 	input_line_ids = fields.One2many(compute='')
 	worked_days_line_ids = fields.One2many(compute='')
+	journal_id = fields.Many2one(related="")
 
 	# @api.model
 	# def create(self, vals):

@@ -37,22 +37,20 @@ class HrProvisiones(models.Model):
 			self.env['hr.provisiones.vaca.line'].search([('provision_id','=',self.id)]).unlink()
 
 		employees = self.env['hr.employee'].search([])
-		grati = self.env['hr.gratification'].browse(self.gratificacion_id.id)
+		grati = self.gratificacion_id
 		date_start = date_utils.subtract(self.payslip_run_id.date_start, months=5)
-		# print("date start",date_start)
 		date_end = date_utils.subtract(self.payslip_run_id.date_end, days=0)
+		# print("date start",date_start)
 		# print("date end",date_end)
 		comi_ids=[]
 		boni_ids=[]
-		extrhors_ids=MainParameter.extra_hours_sr_id.id
+		extrhors_ids = MainParameter.extra_hours_sr_id.id
 		
 		for o in MainParameter.commission_sr_ids:
 			comi_ids.append(o.id)
-		
 
 		for o in MainParameter.bonus_sr_ids:
 			boni_ids.append(o.id)
-
 
 		for employee in employees:
 			sql = """
@@ -70,104 +68,103 @@ class HrProvisiones(models.Model):
 				and hp.date_to = '%s'
 				and hc.labor_regime in ('general','small')
 				and hpl.code = '%s'
+				and payslip_run_id is not null
 				group by hp.employee_id
 			"""%(employee.id, self.payslip_run_id.date_start, self.payslip_run_id.date_end, MainParameter.basic_sr_id.code)
 			self._cr.execute(sql)
 			data = self._cr.dictfetchall()
 
-			
 			payslips = self.env['hr.payslip'].search([('employee_id','=',employee.id),
-													  ('date_from','=',self.payslip_run_id.date_start),
-													  ('date_to','=',self.payslip_run_id.date_end)])
+													   ('date_from','>=',date_start),
+													   ('date_to','<=',date_end),
+													   ('payslip_run_id','!=',None)])
+			# print("payslips",payslips)
+			ncomis=0
+			nboni=0
+			nextra =0
+			amount_comisi=0
+			amount_bonifi=0
+			amount_hextra=0
+			for l in payslips:
+				# print("l",l)
+				for k in l.line_ids:
+					# print("k",k)
+					if k.salary_rule_id.id in comi_ids:
+						# print("total",k.total)
+						amount_comisi = amount_comisi + k.total
+						ncomis=ncomis+1
 
-			if payslips:
+					if k.salary_rule_id.id in boni_ids:
+						amount_bonifi = amount_bonifi + k.total
+						nboni=nboni+1
 
-				
-				payslips1 = self.env['hr.payslip'].search([('employee_id','=',employee.id),
-													  ('date_from','>=',date_start),
-													  ('date_to','<=',date_end)])
+					if k.salary_rule_id.id == extrhors_ids:
+						amount_hextra = amount_hextra + k.total
+						nextra=nextra+1
+			# print("n comisiones",ncomis)
+			for payslip in data:
+				Contract = self.env['hr.contract'].browse(payslip['contract_id'])
+				if Contract.situation_id.name == 'BAJA':
+					if self.payslip_run_id.date_start <= Contract.date_end <= self.payslip_run_id.date_end:
+						continue
+				# date_mo = date_utils.subtract(self.payslip_run_id.date_start, months=1)
+				# print("date_mo",date_mo,Contract.name)
+				if ncomis<3:
+					# if Contract.date_start<=date_mo:
+					amount_comisi=0
 
-				ncomis=0
-				nboni=0
-				nextra =0
-				amount_comisi=0
-				amount_bonifi=0
-				amount_hextra=0
-				for l in payslips1:
-					# print("l",l)
-					for k in l.line_ids:
-						# print("k",k)
-						if k.salary_rule_id.id in comi_ids:
-							# print("total",k.total)
-							amount_comisi=amount_comisi+k.total
-							ncomis=ncomis+1
+				if nboni<3:
+					amount_bonifi=0
 
-						if k.salary_rule_id.id in boni_ids:
-							amount_bonifi=amount_bonifi+k.total
-							nboni=nboni+1
+				if nextra<3:
+					# if Contract.date_start<=date_mo:
+					amount_hextra=0
 
-						if k.salary_rule_id.id == extrhors_ids:
-							amount_hextra=amount_hextra + k.total
-							nextra=nextra+1
-				# print("n comisiones",ncomis)
-				for payslip in data:
-					Contract = self.env['hr.contract'].browse(payslip['contract_id'])
-					date_mo = date_utils.subtract(self.payslip_run_id.date_start, months=1)
-					if ncomis<3:
-						if Contract.date_start<=date_mo:
-							amount_comisi=0
+				line = grati.line_ids.filtered(lambda line: line.employee_id.id == employee.id)
 
-					if nboni<3:
-						amount_bonifi=0
-
-					if nextra<3:
-						if Contract.date_start<=date_mo:
-							amount_hextra=0
-
-					line = grati.line_ids.filtered(lambda line: line.employee_id.id == employee.id)
-
-					if not Contract.less_than_four:
-						self.env['hr.provisiones.cts.line'].create({
-								'provision_id':self.id,
-								'nro_doc':employee.identification_id,
-								'employee_id':employee.id,
-								'contract_id':payslip['contract_id'],
-								'fecha_ingreso':payslip['date_start'],
-								'distribution_id':self.env['hr.contract'].browse(payslip['contract_id']).distribution_id.name,
-								'basico': self.env['hr.contract'].browse(payslip['contract_id']).wage,
-								'asignacion':102.50 if employee.children > 0 else 0,
-								'commission': ReportBase.custom_round(amount_comisi/6,2) if amount_comisi else 0,
-								'bonus': ReportBase.custom_round(amount_bonifi/6,2) if amount_bonifi else 0,
-								'extra_hours': ReportBase.custom_round(amount_hextra/6,2) if amount_hextra else 0,
-								'un_sexto_grati': ReportBase.custom_round(line.total_grat/6,2) if line else 0
-							})
-						self.env['hr.provisiones.vaca.line'].create({
-								'provision_id':self.id,
-								'nro_doc':employee.identification_id,
-								'employee_id':employee.id,
-								'contract_id':payslip['contract_id'],
-								'fecha_ingreso':payslip['date_start'],
-								'distribution_id':self.env['hr.contract'].browse(payslip['contract_id']).distribution_id.name,
-								'basico': self.env['hr.contract'].browse(payslip['contract_id']).wage,
-								'asignacion':102.50 if employee.children > 0 else 0,
-								'commission': ReportBase.custom_round(amount_comisi/6,2) if amount_comisi else 0,
-								'bonus': ReportBase.custom_round(amount_bonifi/6,2) if amount_bonifi else 0,
-								'extra_hours': ReportBase.custom_round(amount_hextra/6,2) if amount_hextra else 0
-							})
+				if not Contract.less_than_four:
+					self.env['hr.provisiones.cts.line'].create({
+						'provision_id':self.id,
+						'nro_doc':employee.identification_id,
+						'employee_id':employee.id,
+						'contract_id':payslip['contract_id'],
+						'fecha_ingreso':payslip['date_start'],
+						'distribution_id':Contract.distribution_id.name,
+						'basico': Contract.wage,
+						'asignacion': (MainParameter.rmv*0.10) if employee.children > 0 else 0,
+						'commission': ReportBase.custom_round(amount_comisi/6,2) if amount_comisi else 0,
+						'bonus': ReportBase.custom_round(amount_bonifi/6,2) if amount_bonifi else 0,
+						'extra_hours': ReportBase.custom_round(amount_hextra/6,2) if amount_hextra else 0,
+						'un_sexto_grati': ReportBase.custom_round(line.total_grat/6,2) if line else 0
+					})
+					self.env['hr.provisiones.vaca.line'].create({
+						'provision_id':self.id,
+						'nro_doc':employee.identification_id,
+						'employee_id':employee.id,
+						'contract_id':payslip['contract_id'],
+						'fecha_ingreso':payslip['date_start'],
+						'distribution_id':Contract.distribution_id.name,
+						'basico': Contract.wage,
+						'asignacion': (MainParameter.rmv*0.10) if employee.children > 0 else 0,
+						'commission': ReportBase.custom_round(amount_comisi/6,2) if amount_comisi else 0,
+						'bonus': ReportBase.custom_round(amount_bonifi/6,2) if amount_bonifi else 0,
+						'extra_hours': ReportBase.custom_round(amount_hextra/6,2) if amount_hextra else 0
+					})
+				if Contract.date_start <= self.payslip_run_id.date_start:
 					self.env['hr.provisiones.grati.line'].create({
-							'provision_id':self.id,
-							'nro_doc':employee.identification_id,
-							'employee_id':employee.id,
-							'contract_id':payslip['contract_id'],
-							'fecha_ingreso':payslip['date_start'],
-							'distribution_id':self.env['hr.contract'].browse(payslip['contract_id']).distribution_id.name,
-							'basico': self.env['hr.contract'].browse(payslip['contract_id']).wage,
-							'asignacion':102.50 if employee.children > 0 else 0,
-							'commission': ReportBase.custom_round(amount_comisi/6,2) if amount_comisi else 0,
-							'bonus': ReportBase.custom_round(amount_bonifi/6,2) if amount_bonifi else 0,
-							'extra_hours': ReportBase.custom_round(amount_hextra/6,2) if amount_hextra else 0,
-							'tasa':payslip['porcentaje']
-						})
+						'provision_id':self.id,
+						'nro_doc':employee.identification_id,
+						'employee_id':employee.id,
+						'contract_id':payslip['contract_id'],
+						'fecha_ingreso':payslip['date_start'],
+						'distribution_id':Contract.distribution_id.name,
+						'basico': Contract.wage,
+						'asignacion': (MainParameter.rmv*0.10) if employee.children > 0 else 0,
+						'commission': ReportBase.custom_round(amount_comisi/6,2) if amount_comisi else 0,
+						'bonus': ReportBase.custom_round(amount_bonifi/6,2) if amount_bonifi else 0,
+						'extra_hours': ReportBase.custom_round(amount_hextra/6,2) if amount_hextra else 0,
+						'tasa':payslip['porcentaje']
+					})
 		return self.env['popup.it'].get_message('Se actualizo de manera correcta')
 
 	def get_move_lines(self):
@@ -480,7 +477,7 @@ class HrProvisiones(models.Model):
 			worksheet.write(x,8,line.total_cts if line.total_cts else 0,formats['numberdos'])
 			x += 1
 
-		widths = [12,38,13,16,13,15,13,11]
+		widths = [13, 38, 13, 30, 13, 15, 14, 12,12]
 		worksheet = ReportBase.resize_cells(worksheet, widths)
 
 		##########GRATIFICACION############
@@ -517,7 +514,7 @@ class HrProvisiones(models.Model):
 			worksheet.write(x,9,line.total_grati if line.total_grati else 0,formats['numberdos'])
 			x += 1
 
-		widths = [12,38,13,15,13,15,16,11,15]
+		widths = [13, 38, 13, 30, 13, 15, 16, 16, 12, 12]
 		worksheet = ReportBase.resize_cells(worksheet, widths)
 
 		##########VACACIONES############
@@ -550,7 +547,7 @@ class HrProvisiones(models.Model):
 			worksheet.write(x,7,line.total_vaca if line.total_vaca else 0,formats['numberdos'])
 			x += 1
 
-		widths = [12,38,13,15,13,13,12]
+		widths = [13, 38, 13, 30, 13, 13, 14, 13]
 		worksheet = ReportBase.resize_cells(worksheet, widths)
 		
 		workbook.close()
@@ -561,30 +558,35 @@ class HrProvisiones(models.Model):
 class HrProvisionesCtsLine(models.Model):
 	_name = 'hr.provisiones.cts.line'
 	_description = 'Provisiones Cts Line'
+	_order = 'employee_id'
 
 	provision_id = fields.Many2one('hr.provisiones', ondelete='cascade')
-	nro_doc = fields.Char('Numero de Documento')
+	nro_doc = fields.Char('Nro Doc')
 	employee_id = fields.Many2one('hr.employee','Empleado')
 	contract_id = fields.Many2one('hr.contract','Contrato')
 	fecha_ingreso = fields.Date('Fecha Ingreso')
-	distribution_id = fields.Char('Distribucion Analitica')
-	basico = fields.Float('Remuneracion Basica')
-	asignacion = fields.Float('Asignacion Familiar')
+	distribution_id = fields.Char('Dist Analitica')
+
+	basico = fields.Float('Rem Basica')
+	asignacion = fields.Float('Asig Familiar')
 	un_sexto_grati = fields.Float('1/6 Gratificacion')
 
-	commission = fields.Float(string='Comision')
-	bonus = fields.Float(string='Bonificacion')
-	extra_hours = fields.Float(string='Prom. Horas Extra')
+	commission = fields.Float(string='Prom Comi')
+	bonus = fields.Float(string='Prom Boni')
+	extra_hours = fields.Float(string='Prom Hor Ex')
 
 	@api.depends('basico','asignacion','commission','bonus','extra_hours','un_sexto_grati','total_cts')
 	def _get_prov_cts(self):
 		for record in self:
 			amount = (record.basico + record.asignacion + record.commission+ record.bonus+ record.extra_hours+ record.un_sexto_grati + record.total_cts)/12
 			divider = 2 if record.contract_id.labor_regime == 'small' else 1
+			if record.fecha_ingreso > record.provision_id.payslip_run_id.date_start and record.fecha_ingreso <= record.provision_id.payslip_run_id.date_end:
+				dias = 30 - record.fecha_ingreso.day + 1
+				amount = amount/30*dias
 			record.provisiones_cts = self.env['report.base'].custom_round(amount/divider, 2)
 
-	provisiones_cts = fields.Float('Provisiones CTS',compute="_get_prov_cts", store=True)
-	total_cts = fields.Float('Total CTS Adic.')
+	provisiones_cts = fields.Float('Prov CTS',compute="_get_prov_cts", store=True)
+	total_cts = fields.Float('Otros Adic.')
 
 	def get_wizard(self):
 		return self.env['cts.line.wizard'].get_wizard(self.employee_id.id,self.provision_id.id,self.id)
@@ -640,19 +642,21 @@ class CtsConceptos(models.Model):
 class HrProvisionesGratiLine(models.Model):
 	_name = 'hr.provisiones.grati.line'
 	_description = 'Provisiones Grati Line'
+	_order = 'employee_id'
 
 	provision_id = fields.Many2one('hr.provisiones', ondelete='cascade')
-	nro_doc = fields.Char('Numero de Documento')
+	nro_doc = fields.Char('Nro Doc')
 	employee_id = fields.Many2one('hr.employee','Empleado')
 	contract_id = fields.Many2one('hr.contract','Contrato')
 	fecha_ingreso = fields.Date('Fecha Ingreso')
-	distribution_id = fields.Char('Distribucion Analitica')
-	basico = fields.Float('Remuneracion Basica')
-	asignacion = fields.Float('Asignacion Familiar')
+	distribution_id = fields.Char('Dist Analitica')
 
-	commission = fields.Float(string='Comision')
-	bonus = fields.Float(string='Bonificacion')
-	extra_hours = fields.Float(string='Prom. Horas Extra')
+	basico = fields.Float('Rem Basica')
+	asignacion = fields.Float('Asig Familiar')
+
+	commission = fields.Float(string='Prom Comi')
+	bonus = fields.Float(string='Prom Boni')
+	extra_hours = fields.Float(string='Prom Hor Ex')
 
 	@api.depends('basico','asignacion','commission','bonus','extra_hours','total_grati')
 	def _get_prov_grati(self):
@@ -661,7 +665,7 @@ class HrProvisionesGratiLine(models.Model):
 			divider = 2 if record.contract_id.labor_regime == 'small' else 1
 			record.provisiones_grati = record.env['report.base'].custom_round(amount/divider, 2)
 
-	provisiones_grati = fields.Float('Provisiones Gratificacion',compute="_get_prov_grati", store=True)
+	provisiones_grati = fields.Float('Prov Gratificacion',compute="_get_prov_grati", store=True)
 	tasa = fields.Float('Tasa')
 
 	@api.depends('provisiones_grati','tasa')
@@ -669,7 +673,7 @@ class HrProvisionesGratiLine(models.Model):
 		for record in self:
 			record.boni_grati = self.env['report.base'].custom_round(record.provisiones_grati * record.tasa/100, 2)
 
-	boni_grati = fields.Float('Bonificacion de Gratificacion',compute="_get_boni", store=True)
+	boni_grati = fields.Float('Prov Bon Grat',compute="_get_boni", store=True)
 
 	@api.depends('provisiones_grati','boni_grati')
 	def _get_total(self):
@@ -677,7 +681,7 @@ class HrProvisionesGratiLine(models.Model):
 			record.total = record.provisiones_grati + record.boni_grati
 
 	total = fields.Float('Total',compute="_get_total")
-	total_grati = fields.Float('Total Grat. Adic.')
+	total_grati = fields.Float('Otros Adic.')
 
 	def get_wizard(self):
 		return self.env['grati.line.wizard'].get_wizard(self.employee_id.id,self.provision_id.id,self.id)
@@ -731,29 +735,34 @@ class GratiConceptos(models.Model):
 class HrProvisionesVacaLine(models.Model):
 	_name = 'hr.provisiones.vaca.line'
 	_description = 'Provisiones Vaca Line'
+	_order = 'employee_id'
 
 	provision_id = fields.Many2one('hr.provisiones', ondelete='cascade')
-	nro_doc = fields.Char('Numero de Documento')
-	employee_id = fields.Many2one('hr.employee','Empleado')
-	contract_id = fields.Many2one('hr.contract','Contrato')
+	nro_doc = fields.Char('Nro Doc')
+	employee_id = fields.Many2one('hr.employee', 'Empleado')
+	contract_id = fields.Many2one('hr.contract', 'Contrato')
 	fecha_ingreso = fields.Date('Fecha Ingreso')
-	distribution_id = fields.Char('Distribucion Analitica')
-	basico = fields.Float('Remuneracion Basica')
-	asignacion = fields.Float('Asignacion Familiar')
+	distribution_id = fields.Char('Dist Analitica')
 
-	commission = fields.Float(string='Comision')
-	bonus = fields.Float(string='Bonificacion')
-	extra_hours = fields.Float(string='Prom. Horas Extra')
+	basico = fields.Float('Rem Basica')
+	asignacion = fields.Float('Asig Familiar')
+
+	commission = fields.Float(string='Prom Comi')
+	bonus = fields.Float(string='Prom Boni')
+	extra_hours = fields.Float(string='Prom Hor Ex')
 
 	@api.depends('basico','asignacion','commission','bonus','extra_hours','total_vaca')
 	def _get_prov_vaca(self):
 		for record in self:
 			amount = (record.basico + record.asignacion + record.commission+ record.bonus+ record.extra_hours+ record.total_vaca)/12
 			divider = 2 if record.contract_id.labor_regime == 'small' else 1
+			if record.fecha_ingreso > record.provision_id.payslip_run_id.date_start and record.fecha_ingreso <= record.provision_id.payslip_run_id.date_end:
+				dias = 30 - record.fecha_ingreso.day + 1
+				amount = amount/30*dias
 			record.provisiones_vaca = self.env['report.base'].custom_round(amount/divider, 2)
 
-	provisiones_vaca = fields.Float('Provisiones Vacacion',compute="_get_prov_vaca", store=True)
-	total_vaca = fields.Float('Total Vac. Adic.')
+	provisiones_vaca = fields.Float('Prov Vacacion',compute="_get_prov_vaca", store=True)
+	total_vaca = fields.Float('Otros Adic.')
 
 	def get_wizard(self):
 		return self.env['vaca.line.wizard'].get_wizard(self.employee_id.id,self.provision_id.id,self.id)

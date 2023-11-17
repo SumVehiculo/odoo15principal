@@ -185,7 +185,8 @@ class HrMainParameter(models.Model):
 			# wage = MonthSlip.line_ids.filtered(lambda line: line.salary_rule_id == MainParameter.basic_sr_id).total
 			# wage = MonthSlip.contract_id.wage
 			wage = MonthSlip.wage
-			household_allowance = MonthSlip.line_ids.filtered(lambda line: line.salary_rule_id == MainParameter.household_allowance_sr_id).total
+			# household_allowance = MonthSlip.line_ids.filtered(lambda line: line.salary_rule_id == MainParameter.household_allowance_sr_id).total
+			household_allowance = (MainParameter.rmv*0.10) if MonthSlip.contract_id.employee_id.children > 0 else 0
 			bonus_months = len(Lots.mapped('slip_ids').filtered(lambda slip: slip.employee_id == Employee))
 
 			if record_type == '12':
@@ -289,36 +290,37 @@ class HrMainParameter(models.Model):
 					'amount_per_day': ReportBase.custom_round(amount_per_day, 2)
 				}
 			if record_type in ['07', '12']:
-				if liquidation:
-					vals['compute_date'] = admission_date if admission_date > date_from else date_from
-					vals['cessation_date'] = MonthSlip.contract_id.date_end
-					vals['liquidation_id'] = record.id
-				else:
-					vals['gratification_id'] = record.id
-				amount_per_lack = amount_per_day * lacks
-				grat_per_month = ReportBase.custom_round(amount_per_month * months, 2)
-				grat_per_day = ReportBase.custom_round(amount_per_day * days, 2)
-				total_grat = ReportBase.custom_round((grat_per_month + grat_per_day) - amount_per_lack, 2)
-				percent = MonthSlip.contract_id.social_insurance_id.percent or 0 if record.with_bonus else 0
-				bonus_essalud = ReportBase.custom_round(total_grat * percent * 0.01, 2)
-				total = ReportBase.custom_round(total_grat + bonus_essalud, 2)
-				vals['amount_per_lack'] = ReportBase.custom_round(amount_per_lack, 2)
-				vals['grat_per_month'] = grat_per_month
-				vals['grat_per_day'] = grat_per_day
-				vals['total_grat'] = total_grat
-				vals['bonus_essalud'] = bonus_essalud
-				vals['total'] = total
-				if liquidation:
-					Grat = self.env['hr.gratification'].search([('payslip_run_id', '=', liquidation.payslip_run_id.id), 
-																('fiscal_year_id', '=', liquidation.fiscal_year_id.id),
-																('type', '=', record_type),
-																('company_id', '=', liquidation.company_id.id)])
-					if Grat and Grat.line_ids.filtered(lambda line: line.employee_id == Employee.id):
-						continue
+				if admission_date <= MonthSlip.date_from:
+					if liquidation:
+						vals['compute_date'] = admission_date if admission_date > date_from else date_from
+						vals['cessation_date'] = MonthSlip.contract_id.date_end
+						vals['liquidation_id'] = record.id
+					else:
+						vals['gratification_id'] = record.id
+					amount_per_lack = amount_per_day * lacks
+					grat_per_month = ReportBase.custom_round(amount_per_month * months, 2)
+					grat_per_day = ReportBase.custom_round(amount_per_day * days, 2)
+					total_grat = ReportBase.custom_round((grat_per_month + grat_per_day) - amount_per_lack, 2)
+					percent = MonthSlip.contract_id.social_insurance_id.percent or 0 if record.with_bonus else 0
+					bonus_essalud = ReportBase.custom_round(total_grat * percent * 0.01, 2)
+					total = ReportBase.custom_round(total_grat + bonus_essalud, 2)
+					vals['amount_per_lack'] = ReportBase.custom_round(amount_per_lack, 2)
+					vals['grat_per_month'] = grat_per_month
+					vals['grat_per_day'] = grat_per_day
+					vals['total_grat'] = total_grat
+					vals['bonus_essalud'] = bonus_essalud
+					vals['total'] = total
+					if liquidation:
+						Grat = self.env['hr.gratification'].search([('payslip_run_id', '=', liquidation.payslip_run_id.id),
+																	('fiscal_year_id', '=', liquidation.fiscal_year_id.id),
+																	('type', '=', record_type),
+																	('company_id', '=', liquidation.company_id.id)])
+						if Grat and Grat.line_ids.filtered(lambda line: line.employee_id == Employee.id):
+							continue
+						else:
+							self.env['hr.gratification.line'].create(vals)
 					else:
 						self.env['hr.gratification.line'].create(vals)
-				else:
-					self.env['hr.gratification.line'].create(vals)
 			else:
 				if liquidation:
 					vals['compute_date'] = admission_date if admission_date > date_from else date_from
@@ -349,14 +351,15 @@ class HrMainParameter(models.Model):
 				vals['cts_soles'] = cts_soles
 				vals['cts_dollars'] = cts_dollars
 				if liquidation:
-					CTS = self.env['hr.cts'].search([('payslip_run_id', '=', liquidation.payslip_run_id.id), 
-													 ('fiscal_year_id', '=', liquidation.fiscal_year_id.id),
-													 ('type', '=', record_type),
-													 ('company_id', '=', liquidation.company_id.id)])
-					if CTS and CTS.line_ids.filtered(lambda line: line.employee_id == Employee.id):
-						continue
-					else:
-						self.env['hr.cts.line'].create(vals)
+					if admission_date <= MonthSlip.date_from:
+						CTS = self.env['hr.cts'].search([('payslip_run_id', '=', liquidation.payslip_run_id.id),
+														 ('fiscal_year_id', '=', liquidation.fiscal_year_id.id),
+														 ('type', '=', record_type),
+														 ('company_id', '=', liquidation.company_id.id)])
+						if CTS and CTS.line_ids.filtered(lambda line: line.employee_id == Employee.id):
+							continue
+						else:
+							self.env['hr.cts.line'].create(vals)
 				else:
 					self.env['hr.cts.line'].create(vals)
 

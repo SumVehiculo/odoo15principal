@@ -88,13 +88,16 @@
 	<record id="view_hr_contract_history_form_inherit" model="ir.ui.view">
 		<field name="name">hr.contract.history.form.inherit</field>
 		<field name="model">hr.contract.history</field>
-		<field name="inherit_id" ref="hr_contract.hr_contract_history_view_form"/>
+		<field name="inherit_id" ref="hr_payroll_account.hr_contract_history_view_form"/>
 		<field name="arch" type="xml">
 			<field name="resource_calendar_id" position="attributes">
 				<attribute name="string">Horario de Trabajo</attribute>
 			</field>
 			<field name="structure_type_id" position="attributes">
 				<attribute name="string">Tipo de Planilla</attribute>
+			</field>
+			<field name="analytic_account_id" position="attributes">
+				<attribute name="invisible">1</attribute>
 			</field>
 		</field>
 	</record>

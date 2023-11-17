@@ -150,7 +150,7 @@
 					</group>
                     <group name="col_right">
                         <field name="leave_type_id" options="{'no_open': True}" context="{'from_manager_leave_form': True ,'employee_id': employee_id}"/>
-                        <field name="work_suspension_id" required="1" attrs="{'readonly':[('state','not in',['draft','confirm'])]}"/>
+                        <field name="work_suspension_id" attrs="{'readonly':[('state','not in',['draft','confirm'])]}"/>
                         <field name="validation_type" invisible="1"/>
                         <label for="request_date_from" string="Fechas" id="label_dates"/>
                         <div>
