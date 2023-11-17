@@ -8,7 +8,7 @@
 		<field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
 		<field name="arch" type="xml">
 			<data>
-				<xpath expr="//notebook/page/field[@name='crossovered_budget_line']/tree/field[@name='theoritical_amount']" position="after">
+				<xpath expr="//notebook/page/field[@name='crossovered_budget_line']/tree/field[@name='amount_diff']" position="after">
 					<field name="theoritical_amount" string="Importe Teórico" optional="hide"/>
 				</xpath>				
 			</data>
@@ -20,7 +20,7 @@
 		<field name="model">crossovered.budget.lines</field>
 		<field name="inherit_id" ref="account_budget.view_crossovered_budget_line_tree"/>
 		<field name="arch" type="xml">
-			<field name="theoritical_amount" position="after">
+			<field name="amount_diff" position="after">
 				<field name="theoritical_amount" string="Importe Teórico"  optional="hide"/>
 			</field>
 		</field>
