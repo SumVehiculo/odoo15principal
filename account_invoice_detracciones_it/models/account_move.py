@@ -42,6 +42,7 @@ class AccountMove(models.Model):
 		if self.move_detraccion_id.id:
 			if self.move_detraccion_id.state != 'draft':
 				self.move_detraccion_id.button_cancel()
+				self.move_detraccion_id.line_ids.remove_move_reconcile()
 			self.move_detraccion_id.line_ids.unlink()
 			self.move_detraccion_id.name = "/"
 			self.move_detraccion_id.unlink()
@@ -52,6 +53,7 @@ class AccountMove(models.Model):
 		if self.move_detraccion_id.id:
 			if self.move_detraccion_id.state != 'draft':
 				self.move_detraccion_id.button_cancel()
+				self.move_detraccion_id.line_ids.remove_move_reconcile()
 			self.move_detraccion_id.line_ids.unlink()
 			self.move_detraccion_id.name = "/"
 			self.move_detraccion_id.unlink()
