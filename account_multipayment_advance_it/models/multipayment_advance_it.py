@@ -249,7 +249,8 @@ class MultipaymentAdvanceIt(models.Model):
 			'ref': self.nro_operation,
 			'glosa':self.glosa,
 			'td_payment_id': self.catalog_payment_id.id if self.catalog_payment_id else None,
-			'move_type':'entry'
+			'move_type':'entry',
+			'currency_rate':self.tc
 		}
 
 		if self.move_name and self.journal_move.id == self.journal_id.id and self.date_move == self.payment_date:
