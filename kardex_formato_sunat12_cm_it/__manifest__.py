@@ -9,8 +9,6 @@
     'description': """KARDEX FORMATO SUNAT V12""",
     'demo': [],
     'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv', 
         'wizard/make_kardex_view.xml',
     ],
     'auto_install': False,
