@@ -914,7 +914,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 				txt+= (productoobj.onu_code.code or '') + '|'
 				fechaespecial = str(move_obj.invoice_id.invoice_date if move_obj.invoice_id.id else ((move_obj.kardex_date - timedelta(hours=5) if move_obj.id and move_obj.kardex_date else str(linea[1]))  ) )
 				txt+= fechaespecial[8:10] + "/" + fechaespecial[5:7] + "/" + fechaespecial[:4] + '|'
-				txt+= (str(move_obj.invoice_id.type_document_id.code) if move_obj.invoice_id.id else '00' ) + '|'
+				txt+= (str(move_obj.invoice_id.l10n_latam_document_type_id.code) if move_obj.invoice_id.id else '00' ) + '|'
 				txt+= (str(move_obj.invoice_id.ref).split('-')[0] if move_obj.invoice_id.id and move_obj.invoice_id.ref else '0' ) + '|'
 				txt+= (str(move_obj.invoice_id.ref).split('-')[1] if move_obj.invoice_id.id and move_obj.invoice_id.ref and len(move_obj.invoice_id.ref.split('-'))>1 else '0' ) + '|'
 				txt+= (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) + '|'
@@ -1048,7 +1048,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 				txt+= (productoobj.onu_code.code or '') + '|'
 				fechaespecial = str(move_obj.invoice_id.invoice_date if move_obj.invoice_id.id else ((move_obj.kardex_date - timedelta(hours=5) if move_obj.id and move_obj.kardex_date else str(linea[1]))  ) )
 				txt+= fechaespecial[8:10] + "/" + fechaespecial[5:7] + "/" + fechaespecial[:4] + '|'
-				txt+= (str(move_obj.invoice_id.type_document_id.code) if move_obj.invoice_id.id else '00' ) + '|'
+				txt+= (str(move_obj.invoice_id.l10n_latam_document_type_id.code) if move_obj.invoice_id.id else '00' ) + '|'
 				txt+= (str(move_obj.invoice_id.ref).split('-')[0] if move_obj.invoice_id.id and move_obj.invoice_id.ref else '0' ) + '|'
 				txt+= (str(move_obj.invoice_id.ref).split('-')[1] if move_obj.invoice_id.id and move_obj.invoice_id.ref and len(move_obj.invoice_id.ref.split('-'))>1 else '0' ) + '|'
 				txt+= (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) + '|'
