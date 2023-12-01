@@ -12,8 +12,13 @@
                                                      alt="Logo" style="width: 150px; top: 0 ; vertical-align: baseline;"
                                                      class="mt-0 pt-0"
                                                 /></center>
-                                                <center>CSI - Av Alfonso Ugarte N 521 - Arequipa - Tlf.<br/>
-                                                (054)281728 - Fax (054)201288 </center>
+                                                <!-- Header dinamico 1/12/23 (#20,403) -->
+                                                <center>
+                                                    CSI - <span t-esc="doc.company_id.street_name"/> <span t-esc="doc.company_id.street_number"/> - <span t-esc="doc.company_id.state_id.name"/> - Tlf.<br/>
+                                                    (054)<span t-esc="doc.company_id.phone"/> - Fax (054)201288
+                                                  </center>
+                                                <!-- <center>CSI - Av Alfonso Ugarte N 521 - Arequipa - Tlf.<br/>
+                                                (054)281728 - Fax (054)201288 </center> -->
 
                                 </div>
                                 <div class="col-7">
