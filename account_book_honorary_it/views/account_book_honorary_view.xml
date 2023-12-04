@@ -17,9 +17,9 @@
                     <field name="numero"/>
                     <field name="tdp"/>
                     <field name="docp"/>
-                    <field name="apellido_p"/>
-                    <field name="apellido_m"/>
-                    <field name="namep"/>
+                    <!--<field name="apellido_p"/>
+                    <field name="apellido_m"/>-->
+                    <field name="full_name"/>
                     <field name="divisa"/>
                     <field name="tipo_c"/>
                     <field name="renta" sum="renta"/>

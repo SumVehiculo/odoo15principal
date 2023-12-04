@@ -17,9 +17,9 @@ class AccountBookHonoraryView(models.Model):
 	numero = fields.Text(string='Numero', size=50)
 	tdp = fields.Char(string='TDP', size=50)
 	docp = fields.Char(string='RUC',size=50)
-	apellido_p = fields.Char(string='Ap. Paterno')
-	apellido_m = fields.Char(string='Ap. Materno')
-	namep = fields.Char(string='Nombres')
+	#apellido_p = fields.Char(string='Ap. Paterno')
+	#apellido_m = fields.Char(string='Ap. Materno')
+	full_name = fields.Char(string='Apellidos y Nombres')
 	divisa = fields.Char(string='Divisa')
 	tipo_c = fields.Float(string='TC',digits=(12,4))
 	renta = fields.Float(string='Renta',digits=(12,2))
@@ -28,7 +28,7 @@ class AccountBookHonoraryView(models.Model):
 	periodo_p = fields.Text(string='Periodo P', size=50)
 	is_not_home = fields.Char(string='No Domiciliado',size=1)
 	c_d_imp = fields.Char(string='Conv. Evit. Doble Imp.')
-
+	
 	#def init(self):
 	#	tools.drop_view_if_exists(self.env.cr, self._table)
 	#	self.env.cr.execute('''
