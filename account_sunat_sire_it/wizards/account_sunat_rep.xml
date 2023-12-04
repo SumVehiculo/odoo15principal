@@ -16,6 +16,9 @@
 						</group>
 						<group>
 							<field name="type_show"/>
+							<field name="sire_proposal"/>
+							<field name="name_file" invisible="1"/>
+							<field name="document_file" filename="name_file" string="Cargar" attrs="{'invisible':[('sire_proposal', '=', 'api')]}"/>
 						</group>
 					</group>
 					<footer>
@@ -56,6 +59,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_2" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_ventas_txt_2" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_2" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -96,6 +100,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_3" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_ventas_txt_3" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_3" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -136,6 +141,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_4" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_ventas_txt_4" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_4" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -176,6 +182,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_ventas_5" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_ventas_txt_5" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_ventas_sire_excel_5" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -260,6 +267,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_compras_2" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_compras_txt_2" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_2" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -302,6 +310,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_compras_3" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_compras_txt_3" type="object" class="oe_highlight"/>
 					<!--button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_3" type="object" class="oe_highlight"/-->
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -342,6 +351,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_compras_4" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_compras_txt_4" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_4" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -382,6 +392,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_compras_5" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_compras_txt_5" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_5" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -419,6 +430,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_compras_6" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_compras_txt_6" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_6" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -459,6 +471,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_compras_7" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_compras_txt_7" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_7" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>
@@ -498,6 +511,7 @@
 					</group>
 					<footer>
 					<button string="Generar ZIP" icon="fa-folder" name="get_compras_8" type="object" class="oe_highlight"/>
+					<button string="Generar TXT" icon="fa-file-text-o" name="get_compras_txt_8" type="object" class="oe_highlight"/>
 					<button string="Generar EXCEL" icon="fa-list-alt" name="get_compras_sire_excel_8" type="object" class="oe_highlight"/>
 					or
 					<button string="Cancel" class="oe_link" special="cancel"/>

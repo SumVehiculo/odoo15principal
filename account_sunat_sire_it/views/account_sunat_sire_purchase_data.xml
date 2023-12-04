@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_sunat_sire_purchase_data_tree" model="ir.ui.view">
+            <field name="name">account.sunat.sire.purchase.data.tree</field>
+            <field name="model">account.sunat.sire.purchase.data</field>
+            <field name="arch" type="xml">
+                <tree string="SIRE Compras" create="false" edit="false" delete="false">
+                    <field name="perPeriodoTributario"/>
+                    <field name="codCar"/>
+                    <field name="fecEmision" optional="show"/>
+                    <field name="fecVencPag" optional="show"/>
+                    <field name="codTipoCDP"/>
+                    <field name="numSerieCDP"/>
+                    <field name="anio"/>
+                    <field name="numCDP"/>
+                    <field name="nro_final"/>
+                    <field name="codTipoDocIdentidad" optional="show"/>
+                    <field name="numDocIdentidad" optional="show"/>
+                    <field name="nomRazonSocialCliente" optional="show"/>
+                    <field name="mto_bi_dg" optional="show"/>
+                    <field name="igv_dg" optional="show"/>
+                    <field name="mto_bi_dgng" optional="show"/>
+                    <field name="igv_dgng" optional="show"/>
+                    <field name="mto_bi_dng" optional="show"/>
+                    <field name="igv_dng" optional="show"/>
+                    <field name="valor_adq_ng" optional="hide"/>
+                    <field name="mtoISC" optional="show"/>
+                    <field name="mtoIcbp" optional="show"/>
+                    <field name="mtoOtrosTrib" optional="show"/>
+                    <field name="mtoTotalCP" optional="show"/>
+                    <field name="codMoneda" optional="show"/>
+                    <field name="mtoTipoCambio" optional="show"/>
+                    <field name="fecEmisionMod" optional="hide"/>
+                    <field name="codTipoCDPMod" optional="hide"/>
+                    <field name="numSerieCDPMod" optional="hide"/>
+                    <field name="cod_dam" optional="hide"/>
+                    <field name="numCDPMod" optional="hide"/>
+                    <field name="bi_o_ser" optional="hide"/>
+                    <field name="id_proyecto_op" optional="hide"/>
+                    <field name="por_part" optional="hide"/>
+                    <field name="imb" optional="hide"/>
+                    <field name="car_orig" optional="hide"/>
+                    <field name="detraccion" optional="hide"/>
+                    <field name="tipo_nota" optional="hide"/>
+                    <field name="estado_comp" optional="hide"/>
+                    <field name="incal" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

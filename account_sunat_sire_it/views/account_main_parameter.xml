@@ -9,12 +9,17 @@
 				<page string="SIRE" groups="account_sunat_sire_it.group_sire_api_query_sunat_manager">
 					<group string="Credenciales">
 						<group>
-							<field name="sire_username"/>
-							<field name="sire_password"/>
+							<field name="sire_username" password="True" widget="password_meter"/>
+							<field name="sire_password" password="True" widget="password_meter"/>
 						</group>
 						<group>
 							<field name="sire_client_id" string="Client ID"/>
 							<field name="sire_client_secret" string="Clave"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="per_page"/>
 						</group>
 					</group>
 					<group>

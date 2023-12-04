@@ -11,7 +11,7 @@
 					<button string="Apuntes Contables" type="object"
 						name="show_move_line_ids"
 						class="oe_stat_button" icon="fa-list"
-						attrs="{'invisible': ['|',('line_ids', '=', []),('move_type', 'not in', ['entry'])]}" />
+						attrs="{'invisible': [('line_ids', '=', [])]}" />
 				</xpath>
 			</data>
 		</field>

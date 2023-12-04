@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_account_compras_81_wizard_form_extend" model="ir.ui.view">
+			<field name="name">account.sunat.wizard.view.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_compras_81_wizard_form"/>
+			<field name="arch" type="xml">
+				<field name="period_id" position="after">
+					<field name="check_close_book"/>
+				</field>
+			</field>
+		</record>
+		<record id="view_account_compras_82_wizard_form_extend" model="ir.ui.view">
+			<field name="name">account.sunat.wizard.view.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_compras_82_wizard_form"/>
+			<field name="arch" type="xml">
+				<field name="period_id" position="after">
+					<field name="check_close_book"/>
+				</field>
+			</field>
+		</record>
+		<record id="view_account_ventas_141_wizard_form_extend" model="ir.ui.view">
+			<field name="name">account.sunat.wizard.view.form.inherit</field>
+			<field name="model">account.sunat.wizard</field>
+			<field name="inherit_id" ref="account_sunat_it.view_account_ventas_141_wizard_form"/>
+			<field name="arch" type="xml">
+				<field name="period_id" position="after">
+					<field name="check_close_book"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

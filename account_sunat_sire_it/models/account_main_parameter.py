@@ -12,3 +12,4 @@ class AccountMainParameter(models.Model):
 	sire_token_expire = fields.Char(string='SIRE Token que expira')
 	sire_token_generation_date = fields.Datetime(string=u'SIRE Fecha de Generación de Token')
 	sire_token_expiration_date = fields.Datetime(string=u'SIRE Fecha de Vencimiento de Token')
+	per_page = fields.Integer(string=u'perPage según SUNAT',default=100)

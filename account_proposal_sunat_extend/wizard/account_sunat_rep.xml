@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_form_acepta_propuesta_c_extend" model="ir.ui.view">
+        <field name="name">view.form.acepta.propuesta.extend</field>
+        <field name="model">account.sunat.wizard</field>
+        <field name="inherit_id" ref="account_sunat_sire_it.view_form_acepta_propuesta_c"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//footer" position="inside">
+                <button name="comparison_odoo_sunat_purchase" type="object" string="Encontrar Diferencias" help="Brinda información de las diferencias existentes entre 
+                                SUNAT y ODOO por medio de un Excel" class="oe_highlight" />
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_form_reemplaza_propuesta_v_extend" model="ir.ui.view">
+        <field name="name">view.form.reemplaza.propuesta.v.extend</field>
+        <field name="model">account.sunat.wizard</field>
+        <field name="inherit_id" ref="account_sunat_sire_it.view_form_acepta_propuesta_v"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//footer" position="inside">
+                <button name="comparison_odoo_sunat_sale" type="object" string="Encontrar Diferencias" help="Brinda información de las diferencias existentes entre 
+                                SUNAT y ODOO por medio de un Excel" class="oe_highlight" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

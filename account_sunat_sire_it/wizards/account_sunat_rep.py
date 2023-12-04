@@ -38,10 +38,14 @@ class AccountSunatRep(models.TransientModel):
 	name_file = fields.Char(string='Nombre de Archivo')
 	comp_pr = fields.Boolean(string='Comparar propuesta',default=False)
 	compl_type = fields.Selection([('0','Adicionar'),('1','Excluir'),('2','Incluir')],string='Tipo')
+	sire_proposal = fields.Selection([('api','API'),('txt','TXT')],default='api')
 
 	############ Ventas #########
 	def get_ventas_sire_1(self):
-		self.get_data_from_api_sale()
+		if self.sire_proposal == 'api':
+			self.get_data_from_api_sale()
+		else:
+			self.get_data_from_txt_sale()
 		if self.type_show == 'pantalla':
 			view = self.env.ref('account_sunat_sire_it.account_sunat_sire_sale_data_tree').id
 			return {
@@ -177,11 +181,17 @@ class AccountSunatRep(models.TransientModel):
 	def get_ventas_2(self):
 		return self.get_sire(2,"v")
 	
+	def get_ventas_txt_2(self):
+		return self.get_txt_sire(2,"v")
+	
 	def get_ventas_sire_excel_2(self):
 		return self.get_excel_sire(2,"v")
 
 	def get_ventas_3(self):
 		return self.get_sire(3,"v")
+	
+	def get_ventas_txt_3(self):
+		return self.get_txt_sire(3,"v")
 	
 	def get_ventas_sire_excel_3(self):
 		return self.get_excel_sire(3,"v")
@@ -189,11 +199,17 @@ class AccountSunatRep(models.TransientModel):
 	def get_ventas_4(self):
 		return self.get_sire(4,"v")
 	
+	def get_ventas_txt_4(self):
+		return self.get_txt_sire(4,"v")
+	
 	def get_ventas_sire_excel_4(self):
 		return self.get_excel_sire(4,"v")
 
 	def get_ventas_5(self):
 		return self.get_sire(5,"v")
+	
+	def get_ventas_txt_5(self):
+		return self.get_txt_sire(5,"v")
 	
 	def get_ventas_sire_excel_5(self):
 		return self.get_excel_sire(5,"v")
@@ -353,14 +369,23 @@ class AccountSunatRep(models.TransientModel):
 	def get_compras_2(self):
 		return self.get_sire(2,"c")
 	
+	def get_compras_txt_2(self):
+		return self.get_txt_sire(2,"c")
+	
 	def get_compras_sire_excel_2(self):
 		return self.get_excel_sire(2,"c")
 	
 	def get_compras_3(self):
 		return self.get_sire(3,"c")
+	
+	def get_compras_txt_3(self):
+		return self.get_txt_sire(3,"c")
 
 	def get_compras_4(self):
 		return self.get_sire(4,"c")
+	
+	def get_compras_txt_4(self):
+		return self.get_txt_sire(4,"c")
 	
 	def get_compras_sire_excel_4(self):
 		return self.get_excel_sire(4,"c")
@@ -368,11 +393,17 @@ class AccountSunatRep(models.TransientModel):
 	def get_compras_5(self):
 		return self.get_sire(5,"c")
 	
+	def get_compras_txt_5(self):
+		return self.get_txt_sire(5,"c")
+	
 	def get_compras_sire_excel_5(self):
 		return self.get_excel_sire(5,"c")
 
 	def get_compras_6(self):
 		return self.get_sire(6,"c")
+	
+	def get_compras_txt_6(self):
+		return self.get_txt_sire(6,"c")
 	
 	def get_compras_sire_excel_6(self):
 		return self.get_excel_sire(6,"c")
@@ -380,11 +411,17 @@ class AccountSunatRep(models.TransientModel):
 	def get_compras_7(self):
 		return self.get_sire(7,"c")
 	
+	def get_compras_txt_7(self):
+		return self.get_txt_sire(7,"c")
+	
 	def get_compras_sire_excel_7(self):
 		return self.get_excel_sire(7,"c")
 
 	def get_compras_8(self):
 		return self.get_sire(8,"c")
+	
+	def get_compras_txt_8(self):
+		return self.get_txt_sire(8,"c")
 	
 	def get_compras_sire_excel_8(self):
 		return self.get_excel_sire(8,"c")
@@ -403,7 +440,7 @@ class AccountSunatRep(models.TransientModel):
 		return self.env['popup.it'].get_file('%s.xlsx'%name_file,workbook)
 
 	def get_sire(self,nro,type):
-		
+		direccion = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).dir_create_file
 		sql = self.get_sql_sire(nro,type)
 		self.env.cr.execute(sql)
 		sql = "COPY (%s) TO STDOUT WITH %s" % (sql, "CSV DELIMITER '|'")
@@ -426,14 +463,38 @@ class AccountSunatRep(models.TransientModel):
 		
 		res = res if res else base64.encodestring(b"== Sin Registros ==")
 		name_zip = name_doc.replace(".txt",".zip")
-		with zipfile.ZipFile(name_zip, 'w') as archivo_zip:
+		with zipfile.ZipFile(direccion+name_zip, 'w') as archivo_zip:
 			archivo_zip.writestr(name_doc,base64.b64decode(res).decode('utf-8'))
 
-		with open(name_zip, 'rb') as archivo:
+		with open(direccion+name_zip, 'rb') as archivo:
 			archivo_binario = archivo.read()
 		export_file = base64.b64encode(archivo_binario)
 
 		return self.env['popup.it'].get_file(name_zip,export_file)
+
+	def get_txt_sire(self,nro,type):
+		sql = self.get_sql_sire(nro,type)
+		self.env.cr.execute(sql)
+		sql = "COPY (%s) TO STDOUT WITH %s" % (sql, "CSV DELIMITER '|'")
+	
+		output = BytesIO()
+		self.env.cr.copy_expert(sql, output)
+		
+		csv_content = output.getvalue().decode('utf-8')
+		csv_lines = csv_content.split('\n')
+		csv_lines.pop(len(csv_lines)-1)
+		csv_lines_with_cr = [line + '\r' for line in csv_lines]
+		csv_content_with_cr = '\n'.join(csv_lines_with_cr)
+		csv_content_with_cr += '\n'
+		res = base64.b64encode(csv_content_with_cr.encode('utf-8'))
+		#res = base64.b64encode(output.getvalue())
+
+		output.close()
+		name_doc = self.get_nomenclatura(nro,type,res)
+		
+		res = res if res else base64.encodestring(b"== Sin Registros ==")
+
+		return self.env['popup.it'].get_file(name_doc,res)
 	
 	def get_nomenclatura(self,nro,type,res):
 		ruc = self.company_id.partner_id.vat
@@ -462,12 +523,12 @@ class AccountSunatRep(models.TransientModel):
 				if not self.comp_pr:
 					name_doc = "LE"+ruc+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month)) + "00080400021"+valor+("1" if self.company_id.currency_id.name == 'PEN' else "2") + "2.txt"
 				else:
-					name_doc = ruc+"-COMP-"+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month))+"-"+str('{:02d}'.format(self.given_numer))+".txt"
+					name_doc = ruc+"-COMP-"+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month))+"-"+str(self.given_numer)+".txt"
 			elif nro == 3:
 				if self.compl_type == '0': #ADICIONAR
-					name_doc = ruc+"-CP-"+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month))+"-"+str('{:02d}'.format(self.given_numer))+".txt"
+					name_doc = ruc+"-CP-"+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month))+"-"+str(self.given_numer)+".txt"
 				elif self.compl_type in ('1','2'): #EXCLUIR e INCLUIR
-					name_doc = ruc+"-RCEINEX-"+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month))+"-"+str('{:02d}'.format(self.given_numer))+".txt"
+					name_doc = ruc+"-RCEINEX-"+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month))+"-"+str(self.given_numer)+".txt"
 			elif nro == 4:
 				name_doc = "LE"+ruc+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month)) + "00080400031"+valor+("1" if self.company_id.currency_id.name == 'PEN' else "2") + "2%s.txt"%(str('{:02d}'.format(self.given_numer)))
 			elif nro == 5:
@@ -576,7 +637,7 @@ class AccountSunatRep(models.TransientModel):
 					ELSE TRUNC(0,2)
 				END AS campo26,
 				vst_v.name AS campo27,
-				vst_v.currency_rate::numeric(12,3) as campo28,
+				CASE WHEN vst_v.name <> 'PEN' THEN vst_v.currency_rate::numeric(12,3) ELSE NULL END as campo28,
 				CASE
 					WHEN vst_v.f_doc_m is not null THEN TO_CHAR(vst_v.f_doc_m :: DATE, 'dd/mm/yyyy')
 					ELSE NULL
@@ -625,7 +686,7 @@ class AccountSunatRep(models.TransientModel):
 				case when vst_v.td = '14' then TO_CHAR(vst_v.fecha_v :: DATE, 'dd/mm/yyyy') else NULL end as campo6,
 				vst_v.td as campo7,
 				vst_v.serie AS campo8,
-				vst_v.numero AS campo9,
+				ltrim(vst_v.numero, '0') AS campo9,
 				NULL as campo10,
 				vst_v.tdp AS campo11,
 				vst_v.docp AS campo12,
@@ -677,7 +738,7 @@ class AccountSunatRep(models.TransientModel):
 					ELSE TRUNC(0,2)
 				END AS campo26,
 				vst_v.name AS campo27,
-				vst_v.currency_rate::numeric(12,3) as campo28,
+				CASE WHEN vst_v.name <> 'PEN' THEN vst_v.currency_rate::numeric(12,3) ELSE NULL END as campo28,
 				CASE
 					WHEN vst_v.f_doc_m is not null THEN TO_CHAR(vst_v.f_doc_m :: DATE, 'dd/mm/yyyy')
 					ELSE NULL
@@ -729,7 +790,7 @@ class AccountSunatRep(models.TransientModel):
 				END AS campo5,
 				vst_v.td AS campo6,
 				vst_v.serie AS campo7,
-				vst_v.numero AS campo8,
+				ltrim(vst_v.numero, '0') AS campo8,
 				CASE
 					WHEN (am.campo_09_sale is not null) and (vst_v.td = '00' or vst_v.td = '03' or vst_v.td = '12' or vst_v.td = '13' or vst_v.td = '87') THEN am.campo_09_sale
 					ELSE NULL
@@ -784,7 +845,7 @@ class AccountSunatRep(models.TransientModel):
 					ELSE TRUNC(0,2)
 				END AS campo25,
 				vst_v.name AS campo26,
-				vst_v.currency_rate::numeric(12,3) as campo27,
+				CASE WHEN vst_v.name <> 'PEN' THEN vst_v.currency_rate::numeric(12,3) ELSE NULL END as campo27,
 				CASE
 					WHEN vst_v.f_doc_m is not null THEN TO_CHAR(vst_v.f_doc_m :: DATE, 'dd/mm/yyyy')
 					ELSE NULL
@@ -829,14 +890,17 @@ class AccountSunatRep(models.TransientModel):
 			vst_c.periodo as campo3,
 			NULL as campo4,
 			TO_CHAR(vst_c.fecha_e :: DATE, 'dd/mm/yyyy') as campo5,
-			NULL as campo6,
+			CASE
+				WHEN vst_c.fecha_v <= '{date_to}'::date THEN TO_CHAR(vst_c.fecha_v :: DATE, 'dd/mm/yyyy')
+				ELSE NULL
+			END AS campo6,
 			vst_c.td as campo7,
 			CASE
 				WHEN coalesce(vst_c.serie,'') <> ''  THEN vst_c.serie
 				ELSE NULL
 			END AS campo8,
 			vst_c.anio as campo9,
-			vst_c.numero as campo10,
+			ltrim(vst_c.numero, '0') AS campo10,
 			am.campo_09_purchase as campo11,
 			vst_c.tdp as campo12,
 			vst_c.docp as campo13,
@@ -853,7 +917,7 @@ class AccountSunatRep(models.TransientModel):
 			TRUNC(vst_c.otros,2) as campo24,
 			TRUNC(vst_c.total,2) as campo25,
 			vst_c.name as campo26,
-			vst_c.currency_rate::numeric(12,3) as campo27,
+			CASE WHEN vst_c.name <> 'PEN' THEN vst_c.currency_rate::numeric(12,3) ELSE NULL END as campo27,
 			CASE
 				WHEN vst_c.f_doc_m is not null THEN TO_CHAR(vst_c.f_doc_m :: DATE, 'dd/mm/yyyy') 
 				ELSE NULL
@@ -898,7 +962,9 @@ class AccountSunatRep(models.TransientModel):
 			NULL AS campo42
 			from get_compras_1_1('{date_from}', '{date_to}', {company_id},'pen') vst_c
 			left join account_move am on am.id = vst_c.am_id
-			where am.corre_sire IS NULL)T
+			LEFT JOIN res_partner rp1 ON rp1.id = vst_c.partner_id
+			WHERE coalesce(rp1.is_not_home,FALSE) <> TRUE
+			and am.corre_sire IS NULL)T
 			ORDER BY T.campo1, T.campo2, T.campo3
 				""".format(
 			ruc = company_id.partner_id.vat,
@@ -917,14 +983,17 @@ class AccountSunatRep(models.TransientModel):
 				vst_c.periodo as campo3,
 				NULL as campo4,
 				TO_CHAR(vst_c.fecha_e :: DATE, 'dd/mm/yyyy') as campo5,
-				NULL as campo6,
+				CASE
+					WHEN vst_c.fecha_v <= '{date_to}'::date THEN TO_CHAR(vst_c.fecha_v :: DATE, 'dd/mm/yyyy')
+					ELSE NULL
+				END AS campo6,
 				vst_c.td as campo7,
 				CASE
 					WHEN coalesce(vst_c.serie,'') <> ''  THEN vst_c.serie
 					ELSE NULL
 				END AS campo8,
 				vst_c.anio as campo9,
-				vst_c.numero as campo10,
+				ltrim(vst_c.numero, '0') AS campo10,
 				am.campo_09_purchase as campo11,
 				vst_c.tdp as campo12,
 				vst_c.docp as campo13,
@@ -941,7 +1010,7 @@ class AccountSunatRep(models.TransientModel):
 				TRUNC(vst_c.otros,2) as campo24,
 				TRUNC(vst_c.total,2) as campo25,
 				vst_c.name as campo26,
-				vst_c.currency_rate::numeric(12,3) as campo27,
+				CASE WHEN vst_c.name <> 'PEN' THEN vst_c.currency_rate::numeric(12,3) ELSE NULL END as campo27,
 				CASE
 					WHEN vst_c.f_doc_m is not null THEN TO_CHAR(vst_c.f_doc_m :: DATE, 'dd/mm/yyyy') 
 					ELSE NULL
@@ -986,7 +1055,9 @@ class AccountSunatRep(models.TransientModel):
 				NULL AS campo42
 				from get_compras_1_1('{date_from}', '{date_to}', {company_id},'pen') vst_c
 				left join account_move am on am.id = vst_c.am_id
-				where am.corre_sire = '0')T
+				LEFT JOIN res_partner rp1 ON rp1.id = vst_c.partner_id
+				WHERE coalesce(rp1.is_not_home,FALSE) <> TRUE
+				and am.corre_sire = '0')T
 				ORDER BY T.campo1, T.campo2, T.campo3
 					""".format(
 				ruc = company_id.partner_id.vat,
@@ -1041,7 +1112,9 @@ class AccountSunatRep(models.TransientModel):
 				NULL AS campo42
 				from get_compras_1_1('{date_from}', '{date_to}', {company_id},'pen') vst_c
 				left join account_move am on am.id = vst_c.am_id
-				where am.corre_sire = '{compl_type}')T
+				LEFT JOIN res_partner rp1 ON rp1.id = vst_c.partner_id
+				WHERE coalesce(rp1.is_not_home,FALSE) <> TRUE
+				and am.corre_sire = '{compl_type}')T
 				ORDER BY T.campo1, T.campo2, T.campo3
 					""".format(
 				ruc = company_id.partner_id.vat,
@@ -1067,7 +1140,7 @@ class AccountSunatRep(models.TransientModel):
 				ELSE NULL
 			END AS campo8,
 			vst_c.anio as campo9,
-			vst_c.numero as campo10,
+			ltrim(vst_c.numero, '0') AS campo10,
 			am.campo_09_purchase as campo11,
 			vst_c.tdp as campo12,
 			vst_c.docp as campo13,
@@ -1084,7 +1157,7 @@ class AccountSunatRep(models.TransientModel):
 			TRUNC(vst_c.otros,2) as campo24,
 			TRUNC(vst_c.total,2) as campo25,
 			vst_c.name as campo26,
-			vst_c.currency_rate::numeric(12,3) as campo27,
+			CASE WHEN vst_c.name <> 'PEN' THEN vst_c.currency_rate::numeric(12,3) ELSE NULL END as campo27,
 			CASE
 				WHEN vst_c.f_doc_m is not null THEN TO_CHAR(vst_c.f_doc_m :: DATE, 'dd/mm/yyyy') 
 				ELSE NULL
@@ -1129,7 +1202,9 @@ class AccountSunatRep(models.TransientModel):
 			NULL AS campo42
 			from get_compras_1_1('{date_from}', '{date_to}', {company_id},'pen') vst_c
 			left join account_move am on am.id = vst_c.am_id
-			where am.corre_sire = '3')T
+			LEFT JOIN res_partner rp1 ON rp1.id = vst_c.partner_id
+			WHERE coalesce(rp1.is_not_home,FALSE) <> TRUE
+			and am.corre_sire = '3')T
 			ORDER BY T.campo1, T.campo2, T.campo3
 				""".format(
 			ruc = company_id.partner_id.vat,
@@ -1162,10 +1237,7 @@ class AccountSunatRep(models.TransientModel):
 				WHEN vst_c.anio is not null THEN vst_c.anio
 				ELSE NULL
 			END AS campo8,
-			CASE
-				WHEN vst_c.numero is not null THEN vst_c.numero
-				ELSE NULL
-			END AS campo9,
+			ltrim(vst_c.numero, '0') AS campo9,
 			NULL as campo10,
 			vst_c.tdp as campo11,
 			vst_c.docp as campo12,
@@ -1182,7 +1254,7 @@ class AccountSunatRep(models.TransientModel):
 			TRUNC(vst_c.otros,2) as campo23,
 			TRUNC(vst_c.total,2) as campo24,
 			vst_c.name as campo25,
-			vst_c.currency_rate::numeric(12,3) as campo26,
+			CASE WHEN vst_c.name <> 'PEN' THEN vst_c.currency_rate::numeric(12,3) ELSE NULL END as campo26,
 			CASE
 				WHEN vst_c.f_doc_m is not null THEN TO_CHAR(vst_c.f_doc_m :: DATE, 'dd/mm/yyyy') 
 				ELSE NULL
@@ -1238,7 +1310,9 @@ class AccountSunatRep(models.TransientModel):
 			NULL AS campo43
 			from get_compras_1_1_sunat('{date_from}','{date_to}',{company_id},'date_modify_purchase') vst_c
 			left join account_move am on am.id = vst_c.am_id
-			WHERE am.campo_41_purchase = '9')T
+			LEFT JOIN res_partner rp1 ON rp1.id = vst_c.partner_id
+			WHERE coalesce(rp1.is_not_home,FALSE) <> TRUE
+			and am.campo_41_purchase = '9')T
 			ORDER BY T.campo1, T.campo2, T.campo3
 		""".format(
 			date_from = date_from.strftime('%Y/%m/%d'),
@@ -1264,7 +1338,7 @@ class AccountSunatRep(models.TransientModel):
 				am.campo_14_purchase_nd as campo13,
 				coalesce(am.campo_15_purchase_nd,0) as campo14,
 				vst_c.name AS campo15,
-				vst_c.currency_rate::numeric(12,3) as campo16,
+				CASE WHEN vst_c.name <> 'PEN' THEN vst_c.currency_rate::numeric(12,3) ELSE NULL END as campo16,
 				rp1.country_home_nd as campo17,
 				vst_c.namep as campo18,
 				rp1.home_nd as campo19,
@@ -1320,7 +1394,7 @@ class AccountSunatRep(models.TransientModel):
 				am.campo_14_purchase_nd as campo13,
 				coalesce(am.campo_15_purchase_nd,0) as campo14,
 				vst_c.name AS campo15,
-				vst_c.currency_rate::numeric(12,3) as campo16,
+				CASE WHEN vst_c.name <> 'PEN' THEN vst_c.currency_rate::numeric(12,3) ELSE NULL END as campo16,
 				rp1.country_home_nd as campo17,
 				vst_c.namep as campo18,
 				rp1.home_nd as campo19,
@@ -1378,7 +1452,7 @@ class AccountSunatRep(models.TransientModel):
 				am.campo_14_purchase_nd AS campo14,
 				coalesce(am.campo_15_purchase_nd,0) AS campo15,
 				vst_c.name AS campo16,
-				vst_c.currency_rate::numeric(12,3) as campo17,
+				CASE WHEN vst_c.name <> 'PEN' THEN vst_c.currency_rate::numeric(12,3) ELSE NULL END as campo17,
 				rp1.country_home_nd AS campo18,
 				vst_c.namep as campo19,
 				rp1.home_nd AS campo20,
@@ -1416,7 +1490,68 @@ class AccountSunatRep(models.TransientModel):
 			company_id = company_id.id,
 			)
 		return sql
-	
+	def get_data_from_txt_sale(self):
+
+		data = []
+		#if not self.document_file:
+		#	raise UserError(u'El archivo es obligatorio')
+		#zip_data = base64.b64decode(self.document_file)
+		#with zipfile.ZipFile(io.BytesIO(zip_data), 'r') as zip_ref:
+		#	if self.name_file.replace(".zip",".txt") in zip_ref.namelist():
+		txt_data = base64.b64decode(self.document_file)
+		txt_data_str = txt_data.decode('utf-8')
+		lines = txt_data_str.split('\n')
+		data = []
+		for l in lines:
+			data.append(l.split('|'))
+		
+		data.pop(0)
+		data.pop(len(data)-1)
+
+		for line in data:
+			values = {
+			'perPeriodoTributario': line[2],
+			'codCar': line[3],
+			'codTipoCDP': line[6],
+			'numSerieCDP':line[7],
+			'numCDP': line[8],
+			#'codTipoCarga': reg['codTipoCarga'],
+			#'codSituacion': reg['codSituacion'],
+			'fecEmision':  datetime.strptime(line[4], '%d/%m/%Y').date() if line[4] != '' else None,
+			'fecVencPag': datetime.strptime(line[5], '%d/%m/%Y').date() if line[5] != '' else None,
+			'codTipoDocIdentidad': line[10],
+			'numDocIdentidad': line[11],
+			'nomRazonSocialCliente': line[12],
+			'mtoValFactExpo': line[13],
+			'mtoBIGravada': line[14],
+			'mtoDsctoBI': line[15],
+			'mtoIGV': line[16],
+			'mtoDsctoIGV': line[17],
+			'mtoExonerado': line[18],
+			'mtoInafecto': line[19],
+			'mtoISC':line[20],
+			'mtoBIIvap': line[21],
+			'mtoIvap': line[22],
+			'mtoIcbp': line[23],
+			'mtoOtrosTrib': line[24],
+			'mtoTotalCP': line[25],
+			'codMoneda': line[26],
+			'mtoTipoCambio': line[27],
+			'codEstadoComprobante': line[34],
+			#'desEstadoComprobante': reg['desEstadoComprobante'],
+			'indOperGratuita': line[36],
+			#'mtoValorOpGratuitas': reg['mtoValorOpGratuitas'],
+			'mtoValorFob': line[35],
+			'indTipoOperacion': line[37],
+			#'mtoPorcParticipacion': reg['mtoPorcParticipacion'],
+			#'mtoValorFobDolar': reg['mtoValorFobDolar'],
+			'fecEmisionMod': datetime.strptime(line[28], '%d/%m/%Y').date() if line[28] != '' else None,
+			'codTipoCDPMod': line[29],
+			'numSerieCDPMod': line[30],
+			'numCDPMod': line[31],
+			}
+			self.env['account.sunat.sire.sale.data'].create(values)
+
 	def get_data_from_api_sale(self):
 		#obj_query = self.env['account.query.sunat']
 		param = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1)
@@ -1454,7 +1589,7 @@ class AccountSunatRep(models.TransientModel):
 		
 		params = {
 				'page': 1,
-				'perPage': 1000
+				'perPage': (param.per_page or 100)
 			}
 		
 		url = 'https://api-sire.sunat.gob.pe/v1/contribuyente/migeigv/libros/rvie/propuesta/web/propuesta/{period}/comprobantes'.format(period = self.period_id.code)
