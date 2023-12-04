@@ -151,7 +151,7 @@ class AccountBookHonoraryWizard(models.TransientModel):
 			tt.numero,
 			tt.tdp,
 			tt.docp,
-			tt.name as full_name,
+			rp.name as full_name,
 			tt.divisa,
 			tt.tipo_c,
 			tt.renta,
@@ -160,6 +160,8 @@ class AccountBookHonoraryWizard(models.TransientModel):
 			tt.periodo_p,
 			tt.is_not_home
 			from get_recxhon_1_1('%s','%s',%d,'%s') tt
+			LEFT JOIN account_move am ON am.id = tt.am_id
+			LEFT JOIN res_partner rp ON rp.id = am.partner_id
 		""" % (x_date_ini.strftime('%Y/%m/%d'),x_date_end.strftime('%Y/%m/%d'),x_company_id,x_date_type)
 		return sql
 
