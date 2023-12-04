@@ -104,26 +104,29 @@ class AccountBookHonoraryWizard(models.TransientModel):
 			worksheet.write(x,7,line['numero'] if line['numero'] else '',formats['especial1'])
 			worksheet.write(x,8,line['tdp'] if line['tdp'] else '',formats['especial1'])
 			worksheet.write(x,9,line['docp'] if line['docp'] else '',formats['especial1'])
-			worksheet.write(x,10,line['apellido_p'] if line['apellido_p'] else '',formats['especial1'])
-			worksheet.write(x,11,line['apellido_m'] if line['apellido_m'] else '',formats['especial1'])
-			worksheet.write(x,12,line['namep'] if line['namep'] else '',formats['especial1'])
-			worksheet.write(x,13,line['divisa'] if line['divisa'] else '',formats['especial1'])
-			worksheet.write(x,14,line['tipo_c'] if line['tipo_c'] else '0.0000',formats['numbercuatro'])
-			worksheet.write(x,15,line['renta'] if line['renta'] else '0.00',formats['numberdos'])
-			worksheet.write(x,16,line['retencion'] if line['retencion'] else '0.00',formats['numberdos'])
-			worksheet.write(x,17,line['neto_p'] if line['neto_p'] else '0.00',formats['numberdos'])
-			worksheet.write(x,18,line['periodo_p'] if line['periodo_p'] else '',formats['especial1'])
-			worksheet.write(x,19,line['is_not_home'] if line['is_not_home'] else '',formats['especial1'])
+			worksheet.write(x,10,line['full_name'] if line['full_name'] else '',formats['especial1'])
+			
+			#worksheet.write(x,10,line['apellido_p'] if line['apellido_p'] else '',formats['especial1'])
+			#worksheet.write(x,11,line['apellido_m'] if line['apellido_m'] else '',formats['especial1'])
+			#worksheet.write(x,12,line['namep'] if line['namep'] else '',formats['especial1'])
+			
+			worksheet.write(x,11,line['divisa'] if line['divisa'] else '',formats['especial1'])
+			worksheet.write(x,12,line['tipo_c'] if line['tipo_c'] else '0.0000',formats['numbercuatro'])
+			worksheet.write(x,13,line['renta'] if line['renta'] else '0.00',formats['numberdos'])
+			worksheet.write(x,14,line['retencion'] if line['retencion'] else '0.00',formats['numberdos'])
+			worksheet.write(x,15,line['neto_p'] if line['neto_p'] else '0.00',formats['numberdos'])
+			worksheet.write(x,16,line['periodo_p'] if line['periodo_p'] else '',formats['especial1'])
+			worksheet.write(x,17,line['is_not_home'] if line['is_not_home'] else '',formats['especial1'])
 			renta += line['renta'] if line['renta'] else 0
 			retencion += line['retencion'] if line['retencion'] else 0
 			neto_p += line['neto_p'] if line['neto_p'] else 0
 			x += 1
 		
-		worksheet.write(x,15,renta,formats['numbertotal'])
-		worksheet.write(x,16,retencion,formats['numbertotal'])
-		worksheet.write(x,17,neto_p,formats['numbertotal'])
+		worksheet.write(x,13,renta,formats['numbertotal'])
+		worksheet.write(x,14,retencion,formats['numbertotal'])
+		worksheet.write(x,15,neto_p,formats['numbertotal'])
 
-		widths = [10,7,11,9,9,4,5,10,4,11,10,10,15,5,7,12,12,12,9,15]
+		widths = [10,7,11,9,9,4,5,10,4,11,30,5,7,12,12,12,9,15]
 		worksheet = ReportBase.resize_cells(worksheet,widths)
 		workbook.close()
 
@@ -132,8 +135,7 @@ class AccountBookHonoraryWizard(models.TransientModel):
 		return self.env['popup.it'].get_file('RH%s.xlsx'%(self.company_id.partner_id.vat),base64.encodebytes(b''.join(f.readlines())))
 	
 	def get_header(self):
-		HEADERS = ['PERIODO','LIBRO','VOUCHER','FECHA E','FECHA P','TD','SERIE','NUMERO','TDP','RUC','AP. PATERNO',
-				   'AP. MATERNO','NOMBRES','DIVISA','TC','RENTA','RETENCION','NETO P','PERIODO P','NO DOMICILIADO']
+		HEADERS = ['PERIODO','LIBRO','VOUCHER','FECHA E','FECHA P','TD','SERIE','NUMERO','TDP','RUC','APELLIDOS Y NOMBRES','DIVISA','TC','RENTA','RETENCION','NETO P','PERIODO P','NO DOMICILIADO']
 		return HEADERS
 
 	def _get_sql(self,x_date_ini,x_date_end,x_company_id,x_date_type):
@@ -149,9 +151,7 @@ class AccountBookHonoraryWizard(models.TransientModel):
 			tt.numero,
 			tt.tdp,
 			tt.docp,
-			tt.apellido_p,
-			tt.apellido_m,
-			tt.namep,
+			rp.name as full_name,
 			tt.divisa,
 			tt.tipo_c,
 			tt.renta,
@@ -160,6 +160,8 @@ class AccountBookHonoraryWizard(models.TransientModel):
 			tt.periodo_p,
 			tt.is_not_home
 			from get_recxhon_1_1('%s','%s',%d,'%s') tt
+			LEFT JOIN account_move am ON am.id = tt.am_id
+			LEFT JOIN res_partner rp ON rp.id = am.partner_id
 		""" % (x_date_ini.strftime('%Y/%m/%d'),x_date_end.strftime('%Y/%m/%d'),x_company_id,x_date_type)
 		return sql
 
