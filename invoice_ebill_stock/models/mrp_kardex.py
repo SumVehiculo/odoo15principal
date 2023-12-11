@@ -22,10 +22,8 @@ class account_move(models.Model):
 
 	def get_lot_name(self):
 		for i in self:
-			i.refresh()
 			if self.env.company.etiqueta_lote != False:
 				for lines in i.invoice_line_ids:
-					lines.refresh()
 					if lines.lot_ids:
 						if " - Lotes: " in lines.name:
 							posicion = lines.name.find(" - Lotes: ")
@@ -68,7 +66,13 @@ class stock_move(models.Model):
 					if det.lot_id.id:
 						if self.env.company.descript_move_l != False:
 							textd += det.lot_id.name if textd == "" else ( ", " + det.lot_id.name)
-				i.description_picking = (i.description_picking if i.description_picking else "") + ((" - Lotes: " + textd) if textd != "" else "")
+						if self.env.company.fecha_caducidad != False:
+							textd += " *Caducidad: " + str(det.lot_id.expiration_date or '')[:10] 
+
+				if textd  and (" - Lotes: " + textd) in i.description_picking:
+					pass
+				else:
+					i.description_picking = (i.description_picking if i.description_picking else "") + ((" - Lotes: " + textd) if textd != "" else "")
 		return t
 
 
