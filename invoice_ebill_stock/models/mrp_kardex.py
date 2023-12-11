@@ -66,8 +66,6 @@ class stock_move(models.Model):
 					if det.lot_id.id:
 						if self.env.company.descript_move_l != False:
 							textd += det.lot_id.name if textd == "" else ( ", " + det.lot_id.name)
-						if self.env.company.fecha_caducidad != False:
-							textd += " *Caducidad: " + str(det.lot_id.expiration_date or '')[:10] 
 
 				if textd  and (" - Lotes: " + textd) in i.description_picking:
 					pass
