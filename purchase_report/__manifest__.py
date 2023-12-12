@@ -11,7 +11,8 @@
 	'auto_install': False,
 	'demo': [],
 	'data':	[
-        'reports/report_purchase_order.xml'
+        'reports/report_purchase_order.xml',
+         'reports/report_purchase_quotation.xml'
         ],
 	'installable': True,
 	'license': 'LGPL-3'
