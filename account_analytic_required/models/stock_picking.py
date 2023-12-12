@@ -16,9 +16,9 @@ class stock_picking(models.Model):
             for move in move_ids_without_package:
                 if not move.get('analytic_account_id') or not move.get('analytic_tag_id'):
                     raise UserError("Falta completar Cuenta Analítica o Etiqueta Analítica")
-        else:
-            res = super(stock_picking, self).create(vals)
-            return res
+        
+        res = super(stock_picking, self).create(vals)
+        return res
         
     def write(self, vals):
         if self.type_operation_sunat_id.code in ('10', '91', '92'):
