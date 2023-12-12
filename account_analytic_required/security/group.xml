@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="group_mod_user_id" model="res.groups">
+			<field name="name">Modificar Vendedor en Ventas</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+        <record id="group_mod_precio_unit" model="res.groups">
+			<field name="name">Modificar Precio Unitario en Ventas</field>
+			<field name="category_id" ref="base.module_category_hidden"/>
+		</record>
+    </data>
+</odoo>

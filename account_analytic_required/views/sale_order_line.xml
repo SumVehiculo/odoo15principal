@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="price_sale_inherit" model="ir.ui.view">
+		<field name="name">sale.price.vendor.tree.inherit</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook//page[@name='order_lines']//tree//field[@name='price_unit']" position="replace">
+				<field name="price_unit"  readonly="1"/>
+			</xpath>
+		</field>
+	</record>
+	<record id="price_sale_gro_inherit" model="ir.ui.view">
+		<field name="name">sale.order.price.tree.inherit</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="groups_id" eval="[(6, 0, [ref('account_analytic_required.group_mod_precio_unit')])]"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook//page[@name='order_lines']//tree//field[@name='price_unit']" position="replace">
+				<field name="price_unit" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="vendor_sale_inherit" model="ir.ui.view">
+		<field name="name">sale.order.vendor.tree.inherit</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+			<field name="user_id" position="replace">
+				<field name="user_id" widget="many2one_avatar_user" readonly="1"/>
+			</field>
+		</field>
+	</record>
+	<record id="vendor_sale_gro_inherit" model="ir.ui.view">
+		<field name="name">sale.order.vendorg.tree.inherit</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="groups_id" eval="[(6, 0, [ref('account_analytic_required.group_mod_user_id')])]"/>
+		<field name="arch" type="xml">
+			<field name="user_id" position="replace">
+				<field name="user_id" widget="many2one_avatar_user"/>
+			</field>
+		</field>
+	</record>
+
+</odoo>
