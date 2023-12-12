@@ -7,7 +7,8 @@
     'category': 'stock',
     'depends' : ['stock'],
     'data': [
-        # 'security/group.xml'
+        'security/group.xml',
+        'views/sale_order.xml'
     ],
     'auto_install': False,
     'installable': True
