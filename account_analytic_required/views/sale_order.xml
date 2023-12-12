@@ -6,7 +6,7 @@
 		<field name="inherit_id" ref="sale.view_order_form"/>
 		<field name="arch" type="xml">
 			<field name="user_id" position="replace">
-				<field name="user_id" widget="many2one_avatar_user" attrs="{'readonly': [('user_id', 'not in', [(4, ref('account_analytic_required.group_mod_user_id'))])]}"/>
+				<field name="user_id" widget="many2one_avatar_user" attrs="{'readonly': [('user_has_group', '!=', 'your.group_name')]}"/>
 			</field>
 		</field>
 	</record>
