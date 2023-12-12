@@ -5,7 +5,7 @@
     'author': 'ITGRUPO,berth',
     'website': '',
     'category': 'stock',
-    'depends' : ['stock'],
+    'depends' : ['stock','sale'],
     'data': [
         'security/group.xml',
         'views/sale_order.xml'
