@@ -35,12 +35,12 @@ class stock_move(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super(stock_picking, self).create(vals)
+        res = super(stock_move, self).create(vals)
         res.verify_required()
         return res
         
     def write(self, vals):
-        res = super(stock_picking, self).write(vals)
+        res = super(stock_move, self).write(vals)
         self.verify_required()
         return res
        
