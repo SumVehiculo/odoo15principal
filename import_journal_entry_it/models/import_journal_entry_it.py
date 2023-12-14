@@ -257,12 +257,12 @@ class ImportJournalEntryIt(models.Model):
 		if values.get('tag_ids'):
 			if str(values.get('tag_ids')) !="":
 				tag_names = values.get('tag_ids').split(',')
-				raise UserError(str(tag_names))
-				for name in tag_names:
-					tag = self.env['account.account.tag'].search([('name', '=', name)])
-					if not tag:
-						raise UserError(_(' No existe la Etiqueta de Cuenta "%s".') % name)
-					tag_ids.append(tag.id)
+				if str(tag_names) != [' ']:
+					for name in tag_names:
+						tag = self.env['account.account.tag'].search([('name', '=', name)])
+						if not tag:
+							raise UserError(_(' No existe la Etiqueta de Cuenta "%s".') % name)
+						tag_ids.append(tag.id)
 		analytic_tag_ids = []
 		if values.get('analytic_tag_ids'):
 			tag_names = values.get('analytic_tag_ids').split(',')
