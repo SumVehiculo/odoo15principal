@@ -120,12 +120,13 @@ class ImportMoveLineWizard(models.TransientModel):
 		tag_ids = []
 
 		if values.get('tag_ids'):
-			tag_names = values.get('tag_ids').split(',')
-			for name in tag_names:
-				tag = self.env['account.account.tag'].search([('name', '=', name)])
-				if not tag:
-					raise UserError(' No existe la etiqueta de Cuenta "%s".'% name)
-				tag_ids.append(tag.id)
+			if str(values.get('tag_ids')) !="":
+				tag_names = values.get('tag_ids').split(',')
+				for name in tag_names:
+					tag = self.env['account.account.tag'].search([('name', '=', name)])
+					if not tag:
+						raise UserError(' No existe la etiqueta de Cuenta "%s".'% name)
+					tag_ids.append(tag.id)
 
 		currency = self.env['res.currency'].search([('name','=',values.get("currency_id"))],limit=1)
 		if currency.name != 'PEN':

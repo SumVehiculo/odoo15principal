@@ -255,7 +255,7 @@ class ImportJournalEntryIt(models.Model):
 		tag_ids = []
 
 		if values.get('tag_ids'):
-			if values.get('tag_ids') !="":
+			if str(values.get('tag_ids')) !="":
 				tag_names = values.get('tag_ids').split(',')
 				for name in tag_names:
 					tag = self.env['account.account.tag'].search([('name', '=', name)])
