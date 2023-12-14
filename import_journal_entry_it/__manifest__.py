@@ -2,7 +2,7 @@
 {
 	'name': 'Importador de Asientos Contables IT',
 	'category': 'account',
-	'author': 'ITGRUPO,Glenda Julia Merma Mayhua',
+	'author': 'ITGRUPO,Glenda Julia Merma Mayhua, Moises',
 	'depends': ['account_fields_it'],
 	'version': '1.0',
 	'description':"""

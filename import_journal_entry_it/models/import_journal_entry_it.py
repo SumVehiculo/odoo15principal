@@ -70,7 +70,7 @@ class ImportJournalEntryIt(models.Model):
 				continue
 			else:
 				line = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
-				if len(line) == 29:
+				if len(line) == 30:
 					date_string = None
 					invoice_date_string = None
 					date_maturity_string = None
@@ -89,10 +89,11 @@ class ImportJournalEntryIt(models.Model):
 						a3_as_datetime = datetime(*xlrd.xldate_as_tuple(a3, workbook.datemode))
 						date_maturity_string = a3_as_datetime.date().strftime('%Y-%m-%d')
 
-					if line[27] != '':
-						a4 = int(float(line[27]))
+					if line[28] != '':
+						a4 = int(float(line[28]))
 						a4_as_datetime = datetime(*xlrd.xldate_as_tuple(a4, workbook.datemode))
 						date_invoice_it_string = a4_as_datetime.date().strftime('%Y-%m-%d')
+					##################SE AGREGO LA ETIQUETAS ANALICAS#############################
 					values = ({'number':line[0],
 								'type_document_id':line[1],
 								'ref': line[2],
@@ -117,13 +118,14 @@ class ImportJournalEntryIt(models.Model):
 								'date_maturity':date_maturity_string,
 								'name':line[22],
 								'analytic_account_id':line[23],
-								'tag_ids':line[24],
-								'amount_tax':line[25],
-								'amount_tax_me':line[26],
+								'analytic_tag_ids':line[24],
+								'tag_ids':line[25],
+								'amount_tax':line[26],
+								'amount_tax_me':line[27],
 								'invoice_date_it':date_invoice_it_string,
-								'cta_cte':line[28] == 'SI',
+								'cta_cte':line[29] == 'SI',
 								})
-				elif len(line) > 27:
+				elif len(line) > 28:
 					raise UserError('Tu archivo tiene columnas mas columnas de lo esperado.')
 				else:
 					raise UserError('Tu archivo tiene columnas menos columnas de lo esperado.')
@@ -150,8 +152,8 @@ class ImportJournalEntryIt(models.Model):
 		self.state = 'draft'
 
 	def make_move(self, values):
+		
 		move_obj = self.env['account.move']
-
 		
 		if str(values.get('journal_id')) == '':
 			raise UserError('El campo "journal_id" no puede estar vacio.')
@@ -259,6 +261,14 @@ class ImportJournalEntryIt(models.Model):
 				if not tag:
 					raise UserError(_(' No existe la Etiqueta de Cuenta "%s".') % name)
 				tag_ids.append(tag.id)
+		analytic_tag_ids = []
+		if values.get('analytic_tag_ids'):
+			tag_names = values.get('analytic_tag_ids').split(',')
+			for name in tag_names:
+				tag = self.env['account.analytic.tag'].search([('name', '=', name)])
+				if not tag:
+					raise UserError(_(' No existe la Etiqueta Analitica "%s".') % name)
+				analytic_tag_ids.append(tag.id)
 
 		currency = self.env['res.currency'].search([('name','=',values.get("currency_id_aml"))],limit=1)
 		if currency.name != 'PEN':
@@ -281,6 +291,7 @@ class ImportJournalEntryIt(models.Model):
 				'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_amount_me': float(values.get("amount_tax_me")) if values.get("amount_tax_me") else 0,
 				'tax_tag_ids':([(6,0,tag_ids)]),
+				'analytic_tag_ids':([(6,0,analytic_tag_ids)]),
 			}
 		else:
 			vals = {
@@ -298,7 +309,8 @@ class ImportJournalEntryIt(models.Model):
 				'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
 				'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_amount_me': float(values.get("amount_tax_me")) if values.get("amount_tax_me") else 0,
-				'tax_tag_ids':([(6,0,tag_ids)])
+				'tax_tag_ids':([(6,0,tag_ids)]),
+				'analytic_tag_ids':([(6,0,analytic_tag_ids)]),
 			}
 
 		move_id.with_context(check_move_validity=False).write({'line_ids' :([(0,0,vals)]) })
