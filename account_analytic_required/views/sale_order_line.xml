@@ -7,7 +7,7 @@
 		<field name="arch" type="xml">
 			<xpath expr="//notebook//page[@name='order_lines']//tree//field[@name='price_unit']" position="replace">
 				<field name="line_factura" invisible="1"/>
-				<field name="price_unit"  attrs="{'readonly': ['|', ('line_factura', '=', True), ('state', '=', 'sale')]}"/>
+				<field name="price_unit"  attrs="{'readonly': ['|', ('line_factura', '=', True), 'in', ('sale','done')]}"/>
 			</xpath>
 		</field>
 	</record>
