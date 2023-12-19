@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="sale.action_order_report_all" model="ir.actions.act_window">
+        <field name="name">Análisis de ventas</field>
+        <field name="res_model">sale.report</field>
+        <field name="view_mode">tree,graph,pivot</field>
+       </record>
+
+</odoo>

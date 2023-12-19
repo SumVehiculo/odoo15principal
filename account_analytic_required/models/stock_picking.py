@@ -43,4 +43,30 @@ class stock_move(models.Model):
         res = super(stock_move, self).write(vals)
         self.verify_required()
         return res
-       
+    
+class sale_order(models.Model):
+    _inherit = 'sale.order'
+    
+    factura = fields.Boolean(
+        string='Tiene factura', 
+        default= False    
+    )
+
+    def tiene_factura(self):
+        if self.invoice_ids >= 1:
+            self.factura = True
+        else:
+            self.factura = False
+
+class sale_order_line(models.Model):
+    _inherit = 'sale.order.line'
+    
+    line_factura = fields.Boolean(
+        string='Tiene factura', 
+        default= False
+        
+    )
+
+    def tiene_lfactura(self):
+       for i in self:
+           self.line_factura = self.order_id.factura
