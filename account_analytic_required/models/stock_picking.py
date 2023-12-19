@@ -49,8 +49,7 @@ class sale_order(models.Model):
     
     factura = fields.Boolean(
         string='Tiene factura', 
-        default= False
-        
+        default= False    
     )
 
     def tiene_factura(self):
@@ -58,5 +57,16 @@ class sale_order(models.Model):
             self.factura = True
         else:
             self.factura = False
+
+class sale_order_line(models.Model):
+    _inherit = 'sale.order.line'
     
-       
+    line_factura = fields.Boolean(
+        string='Tiene factura', 
+        default= False
+        
+    )
+
+    def tiene_lfactura(self):
+       for i in self:
+           self.line_factura = self.order_id.factura
