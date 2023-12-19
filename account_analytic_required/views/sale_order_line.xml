@@ -6,7 +6,7 @@
 		<field name="inherit_id" ref="sale.view_order_form"/>
 		<field name="arch" type="xml">
 			<xpath expr="//notebook//page[@name='order_lines']//tree//field[@name='price_unit']" position="replace">
-				<field name="price_unit"  readonly="1"/>
+				<field name="price_unit"  attrs="{'readonly': [('state', '=', 'sale')]}"/>
 			</xpath>
 		</field>
 	</record>
