@@ -38,7 +38,7 @@
 		<field name="inherit_id" ref="account.view_move_form"/>
 		<field name="arch" type="xml">
 			<xpath expr="//notebook//page[@id='invoice_tab']//tree//field[@name='price_unit']" position="replace">
-				<field name="price_unit" attrs="{'readonly': [('state', 'in', ('posted','cancel'))]}"/>
+				<field name="price_unit" readonly="1"/>
 			</xpath>
 		</field>
 	</record>
@@ -48,10 +48,10 @@
 		<field name="name">account.price.tree.inherit</field>
 		<field name="model">account.move</field>
 		<field name="inherit_id" ref="account.view_move_form"/>
-		<field name="groups_id" eval="[(6, 0, [ref('account_analytic_required.group_mod_user_id')])]"/>
+		<field name="groups_id" eval="[(6, 0, [ref('account_analytic_required.group_mod_precio_unit')])]"/>
 		<field name="arch" type="xml">
 			<xpath expr="//notebook//page[@id='invoice_tab']//tree//field[@name='price_unit']" position="replace">
-                <field name="price_unit"/>
+                <field name="price_unit" readonly="0"/>
 			</xpath>
 		</field>
 	</record>
