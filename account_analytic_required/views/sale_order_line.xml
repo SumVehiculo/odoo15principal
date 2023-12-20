@@ -38,7 +38,7 @@
 		<field name="inherit_id" ref="account.view_move_form"/>
 		<field name="arch" type="xml">
 			<xpath expr="//notebook//page[@id='invoice_tab']//tree//field[@name='price_unit']" position="replace">
-				<field name="price_unit" readonly="1"/>
+				<field name="price_unit" attrs="{'readonly': [('state', 'in', ('posted','cancel'))]}"/>
 			</xpath>
 		</field>
 	</record>
