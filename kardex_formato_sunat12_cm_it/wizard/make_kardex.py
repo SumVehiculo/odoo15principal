@@ -936,7 +936,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 		import importlib
 		import sys
 		importlib.reload(sys)        
-		nombre = "LE" + str(self.env.company.partner_id.vat) + str(self.fini.year) + str(self.fini.month).rjust(2,'0') + '00130100001111.txt'
+		nombre = "LE" + str(self.env.company.partner_id.vat) + str(self.fini.year) + str(self.fini.month).rjust(2,'0') + '00120100001111.txt'
 		return self.env['popup.it'].get_file(nombre,base64.encodestring(b''+txt.encode("utf-8")))
 
 
@@ -1070,7 +1070,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 		import importlib
 		import sys
 		importlib.reload(sys)        
-		nombre = "LE" + str(self.env.company.partner_id.vat) + str(self.fini.year) + str(self.fini.month).rjust(2,'0') + '00130100001111.txt'
+		nombre = "LE" + str(self.env.company.partner_id.vat) + str(self.fini.year) + str(self.fini.month).rjust(2,'0') + '00120100001111.txt'
 		return self.env['popup.it'].get_file(nombre,base64.encodestring(b''+txt.encode("utf-8")))
 
 
