@@ -982,7 +982,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 			almacen_origen = self.env['stock.location'].browse(linea[27])
 
 			txt+=str(llavemaster) +'-'+ str(contador[llavemaster]) + '|'
-			txt+=('A' if almacen_origen.id and almacen_origen.usage == 'inventory' else 'M') + str(move_obj.invoice_id.name) + '|'
+			txt+=('A' if almacen_origen.id and almacen_origen.usage == 'inventory' else 'M') + str(move_obj.invoice_id.name or move_obj.id) + '|'
 
 			almacen = self.env['stock.location'].browse(linea[26])
 			txt+= str(almacen.l10n_pe_edi_branch_code) + "|" #EL CODIGO DE ESTABLECIMIENTO
