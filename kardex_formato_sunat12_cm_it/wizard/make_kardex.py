@@ -818,7 +818,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 			lst_locations = locat_ids.ids
 		else:
 			lst_locations = self.location_ids.ids
-		lst_products  = self.products_ids.ids
+		lst_products  = self.products_ids_it.ids
 		productos='{'
 		almacenes='{'
 		date_ini=self.fini
