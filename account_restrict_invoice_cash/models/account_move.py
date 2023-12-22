@@ -8,7 +8,16 @@ class AccountMove(models.Model):
 	@api.model
 	def search(self, args, offset=0, limit=None, order=None, count=False):		
 		if self.env.user.has_group("account_restrict_invoice_cash.group_invoice_only"):
-			args = [('create_uid', '=', self.env.user.id)] + args
+			opt = 0
+			for condition in args:
+				if isinstance(condition,list)and len(condition)==3:					
+					field, operator, value = condition					
+					#['&', ['journal_id.type', '=', 'cash'], ['journal_id.check_surrender', '=', False]]
+					if field ==	'move_type' and operator == '=' and value == 'in_invoice':		
+						opt+= 1					
+			if opt==1:
+				args = [('create_uid', '=', self.env.user.id)] + args
+
 		t = super(AccountMove, self).search(args, offset, limit, order, count=count)		
 		return t
 
