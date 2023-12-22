@@ -888,190 +888,129 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 		total_4 = 0
 		txt=""
 		contador = {}
-		for linea in self.env.cr.fetchall():			
-			if str(linea[1])>= str(date_ini):
-				move_obj = self.env['stock.move'].browse(linea[25])
-				txt+=str(linea[1])[0:4] +	str(linea[1])[5:7] + '00|'
-				llavemaster = move_obj.invoice_id.id or linea[25]
-				if llavemaster in contador:
-					contador[llavemaster] = contador[llavemaster]+1
-				else:
-					contador[llavemaster] = 1
-
-				almacen_origen = self.env['stock.location'].browse(linea[27])
-
-				txt+=str(llavemaster) + str(contador[llavemaster]) + '|'
-				txt+=('A' if almacen_origen.id and almacen_origen.usage == 'inventory' else 'M') + str(move_obj.invoice_id.name or move_obj.id) + '|'
-
-				almacen = self.env['stock.location'].browse(linea[26])
-				txt+= str(almacen.l10n_pe_edi_branch_code) + "|" #EL CODIGO DE ESTABLECIMIENTO
-				txt+='1|'
-				#txt+=str(linea[25]) + str(contador[linea[25]]) + '|'##esta de mas
-				productoobj = self.env['product.product'].browse(linea[24])
-				txt+= (productoobj.categ_id.existence_type_id.code or '') + '|'
-				txt+= (productoobj.default_code or '') + '|'
-				txt+= '1|'
-				txt+= (productoobj.onu_code.code or '') + '|'
-				fechaespecial = str(move_obj.invoice_id.invoice_date if move_obj.invoice_id.id else ((move_obj.kardex_date - timedelta(hours=5) if move_obj.id and move_obj.kardex_date else str(linea[1]))  ) )
-				txt+= fechaespecial[8:10] + "/" + fechaespecial[5:7] + "/" + fechaespecial[:4] + '|'
-				txt+= (str(move_obj.invoice_id.l10n_latam_document_type_id.code) if move_obj.invoice_id.id else '00' ) + '|'
-				txt+= (str(move_obj.invoice_id.ref).split('-')[0] if move_obj.invoice_id.id and move_obj.invoice_id.ref else '0' ) + '|'
-				txt+= (str(move_obj.invoice_id.ref).split('-')[1] if move_obj.invoice_id.id and move_obj.invoice_id.ref and len(move_obj.invoice_id.ref.split('-'))>1 else '0' ) + '|'
-				txt+= (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) + '|'
-				txt+= (productoobj.name_get()[0][1] or '') + '|'
-				txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
-				txt+= '1|'			
-				txt+=  "%.2f"%(linea[11])+ '|' #entrada
-				txt+=  "%.2f"%(linea[12]/linea[11] if linea[11]!= 0 else 0)+ '|' #entrada			
-				txt+=  "%.2f"%(linea[12])+ '|' #entrada
-				txt+=  "%.2f"%(linea[13])+ '|' #salida
-				txt+=  "%.2f"%(linea[14]/linea[13] if linea[13]!= 0 else 0)+ '|' #salida
-				txt+=  "%.2f"%(linea[14])+ '|' #salida
-				txt+=  "%.2f"%(linea[15])+ '|' #saldo
-				txt+=  "%.2f"%(linea[16]/linea[15] if linea[15]!= 0 else 0)+ '|' #saldo
-				txt+=  "%.2f"%(linea[16])+ '|' #saldo
-				txt+=  '1|\n' #saldo
-
-
-		import importlib
-		import sys
-		importlib.reload(sys)        
-		nombre = "LE" + str(self.env.company.partner_id.vat) + str(self.fini.year) + str(self.fini.month).rjust(2,'0') + '00120100001111.txt'
-		return self.env['popup.it'].get_file(nombre,base64.encodestring(b''+txt.encode("utf-8")))
-
-
-
-
-
-	def report_txt(self):
-		separador = '|'
-		s_prod = [-1,-1,-1]
-		s_loca = [-1,-1,-1]
-		if self.alllocations == True:
-			locat_ids = self.env['stock.location'].search( [('usage','in',('internal','inventory','transit','procurement','production'))] )
-			lst_locations = locat_ids.ids
-		else:
-			lst_locations = self.location_ids.ids
-		lst_products  = self.products_ids_it.ids
-		productos='{'
-		almacenes='{'
-		date_ini=self.fini
-		date_fin=self.ffin
-		if self.allproducts:
-			lst_products = self.env['product.product'].with_context(active_test=False).search([]).ids
-		else:
-			lst_products = self.products_ids_it.ids
-		if len(lst_products) == 0:
-			raise osv.except_osv('Alerta','No existen productos seleccionados')
-		for producto in lst_products:
-			productos=productos+str(producto)+','
-			s_prod.append(producto)
-		productos=productos[:-1]+'}'
-		for location in lst_locations:
-			almacenes=almacenes+str(location)+','
-			s_loca.append(location)
-		almacenes=almacenes[:-1]+'}'
-		t = self.env['make.kardex.valorado'].create({
-				'fini':date_ini,
-				'ffin':date_fin,
-				'fecha_ini_mod':date_ini,
-				'fecha_fin_mod':date_fin,
-				'allproducts':True,
-				'alllocations':True,
-				'moneda':'pen',
-				})
-		t.with_context({'res_model_it':'make.kardex.valorado.formato.sunat','id_it':self.id}).guardado()
-		self.env.cr.execute("""
-			 select
-				fecha_albaran as "Fecha Alb.",	
-				fecha as "Fecha",
-				type_doc as "T. Doc.",
-				serial as "Serie",
-				nro as "Nro. Documento",
-				numdoc_cuadre as "Nro. Documento",
-				doc_partner as "Nro Doc. Partner",
-				name as "Proveedor",							
-				operation_type as "Tipo de operacion",				 
-				name_template as "Producto",
-				unidad as "Unidad",			
-				ingreso as "Ingreso Fisico",
-				round(debit,6) as "Ingreso Valorado.",
-				salida as "Salida Fisico",
-				round(credit,6) as "Salida Valorada",
-				saldof as "Saldo Fisico",
-				round(saldov,6) as "Saldo valorado",
-				round(cadquiere,6) as "Costo adquisicion",
-				round(cprom,6) as "Costo promedio",
-					origen as "Origen",
-					destino as "Destino",
-				almacen AS "Almacen",
-				default_code as "Cod Producto",
-				null::varchar "guia remision",
-				product_id,
-				stock_moveid,
-				location_id,
-				ubicacion_origen
-			from get_kardex_v("""+  str(date_ini).replace('-','') +""","""+  str(date_fin).replace('-','') + ",'" + productos + """'::INT[], '""" + almacenes + """'::INT[], """ +str(self.env.company.id)+ """)
-		order by almacen, product_id, fecha, esingreso
-		""")
 		product_index = False
 		almacen_index = False
-		total_1 = 0
-		total_2 = 0
-		total_3 = 0 
-		total_4 = 0
-		txt=""
-		contador = {}
-		for linea in self.env.cr.fetchall():			
-			if str(linea[1])>= str(date_ini):
-				move_obj = self.env['stock.move'].browse(linea[25])
-				txt+=str(linea[1])[0:4] +	str(linea[1])[5:7] + '00|'
-				llavemaster = move_obj.invoice_id.id or linea[25]
-				if llavemaster in contador:
-					contador[llavemaster] = contador[llavemaster]+1
-				else:
-					contador[llavemaster] = 1
+		primero = True
+		for linea in self.env.cr.fetchall():
+			if almacen_index != linea[26] or product_index != linea[24]:	
+				
+				cantidadx =((linea[15] if linea[15] else 0) - (linea[11] if linea[11] else 0) +   (linea[13] if linea[13] else 0) )
+				montox = ((linea[16] if linea[16] else 0) - (linea[12] if linea[12] else 0) +   (linea[14] if linea[14] else 0) )
+				if cantidadx != 0:
+					almacen_index = linea[26]
+					product_index = linea[24]
+					#especial
+					move_obj = self.env['stock.move'].browse(linea[25])	
+					move = move_obj
+					
+					xtipo = '00'
+					xserie = 'SI'
+					xnumero = str(almacen_index*10000+product_index)				
+					txt+=str(linea[1])[0:4] +	str(linea[1])[5:7] + '00|'
+					llavemaster = almacen_index*10000+product_index
+					#llavemaster = linea[25] or move_obj.invoice_id.id
+					if llavemaster in contador:
+						contador[llavemaster] = contador[llavemaster]+1
+					else:
+						contador[llavemaster] = 1
+		
+					almacen_origen = self.env['stock.location'].browse(linea[27])
+		
+					txt+=str(llavemaster) +'-'+ str(contador[llavemaster]) + '|'
+					txt+=('A') + str(move_obj.invoice_id.name) + '|'
+		
+					almacen = self.env['stock.location'].browse(linea[26])
+					txt+= str(almacen.l10n_pe_edi_branch_code) + "|" #EL CODIGO DE ESTABLECIMIENTO
+					txt+='1|'
+					productoobj = self.env['product.product'].browse(linea[24])
+					txt+= (productoobj.categ_id.existence_type_id.code or '') + '|'
+					txt+= (productoobj.default_code or '') + '|'
+					txt+= '1|'
+					txt+= (productoobj.onu_code.code or '') + '|'
+					
+					fecha_sf = str(( (move_obj.kardex_date - timedelta(hours=5) ) if move_obj.id and move_obj.kardex_date else str(linea[1]) ))[:10]
+					txt+= fecha_sf[8:10]+ "/" + fecha_sf[5:7] + "/" + fecha_sf[0:4] + '|'
+					txt+= xtipo + '|'
+					txt+= xserie + '|'
+					txt+= xnumero + '|'
+					txt+= '16|'
+					txt+= (productoobj.name_get()[0][1] or '') + '|'
+					txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
+					cantidadx =((linea[15] if linea[15] else 0) - (linea[11] if linea[11] else 0) +   (linea[13] if linea[13] else 0) )
+					montox = ((linea[16] if linea[16] else 0) - (linea[12] if linea[12] else 0) +   (linea[14] if linea[14] else 0) )					
+					txt+=  "%.2f"%(cantidadx)+ '|' #entrada
+					txt+=  "%.2f"%(0)+ '|' #salida
+					txt+=  '1|\n' #saldo
+		
+					#fin especial
 
-				almacen_origen = self.env['stock.location'].browse(linea[27])
 
-				txt+=str(llavemaster) + str(contador[llavemaster]) + '|'
-				txt+=('A' if almacen_origen.id and almacen_origen.usage == 'inventory' else 'M') + str(move_obj.invoice_id.name) + '|'
+			
+			move_obj = self.env['stock.move'].browse(linea[25])
 
-				almacen = self.env['stock.location'].browse(linea[26])
-				txt+= str(almacen.l10n_pe_edi_branch_code) + "|" #EL CODIGO DE ESTABLECIMIENTO
-				txt+='1|'
-				#txt+=str(linea[25]) + str(contador[linea[25]]) + '|'##esta de mas
-				productoobj = self.env['product.product'].browse(linea[24])
-				txt+= (productoobj.categ_id.existence_type_id.code or '') + '|'
-				txt+= (productoobj.default_code or '') + '|'
-				txt+= '1|'
-				txt+= (productoobj.onu_code.code or '') + '|'
-				fechaespecial = str(move_obj.invoice_id.invoice_date if move_obj.invoice_id.id else ((move_obj.kardex_date - timedelta(hours=5) if move_obj.id and move_obj.kardex_date else str(linea[1]))  ) )
-				txt+= fechaespecial[8:10] + "/" + fechaespecial[5:7] + "/" + fechaespecial[:4] + '|'
-				txt+= (str(move_obj.invoice_id.l10n_latam_document_type_id.code) if move_obj.invoice_id.id else '00' ) + '|'
-				txt+= (str(move_obj.invoice_id.ref).split('-')[0] if move_obj.invoice_id.id and move_obj.invoice_id.ref else '0' ) + '|'
-				txt+= (str(move_obj.invoice_id.ref).split('-')[1] if move_obj.invoice_id.id and move_obj.invoice_id.ref and len(move_obj.invoice_id.ref.split('-'))>1 else '0' ) + '|'
-				txt+= (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) + '|'
-				txt+= (productoobj.name_get()[0][1] or '') + '|'
-				txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
-				txt+= '1|'			
-				txt+=  "%.2f"%(linea[11])+ '|' #entrada
-				txt+=  "%.2f"%(linea[12]/linea[11] if linea[11]!= 0 else 0)+ '|' #entrada			
-				txt+=  "%.2f"%(linea[12])+ '|' #entrada
-				txt+=  "%.2f"%(linea[13])+ '|' #salida
-				txt+=  "%.2f"%(linea[14]/linea[13] if linea[13]!= 0 else 0)+ '|' #salida
-				txt+=  "%.2f"%(linea[14])+ '|' #salida
-				txt+=  "%.2f"%(linea[15])+ '|' #saldo
-				txt+=  "%.2f"%(linea[16]/linea[15] if linea[15]!= 0 else 0)+ '|' #saldo
-				txt+=  "%.2f"%(linea[16])+ '|' #saldo
-				txt+=  '1|\n' #saldo
+			move = move_obj
+			guia = move.picking_id.nro_guia_compra or move.picking_id.despatch_id.name
+
+			xtipo = linea[2] if linea[2] else ''
+			xserie = linea[3] if linea[3] else ''
+			xnumero = linea[4] if linea[4] else ''
+			if xtipo == '' and guia:
+				xtipo = '09'
+				xserie = guia.split('-')[0]
+				xnumero = guia.split('-')[1] if len(guia.split('-'))>1 else ''
+			elif move.picking_id.id:					
+				xtipo = '00'
+				xserie = move.picking_id.name.split('/')[0]
+				xnumero = ''.join(move.picking_id.name.split('/')[1:])
+			elif move.production_id.id:	
+				xtipo = '19'
+				xserie = ""
+				xnumero = move.production_id.name.replace('/','').replace('-','')
+			elif move.raw_material_production_id.id:	
+				xtipo = '10'
+				xserie = ""
+				xnumero = move.raw_material_production_id.name.replace('/','').replace('-','')
+		
+			txt+=str(linea[1])[0:4] +	str(linea[1])[5:7] + '00|'
+			llavemaster = move_obj.invoice_id.id or linea[25]
+			#llavemaster = linea[25] or move_obj.invoice_id.id
+			if llavemaster in contador:
+				contador[llavemaster] = contador[llavemaster]+1
+			else:
+				contador[llavemaster] = 1
+
+			almacen_origen = self.env['stock.location'].browse(linea[27])
+
+			txt+=str(llavemaster) +'-'+ str(contador[llavemaster]) + '|'
+			txt+=('A' if almacen_origen.id and almacen_origen.usage == 'inventory' else 'M') + str(move_obj.invoice_id.name) + '|'
+
+			almacen = self.env['stock.location'].browse(linea[26])
+			txt+= str(almacen.l10n_pe_edi_branch_code) + "|" #EL CODIGO DE ESTABLECIMIENTO
+			txt+='1|'
+			#txt+=str(linea[25]) + str(contador[linea[25]]) + '|'##esta de mas
+			productoobj = self.env['product.product'].browse(linea[24])
+			txt+= (productoobj.categ_id.existence_type_id.code or '') + '|'
+			txt+= (productoobj.default_code or '') + '|'
+			txt+= '1|'
+			txt+= (productoobj.onu_code.code or '') + '|'
+			
+			#fecha_sf = str(move_obj.invoice_id.invoice_date if move_obj.invoice_id.id else ((move_obj.kardex_date - timedelta(hours=5) if move_obj.id and move_obj.kardex_date else str(linea[1]))  ) )[:10]
+			fecha_sf = str(( (move_obj.kardex_date - timedelta(hours=5) ) if move_obj.id and move_obj.kardex_date else str(linea[1]) ))[:10]
+			txt+= fecha_sf[8:10]+ "/" + fecha_sf[5:7] + "/" + fecha_sf[0:4] + '|'
+			txt+= xtipo + '|'
+			txt+= xserie + '|'
+			txt+= xnumero + '|'
+			txt+= (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) + '|'
+			txt+= (productoobj.name_get()[0][1] or '') + '|'
+			txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
+			txt+=  "%.2f"%(linea[11])+ '|' #entrada
+			txt+=  "%.2f"%(linea[13])+ '|' #salida
+			txt+=  '1|\n' #saldo
 
 
 		import importlib
 		import sys
 		importlib.reload(sys)        
-		nombre = "LE" + str(self.env.company.partner_id.vat) + str(self.fini.year) + str(self.fini.month).rjust(2,'0') + '00120100001111.txt'
+		nombre = "LE" + str(self.env.company.partner_id.vat) + str(self.fini.year) + str(self.fini.month).rjust(2,'0') + '00130100001111.txt'
 		return self.env['popup.it'].get_file(nombre,base64.encodestring(b''+txt.encode("utf-8")))
-
-
 
