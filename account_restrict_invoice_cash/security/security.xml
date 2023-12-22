@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--<record model="ir.module.category" id="module_account_restrict_invoice_cash">
+            <field name="name">Registros Contabilidad</field>
+            <field name="sequence">61</field>
+            <field name="visible" eval="0" />
+        </record>
+
+        <record id="group_invoice_only" model="res.groups">
+            <field name="name">Usuario: Solo Mostrar sus propios Documentos</field>
+            <field name="category_id" ref="module_account_restrict_invoice_cash"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>-->
+
+        <record id="group_invoice_only" model="res.groups">
+            <field name="name">Usuario: Mostrar solo sus documentos (Contabilidad y Tesoreria)</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        
+    </data>
+</odoo>
