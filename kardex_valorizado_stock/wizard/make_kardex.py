@@ -646,7 +646,8 @@ select
 				cat_name.append(cat_obj.name)
 				cat_obj = cat_obj.parent_id
 			cat_name.reverse()
-			cat_recortado = cat_name[2:]
+			#cat_recortado = cat_name[2:] revisar
+			cat_recortado = cat_name
 			n1= ""
 			n2= ""
 			n3= ""
@@ -1124,7 +1125,8 @@ select
 				cat_name.append(cat_obj.name)
 				cat_obj = cat_obj.parent_id
 			cat_name.reverse()
-			cat_recortado = cat_name[2:]
+			#cat_recortado = cat_name[2:]
+			cat_recortado = cat_name
 			n1= ""
 			n2= ""
 			n3= ""
@@ -1152,7 +1154,7 @@ select
 			linea.append(  cprom_acum[1] if len(cprom_acum)>1 and cprom_acum[1] else 0 )
 			linea.append(  (cprom_acum[1] if len(cprom_acum)>1 and cprom_acum[1] else 0) / (cprom_acum[0] if len(cprom_acum)>1 and cprom_acum[0] else 0) if (cprom_acum[0] if len(cprom_acum)>1 and cprom_acum[0] else 0) != 0 else 0 )
 
-			linea.append( l['almacen'] if l['almacen'] else '' )
+			linea.append( l['location_id'] if l['location_id'] else 0 )
 			array_grabar = linea.copy()
 			
 			ingreso1 += l['ingreso'] or 0
