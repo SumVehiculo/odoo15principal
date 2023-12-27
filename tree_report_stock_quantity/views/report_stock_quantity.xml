@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<record id="view_tree_report_quantity" model="ir.ui.view">
+    <field name="name">report.quantity.tree</field>
+    <field name="model">report.stock.quantity</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="product_id"/>
+            <field name="state"/>
+            <field name="product_tmpl_id"/>
+            <field name="warehouse_id"/>
+        </tree>
+    </field>
+   
+</record>
+
+ <record id="stock.report_stock_quantity_action" model="ir.actions.act_window">
+        <field name="name">Inventario pronosticado</field>
+        <field name="res_model">report.stock.quantity</field>
+        <field name="view_mode">tree,graph</field>
+        
+</record>
