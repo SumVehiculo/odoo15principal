@@ -6,7 +6,8 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="warehouse_id"/>
-                <field name="product_id"/>
+                <field name="product_code"/>
+                <field name="product_name"/>
                 <field name="date" interval="day"/>
                 <field name="state"/>
                 
