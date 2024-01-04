@@ -9,7 +9,7 @@
     """,
     'author': "ITGROUP,berth",
     'website': "",
-    'category': 'sale',
+    'category': '',
     'version': '1.0',
     'depends': [
         'stock',
