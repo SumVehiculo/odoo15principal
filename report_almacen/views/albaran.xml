@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="report_albaran_fecha" inherit_id="stock.report_delivery_document">
+		<xpath expr="//div[@name='div_sched_date']" position="after">
+        <div class="col-auto" name="div_date_done">
+            <strong>Fecha efectiva:</strong>
+            <p t-field="o.date_done"/>
+        </div>
+        <div class="col-auto" name="div_kardex_date">
+            <strong>Fecha Kardex:</strong>
+            <p t-field="o.kardex_date"/>
+        </div>
+    </xpath>
+	</template>
+</odoo>
