@@ -11,7 +11,7 @@ class AccountBaseSunat(models.Model):
 	def _get_sql(self,type,period_id,company_id):
 		sql,nomenclatura = super(AccountBaseSunat,self)._get_sql(type=type,period_id=period_id,company_id=company_id)
 		if type == 8:
-			param = self.env['main.parameter'].search([('company_id','=',company_id)],limit=1)
+			param = self.env['account.main.parameter'].search([('company_id','=',company_id)],limit=1)
 			if not param.cash_account_prefix_ids:
 				raise UserError(u'Debe configurar sus cuentas para Caja en los parametros principales de Contabilidad.')
 			sql = """
@@ -64,7 +64,7 @@ class AccountBaseSunat(models.Model):
 			nomenclatura = "010100"
 
 		if type == 9:
-			param = self.env['main.parameter'].search([('company_id','=',company_id)],limit=1)
+			param = self.env['account.main.parameter'].search([('company_id','=',company_id)],limit=1)
 			if not param.bank_account_prefix_ids:
 				raise UserError(u'Debe configurar sus cuentas para Banco en los parametros principales de Contabilidad.')
 			sql = """
@@ -108,7 +108,7 @@ class AccountBaseSunat(models.Model):
 		return sql,nomenclatura
 	
 	def pdf_get_sql_vst_caja(self,date_start,date_end,company_id):
-		param = self.env['main.parameter'].search([('company_id','=',company_id)],limit=1)
+		param = self.env['account.main.parameter'].search([('company_id','=',company_id)],limit=1)
 		if not param.cash_account_prefix_ids:
 			raise UserError(u'Debe configurar sus cuentas para Caja en los parametros principales de Contabilidad.')
 		sql_acc = "'{%s}'" % (','.join(str(i) for i in param.cash_account_prefix_ids.ids))
@@ -134,7 +134,7 @@ class AccountBaseSunat(models.Model):
 		return sql
 	
 	def pdf_get_sql_vst_banco(self,date_start,date_end,company_id):
-		param = self.env['main.parameter'].search([('company_id','=',company_id)],limit=1)
+		param = self.env['account.main.parameter'].search([('company_id','=',company_id)],limit=1)
 		if not param.bank_account_prefix_ids:
 			raise UserError(u'Debe configurar sus cuentas para Banco en los parametros principales de Contabilidad.')
 		sql_acc = "'{%s}'" % (','.join(str(i) for i in param.bank_account_prefix_ids.ids))

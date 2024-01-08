@@ -12,7 +12,7 @@ class AccountCashRep(models.TransientModel):
 		if self.account_ids:
 			sql_acc = "'{%s}'" % (','.join(str(i) for i in self.account_ids.ids))
 		else:
-			param = self.env['main.parameter'].search([('company_id','=',self.company_id.id)],limit=1)
+			param = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1)
 			if not param.cash_account_prefix_ids:
 				raise UserError(u'Debe configurar sus cuentas para Caja en los parametros principales de Contabilidad.')
 			sql_acc = "'{%s}'" % (','.join(str(i) for i in param.cash_account_prefix_ids.ids))
