@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_consulta_stock_wizard_form">
+			<field name="name">consulta.stock.wizardform</field>
+			<field name="model">consulta.usuarios.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Consulta de Usuarios">
+					<group>
+						
+					</group>
+					<footer>
+						<button string="Reporte grupos de accesos" name="grupos_acceso" type="object" class="oe_highlight"/>
+						<button string="Reporte lista de usuarios" name="user_company" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="consulta_stock_wizard_action" model="ir.actions.act_window">
+			<field name="name">Consulta de Usuarios</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">consulta.usuarios.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="consulta_stock_wizard_action" 
+				id="menu_consulta_stock_wizard" 
+				parent="account.menu_finance_configuration" 
+				sequence="500" />
+
+	</data>
+</odoo>
