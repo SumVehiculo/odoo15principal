@@ -10,36 +10,33 @@
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
                             <div class="col-12 pt-0 row">
                                 <div class="col-8">
-                                    <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
-                                                     alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;"
-                                                     class="mt-0 pt-0"
-                                                />
-                                                
-
-                                </div>
-                                <div class="col-4">
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td style=" font-size: 14pt;"><b>OC</b></td>
+                                                <td colspan="2" style=" font-size: 14pt;"><center><b>ORDEN DE COMPRA: <span t-field="doc.name"/></b></center></td>
+                                            </tr>
+                                            <tr>
+                                                 <td  style=" font-size: 14pt;"><b>N°</b></td>
                                                 <td  style=" font-size: 14pt;"><b>: </b> <span t-field="doc.name"/></td>
                                             </tr>
                                             <tr>
                                                 <td  style=" font-size: 14pt;"><b>FECHA</b></td>
                                                 <td  style=" font-size: 14pt;"><b>: </b> <span t-esc="doc.date_planned.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
                                             </tr>
-                                            <tr>
-                                                <td  style=" font-size: 14pt;"><b>PÁGINA</b></td>
-                                                <td  style=" font-size: 14pt;"><b>: </b> <span class="page"/> / <span class="topage"/></td>
-                                            </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="col-4">
+                                   <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                                                     alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;"
+                                                     class="mt-0 pt-0"
+                                                />
                               </div>
                             </div>
                                         
-                            <div class="col-4 pt-0" >
+                            <!-- <div class="col-4 pt-0" >
                                    
-                            </div>
+                            </div> -->
                         </div>
             </div>
             
@@ -48,35 +45,74 @@
             <div class="article o_report_layout_standard" style="font-family: Arial;font-size:12px">
                 <div class="page">
                     <div class="oe_structure"/>
-                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']"><b>SOLICITUD DE COMPRA N° <span t-field="doc.name"/></b></h2></center>
-                        <center><h2 t-if="doc.state in ['purchase', 'done']"><b>ORDEN DE COMPRA N° <span t-field="doc.name"/></b></h2></center>
-                        <center><h2 t-if="doc.state == 'cancel'"><b>ORDEN DE COMPRA CANCELADA N° <span t-field="doc.name"/></b></h2></center>
-                        <br/>
-                        <table>
-                            <tbody>
-                                <tr>    
-                                    <td style="width: 20%"><b>PROVEEDOR</b></td>
-                                    <td style="width: 80%" colspan='3'><b>: </b>  <span t-field="doc.partner_id.name"/></td>
-                                </tr>
-                                <tr>    
-                                    <td style="width: 20%"><b>RUC</b></td>
-                                    <td style="width: 80%" colspan='3'><b>: </b>  <span t-field="doc.partner_id.vat"/></td>
-                                </tr>
-                                <tr>    
-                                    <td style="width: 20%"><b>DIRECCIÓN</b></td>
-                                    <td style="width: 50%"><b>: </b>  <span t-field="doc.partner_id.street"/></td>
-                                    <td style="width: 10%"><b>TELÉFONO</b></td>
-                                    <td style="width: 20%"><b>: </b>  <span t-field="doc.partner_id.phone"/></td>
-                                </tr>
-                                <tr>    
-                                    <td style="width: 20%"><b>CONTACTO</b></td>
-                                    <td style="width: 80%" colspan='3'>:</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br/>
-                        <p>Por la presente orden, agradecemos dispones de los siguientes artículos según cotización</p>
-                    
+                       <div class="col-6">
+                       </div>
+                       <div class="col-6">
+                            <table>
+                                <tbody>
+                                    <tr>    
+                                        <td style="width: 20%"><b>RAZON SOCIAL</b></td>
+                                        <td style="width: 80%"><b>: </b>  <span t-field="doc.partner_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>RUC</b></td>
+                                        <td style="width: 80%"><b>: </b>  <span t-field="doc.partner_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>DIRECCIÓN</b></td>
+                                        <td style="width: 80%"><b>: </b>  <span t-field="doc.partner_id.name"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                       <div class="col-6">
+                            <table>
+                                <tbody>
+                                    <tr>    
+                                        <td style="width: 20%"><b>PROVEEDOR</b></td>
+                                        <td style="width: 80%"><b>: </b>  <span t-field="doc.partner_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>RUC</b></td>
+                                        <td style="width: 80%"><b>: </b>  <span t-field="doc.partner_id.vat"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>DIRECCIÓN</b></td>
+                                        <td style="width: 50%"><b>: </b>  <span t-field="doc.partner_id.street"/></td>
+                                        <td style="width: 10%"><b>TELÉFONO</b></td>
+                                        <td style="width: 20%"><b>: </b>  <span t-field="doc.partner_id.phone"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>CONTACTO</b></td>
+                                        <td style="width: 80%">:</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                       <div class="col-6">
+                            <table>
+                                <tbody>
+                                    <tr>    
+                                        <td style="width: 20%"><b>ENVIAR A</b></td>
+                                        <td style="width: 80%"><b>: </b>  <span t-field="doc.partner_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>RUC</b></td>
+                                        <td style="width: 80%"><b>: </b>  <span t-field="doc.partner_id.vat"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>DIRECCIÓN</b></td>
+                                        <td style="width: 50%"><b>: </b>  <span t-field="doc.partner_id.street"/></td>
+                                        <td style="width: 10%"><b>TELÉFONO</b></td>
+                                        <td style="width: 20%"><b>: </b>  <span t-field="doc.partner_id.phone"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%"><b>CONTACTO</b></td>
+                                        <td style="width: 80%">:</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
                     <table class="table table-sm o_main_table">
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                         <thead style="display: table-row-group">
