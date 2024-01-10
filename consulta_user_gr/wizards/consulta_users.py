@@ -11,7 +11,7 @@ class ConsultaUsuariosWizard(models.Model):
 		from xlsxwriter.workbook import Workbook
 		output = io.BytesIO()
 
-		direccion = self.env['main.parameter'].search([])[0].dir_create_file
+		direccion = self.env['account.main.parameter'].search([])[0].dir_create_file
 		workbook = Workbook(direccion +'reporte_lista_grupos_accesso.xlsx')
 		worksheet = workbook.add_worksheet("Lista grupos de accesso")
 		bold = workbook.add_format({'bold': True})
@@ -109,7 +109,7 @@ class ConsultaUsuariosWizard(models.Model):
 			from xlsxwriter.workbook import Workbook
 			output = io.BytesIO()
 
-			direccion = self.env['main.parameter'].search([])[0].dir_create_file
+			direccion = self.env['account.main.parameter'].search([])[0].dir_create_file
 			workbook = Workbook(direccion +'reporte_lista_usuarios.xlsx')
 			worksheet = workbook.add_worksheet("Lista grupos de accesso")
 			bold = workbook.add_format({'bold': True})
