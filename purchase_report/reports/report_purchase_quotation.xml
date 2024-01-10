@@ -13,7 +13,7 @@
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td colspan="2" style=" font-size: 14pt;"><b>ORDEN DE COMPRA</b></td>
+                                                <td colspan="2" style=" font-size: 14pt;"><b>SOLICITUD DE PRESUPUESTO</b></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
@@ -241,6 +241,7 @@
                         <tfooter>
                         
                          <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
