@@ -12,6 +12,6 @@ class purchase_order_line(models.Model):
 		for i in self:
 			i.cod_proveedor = ""
 			for lp in i.product_id.seller_ids:
-				if lp.name.id == i.order_id.partnert_id.id:
+				if lp.name.id == i.order_id.partner_id.id:
 					i.cod_proveedor = lp.product_code
             
