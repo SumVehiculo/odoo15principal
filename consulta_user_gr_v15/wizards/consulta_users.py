@@ -57,13 +57,13 @@ class ConsultaUsuariosWizard(models.Model):
 		worksheet.write(2,4,'GRUPO DE ACCESO',boldbord)
 		
 		x= 3
-		for i in self.env['res.users'].search([]):
+		for i in self.env['res.users'].sudo().search([]):
 			compania = ""
 			for l in i.company_ids:
 				compania += l.name + ','
 
-			for c in self.env['ir.module.category'].search([]):
-				for y in self.env['res.groups'].search([('category_id','=',c.id)]):
+			for c in self.env['ir.module.category'].sudo().search([]):
+				for y in self.env['res.groups'].sudo().search([('category_id','=',c.id)]):
 					if i.id in y.users.ids:
 						worksheet.write(x,1,i.name or '' ,bord )
 						worksheet.write(x,2,i.email or '' ,bord )
@@ -154,7 +154,7 @@ class ConsultaUsuariosWizard(models.Model):
 			worksheet.write(2,3,'COMPAÑIAS DE ACCESO',boldbord)
 			
 			x= 3
-			for i in self.env['res.users'].search([]):
+			for i in self.env['res.users'].sudo().search([]):
 				compania = ""
 				for l in i.company_ids:
 					compania += l.name + ','
