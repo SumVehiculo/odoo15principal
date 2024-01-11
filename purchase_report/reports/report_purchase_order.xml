@@ -5,41 +5,36 @@
     
 
     <template id="report_purchase_order_document">
-            <div class="header">
-                        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+             <div class="header">
+                        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
                             <div class="col-12 pt-0 row">
                                 <div class="col-8">
-                                    <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
-                                                     alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;"
-                                                     class="mt-0 pt-0"
-                                                />
-                                                
-
-                                </div>
-                                <div class="col-4">
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td style=" font-size: 14pt;"><b>OC</b></td>
-                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-field="doc.name"/></td>
+                                                <td colspan="2" style=" font-size: 14pt;"><b>ORDEN DE COMPRA</b></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
-                                                <td  style=" font-size: 14pt;"><b>FECHA</b></td>
-                                                <td  style=" font-size: 14pt;"><b>: </b> <span t-esc="doc.date_planned.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
+                                                 <td style=" font-size: 14pt; width: 20%"><b>N°</b></td>
+                                                <td style=" font-size: 14pt; width: 80%"><b>: </b> <span t-field="doc.name"/></td>
                                             </tr>
                                             <tr>
-                                                <td  style=" font-size: 14pt;"><b>PÁGINA</b></td>
-                                                <td  style=" font-size: 14pt;"><b>: </b> <span class="page"/> / <span class="topage"/></td>
+                                                <td style=" font-size: 14pt; width: 20%"><b>FECHA</b></td>
+                                                <td style=" font-size: 14pt; width: 80%"><b>: </b> <span t-esc="doc.date_approve.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="col-4">
+                                   <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;" class="mt-0 pt-0"/>
                               </div>
                             </div>
                                         
-                            <div class="col-4 pt-0" >
+                            <!-- <div class="col-4 pt-0" >
                                    
-                            </div>
+                            </div> -->
                         </div>
             </div>
             
@@ -48,46 +43,164 @@
             <div class="article o_report_layout_standard" style="font-family: Arial;font-size:12px">
                 <div class="page">
                     <div class="oe_structure"/>
-                        <center><h2 t-if="doc.state in ['draft', 'sent', 'to approve']"><b>SOLICITUD DE COMPRA N° <span t-field="doc.name"/></b></h2></center>
-                        <center><h2 t-if="doc.state in ['purchase', 'done']"><b>ORDEN DE COMPRA N° <span t-field="doc.name"/></b></h2></center>
-                        <center><h2 t-if="doc.state == 'cancel'"><b>ORDEN DE COMPRA CANCELADA N° <span t-field="doc.name"/></b></h2></center>
+                         <div class="row col-12">
+                         <div class="col-6">
+                         </div>
+                         <div class="col-6">
+                              <table>
+                                  <tbody>
+                                      <tr>    
+                                          <td style="width: 25%">RAZÓN SOCIAL</td>
+                                          <td style="width: 25%">:  <span t-field="doc.company_id.name"/></td>
+                                      </tr>
+                                      <tr>    
+                                          <td>RUC</td>
+                                          <td>: <span t-field="doc.company_id.vat"/></td>
+                                      </tr>
+                                      <tr>    
+                                          <td>DIRECCIÓN</td>
+                                          <td>: <span t-field="doc.company_id.street_name"/> , <span t-field="doc.company_id.state_id"/></td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                         </div>
+                        </div>
                         <br/>
-                        <table>
-                            <tbody>
-                                <tr>    
-                                    <td style="width: 20%"><b>PROVEEDOR</b></td>
-                                    <td style="width: 80%" colspan='3'><b>: </b>  <span t-field="doc.partner_id.name"/></td>
-                                </tr>
-                                <tr>    
-                                    <td style="width: 20%"><b>RUC</b></td>
-                                    <td style="width: 80%" colspan='3'><b>: </b>  <span t-field="doc.partner_id.vat"/></td>
-                                </tr>
-                                <tr>    
-                                    <td style="width: 20%"><b>DIRECCIÓN</b></td>
-                                    <td style="width: 50%"><b>: </b>  <span t-field="doc.partner_id.street"/></td>
-                                    <td style="width: 10%"><b>TELÉFONO</b></td>
-                                    <td style="width: 20%"><b>: </b>  <span t-field="doc.partner_id.phone"/></td>
-                                </tr>
-                                <tr>    
-                                    <td style="width: 20%"><b>CONTACTO</b></td>
-                                    <td style="width: 80%" colspan='3'>:</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="col-12 pt-0 row">
+                       <div class="col-6">
+                            <table>
+                                <tbody>
+                                    <tr>    
+                                        <td colspan="2"><b>PROVEEDOR</b></td>
+                                        <td></td>
+                                    </tr>
+                                     <tr>    
+                                        <td style="width: 25%">RAZON SOCIAL</td>
+                                        <td style="width: 75%">: <span t-field="doc.partner_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td >RUC</td>
+                                        <td >: <span t-field="doc.partner_id.vat"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td >DIRECCIÓN</td>
+                                        <td >: <span t-field="doc.partner_id.street"/></td>
+                                        
+                                    </tr>
+                                     <tr>    
+                                        <td >CODIGO POSTAL</td>
+                                        <td>: <span t-field="doc.partner_id.zip"/></td>
+                                    </tr>
+                                     <tr>    
+                                        <td>PAÍS</td>
+                                        <td>: <span t-field="doc.partner_id.country_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td colspan="2">CONTACTO</td>
+                                        <td></td>
+                                    </tr>
+                                     <tr>    
+                                        <td>CORREO</td>
+                                        <td>: <span t-field="doc.partner_id.email"/></td>
+                                    </tr>
+                                     <tr>    
+                                        <td>TELÉFONO</td>
+                                        <td>: <span t-field="doc.partner_id.phone"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                       <div class="col-6">
+                            <table>
+                                <tbody>
+                                    <tr>    
+                                        <td colspan="2"><b>ENVIAR A</b></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 25%">LOCAL</td>
+                                        <td style="width: 75%">: <span t-field="doc.picking_type_id.warehouse_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td>DIRECCIÓN</td>
+                                        <td>: <span t-field="doc.picking_type_id.warehouse_id.partner_id.street"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.province_id.name"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.district_id.name"/> </td>
+                                        
+                                    </tr>
+                                    <tr>    
+                                        <td>CODIGO POSTAL</td>
+                                        <td>: <span t-field="doc.picking_type_id.warehouse_id.partner_id.zip"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                       </div>
                         <br/>
-                        <p>Por la presente orden, agradecemos dispones de los siguientes artículos según cotización</p>
-                    
+                        <div class="col-12 pt-0 row">
+                       <div class="col-6">
+                            <table>
+                                <tbody>
+                                    <tr>    
+                                        <td colspan="2"><b>PEDIDO</b></td>
+                                        <td></td>
+                                    </tr>
+                                     <tr>    
+                                        <td style="width: 35%">REFERENCIA DE PEDIDO</td>
+                                        <td style="width: 65%">:  <span t-field="doc.partner_ref"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td >CONDICIONES DE PAGO</td>
+                                        <td >: <span t-field="doc.payment_term_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td >MONEDA</td>
+                                        <td >: <span t-field="doc.currency_id.name"/></td>
+                                        
+                                    </tr>
+                                     <tr>    
+                                        <td>INCOTERM</td>
+                                        <td>: <span t-field="doc.incoterm_id.name"/></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                       </div>
+                       <div class="col-6">
+                            <table>
+                                <tbody>
+                                    <tr>    
+                                        <td  colspan="2"><b>COMPRADOR</b></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%">NOMBRE</td>
+                                        <td style="width: 80%">: <span t-field="doc.user_id.name"/></td>
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%">CORREO</td>
+                                        <td style="width: 50%">: <span t-field="doc.user_id.login"/></td>
+                                        
+                                    </tr>
+                                    <tr>    
+                                        <td style="width: 20%">TELÉFONO</td>
+                                        <td style="width: 80%">: <span t-field="doc.user_id.phone"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       </div>
+                       </div>
+                       <br/>
                     <table class="table table-sm o_main_table">
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                         <thead style="display: table-row-group">
                             <tr>
                                 <th style="  width: 5% !important;">N°</th>
-                                <th class="text-center">CANTIDAD</th>
-                                <th class="text-center">UND MED</th>
-                                <th class="text-center">CODIGO</th>
+                                <th class="text-center">CODIGO SUM</th>
+                                <th class="text-center">CODIGO PROVEEDOR</th>
                                 <th style="width: 30%" class="text-center">DESCRIPCIÓN</th>
-                                <th class="text-right">PRECIO</th>
-                                <th class="text-right">TOTAL</th>
+                                <th class="text-center">UND MED</th>
+                                <th class="text-center">CANTIDAD</th>
+                                <th class="text-right">PRECIO UNIT</th>
+                                <th class="text-right">PRECIO TOTAL</th>
                             </tr>
                         </thead>
                         <tbody class="sale_tbody">
@@ -101,22 +214,23 @@
 
                                 <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                    
-                                        <td  style="  width: 5% !important;"><t t-esc="counter"/></td>
-                                        <td  class="text-center" >
-                                            <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 2}'/></td>
-                                        <td  class="text-center"><span t-field="line.product_uom"/></td>
-                                        <td  class="text-center"><t t-if="line.product_id">
+                                        <td style="  width: 5% !important;"><t t-esc="counter"/></td>
+                                        <td class="text-center"><t t-if="line.product_id">
                                                 <span t-field="line.product_id.default_code"/>
                                             </t></td>
+                                        <td class="text-center"><t t-if="line.product_id">
+                                                <span t-field="line.cod_proveedor"/>
+                                            </t></td>
                                         <td style="width: 30%" class="text-center"><span t-field="line.name"/></td>
-                                        <td class="text-right"><span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}'/></td>
-                                        <td name="td_subtotal" class="text-right o_price_total"  >
-                                            <span t-field="line.price_subtotal"
-                                                  t-options='{"widget": "float", "precision": 2}'
-                                                  groups="account.group_show_line_subtotals_tax_excluded"/>
-                                            <span t-field="line.price_total"
-                                                  t-options='{"widget": "float", "precision": 2}'
-                                                  groups="account.group_show_line_subtotals_tax_included"/>
+                                        <td class="text-center"><span t-field="line.product_uom"/></td>
+                                        <td class="text-right"><span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+                                        <td class="text-center">
+                                            <span t-field="line.product_uom_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+
+
+                                        <td name="td_subtotal" class="text-right o_price_total">
+                                            <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                            <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_included"/>
                                         </td>
                                       
                                         
@@ -127,98 +241,49 @@
                         </tbody>
                         <tfooter>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td colspan=''><b>SUBTOTAL</b></td>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            
+                            <td colspan=""><b>SUBTOTAL</b></td>
                             <td class="text-right"> <span t-field="doc.amount_untaxed"/></td>
                         </tr>
                         <t t-set="igv" t-value="doc.amount_total - doc.amount_untaxed"/>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td colspan=''><b>IGV</b></td>
-                            <td class="text-right"> <span t-esc="doc.currency_id.symbol" />  <span t-esc="igv" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td colspan=""><b>IMPUESTOS</b></td>
+                            <td class="text-right"> <span t-esc="doc.currency_id.symbol"/>  <span t-esc="igv" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td colspan=''><b>TOTAL</b></td>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td colspan=""><b>TOTAL</b></td>
                             <td class="text-right"> <span t-field="doc.amount_total"/></td>
                         </tr>
                     </tfooter>
                     </table>
-                    <table>
-                    <br/>
-                    <tbody>
-                        <tr>    
-                            <td><b>MONEDA</b></td>
-                            <td></td>
-                        </tr>
-                        <tr>    
-                            <td><b>OBSERVACIONES </b></td>
-                            <td>  <span t-field="doc.notes"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br/>
-                <br/>
-                <table>
-                    <tbody>
-                        <tr>    
-                            <td style="width: 30%;"><b>FACTURAR A NOMBRE DE</b></td>
-                            <td></td>
-                        </tr>
-                        <tr>    
-                            <td  style="width: 30%;">RAZON SOCIAL</td>
-                            <td>: <span t-field="doc.company_id"/></td>
-                        </tr>
-                        <tr  style="width: 30%;">    
-                            <td>RUC</td>
-                            <td>:<span t-field="doc.company_id.vat"/></td>
-                        </tr>
-                        <tr  style="width: 30%;">    
-                            <td>DIRECCIÓN</td>
-                            <td>:<span t-field="doc.company_id.partner_id.street"/></td>
-                        </tr>
-                        <tr  style="width: 30%;">    
-                            <td>CONDICIÓN DE PAGO</td>
-                            <td>:<span t-field="doc.payment_term_id"/></td>
-                        </tr>
-                        <tr  style="width: 30%;">    
-                            <td>FECHA</td>
-                            <td>:<span t-esc="doc.date_planned.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
-                        </tr>
-                        <tr  style="width: 30%;">    
-                            <td>VENCIMIENTO</td>
-                            <td>:<span t-esc="( (   (   doc.date_planned + datetime.timedelta(days=doc.payment_term_id.line_ids[0].days)   ).strftime('%d/%m/%Y')    if len(doc.payment_term_id.line_ids)>0 else  doc.date_planned.strftime('%d/%m/%Y')    )       if doc.payment_term_id.id else doc.date_planned.strftime('%d/%m/%Y')   ) if doc.date_planned else ''"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br/>
-                <br/>
                 <br/>
 
                 <center><h6><b>ESTIMADOS PROVEEDORES</b></h6></center>
-                <p>Se les informa que la recepción de factura física en Jirón Monterrey N° 341, Interior 302, Urb Chacarilla, Surco.<br/>
-                Tener presente que la factura física y/o electrónica debe contar con el siguiente sustento:<br/>
-                <b>- ORDEN DE COMPRA<br/>
-                - NOTA DE INGRESO DEL ALMACÉN, DEBIDAMENTE FIRMADA Y SELLADA VALIDANDO LA RECEPCIÓN DEL PERSONAL DE ALMACÉN DE SUM VEHICULOS.<br/>
-                - LA FACTURA DEBE INDICAR EL NÚMERO DE LA ORDEN DE COMPRA.<br/>
-                - GUÍA REMISIÓN DEBIDAMENTE FIRMADA Y SELLADA VALIDANDO LA RECEPCIÓN POR EL PERSONAL DE ALMACÉN DE SUM VEHICULOS.<br/>
-                - LA DESCRIPCIÓN DE LA FACTURA: ITEM, CANTIDAD, PRECIO UNITARIO Y TOTALES DEBEN SER IGUALES A LAS DETALLADAS EN LA ORDEN DE COMMPRA.<br/>
-                - LAS CONDICIONES DE PAGO SE APLICARÁN A PARTIR DE LA FECHA DE RECEPCIÓN A ENTERA SATISFACCIÓN DE LA FACTURA O BOLETA DE VENTA CON EL SUSTENTO INDICADO</b>
-                De lunes a viernes de 8:00 a 13:00 o de 14:00 a 17:00 horas.<br/>
-                En caso que la <b>Factura sea electrónica, </b>se debe enviar los formatos PDF y XML, junto con los documentos mencionados anteriormente (en archivos PDF) a los correos:
-                asistente@sum.pe; compras@sum.pe<br/></p>
+                <p>Enviar la factura electrónica en formato PDF y XML, en conjunto con los siguientes documentos a los correos: asistente@sum.pe; compras@sum.pe<br/>
+                1. ORDEN DE COMPRA.<br/>
+                2. NOTA DE INGRESO DEL ALMACÉN, DEBIDAMENTE FIRMADA Y SELLADA VALIDANDO LA RECEPCIÓN DEL PERSONAL DE ALMACÉN DE SUM VEHICULOS.<br/>
+                3. LA FACTURA DEBE INDICAR EL NÚMERO DE LA ORDEN DE COMPRA.<br/>
+                4. GUÍA DE REMISIÓN DEBIDAMENTE FIRMADA Y SELLADA VALIDANDO LA RECEPCIÓN POR EL PERSONAL DE ALMACÉN DE SUM VEHICULOS.<br/>
+                5. LA DESCRIPCIÓN DE LA FACTURA: ITEM, CANTIDAD, PRECIO UNITARIO Y TOTALES, DEBEN SER IGUALES A LOS DETALLADOS EN LA ORDEN DE COMPRA.<br/>
+                </p>
                  </div>  
                 
             </div>
