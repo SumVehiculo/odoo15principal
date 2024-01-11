@@ -199,8 +199,6 @@
                                 <th style="width: 30%" class="text-center">DESCRIPCIÓN</th>
                                 <th class="text-center">UND MED</th>
                                 <th class="text-center">CANTIDAD</th>
-                                <th class="text-right">PRECIO UNIT</th>
-                                <th class="text-right">PRECIO TOTAL</th>
                             </tr>
                         </thead>
                         <tbody class="sale_tbody">
@@ -223,36 +221,19 @@
                                             </t></td>
                                         <td style="width: 30%" class="text-center"><span t-field="line.name"/></td>
                                         <td class="text-center"><span t-field="line.product_uom"/></td>
-                                        <td class="text-right"><span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+                                   
                                         <td class="text-center">
                                             <span t-field="line.product_uom_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
 
 
-                                        <td name="td_subtotal" class="text-right o_price_total">
-                                            <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                            <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_included"/>
-                                        </td>
-                                      
+                                     
                                         
                                   
                                 </tr>
 
                             </t>
                         </tbody>
-                        <tfooter>
-                        
-                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td colspan=''><b>TOTAL</b></td>
-                            <td class="text-right"> <span t-field="doc.amount_untaxed"/></td>
-                        </tr>
-                        <t t-set="igv" t-value="doc.amount_total - doc.amount_untaxed"/>
-                    </tfooter>
+              
                     </table>
                 <br/>
 
