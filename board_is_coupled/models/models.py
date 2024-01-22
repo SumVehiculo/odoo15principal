@@ -10,7 +10,7 @@ class Board(models.Model):
 	is_coupled = fields.Boolean(string='Acoplamiento', default=True)
 
 	# Sobrescribir el método "save"
-	@api.multi
+	# @api.multi
 	def save(self):
 		# Establecer el valor del campo "graph_id" a NULL
 		for board in self:
