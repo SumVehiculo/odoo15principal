@@ -3,13 +3,17 @@ from odoo import models, fields, api
 
 # Definir la clase del tablero
 class Board(models.AbstractModel):
+	_inherit = 'board.board'
+
 
 	# Agregar el campo "is_coupled"
 	graph_id = fields.Many2one('board.graph', string='Gráfico', readonly=True)
 	is_coupled = fields.Boolean(string='Acoplamiento', default=True)
 
-# Definir la clase concreta
-class MyBoard(Board):
+# # Definir la clase concreta
+# class MyBoard(Board):
+# 	_inherit = 'board.board'
+
 
 	# Sobrescribir el método "save"
 	def save(self):
@@ -19,4 +23,4 @@ class MyBoard(Board):
 				board.graph_id = None
 
 		# Guardar el tablero
-		super(MyBoard, self).save()
+		super(Board, self).save()
