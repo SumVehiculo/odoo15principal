@@ -1004,7 +1004,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 			txt+= (productoobj.name_get()[0][1] or '') + '|'
 			txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
 			txt+=  "%.2f"%(linea[11])+ '|' #entrada
-			txt+= "-" +( "%.2f"%(linea[13]) ) + '|' #salida
+			txt+= ("-" if linea[13]!= 0 else '') +( "%.2f"%(linea[13]) ) + '|' #salida
 			txt+=  '1|\n' #saldo
 
 
