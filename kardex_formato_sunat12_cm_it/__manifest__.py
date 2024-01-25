@@ -2,7 +2,7 @@
 {
     'name': 'Kardex Formato Sunat V12',
     'version': '1.0',
-    'author': 'ITGRUPO-COMPATIBLE-BO',
+    'author': 'ITGRUPO-KARDEX',
     'website': '',
     'category': 'account',
     'depends': ['kardex_valorado_it'],
