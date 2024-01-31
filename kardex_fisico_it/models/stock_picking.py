@@ -22,17 +22,6 @@ class stock_move_line(models.Model):
 	kardex_date = fields.Datetime(string='Fecha kardex', readonly=False,copy=False,track_visibility='always',compute="get_kardex_date",inverse="set_kardex_date")
 	no_mostrar = fields.Boolean('No mostrar en kardex',compute="get_no_mostrar",inverse="set_no_mostrar")
 
-	def write(self,vals):
-		t = super(stock_move_line,self).write(vals)
-		if "kardex_date" in vals:
-			for i in self:
-				if i.state=="done" and not i.kardex_date:
-					raise UserError("No puede dejar la fecha kardex en blanco, en movimientos realizados")
-		return t
-
-
-
-
 	def get_kardex_date(self):
 		for i in self:
 			i.kardex_date = i.move_id.kardex_date
@@ -89,6 +78,17 @@ class stock_move(models.Model):
 		t = super(stock_move,self)._action_confirm(False,merge_into)
 		return t
 
+
+	@api.model
+	def create(self,vals):
+		t = super(stock_move,self).create(vals)
+		if 'kardex_date' in vals and vals['kardex_date'] != False:
+			t.write({'kardex_date': vals['kardex_date'] })
+		if 'no_mostrar' in vals  and vals['no_mostrar'] != False:
+			t.write({'no_mostrar': vals['no_mostrar'] })
+		return t
+
+
 	def write(selfs,vals):
 		for self in selfs:
 			pass_mostrar= True
@@ -121,9 +121,6 @@ class stock_move(models.Model):
 						pass
 					else:
 						raise UserError('No tiene permisos de Edicion del Kardex')
-			if "kardex_date" in vals:
-				if self.state=="done" and not self.kardex_date:
-					raise UserError("No puede dejar la fecha kardex en blanco, en movimientos realizados")
 			
 
 
@@ -151,17 +148,29 @@ class PickingType(models.Model):
 				for line in i.move_ids_without_package:
 					line.invoice_id = i.invoice_id.id
 
-	def button_validate(self):
-		t = super(PickingType,self).button_validate()
-		if not self.kardex_date:
-			self.with_context({'permitido':1}).write({'kardex_date': fields.Datetime.now()})
-			for i in self:
-				i.move_ids_without_package.with_context({'permitido':1}).write({'kardex_date': fields.Datetime.now()})
-		else:
-			for i in self:
-				i.move_ids_without_package.with_context({'permitido':1}).write({'kardex_date': i.kardex_date})
-		self.add_costos()
+	def button_validate(selfs):
+		t = super(PickingType,selfs).button_validate()
+		for self in selfs:
+			if not self.kardex_date:
+				self.with_context({'permitido':1}).write({'kardex_date': fields.Datetime.now()})
+				for i in self:
+					i.move_ids_without_package.with_context({'permitido':1}).write({'kardex_date': fields.Datetime.now()})
+			else:
+				for i in self:
+					i.move_ids_without_package.with_context({'permitido':1}).write({'kardex_date': i.kardex_date})
+			self.add_costos()
 		return t
+
+
+	@api.model
+	def create(self,vals):
+		t = super(PickingType,self).create(vals)
+		if 'kardex_date' in vals and vals['kardex_date'] != False:
+			t.write({'kardex_date': vals['kardex_date'] })
+		if 'no_mostrar' in vals  and vals['no_mostrar'] != False:
+			t.write({'no_mostrar': vals['no_mostrar'] })
+		return t
+		
 
 	def write(self,vals):
 		t = super(PickingType,self).write(vals)
@@ -188,8 +197,4 @@ class PickingType(models.Model):
 						i.move_ids_without_package.with_context({'permitido':1}).write({'kardex_date': vals['kardex_date'] })
 				else:
 					raise UserError('No tiene permisos de Edicion del Kardex')
-		if "kardex_date" in vals:
-			for a in self:
-				if a.state=="done" and not a.kardex_date:
-					raise UserError("No puede dejar la fecha kardex en blanco, en movimientos realizados")
 		return t

@@ -2,10 +2,10 @@
 {
     'name': 'Kardex Fisico',
     'version': '1.0',
-    'author': 'ITGRUPO-COMPATIBLE-BO',
+    'author': 'ITGRUPO-KARDEX-JP',
     'website': '',
     'category': 'Kardex',
-    'depends': ['product','stock','account','kardex_save_period_tabla','cost_production_jp'],
+    'depends': ['product','stock','account','kardex_save_period_tabla','cost_production_jp','kardex_fields_it'],
     'description': """KARDEX""",
     'demo': [],
     'data': [
