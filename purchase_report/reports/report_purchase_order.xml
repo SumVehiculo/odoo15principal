@@ -10,25 +10,28 @@
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
                             <div class="col-12 pt-0 row">
                                 <div class="col-8">
+                                    <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;" class="mt-0 pt-0"/>
+
+                                    
+                                </div>
+                                <div class="col-4" >
+
                                     <table>
                                         <tbody>
                                             <tr>
                                                 <td colspan="2" style=" font-size: 14pt;"><b>ORDEN DE COMPRA</b></td>
-                                                <td></td>
+                                                <td/>
                                             </tr>
                                             <tr>
                                                  <td style=" font-size: 14pt; width: 20%"><b>N°</b></td>
-                                                <td style=" font-size: 14pt; width: 80%"><b>: </b> <span t-field="doc.name"/></td>
+                                                <td style=" font-size: 14pt; width: 80% ;"><b>: </b> <span t-field="doc.name"/></td>
                                             </tr>
                                             <tr>
                                                 <td style=" font-size: 14pt; width: 20%"><b>FECHA</b></td>
-                                                <td style=" font-size: 14pt; width: 80%"><b>: </b> <span t-esc="doc.date_approve.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
+                                                <td style=" font-size: 14pt; width: 80% ;"><b>: </b> <span t-esc="doc.date_approve.strftime('%d/%m/%Y') if doc.date_approve else ''"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="col-4">
-                                   <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;" class="mt-0 pt-0"/>
                               </div>
                             </div>
                                         
@@ -46,12 +49,12 @@
                          <div class="row col-12">
                          <div class="col-6">
                          </div>
-                         <div class="col-6">
-                              <table>
+                         <div class="col-6" style="border: 1px solid #B4B4B4;  border-radius: 5px 5px 5px 5px;-moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;">
+                              <table style="padding: 5px;">
                                   <tbody>
                                       <tr>    
                                           <td style="width: 25%">RAZÓN SOCIAL</td>
-                                          <td style="width: 25%">:  <span t-field="doc.company_id.name"/></td>
+                                          <td style="width: 25%;">:  <span t-field="doc.company_id.name"/></td>
                                       </tr>
                                       <tr>    
                                           <td>RUC</td>
@@ -65,100 +68,100 @@
                               </table>
                          </div>
                         </div>
-                        <br/>
-                        <div class="col-12 pt-0 row">
-                       <div class="col-6">
+                        <br/> 
+                        <div class="col-12 pt-0 row" style="border: 2px solid #4A4A4A; border-radius: 20px 20px 20px 20px;-moz-border-radius: 20px 20px 20px 20px; -webkit-border-radius: 20px 20px 20px 20px; ">
+                       <div class="col-6" style="padding: 5px;" >
                             <table>
                                 <tbody>
                                     <tr>    
                                         <td colspan="2"><b>PROVEEDOR</b></td>
-                                        <td></td>
+                                        <td/>
                                     </tr>
                                      <tr>    
                                         <td style="width: 25%">RAZON SOCIAL</td>
-                                        <td style="width: 75%">: <span t-field="doc.partner_id.name"/></td>
+                                        <td style="width: 75%; background-color: #D3D3D3; border: 1px solid #8D8D8D;" >: <span t-field="doc.partner_id.name"/></td>
                                     </tr>
                                     <tr>    
-                                        <td >RUC</td>
-                                        <td >: <span t-field="doc.partner_id.vat"/></td>
+                                        <td>RUC</td>
+                                        <td  style="background-color: #D3D3D3;  border: 1px solid #8D8D8D;" >: <span t-field="doc.partner_id.vat"/></td>
                                     </tr>
                                     <tr>    
-                                        <td >DIRECCIÓN</td>
-                                        <td >: <span t-field="doc.partner_id.street"/></td>
+                                        <td>DIRECCIÓN</td>
+                                        <td style="background-color: #D3D3D3;  border: 1px solid #8D8D8D;">: <span t-field="doc.partner_id.street"/></td>
                                         
                                     </tr>
                                      <tr>    
-                                        <td >CODIGO POSTAL</td>
-                                        <td>: <span t-field="doc.partner_id.zip"/></td>
+                                        <td>CODIGO POSTAL</td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.partner_id.zip"/></td>
                                     </tr>
                                      <tr>    
                                         <td>PAÍS</td>
-                                        <td>: <span t-field="doc.partner_id.country_id.name"/></td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.partner_id.country_id.name"/></td>
                                     </tr>
                                     <tr>    
                                         <td colspan="2">CONTACTO</td>
-                                        <td></td>
+                                        <td/>
                                     </tr>
                                      <tr>    
                                         <td>CORREO</td>
-                                        <td>: <span t-field="doc.partner_id.email"/></td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.partner_id.email"/></td>
                                     </tr>
                                      <tr>    
                                         <td>TELÉFONO</td>
-                                        <td>: <span t-field="doc.partner_id.phone"/></td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.partner_id.phone"/></td>
                                     </tr>
                                 </tbody>
                             </table>
                        </div>
-                       <div class="col-6">
+                       <div class="col-6" style="padding: 5px;">
                             <table>
                                 <tbody>
                                     <tr>    
                                         <td colspan="2"><b>ENVIAR A</b></td>
-                                        <td></td>
+                                        <td/>
                                     </tr>
                                     <tr>    
                                         <td style="width: 25%">LOCAL</td>
-                                        <td style="width: 75%">: <span t-field="doc.picking_type_id.warehouse_id.name"/></td>
+                                        <td style="width: 75%; background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.picking_type_id.warehouse_id.name"/></td>
                                     </tr>
                                     <tr>    
                                         <td>DIRECCIÓN</td>
-                                        <td>: <span t-field="doc.picking_type_id.warehouse_id.partner_id.street"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.province_id.name"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.district_id.name"/> </td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.picking_type_id.warehouse_id.partner_id.street"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.province_id.name"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.district_id.name"/> </td>
                                         
                                     </tr>
                                     <tr>    
                                         <td>CODIGO POSTAL</td>
-                                        <td>: <span t-field="doc.picking_type_id.warehouse_id.partner_id.zip"/></td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.picking_type_id.warehouse_id.partner_id.zip"/></td>
                                     </tr>
                                 </tbody>
                             </table>
                        </div>
                        </div>
                         <br/>
-                        <div class="col-12 pt-0 row">
-                       <div class="col-6">
+                        <div class="col-12 pt-0 row" style="border: 2px solid #4A4A4A; border-radius: 20px 20px 20px 20px;-moz-border-radius: 20px 20px 20px 20px; -webkit-border-radius: 20px 20px 20px 20px; ">
+                       <div class="col-6" style="padding: 5px;">
                             <table>
                                 <tbody>
                                     <tr>    
                                         <td colspan="2"><b>PEDIDO</b></td>
-                                        <td></td>
+                                        <td/>
                                     </tr>
                                      <tr>    
                                         <td style="width: 35%">REFERENCIA DE PEDIDO</td>
-                                        <td style="width: 65%">:  <span t-field="doc.partner_ref"/></td>
+                                        <td style="width: 65%; background-color: #D3D3D3; border: 1px solid #8D8D8D;">:  <span t-field="doc.partner_ref"/></td>
                                     </tr>
                                     <tr>    
-                                        <td >CONDICIONES DE PAGO</td>
-                                        <td >: <span t-field="doc.payment_term_id.name"/></td>
+                                        <td>CONDICIONES DE PAGO</td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.payment_term_id.name"/></td>
                                     </tr>
                                     <tr>    
-                                        <td >MONEDA</td>
-                                        <td >: <span t-field="doc.currency_id.name"/></td>
+                                        <td>MONEDA</td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.currency_id.name"/></td>
                                         
                                     </tr>
                                      <tr>    
                                         <td>INCOTERM</td>
-                                        <td>: <span t-field="doc.incoterm_id.name"/></td>
+                                        <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.incoterm_id.name"/></td>
                                     </tr>
                                     
                                 </tbody>
@@ -168,21 +171,21 @@
                             <table>
                                 <tbody>
                                     <tr>    
-                                        <td  colspan="2"><b>COMPRADOR</b></td>
-                                        <td></td>
+                                        <td colspan="2"><b>COMPRADOR</b></td>
+                                        <td/>
                                     </tr>
                                     <tr>    
                                         <td style="width: 20%">NOMBRE</td>
-                                        <td style="width: 80%">: <span t-field="doc.user_id.name"/></td>
+                                        <td style="width: 80%; background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.user_id.name"/></td>
                                     </tr>
                                     <tr>    
                                         <td style="width: 20%">CORREO</td>
-                                        <td style="width: 50%">: <span t-field="doc.user_id.login"/></td>
+                                        <td style="width: 50%; background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.user_id.login"/></td>
                                         
                                     </tr>
                                     <tr>    
                                         <td style="width: 20%">TELÉFONO</td>
-                                        <td style="width: 80%">: <span t-field="doc.user_id.phone"/></td>
+                                        <td style="width: 80%; background-color: #D3D3D3; border: 1px solid #8D8D8D;">: <span t-field="doc.user_id.phone"/></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -191,8 +194,8 @@
                        <br/>
                     <table class="table table-sm o_main_table">
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
-                        <thead style="display: table-row-group">
-                            <tr>
+                        <thead style="display: table-row-group;  ">
+                            <tr style= "background-color: #A0A0A0; ">
                                 <th style="  width: 5% !important;">N°</th>
                                 <th class="text-center">CODIGO SUM</th>
                                 <th class="text-center">CODIGO PROVEEDOR</th>
