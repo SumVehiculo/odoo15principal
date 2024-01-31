@@ -226,11 +226,12 @@
                                             </t></td>
                                         <td style="width: 30%" class="text-center"><span t-field="line.name"/></td>
                                         <td class="text-center"><span t-field="line.product_uom"/></td>
-                                        <td class="text-right"><span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
-                                        <td class="text-center">
+                                         <td class="text-center">
                                             <span t-field="line.product_uom_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
 
 
+                                        <td class="text-right"><span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+                                       
                                         <td name="td_subtotal" class="text-right o_price_total">
                                             <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_excluded"/>
                                             <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_included"/>
