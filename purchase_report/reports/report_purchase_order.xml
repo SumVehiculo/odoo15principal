@@ -167,7 +167,7 @@
                                 </tbody>
                             </table>
                        </div>
-                       <div class="col-6">
+                       <div class="col-6" style="padding: 5px;">
                             <table>
                                 <tbody>
                                     <tr>    
@@ -195,7 +195,7 @@
                     <table class="table table-sm o_main_table">
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                         <thead style="display: table-row-group;  ">
-                            <tr style= "background-color: #A0A0A0; ">
+                            <tr style= "background-color: #A0A0A0;">
                                 <th style="  width: 5% !important;">N°</th>
                                 <th class="text-center">CODIGO SUM</th>
                                 <th class="text-center">CODIGO PROVEEDOR</th>
