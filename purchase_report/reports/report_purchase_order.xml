@@ -10,6 +10,12 @@
                         <div class="row pt-2" style="font-family: Arial;font-size:11px">
                             <div class="col-12 pt-0 row">
                                 <div class="col-8">
+                                    <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;" class="mt-0 pt-0"/>
+
+                                    
+                                </div>
+                                <div class="col-4">
+
                                     <table>
                                         <tbody>
                                             <tr>
@@ -22,13 +28,10 @@
                                             </tr>
                                             <tr>
                                                 <td style=" font-size: 14pt; width: 20%"><b>FECHA</b></td>
-                                                <td style=" font-size: 14pt; width: 80%"><b>: </b> <span t-esc="doc.date_approve.strftime('%d/%m/%Y') if doc.date_planned else ''"/></td>
+                                                <td style=" font-size: 14pt; width: 80%"><b>: </b> <span t-esc="doc.date_approve.strftime('%d/%m/%Y') if doc.date_approve else ''"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="col-4">
-                                   <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="Logo" style="width: 200px; top: 0 ; vertical-align: baseline;" class="mt-0 pt-0"/>
                               </div>
                             </div>
                                         
@@ -68,7 +71,10 @@
                         <br/>
                         <div class="col-12 pt-0 row">
                        <div class="col-6">
-                            <table>
+                            <table style="border: 1px solid #a7a7a7;
+                                    border-radius: 5px 5px 0px 0px;
+                                    -moz-border-radius: 5px 5px 0px 0px;
+                                    -webkit-border-radius: 5px 5px 0px 0px; ">
                                 <tbody>
                                     <tr>    
                                         <td colspan="2"><b>PROVEEDOR</b></td>
