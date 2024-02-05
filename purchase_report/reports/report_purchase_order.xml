@@ -86,229 +86,229 @@
                                   <tbody>
                                       <tr>    
                                           <td style="width: 25%">RAZÓN SOCIAL</td>
-                                          <td style="width: 25%;">:  <span t-field="doc.company_id.name"/></td>
+                                          <td style="width: 25%;"> <span t-field="doc.company_id.name"/></td>
                                       </tr>
                                       <tr>    
                                           <td>RUC</td>
-                                          <td>: <span t-field="doc.company_id.vat"/></td>
+                                          <td><span t-field="doc.company_id.vat"/></td>
                                       </tr>
                                       <tr>    
                                           <td>DIRECCIÓN</td>
-                                          <td>: <span t-field="doc.company_id.street_name"/> , <span t-field="doc.company_id.state_id"/></td>
+                                          <td><span t-field="doc.company_id.street_name"/> , <span t-field="doc.company_id.state_id"/></td>
                                       </tr>
                                   </tbody>
                               </table>
                          </div>
                         </div>
                         <br/> -->
-                        <div class="col-12 pt-0 row">
-                       <div class="col-6">
-                            <table>
-                                <tbody>
-                                    <tr>    
-                                        <td colspan="2"><b>PROVEEDOR</b></td>
-                                        <td/>
-                                    </tr>
-                                     <tr>    
-                                        <td style="width: 25%">
-                                            RAZÓN SOCIAL
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td style="width: 75%"><span t-field="doc.partner_id.name"/></td>
-                                    </tr>
-                                    <tr>    
-                                        <td >
-                                            RUC
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td ><span t-field="doc.partner_id.vat"/></td>
-                                    </tr>
-                                    <tr>    
-                                        <td >
-                                            DIRECCIÓN
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td ><span t-field="doc.partner_id.street"/></td>
-                                        
-                                    </tr>
-                                     <tr>    
-                                        <td >
-                                            CÓDIGO POSTAL
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td><span t-field="doc.partner_id.zip"/></td>
-                                    </tr>
-                                     <tr>    
-                                        <td>
-                                            PAÍS
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td><span t-field="doc.partner_id.country_id.name"/></td>
-                                    </tr>
-                                    <tr>    
-                                        <td colspan="2">CONTACTO</td>
-                                        <td/>
-                                    </tr>
-                                     <tr>    
-                                        <td>
-                                            CORREO
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td><span t-field="doc.partner_id.email"/></td>
-                                    </tr>
-                                     <tr>    
-                                        <td>
-                                            TELÉFONO
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td><span t-field="doc.partner_id.phone"/></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                       </div>
-                       <div class="col-6" style="padding: 5px;">
-                            <table>
-                                <tbody>
-                                    <tr>    
-                                        <td colspan="2"><b>ENVIAR A</b></td>
-                                        <td/>
-                                    </tr>
-                                    <tr>    
-                                        <td style="width: 25%">
-                                            LOCAL
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td style="width: 75%"><span t-field="doc.picking_type_id.warehouse_id.name"/></td>
-                                    </tr>
-                                    <tr>    
-                                        <td>
-                                            DIRECCIÓN
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td><span t-field="doc.picking_type_id.warehouse_id.partner_id.street"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.province_id.name"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.district_id.name"/> </td>
-                                        
-                                    </tr>
-                                    <tr>    
-                                        <td>
-                                            CÓDIGO POSTAL
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td><span t-field="doc.picking_type_id.warehouse_id.partner_id.zip"/></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                       </div>
-                       </div>
-                        <br/>
                         <div class="col-12 pt-0 row" style="border: 2px solid #4A4A4A; border-radius: 20px 20px 20px 20px;-moz-border-radius: 20px 20px 20px 20px; -webkit-border-radius: 20px 20px 20px 20px; ">
-                       <div class="col-6" style="padding: 5px;">
-                            <table>
-                                <tbody>
-                                    <tr>    
-                                        <td colspan="2"><b>PEDIDO</b></td>
-                                        <td/>
-                                    </tr>
-                                     <tr>    
-                                        <td style="width: 35%">
-                                            REFERENCIA DE PEDIDO
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td style="width: 65%"><span t-field="doc.partner_ref"/></td>
-                                    </tr>
-                                    <tr>    
-                                        <td >
-                                            CONDICIONES DE PAGO
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td ><span t-field="doc.payment_term_id.name"/></td>
-                                    </tr>
-                                    <tr>    
-                                        <td >
-                                            MONEDA
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td ><span t-field="doc.currency_id.name"/></td>
-                                        
-                                    </tr>
-                                     <tr>    
-                                        <td>
-                                            INCOTERM
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td><span t-field="doc.incoterm_id.name"/></td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                       </div>
-                       <div class="col-6" style="padding: 5px;">
-                            <table>
-                                <tbody>
-                                    <tr>    
-                                        <td colspan="2"><b>COMPRADOR</b></td>
-                                        <td/>
-                                    </tr>
-                                    <tr>    
-                                        <td style="width: 20%">
-                                            NOMBRE
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td style="width: 80%"><span t-field="doc.user_id.name"/></td>
-                                    </tr>
-                                    <tr>    
-                                        <td style="width: 20%">
-                                            CORREO
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td style="width: 50%"><span t-field="doc.user_id.login"/></td>
-                                        
-                                    </tr>
-                                    <tr>    
-                                        <td style="width: 20%">
-                                            TELÉFONO
-                                            <span style="float:right;">
-                                                :&#160;
-                                            </span>
-                                        </td>
-                                        <td style="width: 80%"><span t-field="doc.user_id.phone"/></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                       </div>
-                       </div>
-                       <br/>
+                            <div class="col-6" style="padding: 5px;">
+                                 <table>
+                                     <tbody>
+                                         <tr>    
+                                             <td colspan="2"><b>PROVEEDOR</b></td>
+                                             <td/>
+                                         </tr>
+                                          <tr>    
+                                             <td style="width: 25%">
+                                                RAZON SOCIAL
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="width: 75%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.name"/></td>
+                                         </tr>
+                                         <tr>    
+                                             <td>
+                                                RUC
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3;  border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.vat"/></td>
+                                         </tr>
+                                         <tr>    
+                                             <td>
+                                                DIRECCIÓN
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3;  border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.street"/></td>
+                                             
+                                         </tr>
+                                          <tr>    
+                                             <td>
+                                                CODIGO POSTAL
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.zip"/></td>
+                                         </tr>
+                                          <tr>    
+                                             <td>
+                                                PAÍS
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.country_id.name"/></td>
+                                         </tr>
+                                         <tr>    
+                                             <td colspan="2">CONTACTO</td>
+                                             <td/>
+                                         </tr>
+                                          <tr>    
+                                             <td>
+                                                CORREO
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.email"/></td>
+                                         </tr>
+                                          <tr>    
+                                             <td>
+                                                TELÉFONO
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.phone"/></td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                            </div>
+                            <div class="col-6" style="padding: 5px;">
+                                 <table>
+                                     <tbody>
+                                         <tr>    
+                                             <td colspan="2"><b>ENVIAR A</b></td>
+                                             <td/>
+                                         </tr>
+                                         <tr>    
+                                             <td style="width: 25%">
+                                                LOCAL
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="width: 75%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.picking_type_id.warehouse_id.name"/></td>
+                                         </tr>
+                                         <tr>    
+                                             <td>
+                                                DIRECCIÓN
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.picking_type_id.warehouse_id.partner_id.street"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.province_id.name"/> , <span t-field="doc.picking_type_id.warehouse_id.partner_id.district_id.name"/> </td>
+                                             
+                                         </tr>
+                                         <tr>    
+                                             <td>
+                                                CODIGO POSTAL
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.picking_type_id.warehouse_id.partner_id.zip"/></td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                            </div>
+                            </div>
+                             <br/>
+                             <div class="col-12 pt-0 row" style="border: 2px solid #4A4A4A; border-radius: 20px 20px 20px 20px;-moz-border-radius: 20px 20px 20px 20px; -webkit-border-radius: 20px 20px 20px 20px; ">
+                            <div class="col-6" style="padding: 5px;">
+                                 <table>
+                                     <tbody>
+                                         <tr>    
+                                             <td colspan="2"><b>PEDIDO</b></td>
+                                             <td/>
+                                         </tr>
+                                          <tr>    
+                                             <td style="width: 35%">
+                                                REFERENCIA DE PEDIDO
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="width: 65%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"> <span t-field="doc.partner_ref"/></td>
+                                         </tr>
+                                         <tr>    
+                                             <td>
+                                                CONDICIONES DE PAGO
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.payment_term_id.name"/></td>
+                                         </tr>
+                                         <tr>    
+                                             <td>
+                                                MONEDA
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.currency_id.name"/></td>
+                                             
+                                         </tr>
+                                          <tr>    
+                                             <td>
+                                                INCOTERM
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.incoterm_id.name"/></td>
+                                         </tr>
+                                         
+                                     </tbody>
+                                 </table>
+                            </div>
+                            <div class="col-6" style="padding: 5px;">
+                                 <table>
+                                     <tbody>
+                                         <tr>    
+                                             <td colspan="2"><b>COMPRADOR</b></td>
+                                             <td/>
+                                         </tr>
+                                         <tr>    
+                                             <td style="width: 20%">
+                                                NOMBRE
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="width: 80%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.user_id.name"/></td>
+                                         </tr>
+                                         <tr>    
+                                             <td style="width: 20%">
+                                                CORREO
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="width: 50%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.user_id.login"/></td>
+                                             
+                                         </tr>
+                                         <tr>    
+                                             <td style="width: 20%">
+                                                TELÉFONO
+                                                <span style="float:right;">
+                                                    :&#160;
+                                                </span>
+                                            </td>
+                                             <td style="width: 80%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.user_id.phone"/></td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                            </div>
+                            </div>
+                            <br/>
                     <table class="table table-sm o_main_table">
                         <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                         <thead style="display: table-row-group;  ">
