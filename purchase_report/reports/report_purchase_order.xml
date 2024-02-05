@@ -139,7 +139,7 @@
                                          </tr>
                                           <tr>    
                                              <td style="position:relative;">
-                                                CODIGO POSTAL
+                                                COD. POSTAL
                                                 <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
@@ -208,7 +208,7 @@
                                          </tr>
                                          <tr>    
                                              <td style="position:relative;">
-                                                CODIGO POSTAL
+                                                COD. POSTAL
                                                 <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
@@ -230,7 +230,7 @@
                                          </tr>
                                           <tr>    
                                              <td style="width: 35%; position:relative;">
-                                                REFERENCIA DE PEDIDO
+                                                REF. PEDIDO
                                                 <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
@@ -239,7 +239,7 @@
                                          </tr>
                                          <tr>    
                                              <td style="position:relative;">
-                                                CONDICIONES DE PAGO
+                                                COND.PAGO
                                                 <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
@@ -309,92 +309,92 @@
                             </div>
                             </div>
                             <br/>
-                    <table class="table table-sm o_main_table">
-                        <!-- In case we want to repeat the header, remove "display: table-row-group" -->
-                        <thead style="display: table-row-group;  ">
-                            <tr style= "background-color: #A0A0A0;">
-                                <th style="  width: 5% !important;">N°</th>
-                                <th class="text-center">CODIGO SUM</th>
-                                <th class="text-center">CODIGO PROVEEDOR</th>
-                                <th style="width: 30%" class="text-center">DESCRIPCIÓN</th>
-                                <th class="text-center">UND MED</th>
-                                <th class="text-center">CANTIDAD</th>
-                                <th class="text-right">PRECIO UNIT</th>
-                                <th class="text-right">PRECIO TOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody class="sale_tbody">
-
-                            <t t-set="current_subtotal" t-value="0"/>
-                            <t t-set="counter" t-value="0"/>
-                            <t t-foreach="doc.order_line" t-as="line">
-                                <t t-set="counter" t-value="counter + 1"/>
-                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
-
-                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                   
-                                        <td style="  width: 5% !important;"><t t-esc="counter"/></td>
-                                        <td class="text-center"><t t-if="line.product_id">
-                                                <span t-field="line.product_id.default_code"/>
-                                            </t></td>
-                                        <td class="text-center"><t t-if="line.product_id">
-                                                <span t-field="line.cod_proveedor"/>
-                                            </t></td>
-                                        <td style="width: 30%" class="text-center"><span t-field="line.name"/></td>
-                                        <td class="text-center"><span t-field="line.product_uom"/></td>
-                                         <td class="text-center">
-                                            <span t-field="line.product_uom_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
-
-
-                                        <td class="text-right"><span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
-                                       
-                                        <td name="td_subtotal" class="text-right o_price_total">
-                                            <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                            <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_included"/>
-                                        </td>
-                                      
-                                        
-                                  
+                            <table class="table table-sm o_main_table">
+                                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                                <thead style="display: table-row-group;  ">
+                                    <tr style="background-color: #A0A0A0;">
+                                        <th style="  width: 5% !important;">N°</th>
+                                        <th class="text-center">CODIGO SUM</th>
+                                        <th class="text-center">CODIGO PROVEEDOR</th>
+                                        <th style="width: 30%; text-align:left;" >DESCRIPCIÓN</th>
+                                        <th class="text-center">UND MED</th>
+                                        <th class="text-center">CANTIDAD</th>
+                                        <th class="text-right">PRECIO UNIT</th>
+                                        <th class="text-right">PRECIO TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+        
+                                    <t t-set="current_subtotal" t-value="0"/>
+                                    <t t-set="counter" t-value="0"/>
+                                    <t t-foreach="doc.order_line" t-as="line">
+                                        <t t-set="counter" t-value="counter + 1"/>
+                                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+        
+                                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                           
+                                                <td style="  width: 5% !important;"><t t-esc="counter"/></td>
+                                                <td class="text-center"><t t-if="line.product_id">
+                                                        <span t-field="line.product_id.default_code"/>
+                                                    </t></td>
+                                                <td class="text-center"><t t-if="line.product_id">
+                                                        <span t-field="line.cod_proveedor"/>
+                                                    </t></td>
+                                                <td style="width: 30%" ><span t-field="line.name"/></td>
+                                                <td class="text-center"><span t-field="line.product_uom"/></td>
+                                                 <td class="text-center">
+                                                    <span t-field="line.product_uom_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+        
+        
+                                                <td class="text-right"><span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+                                               
+                                                <td name="td_subtotal" class="text-right o_price_total">
+                                                    <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                                    <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" groups="account.group_show_line_subtotals_tax_included"/>
+                                                </td>
+                                              
+                                                
+                                          
+                                        </tr>
+        
+                                    </t>
+                                </tbody>
+                                <tfooter>
+                                <tr>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    
+                                    <td colspan=""><b>SUBTOTAL</b></td>
+                                    <td class="text-right"> <span t-field="doc.amount_untaxed"/></td>
                                 </tr>
-
-                            </t>
-                        </tbody>
-                        <tfooter>
-                        <tr>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            
-                            <td colspan=""><b>SUBTOTAL</b></td>
-                            <td class="text-right"> <span t-field="doc.amount_untaxed"/></td>
-                        </tr>
-                        <t t-set="igv" t-value="doc.amount_total - doc.amount_untaxed"/>
-                        <tr>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td colspan=""><b>IMPUESTOS</b></td>
-                            <td class="text-right"> <span t-esc="doc.currency_id.symbol"/>  <span t-esc="igv" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
-                        </tr>
-                        <tr>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td/>
-                            <td colspan=""><b>TOTAL</b></td>
-                            <td class="text-right"> <span t-field="doc.amount_total"/></td>
-                        </tr>
-                    </tfooter>
-                    </table>
+                                <t t-set="igv" t-value="doc.amount_total - doc.amount_untaxed"/>
+                                <tr>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td colspan=""><b>IMPUESTOS</b></td>
+                                    <td class="text-right"> <span t-esc="doc.currency_id.symbol"/>  <span t-esc="igv" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+                                </tr>
+                                <tr>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td colspan=""><b>TOTAL</b></td>
+                                    <td class="text-right"> <span t-field="doc.amount_total"/></td>
+                                </tr>
+                            </tfooter>
+                            </table>
                 <br/>
 
                 <center><h6><b>ESTIMADOS PROVEEDORES</b></h6></center>
