@@ -110,9 +110,9 @@
                                              <td/>
                                          </tr>
                                           <tr>    
-                                             <td style="width: 25%">
+                                             <td style="width: 25%; position:relative;">
                                                 RAZON SOCIAL
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
@@ -128,9 +128,9 @@
                                              <td style="background-color: #D3D3D3;  border: 1px solid #8D8D8D;"><span t-field="doc.partner_id.vat"/></td>
                                          </tr>
                                          <tr>    
-                                             <td>
+                                             <td style="position:relative;">
                                                 DIRECCIÓN
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
@@ -138,9 +138,9 @@
                                              
                                          </tr>
                                           <tr>    
-                                             <td>
+                                             <td style="position:relative;">
                                                 CODIGO POSTAL
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
@@ -197,9 +197,9 @@
                                              <td style="width: 75%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"><span t-field="doc.picking_type_id.warehouse_id.name"/></td>
                                          </tr>
                                          <tr>    
-                                             <td>
+                                             <td style="position:relative;">
                                                 DIRECCIÓN
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
@@ -207,9 +207,9 @@
                                              
                                          </tr>
                                          <tr>    
-                                             <td>
+                                             <td style="position:relative;">
                                                 CODIGO POSTAL
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
@@ -229,18 +229,18 @@
                                              <td/>
                                          </tr>
                                           <tr>    
-                                             <td style="width: 35%">
+                                             <td style="width: 35%; position:relative;">
                                                 REFERENCIA DE PEDIDO
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
                                              <td style="width: 65%; background-color: #D3D3D3; border: 1px solid #8D8D8D;"> <span t-field="doc.partner_ref"/></td>
                                          </tr>
                                          <tr>    
-                                             <td>
+                                             <td style="position:relative;">
                                                 CONDICIONES DE PAGO
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
@@ -277,9 +277,9 @@
                                              <td/>
                                          </tr>
                                          <tr>    
-                                             <td style="width: 20%">
+                                             <td style="width: 20%; position:relative;">
                                                 NOMBRE
-                                                <span style="float:right;">
+                                                <span style="position: absolute; top: 0; right: 0;">
                                                     :&#160;
                                                 </span>
                                             </td>
