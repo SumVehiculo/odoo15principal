@@ -18,7 +18,7 @@ class StockPicking(models.Model):
 		for sp in self:
 			if self.picking_type_id:
 				if self.picking_type_id.account_analytic_type == True:
-					for sm in self.move_line_ids:
+					for sm in self.move_ids_without_package:
 						if not sm.analytic_account_id:
 							raise UserError(f'El producto {sm.product_id.name} No tiene una cuenta analitica agregada')
 						if not sm.analytic_tag_id:
