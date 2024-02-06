@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="group_stock_picking_type_analytic" model="res.groups">
-        <field name="name">Editar campo boolean</field>
+        <field name="name">Cuenta y etiquetas obligatorias en albarán</field>
     </record>
     <record id="add_booble_stock_picking_type" model="ir.ui.view">
         <field name="name">add.boolean.stock.picking.type</field>
