@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- <record id="view_sale_order_pivot_inherit_it" model="ir.ui.view">
-            <field name="name">sale.order.pivot.inherit</field>
-            <field name="model">sale.order</field>
+        <record id="view_sale_report_pivot_inherit_it" model="ir.ui.view">
+            <field name="name">sale.report.pivot.inherit</field>
+            <field name="model">sale.report</field>
             <field name="inherit_id" ref="sale.view_order_product_pivot"/>
             <field name="arch" type="xml">
                 <pivot position="inside">
                     <field name="payment_term_id"/>
                 </pivot>
             </field>
-        </record> -->
-        <record id="view_sale_order_search_inherit_it" model="ir.ui.view">
-            <field name="name">sale.order.view.search.inherit.it</field>
-            <field name="model">sale.order</field>
+        </record>
+        <record id="view_sale_report_search_inherit_it" model="ir.ui.view">
+            <field name="name">sale.report.view.search.inherit.it</field>
+            <field name="model">sale.report</field>
             <field name="inherit_id" ref="sale.view_order_product_search"/>
             <field name="arch" type="xml">
                 <search position="inside">
                     <field name="payment_term_id" />
-                    <field name="date" />
                 </search>
             </field>
         </record>
