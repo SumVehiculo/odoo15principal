@@ -18,6 +18,7 @@
             <field name="arch" type="xml">
                 <search position="inside">
                     <field name="payment_term_id" />
+                    <field name="date" />
                 </search>
             </field>
         </record>

@@ -8,7 +8,7 @@
     'summary': 'Modificaciones personalizadas para sale_reports',
     'depends': ['sale'],
     'data': [
-        'views/report.xml',
+        # 'views/report.xml',
     ],
     'demo': [],
     'installable': True,
