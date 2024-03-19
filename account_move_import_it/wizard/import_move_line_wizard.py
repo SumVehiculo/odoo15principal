@@ -32,7 +32,7 @@ class ImportMoveLineWizard(models.TransientModel):
 	_name = 'import.move.line.wizard'
 
 	move_id = fields.Many2one('account.move',string='Asiento',required=True)
-	document_file = fields.Binary(string='Excel', help="El archivo Excel debe ir con la cabecera: account_id, debit, credit, currency_id, amount_currency, tc, partner_id, type_document_id, nro_comp, date_maturity, name, analytic_account_id, amount_tax, tag_ids, invoice_date_it, cta_cte")
+	document_file = fields.Binary(string='Excel', help="El archivo Excel debe ir con la cabecera: account_id, debit, credit, currency_id, amount_currency, tc, partner_id, type_document_id, nro_comp, date_maturity, name, analytic_account_id, analytic_tag_ids, amount_tax, tag_ids, invoice_date_it, cta_cte")
 	name_file = fields.Char(string='Nombre de Archivo')
 
 	def importar(self):
@@ -54,16 +54,16 @@ class ImportMoveLineWizard(models.TransientModel):
 				continue
 			else:
 				line = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
-				if len(line) == 16:
+				if len(line) == 17:
 					date_string = None
 					if line[9] != '':
 						fecha_base = datetime(1900, 1, 1, tzinfo=pytz.timezone('UTC'))
 						delta = timedelta(days=int(float(line[9]))-2)
 						date_string = fecha_base + delta
 					date_invoice_string = None
-					if line[14] != '':
+					if line[15] != '':
 						fecha_base = datetime(1900, 1, 1, tzinfo=pytz.timezone('UTC'))
-						delta = timedelta(days=int(float(line[14]))-2)
+						delta = timedelta(days=int(float(line[15]))-2)
 						date_invoice_string = fecha_base + delta
 					
 					
@@ -79,12 +79,13 @@ class ImportMoveLineWizard(models.TransientModel):
 								'date_maturity':date_string,
 								'name':line[10],
 								'analytic_account_id':line[11],
-								'amount_tax':line[12],
-								'tag_ids':line[13],
+								'analytic_tag_ids':line[12],
+								'amount_tax':line[13],
+								'tag_ids':line[14],
 								'invoice_date_it': date_invoice_string,
-								'cta_cte': line[15] == 'SI',
+								'cta_cte': line[16] == 'SI',
 								})
-				elif len(line) > 16:
+				elif len(line) > 17:
 					raise UserError('Tu archivo tiene columnas mas columnas de lo esperado.')
 				else:
 					raise UserError('Tu archivo tiene columnas menos columnas de lo esperado.')
