@@ -109,7 +109,7 @@ class ImportMoveLineWizard(models.TransientModel):
 					id_etiqueta = []
 					raw_invoice_tags=line[12].replace(" ","")
 					raw_invoice_tags= raw_invoice_tags.split(',') if raw_invoice_tags else  None
-					tag_list= self.env['account.analytic.tag'].search([('name', 'ilike', fragmento.strip() + '%')])
+					tag_list= self.env['account.analytic.tag'].search([])
 					for tag in tag_list:
 						if tag in raw_invoice_tags:
 							id_etiqueta.append(tag.id)
