@@ -87,7 +87,8 @@ class ImportMoveLineWizard(models.TransientModel):
 							id_etiqueta=etiqueta.id	
 					if not id_etiqueta:
 						raise UserError('La etiqueta analitica no existe en el registro')
-					#nuevo
+					raise UserError(id_etiqueta)
+     				#nuevo
      
 					values.update( {'account_id': line[0],
 								'debit': line[1],
