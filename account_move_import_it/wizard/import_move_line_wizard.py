@@ -91,14 +91,14 @@ class ImportMoveLineWizard(models.TransientModel):
 					#id_etiqueta_str = ','.join(id_etiqueta)
 					#raise UserError(id_etiqueta_str)
 
-					id_etiqueta=False
+					id_etiqueta=[]
 					todas_las_etiquetas=self.env['account.analytic.tag'].search([])
 					for etiqueta in todas_las_etiquetas:
 						if str(etiqueta.name).split()[0] == line[12]:
-							id_etiqueta=etiqueta.name
+							id_etiqueta.append(etiqueta.name)
 					if not id_etiqueta:
 						raise UserError('La etiqueta analitica no existe en el registro')
-					#raise UserError(id_etiqueta)
+					raise UserError(id_etiqueta)
      				#nuevo
      
 					values.update( {'account_id': line[0],
