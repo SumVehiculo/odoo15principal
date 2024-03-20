@@ -32,7 +32,7 @@ class ImportMoveLineWizard(models.TransientModel):
 	_name = 'import.move.line.wizard'
 
 	move_id = fields.Many2one('account.move',string='Asiento',required=True)
-	document_file = fields.Binary(string='Excel', help="El archivo Excel debe ir con la cabecera: account_id, debit, credit, currency_id, amount_currency, tc, partner_id, type_document_id, nro_comp, date_maturity, name, analytic_account_id, amount_tax, tag_ids, invoice_date_it, cta_cte")
+	document_file = fields.Binary(string='Excel', help="El archivo Excel debe ir con la cabecera: account_id, debit, credit, currency_id, amount_currency, tc, partner_id, type_document_id, nro_comp, date_maturity, name, analytic_account_id, analytic_tag_ids, amount_tax, tag_ids, invoice_date_it, cta_cte")
 	name_file = fields.Char(string='Nombre de Archivo')
 
 	def importar(self):
@@ -48,25 +48,37 @@ class ImportMoveLineWizard(models.TransientModel):
 			raise UserError("Archivo invalido!")
 
 		lineas = []
-
+		
 		for row_no in range(sheet.nrows):
 			if row_no <= 0:
 				continue
 			else:
 				line = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
-				if len(line) == 16:
+				if len(line) == 17:
 					date_string = None
 					if line[9] != '':
 						fecha_base = datetime(1900, 1, 1, tzinfo=pytz.timezone('UTC'))
 						delta = timedelta(days=int(float(line[9]))-2)
 						date_string = fecha_base + delta
 					date_invoice_string = None
-					if line[14] != '':
+					if line[15] != '':
 						fecha_base = datetime(1900, 1, 1, tzinfo=pytz.timezone('UTC'))
-						delta = timedelta(days=int(float(line[14]))-2)
+						delta = timedelta(days=int(float(line[15]))-2)
 						date_invoice_string = fecha_base + delta
-					
-					
+	  
+					#Importar etiqueta analitica
+		 
+					id_etiqueta = []
+					raw_invoice_tags=line[12].replace(" ","")
+					raw_invoice_tags= raw_invoice_tags.split(',') if raw_invoice_tags else []
+					tag_list= self.env['account.analytic.tag'].search([])
+					for tag in tag_list:
+						if str(tag.name).split()[0] in raw_invoice_tags:
+							id_etiqueta.append(tag.id)
+       
+					#--------------------------------
+
+	 
 					values.update( {'account_id': line[0],
 								'debit': line[1],
 								'credit': line[2],
@@ -79,12 +91,13 @@ class ImportMoveLineWizard(models.TransientModel):
 								'date_maturity':date_string,
 								'name':line[10],
 								'analytic_account_id':line[11],
-								'amount_tax':line[12],
-								'tag_ids':line[13],
+								'analytic_tag_ids':id_etiqueta,
+								'amount_tax':line[13],
+								'tag_ids':line[14],
 								'invoice_date_it': date_invoice_string,
-								'cta_cte': line[15] == 'SI',
+								'cta_cte': line[16] == 'SI',
 								})
-				elif len(line) > 16:
+				elif len(line) > 17:
 					raise UserError('Tu archivo tiene columnas mas columnas de lo esperado.')
 				else:
 					raise UserError('Tu archivo tiene columnas menos columnas de lo esperado.')
@@ -115,6 +128,11 @@ class ImportMoveLineWizard(models.TransientModel):
 		if values.get("analytic_account_id"):
 			analytic_account_id = self.find_analytic_account(values.get("analytic_account_id"))
 
+
+
+
+
+
 		account_id = self.find_account(values.get("account_id"))
 
 		tag_ids = []
@@ -144,6 +162,7 @@ class ImportMoveLineWizard(models.TransientModel):
 				'company_id': self.move_id.company_id.id,
 				'tc': float(values.get("tc")) if values.get("tc") else 1,
 				'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
+				'analytic_tag_ids': [(6, 0, values.get("analytic_tag_ids"))] if values.get("analytic_tag_ids") else False,
 				'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_tag_ids':([(6,0,tag_ids)]),
 				'invoice_date_it':values.get("invoice_date_it"),
@@ -162,6 +181,7 @@ class ImportMoveLineWizard(models.TransientModel):
 				'date_maturity':values.get("date_maturity"),
 				'company_id': self.move_id.company_id.id,
 				'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
+				'analytic_tag_ids': [(6, 0, values.get("analytic_tag_ids"))] if values.get("analytic_tag_ids") else False,
 				'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_tag_ids':([(6,0,tag_ids)]),
 				'invoice_date_it':values.get("invoice_date_it"),
@@ -200,6 +220,10 @@ class ImportMoveLineWizard(models.TransientModel):
 		else:
 			raise UserError('No existe un Tipo de Comprobante con el Codigo "%s"'% code)
 
+	
+			
+  
+  
 	def download_template(self):
 		return {
 			 'type' : 'ir.actions.act_url',
