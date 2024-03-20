@@ -52,11 +52,11 @@ class ImportMoveLineWizard(models.TransientModel):
 		#nuevo
   
 
-		analytic_tag_ids = None
-		todas_las_etiquetas=self.env['account.analytic.tag'].search([])
-		for etiqueta in todas_las_etiquetas:
-			if string (etiqueta.name).split()[0] == analytic_tag_ids:
-				return etiqueta
+		#analytic_tag_ids = None
+		#todas_las_etiquetas=self.env['account.analytic.tag'].search([])
+		#for etiqueta in todas_las_etiquetas:
+		#	if string (etiqueta.name).split()[0] == analytic_tag_ids:
+		#		return etiqueta
 
 
 
@@ -78,7 +78,8 @@ class ImportMoveLineWizard(models.TransientModel):
 						fecha_base = datetime(1900, 1, 1, tzinfo=pytz.timezone('UTC'))
 						delta = timedelta(days=int(float(line[15]))-2)
 						date_invoice_string = fecha_base + delta
-					
+      
+					#nuevo
 					id_etiqueta=False
 					todas_las_etiquetas=self.env['account.analytic.tag'].search([])
 					for etiqueta in todas_las_etiquetas:
@@ -86,6 +87,7 @@ class ImportMoveLineWizard(models.TransientModel):
 							id_etiqueta=etiqueta.id	
 					if not id_etiqueta:
 						raise UserError('La etiqueta analitica no existe en el registro')
+					#nuevo
      
 					values.update( {'account_id': line[0],
 								'debit': line[1],
