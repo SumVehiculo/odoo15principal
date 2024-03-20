@@ -49,19 +49,6 @@ class ImportMoveLineWizard(models.TransientModel):
 
 		lineas = []
 		
-		#nuevo
-  
-
-		#analytic_tag_ids = None
-		#todas_las_etiquetas=self.env['account.analytic.tag'].search([])
-		#for etiqueta in todas_las_etiquetas:
-		#	if string (etiqueta.name).split()[0] == analytic_tag_ids:
-		#		return etiqueta
-
-
-
-		#nuevo
-		
 		for row_no in range(sheet.nrows):
 			if row_no <= 0:
 				continue
@@ -79,32 +66,7 @@ class ImportMoveLineWizard(models.TransientModel):
 						delta = timedelta(days=int(float(line[15]))-2)
 						date_invoice_string = fecha_base + delta
 	  
-					#nuevo
-					#line[12]=""
-					#id_etiqueta=[]
-					#todas_las_etiquetas=self.env['account.analytic.tag'].search([])
-					#for etiqueta in todas_las_etiquetas:
-					#	if str(etiqueta.name).split()[0] == line[12]:
-					#		id_etiqueta.append(etiqueta.id)
-					#if not id_etiqueta:
-					#	raise UserError('La etiqueta analitica no existe en el registro')
-					#id_etiqueta_str = ','.join(id_etiqueta)
-					#raise UserError(id_etiqueta_str)
-
-					#id_etiqueta=[]
-					#todas_las_etiquetas=self.env['account.analytic.tag'].search([])
-					#for etiqueta in todas_las_etiquetas:
-					#	nombre_etiqueta = str(etiqueta.name).split(',')
-					#	for i in nombre_etiqueta:
-					#		if i.strip().split()[0] == line[12]:
-					#			id_etiqueta.append((0, 0, {etiqueta.id}))
-					#			#id_etiqueta.append(str(etiqueta.name))
-					#			break
-					#if not id_etiqueta:
-					#	raise UserError('La etiqueta analitica no existe en el registro')
-					#raise UserError(id_etiqueta)
-	 				#nuevo
-		 
+					#Importar etiqueta analitica
 		 
 					id_etiqueta = []
 					raw_invoice_tags=line[12].replace(" ","")
@@ -113,7 +75,8 @@ class ImportMoveLineWizard(models.TransientModel):
 					for tag in tag_list:
 						if str(tag.name).split()[0] in raw_invoice_tags:
 							id_etiqueta.append(tag.id)
-					
+       
+					#--------------------------------
 
 	 
 					values.update( {'account_id': line[0],
