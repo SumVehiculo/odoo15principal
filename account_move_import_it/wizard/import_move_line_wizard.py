@@ -111,9 +111,9 @@ class ImportMoveLineWizard(models.TransientModel):
 					raw_invoice_tags= raw_invoice_tags.split(',') if raw_invoice_tags else  None
 					tag_list= self.env['account.analytic.tag'].search([])
 					for tag in tag_list:
-						if tag in raw_invoice_tags:
+						if str(tag.name).split()[0] in raw_invoice_tags:
 							id_etiqueta.append(tag.id)
-					raise UserError(id_etiqueta)
+					raise UserError(f"{id_etiqueta}")
 
 	 
 					values.update( {'account_id': line[0],
