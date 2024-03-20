@@ -116,7 +116,7 @@ class ImportMoveLineWizard(models.TransientModel):
 
 						# Obtener los IDs de las etiquetas encontradas y agregarlos a la lista id_etiqueta
 						for etiqueta in etiquetas_encontradas:
-							id_etiqueta.append((0, 0, {'name': etiqueta.name, 'analytic_tag_id': etiqueta.id}))
+							id_etiqueta.append((0, 0, {'id': etiqueta.id}))
 
 					# Verificar si se encontraron IDs de etiquetas
 					if not id_etiqueta:
