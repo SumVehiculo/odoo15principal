@@ -78,7 +78,7 @@ class ImportMoveLineWizard(models.TransientModel):
 						fecha_base = datetime(1900, 1, 1, tzinfo=pytz.timezone('UTC'))
 						delta = timedelta(days=int(float(line[15]))-2)
 						date_invoice_string = fecha_base + delta
-      
+	  
 					#nuevo
 					#line[12]=""
 					#id_etiqueta=[]
@@ -91,20 +91,40 @@ class ImportMoveLineWizard(models.TransientModel):
 					#id_etiqueta_str = ','.join(id_etiqueta)
 					#raise UserError(id_etiqueta_str)
 
-					id_etiqueta=[]
-					todas_las_etiquetas=self.env['account.analytic.tag'].search([])
-					for etiqueta in todas_las_etiquetas:
-						nombre_etiqueta = str(etiqueta.name).split(',')
-						for i in nombre_etiqueta:
-							if i.strip().split()[0] == line[12]:
-								id_etiqueta.append((0, 0, {etiqueta.id}))
-								#id_etiqueta.append(str(etiqueta.name))
-								break
+					#id_etiqueta=[]
+					#todas_las_etiquetas=self.env['account.analytic.tag'].search([])
+					#for etiqueta in todas_las_etiquetas:
+					#	nombre_etiqueta = str(etiqueta.name).split(',')
+					#	for i in nombre_etiqueta:
+					#		if i.strip().split()[0] == line[12]:
+					#			id_etiqueta.append((0, 0, {etiqueta.id}))
+					#			#id_etiqueta.append(str(etiqueta.name))
+					#			break
+					#if not id_etiqueta:
+					#	raise UserError('La etiqueta analitica no existe en el registro')
+					#raise UserError(id_etiqueta)
+	 				##nuevo
+		 
+		 
+					id_etiqueta = []
+					fragmentos_letras = line[12].split(',')  # Suponiendo que line[12] contiene los fragmentos de letras separados por comas
+
+					# Iterar sobre cada fragmento de letras proporcionado en el Excel
+					for fragmento in fragmentos_letras:
+						# Buscar todas las etiquetas analíticas que comiencen con el fragmento de letras
+						etiquetas_encontradas = self.env['account.analytic.tag'].search([('name', 'ilike', fragmento.strip() + '%')])
+
+						# Obtener los IDs de las etiquetas encontradas y agregarlos a la lista id_etiqueta
+						for etiqueta in etiquetas_encontradas:
+							id_etiqueta.append((0, 0, {'name': etiqueta.name, 'analytic_tag_id': etiqueta.id}))
+
+					# Verificar si se encontraron IDs de etiquetas
 					if not id_etiqueta:
-						raise UserError('La etiqueta analitica no existe en el registro')
+						raise UserError('No se encontraron etiquetas analíticas para los fragmentos proporcionados en el registro.')
+
 					raise UserError(id_etiqueta)
-     				#nuevo
-     
+
+	 
 					values.update( {'account_id': line[0],
 								'debit': line[1],
 								'credit': line[2],
@@ -189,7 +209,7 @@ class ImportMoveLineWizard(models.TransientModel):
 				'tc': float(values.get("tc")) if values.get("tc") else 1,
 				'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
 				'analytic_tag_ids': [(6, 0, values.get("analytic_tag_ids"))] if values.get("analytic_tag_ids") else False,
-    			'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
+				'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_tag_ids':([(6,0,tag_ids)]),
 				'invoice_date_it':values.get("invoice_date_it"),
 				'cta_cte_origen':values.get("cta_cte")
@@ -208,7 +228,7 @@ class ImportMoveLineWizard(models.TransientModel):
 				'company_id': self.move_id.company_id.id,
 				'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
 				'analytic_tag_ids': [(6, 0, values.get("analytic_tag_ids"))] if values.get("analytic_tag_ids") else False,
-    			'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
+				'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_tag_ids':([(6,0,tag_ids)]),
 				'invoice_date_it':values.get("invoice_date_it"),
 				'cta_cte_origen':values.get("cta_cte")
