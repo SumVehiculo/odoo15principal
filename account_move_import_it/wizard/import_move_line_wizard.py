@@ -103,25 +103,17 @@ class ImportMoveLineWizard(models.TransientModel):
 					#if not id_etiqueta:
 					#	raise UserError('La etiqueta analitica no existe en el registro')
 					#raise UserError(id_etiqueta)
-	 				##nuevo
+	 				#nuevo
 		 
 		 
 					id_etiqueta = []
-					fragmentos_letras = line[12].split(',')  # Suponiendo que line[12] contiene los fragmentos de letras separados por comas
-
-					# Iterar sobre cada fragmento de letras proporcionado en el Excel
+					fragmentos_letras = line[12].split(',')
 					for fragmento in fragmentos_letras:
-						# Buscar todas las etiquetas analíticas que comiencen con el fragmento de letras
 						etiquetas_encontradas = self.env['account.analytic.tag'].search([('name', 'ilike', fragmento.strip() + '%')])
-
-						# Obtener los IDs de las etiquetas encontradas y agregarlos a la lista id_etiqueta
 						for etiqueta in etiquetas_encontradas:
-							id_etiqueta.append((0, 0, {'id': etiqueta.id}))
-
-					# Verificar si se encontraron IDs de etiquetas
+							id_etiqueta.append({'id': etiqueta.id})
 					if not id_etiqueta:
-						raise UserError('No se encontraron etiquetas analíticas para los fragmentos proporcionados en el registro.')
-
+						raise UserError('No se encontraron etiquetas analíticas.')
 					raise UserError(id_etiqueta)
 
 	 
