@@ -91,7 +91,7 @@ class ImportMoveLineWizard(models.TransientModel):
 					#id_etiqueta_str = ','.join(id_etiqueta)
 					#raise UserError(id_etiqueta_str)
 
-					id_etiqueta=[]
+					id_etiqueta=False
 					todas_las_etiquetas=self.env['account.analytic.tag'].search([])
 					for etiqueta in todas_las_etiquetas:
 						if str(etiqueta.name).split()[0] == line[12]:
