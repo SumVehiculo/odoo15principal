@@ -81,7 +81,7 @@ class ImportMoveLineWizard(models.TransientModel):
       
 					#nuevo
 
-					line[12]=""
+					#line[12]=""
 					
 
 					id_etiqueta=[]
