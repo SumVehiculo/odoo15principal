@@ -111,7 +111,7 @@ class ImportMoveLineWizard(models.TransientModel):
 					for fragmento in fragmentos_letras:
 						etiquetas_encontradas = self.env['account.analytic.tag'].search([('name', 'ilike', fragmento.strip() + '%')])
 						for etiqueta in etiquetas_encontradas:
-							id_etiqueta.append({'id': etiqueta.id})
+							id_etiqueta.append(etiqueta.id)
 					if not id_etiqueta:
 						raise UserError('No se encontraron etiquetas analíticas.')
 					raise UserError(id_etiqueta)
