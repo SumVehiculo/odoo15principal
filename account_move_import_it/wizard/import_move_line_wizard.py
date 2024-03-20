@@ -95,7 +95,7 @@ class ImportMoveLineWizard(models.TransientModel):
 					todas_las_etiquetas=self.env['account.analytic.tag'].search([])
 					for etiqueta in todas_las_etiquetas:
 						if str(etiqueta.name).split()[0] == line[12]:
-							id_etiqueta.append((0, 0, {'id': etiqueta.id}))
+							id_etiqueta.append((0, 0, etiqueta.id))
 							#id_etiqueta.append(str(etiqueta.name))
 					if not id_etiqueta:
 						raise UserError('La etiqueta analitica no existe en el registro')
