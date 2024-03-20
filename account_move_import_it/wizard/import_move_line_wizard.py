@@ -81,7 +81,7 @@ class ImportMoveLineWizard(models.TransientModel):
       
 					#nuevo
 
-					#line[12]=""
+					line[12]=""
 					
 
 					id_etiqueta=[]
@@ -89,8 +89,8 @@ class ImportMoveLineWizard(models.TransientModel):
 					for etiqueta in todas_las_etiquetas:
 						if str(etiqueta.name).split()[0] == line[12]:
 							id_etiqueta.append(str(etiqueta.id))
-					if not id_etiqueta:
-						raise UserError('La etiqueta analitica no existe en el registro')
+					#if not id_etiqueta:
+						#raise UserError('La etiqueta analitica no existe en el registro')
 					id_etiqueta_str = ','.join(id_etiqueta)
 					raise UserError(id_etiqueta_str)
      				#nuevo
