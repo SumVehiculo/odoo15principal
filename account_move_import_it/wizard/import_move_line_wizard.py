@@ -95,10 +95,11 @@ class ImportMoveLineWizard(models.TransientModel):
 					todas_las_etiquetas=self.env['account.analytic.tag'].search([])
 					for etiqueta in todas_las_etiquetas:
 						if str(etiqueta.name).split()[0] == line[12]:
-							id_etiqueta.append(str(etiqueta.name))
+							id_etiqueta.append((0, 0, {'name': str(etiqueta.name)}))
+							#id_etiqueta.append(str(etiqueta.name))
 					if not id_etiqueta:
 						raise UserError('La etiqueta analitica no existe en el registro')
-					#raise UserError(id_etiqueta)
+					raise UserError(id_etiqueta)
      				#nuevo
      
 					values.update( {'account_id': line[0],
@@ -184,7 +185,7 @@ class ImportMoveLineWizard(models.TransientModel):
 				'company_id': self.move_id.company_id.id,
 				'tc': float(values.get("tc")) if values.get("tc") else 1,
 				'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
-				'analytic_tag_ids': [(6, 0, {'name': tag_name}) for tag_name in id_etiqueta],
+				'analytic_tag_ids': [(6, 0, values.get("analytic_tag_ids"))] if values.get("analytic_tag_ids") else False,
     			'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_tag_ids':([(6,0,tag_ids)]),
 				'invoice_date_it':values.get("invoice_date_it"),
@@ -203,7 +204,7 @@ class ImportMoveLineWizard(models.TransientModel):
 				'date_maturity':values.get("date_maturity"),
 				'company_id': self.move_id.company_id.id,
 				'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
-				'analytic_tag_ids': [(6, 0, {'name': tag_name}) for tag_name in id_etiqueta],
+				'analytic_tag_ids': [(6, 0, values.get("analytic_tag_ids"))] if values.get("analytic_tag_ids") else False,
     			'tax_amount_it': float(values.get("amount_tax")) if values.get("amount_tax") else 0,
 				'tax_tag_ids':([(6,0,tag_ids)]),
 				'invoice_date_it':values.get("invoice_date_it"),
