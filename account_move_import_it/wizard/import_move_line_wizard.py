@@ -107,13 +107,12 @@ class ImportMoveLineWizard(models.TransientModel):
 		 
 		 
 					id_etiqueta = []
-					fragmentos_letras = line[12].split(',')
-					for fragmento in fragmentos_letras:
-						etiquetas_encontradas = self.env['account.analytic.tag'].search([('name', 'ilike', fragmento.strip() + '%')])
-						for etiqueta in etiquetas_encontradas:
-							id_etiqueta.append(etiqueta.id)
-					if not id_etiqueta:
-						raise UserError('No se encontraron etiquetas analíticas.')
+					raw_invoice_tags=line[12].replace(" ","")
+					raw_invoice_tags= raw_invoice_tags.split(',') if raw_invoice_tags else  None
+					tag_list= self.env['account.analytic.tag'].search([('name', 'ilike', fragmento.strip() + '%')])
+					for tag in tag_list:
+						if tag in raw_invoice_tags:
+							id_etiqueta.append(tag.id)
 					raise UserError(id_etiqueta)
 
 	 
