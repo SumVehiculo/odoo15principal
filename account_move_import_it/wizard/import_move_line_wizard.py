@@ -97,7 +97,7 @@ class ImportMoveLineWizard(models.TransientModel):
 						nombre_etiqueta = str(etiqueta.name).split(',')
 						for i in nombre_etiqueta:
 							if i.strip().split()[0] == line[12]:
-								id_etiqueta.append((0, 0, etiqueta.id))
+								id_etiqueta.append((0, 0, {etiqueta.id}))
 								#id_etiqueta.append(str(etiqueta.name))
 								break
 					if not id_etiqueta:
