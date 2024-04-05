@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_gratification_form_inherit_multipayment" model="ir.ui.view">
+		<field name="name">hr.gratification.form.inherit.multipayment</field>
+		<field name="model">hr.gratification</field>
+		<field name="inherit_id" ref="hr_social_benefits.hr_gratification_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header" position="inside">
+				<button name="generate_multipayments" string="Generar Pagos Gratificacion" type="object" class="oe_highlight" confirm="¿Esta seguro que desea generar el Txt de Pagos para Bancos en esta Gratificacion?"/>
+			</xpath>
+			<button name="action_open_grati" position="after">
+				<button name="get_multipayments_view" class="oe_stat_button" icon="fa-dollar" type="object" attrs="{'invisible': [('multipayment_count', '=', 0)]}">
+					<div class="o_field_widget o_stat_info">
+						<span class="o_stat_value"><field name="multipayment_count"/></span>
+						<span class="o_stat_text">Bancos Pagos</span>
+					 </div>
+				</button>
+			</button>
+		</field>
+	</record>
+</odoo>

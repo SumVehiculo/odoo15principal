@@ -291,7 +291,7 @@ class HrCtsLine(models.Model):
 			doc.build(payslip.get_pdf_cts())
 			f = open(route, 'rb')
 			try:
-				self.env['mail.mail'].create({
+				self.env['mail.mail'].sudo().create({
 						'subject': 'Certificado: %s %s' % (dict(payslip.cts_id._fields['type'].selection).get(payslip.cts_id.type),payslip.cts_id.fiscal_year_id.name),
 						'body_html':'Estimado (a) %s,<br/>'
 									'Estamos adjuntando su certificado de %s %s,<br/>'
@@ -425,10 +425,10 @@ class HrCtsLine(models.Model):
 			[Paragraph('3. <u>REMUNERACION COMPUTABLE</u>:', styles["LeftBold"]), '', ''],
 			[Paragraph('-  Básico', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.wage or 0.00), styles["Right"])],
 			[Paragraph('-  Asignación Familiar', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.household_allowance or 0.00), styles["Right"])],
-			[Paragraph('-  Horas Extra', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.extra_hours or 0.00), styles["Right"])],
-			[Paragraph('-  Gratificaciones', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.sixth_of_gratification or 0.00), styles["Right"])],
-			[Paragraph('-  Bonificación', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.bonus or 0.00), styles["Right"])],
-			[Paragraph('-  Comisión', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.commission or 0.00), styles["Right"])],
+			[Paragraph('-  1/6 de Gratificacion', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.sixth_of_gratification or 0.00), styles["Right"])],
+			[Paragraph('-  Prom Horas Extra', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.extra_hours or 0.00), styles["Right"])],
+			[Paragraph('-  Prom Bonificación', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.bonus or 0.00), styles["Right"])],
+			[Paragraph('-  Prom Comisión', styles["Tab"]), 'S/.', Paragraph('{:,.2f}'.format(self.commission or 0.00), styles["Right"])],
 		]
 
 		datat += [[Paragraph('TOTAL', styles["RightBold"]), 'S/.', Paragraph('{:,.2f}'.format(self.computable_remuneration or 0.00), styles["RightBold"])],

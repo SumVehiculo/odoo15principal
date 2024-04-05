@@ -8,10 +8,10 @@ import base64
 
 from reportlab.lib import colors
 from reportlab.lib.units import cm
-from reportlab.platypus import Table, TableStyle, Paragraph, Spacer, PageBreak
+from reportlab.lib.pagesizes import letter, inch, landscape, A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY, TA_CENTER, TA_RIGHT, TA_LEFT
-import subprocess
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, PageBreak
 import sys
 
 class HrUtilitiesIt(models.Model):
@@ -36,6 +36,22 @@ class HrUtilitiesIt(models.Model):
 	state = fields.Selection([('draft','Borrador'),('calculate','Calculado'),('cancel','Cancelado')],string='Estado',default='draft')
 	hr_payslip_run_id = fields.Many2one('hr.payslip.run',string=u'Nómina',required=True)
 	company_id = fields.Many2one('res.company',string=u'Compañía',default=lambda self: self.env.company)
+
+	utili_count = fields.Integer(compute='_compute_utilities_count')
+
+	def _compute_utilities_count(self):
+		for util in self:
+			util.utili_count = len(util.utilities_line_ids)
+
+	def action_open_utili(self):
+		self.ensure_one()
+		return {
+			"type": "ir.actions.act_window",
+			"res_model": "hr.utilities.it.line",
+			"views": [[False, "tree"], [False, "form"]],
+			"domain": [['id', 'in', self.utilities_line_ids.ids]],
+			"name": "Boletas Utilidades",
+		}
 
 	@api.onchange('annual_rent','percentage')
 	def _change_percentage_rent(self):
@@ -255,6 +271,7 @@ class HrUtilitiesIt(models.Model):
 class HrUtilitiesItLine(models.Model):
 	_name = 'hr.utilities.it.line'
 	_description = 'Hr Utilities It Line'
+	_order = 'employee_id'
 
 	main_id = fields.Many2one('hr.utilities.it',string='Utilidad')
 	employee_document = fields.Char(string='N° Documento')
@@ -274,6 +291,45 @@ class HrUtilitiesItLine(models.Model):
 			name = line.employee
 			result.append((line.id, name))
 		return result
+
+	def send_utilities_by_email(self):
+		MainParameter = self.env['hr.main.parameter'].get_main_parameter()
+		route = MainParameter.dir_create_file + 'BOLETA DE UTILIDADES.pdf'
+		issues = []
+		for payslip in self:
+			Employee = payslip.employee_id
+			doc = SimpleDocTemplate(route, pagesize=letter,
+									rightMargin=30,
+									leftMargin=30,
+									topMargin=30,
+									bottomMargin=20,
+									encrypt=Employee.identification_id)
+
+			doc.build(payslip._get_print())
+			f = open(route, 'rb')
+			try:
+				self.env['mail.mail'].sudo().create({
+					'subject': 'Boleta: %s %s' % (
+					"de Utilidades",
+					payslip.main_id.fiscal_year_id.name),
+					'body_html': 'Estimado (a) %s,<br/>'
+								 'Estamos adjuntando su boleta de Utilidades %s,<br/>'
+								 '<strong>Nota: Para abrir su boleta es necesario colocar su dni como clave</strong>' % (
+								 Employee.name, payslip.main_id.fiscal_year_id.name),
+					'email_to': Employee.work_email,
+					'attachment_ids': [(0, 0, {'name': 'Boleta Utilidades %s.pdf' % Employee.name,
+											   'datas': base64.encodebytes(b''.join(f.readlines()))}
+										)]
+				}).send()
+				f.close()
+			except:
+				issues.append(Employee.name)
+		if issues:
+			return self.env['popup.it'].get_message(
+				'No se pudieron enviar las boletas de los siguientes Empleados: \n %s' % '\n'.join(issues))
+		else:
+			return self.env['popup.it'].get_message(
+				'Se enviaron todas las boletas de Utilidades satisfactoriamente.')
 
 	
 	def _get_print(self):

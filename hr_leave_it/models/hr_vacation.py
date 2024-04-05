@@ -32,7 +32,7 @@ class HrVacation(models.Model):
 		self.state = 'draft'
 
 	def set_amounts(self, line_ids, Lot, MainParameter):
-		inp_vacation = MainParameter.vaca_input_id
+		inp_vacation = MainParameter.vacation_input_id
 		inp_ade_vacation = self.env['hr.payslip.input.type'].search([('company_id', '=', self.env.company.id),('code', '=', 'ADE_VAC')], limit=1)
 		inp_fifth = MainParameter.fifth_category_input_id
 		for line in line_ids:
@@ -80,6 +80,8 @@ class HrVacation(models.Model):
 		Employees = MonthLot.slip_ids.filtered(lambda slip: slip.contract_id.labor_regime in ['general', 'small','micro'] and
 															not slip.contract_id.less_than_four).mapped('employee_id')
 
+		suspension_type_id = self.env['hr.suspension.type'].search([('code', '=', '23')], limit=1)
+
 		# print("Employees",Employees)
 		for Employee in Employees:
 			if Employee.contract_id.situation_id.code == '0':
@@ -91,11 +93,11 @@ class HrVacation(models.Model):
 				# print('Contract',Contract)
 				leave_vacations = self.env['hr.leave.it'].search([('payslip_run_id', '=', MonthLot.id),
 																  ('employee_id', '=', Employee.id),
-																  ('work_suspension_id', '=', MainParameter.suspension_type_id.id)], limit=1)
+																  ('work_suspension_id', '=', suspension_type_id.id)], limit=1)
 
 				number_of_days = self.env['hr.leave.it'].search([('payslip_run_id', '=', MonthLot.id),
 																  ('employee_id', '=', Employee.id),
-																  ('work_suspension_id', '=', MainParameter.suspension_type_id.id)]).mapped('number_of_days')
+																  ('work_suspension_id', '=', suspension_type_id.id)]).mapped('number_of_days')
 
 				# print("leave_vacations",leave_vacations)
 				if leave_vacations.payslip_run_id.name.id == MonthLot.name.id:
@@ -165,9 +167,9 @@ class HrVacation(models.Model):
 					# print('days: ',days,'    months:',months)
 					amount_per_month = computable_remuneration if MonthSlip.contract_id.labor_regime == 'general' else computable_remuneration/2
 					amount_per_day = amount_per_month/30
-					amount_per_lack = amount_per_day * lacks
+					# amount_per_lack = amount_per_day * lacks
 					advanced_vacation = computable_remuneration/30*sum(number_of_days)
-					total_vacation = ReportBase.custom_round(advanced_vacation - amount_per_lack, 2)
+					total_vacation = ReportBase.custom_round(advanced_vacation, 2)
 					membership = MonthSlip.contract_id.membership_id
 					onp = afp_jub = afp_si = afp_mixed_com = afp_fixed_com = 0
 					if membership.is_afp:
@@ -417,16 +419,16 @@ class HrVacationLine(models.Model):
 			record.computable_remuneration = record.wage + record.household_allowance + record.commission + record.bonus + record.extra_hours
 			amount_per_month = record.computable_remuneration if record.contract_id.labor_regime == 'general' else record.computable_remuneration/2
 			amount_per_day = amount_per_month/30
-			amount_per_lack = amount_per_day * record.lacks
-			vacation = ReportBase.custom_round(amount_per_month - amount_per_lack, 2)
+			# amount_per_lack = amount_per_day * record.lacks
+			vacation = ReportBase.custom_round(amount_per_month, 2)
 			advanced_vacation = vacation/30*int(record.accrued_vacation)
-			record.total_vacation = ReportBase.custom_round(advanced_vacation - amount_per_lack, 2)
+			record.total_vacation = ReportBase.custom_round(advanced_vacation, 2)
 			# record.total_vacation = record.accrued_vacation + vacation - record.advanced_vacation
 			membership = record.contract_id.membership_id
 			onp = afp_jub = afp_si = afp_mixed_com= afp_fixed_com= 0
 			if membership.is_afp:
 				afp_jub = ReportBase.custom_round(membership.retirement_fund/100 * record.total_vacation, 2)
-				if record.accrued_vacation>=membership.insurable_remuneration:
+				if record.total_vacation >= membership.insurable_remuneration:
 					afp_si = ReportBase.custom_round(membership.prima_insurance/100 * membership.insurable_remuneration, 2)
 				else:
 					afp_si = ReportBase.custom_round(membership.prima_insurance/100 * record.total_vacation, 2)

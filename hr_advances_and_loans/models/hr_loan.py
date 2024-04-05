@@ -36,6 +36,8 @@ class HrLoan(models.Model):
 	line_ids = fields.One2many('hr.loan.line', 'loan_id')
 	observations = fields.Text(string='Observaciones')
 
+	active = fields.Boolean(string='Activo', default=True)
+
 	saldo_final = fields.Float(string='Saldo Final', readonly=True, compute='_compute_saldo_final')
 
 	@api.depends('line_ids.amount','line_ids.validation')

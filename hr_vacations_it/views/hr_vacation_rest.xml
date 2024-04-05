@@ -45,6 +45,24 @@
 					<field name="amount" optional="show"/>
 					<field name="amount_rest" optional="show"/>
 					<field name="company_id" optional="hide"/>
+					<field name="is_saldo_final" invisible="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="hr_vacation_rest_tree_resumen" model="ir.ui.view">
+			<field name="name">hr.vacation.rest.tree.resumen.view</field>
+			<field name="model">hr.vacation.rest</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="year" optional="show"/>
+					<field name="identification_id" optional="show"/>
+					<field name="employee_id"/>
+					<field name="days_rest"/>
+					<field name="amount_rest" optional="show"/>
+					<field name="company_id" optional="hide"/>
+					<field name="is_saldo_final" invisible="1"/>
+					<button name="view_detail" icon="fa-eye" string="Ver Detalle" type="object"/>
 				</tree>
 			</field>
 		</record>

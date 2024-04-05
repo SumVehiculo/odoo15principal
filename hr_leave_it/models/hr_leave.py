@@ -33,8 +33,8 @@ class HrLeaveIt(models.Model):
     def default_get(self, fields_list):
         defaults = super(HrLeaveIt, self).default_get(fields_list)
         defaults = self._default_get_request_parameters(defaults)
-        parameters = self.env['hr.main.parameter'].search([('company_id', '=', self.env.company.id)], limit=1)
-        LeaveType = self.env['hr.leave.type.it'].search([('active', '=', True),('suspension_type_id', '=', parameters.suspension_type_id.id)], limit=1)
+        suspension_type_id = self.env['hr.suspension.type'].search([('code', '=','23')], limit=1)
+        LeaveType = self.env['hr.leave.type.it'].search([('active', '=', True),('suspension_type_id', '=', suspension_type_id.id)], limit=1)
         # print("LeaveType",LeaveType.name)
         defaults['leave_type_id'] = LeaveType.id if LeaveType else defaults.get('leave_type_id')
         # defaults['work_suspension_id'] = parameters.suspension_type_id.id
@@ -140,11 +140,18 @@ class HrLeaveIt(models.Model):
     def action_refuse(self):
         l = self.contract_id.work_suspension_ids.filtered(lambda reg: reg.leave_id.id == self.id)
         h = self.env['hr.accrual.vacation'].search([('leave_id','=',self.id)])
+
         if self.payslip_status or len(l)>0 or len(h)>0:
             # raise UserError(u'No se puede rechazar si ya se encuentra en reportado en planilla')
             self.payslip_status = False
+            if self.leave_type_id.ausencia_wd_id:
+                slip = self.env['hr.payslip'].search([('payslip_run_id','=',self.payslip_run_id.id),('employee_id','=',self.employee_id.id)])
+                wd_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == self.leave_type_id.ausencia_wd_id)
+                wd_line.number_of_days = wd_line.number_of_days - self.number_of_days
+                slip.compute_wds()
             l.unlink()
             h.unlink()
+
         current_employee = self.env.user.employee_id
         if any(holiday.state not in ['draft', 'confirm', 'validate', 'validate1'] for holiday in self):
             raise UserError(_('La solicitud de ausencia debe ser confirmada o validada para poder rechazarla.'))
@@ -165,30 +172,8 @@ class HrLeaveIt(models.Model):
         if any(holiday.state != 'confirm' for holiday in self):
             raise UserError(_('La solicitud de ausencia debe ser confirmada ("Por aprobar") para poder aprobarla.'))
 
-        MainParameter = self.env['hr.main.parameter'].get_main_parameter()
-        valida1 = False
-        valida2 = False
-        first_validators=[]
-        second_validators=[]
-        res=False
-        for l in MainParameter.validator_ids:
-            if self.env.user.id == l.user_id.id:
-                if l.first_validate:
-                    valida1=l.first_validate
-                if l.second_validate:
-                    valida2=l.second_validate
-            if l.first_validate:
-                first_validators.append(l.user_id.id)
-            if l.second_validate:
-                second_validators.append(l.user_id.id)
-        if not valida1:
-            raise UserError(u'No tiene permiso para realizar esta operación')
-        else:
-            if self.env.user.id in first_validators:
-                current_employee = self.env.user.employee_id
-                self.filtered(lambda hol: hol.validation_type == 'both').write({'state': 'validate1', 'first_approver_id': current_employee.id})
-            else:
-                raise UserError(u'No tiene permiso para realizar esta operación')
+        current_employee = self.env.user.employee_id
+        self.filtered(lambda hol: hol.validation_type == 'both').write({'state': 'validate1', 'first_approver_id': current_employee.id})
 
         # Publique un segundo mensaje, más detallado que el mensaje de seguimiento
         for holiday in self.filtered(lambda holiday: holiday.employee_id.user_id):
@@ -254,7 +239,7 @@ class HrLeaveIt(models.Model):
         return vals
 
     def send_data_to_payslip(self):
-        MainParameter = self.env['hr.main.parameter'].get_main_parameter()
+        # MainParameter = self.env['hr.main.parameter'].get_main_parameter()
         for l in self:
             if not l.payslip_run_id:
                 raise UserError(u'La ausencia %s de %s no tiene asignada una planilla Mensual' % (l.name, l.employee_id.name))
@@ -268,52 +253,25 @@ class HrLeaveIt(models.Model):
                         # print("vals",vals)
                         self.env['hr.work.suspension'].create(vals)
 
-                    if l.work_suspension_id.id == MainParameter.suspension_type_id.id:
+                    if l.work_suspension_id.code == '23':
                         vals=l.prepare_payslip_data(slip)
                         # print(vals)
                         self.env['hr.accrual.vacation'].create(vals)
 
-                        if l.leave_type_id.ausencia_wd_id:
-                            total_dias_vaca = self.env['hr.accrual.vacation'].search([('slip_id', '=', slip.id)]).mapped('days')
-                            total_dias_dm = self.env['hr.work.suspension'].search([('payslip_run_id', '=', l.payslip_run_id.id),('contract_id', '=',l.contract_id.id),('suspension_type_id', '=',MainParameter.suspension_dm_type_id.id)]).mapped('days')
-                            # print("total_dias_vaca",sum(total_dias_vaca))
+                    wd_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == l.leave_type_id.ausencia_wd_id)
+                    if l.leave_type_id.ausencia_wd_id:
+                        wd_line.number_of_days = wd_line.number_of_days + l.number_of_days
 
-                            vaca_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.vacations_wd_id)
-                            dm_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.medico_wd_id)
-                            dia_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.payslip_working_wd)
-                            # print(vaca_line)
-                            vaca_line.number_of_days = sum(total_dias_vaca)
-                            dm_line.number_of_days = sum(total_dias_dm)
-                            dia_line.number_of_days = 30-sum(total_dias_vaca)-sum(total_dias_dm)
-
-                    elif l.work_suspension_id.id == MainParameter.suspension_dm_type_id.id:
-                        total_dias_vaca = self.env['hr.accrual.vacation'].search([('slip_id', '=', slip.id)]).mapped('days')
-                        total_dias_dm = self.env['hr.work.suspension'].search([('payslip_run_id', '=', l.payslip_run_id.id),('contract_id', '=',l.contract_id.id),('suspension_type_id', '=',MainParameter.suspension_dm_type_id.id)]).mapped('days')
-                        # print("total_dias_dm",total_dias_dm)
-
-                        vaca_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.vacations_wd_id)
-                        dm_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.medico_wd_id)
-                        dia_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.payslip_working_wd)
-                        # print(vaca_line)
-                        vaca_line.number_of_days = sum(total_dias_vaca)
-                        dm_line.number_of_days = sum(total_dias_dm)
-                        dia_line.number_of_days = 30-sum(total_dias_vaca)-sum(total_dias_dm)
-                    elif not l.work_suspension_id.id:
-                        vals=l.prepare_payslip_data(slip)
-                        # print(vals)
-                        self.env['hr.accrual.vacation'].create(vals)
-                        wd_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == l.leave_type_id.ausencia_wd_id)
-                        wd_line.number_of_days = l.number_of_days
-                    else:
-                        DIAS_FAL = slip.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_dnlab.mapped('code')).mapped('code')
-                        dia_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.payslip_working_wd)
-                        wd_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == l.leave_type_id.ausencia_wd_id)
-                        if wd_line.code in tuple(DIAS_FAL):
-                            wd_line.number_of_days = wd_line.number_of_days + l.number_of_days
-                        else:
-                            wd_line.number_of_days = l.number_of_days
-                            dia_line.number_of_days = 30 - l.number_of_days
+                    # DIAS_FAL = slip.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_dnlab.mapped('code')).mapped('code')
+                    # dia_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.payslip_working_wd)
+                    # wd_line = slip.worked_days_line_ids.filtered(lambda line: line.wd_type_id == l.leave_type_id.ausencia_wd_id)
+                    # if wd_line.code in tuple(DIAS_FAL):
+                    #     wd_line.number_of_days = wd_line.number_of_days + l.number_of_days
+                    # else:
+                    #     wd_line.number_of_days = wd_line.number_of_days + l.number_of_days
+                        # dia_line.number_of_days = 30 - l.number_of_days
                     l.payslip_status = True
+                    slip.compute_wds()
                 else:
                     raise UserError(u'Para reportar a la planilla, primero debe de confirmar esta ausencia: %s de %s.' % (l.name, l.employee_id.name))
             else:

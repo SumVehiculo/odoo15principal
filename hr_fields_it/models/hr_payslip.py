@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+from calendar import *
 
 class HrPayslip(models.Model):
 	_inherit = 'hr.payslip'
@@ -115,15 +116,37 @@ class HrPayslip(models.Model):
 			record.holidays = len(Holidays)
 			if not MainParameter.payslip_working_wd:
 				raise UserError('Falta configurar un Worked Day para Dias Laborados en Parametros Principales de Nomina')
-			WDLine = record.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.payslip_working_wd)
+			WD_DLAB = record.worked_days_line_ids.filtered(lambda line: line.wd_type_id == MainParameter.payslip_working_wd)
 			Contract = self.env['hr.contract'].get_first_contract(record.employee_id, record.contract_id)
+
+			DIAS_FAL = record.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_dnlab.mapped('code')).mapped('code')
+			WD_DAYS = record.worked_days_line_ids.filtered(lambda line: line.wd_type_id != MainParameter.payslip_working_wd and line.wd_type_id.code not in tuple(DIAS_FAL))
+
+			total_days = sum(WD_DAYS.mapped('number_of_days'))
+			# print("total_days",total_days)
+
 			if Contract.date_start > record.date_from and Contract.date_start <= record.date_to:
-				result = record.date_to.day - Contract.date_start.day + 1
-				WDLine.number_of_days = result
+				result = 30 - Contract.date_start.day + 1
+				WD_DLAB.number_of_days = result-total_days
+			else:
+				WD_DLAB.number_of_days = 30-total_days
+
+			# if Contract.date_start > record.date_from and Contract.date_start <= record.date_to:
+			# 	result = record.date_to.day - Contract.date_start.day + 1
+			# 	WDLine.number_of_days = result
+
+			# if record.contract_id.situation_id.name == 'BAJA':
+			# 	if record.date_from <= record.contract_id.date_end <= record.date_to:
+			# 		WDLine.number_of_days = record.contract_id.date_end.day
 
 			if record.contract_id.situation_id.name == 'BAJA':
 				if record.date_from <= record.contract_id.date_end <= record.date_to:
-					WDLine.number_of_days = record.contract_id.date_end.day
+					if record.contract_id.date_start >= record.date_from:
+						WD_DLAB.number_of_days = record.contract_id.date_end.day + 1 - record.contract_id.date_start.day - total_days
+					elif record.date_from.month == record.contract_id.date_end.month:
+						WD_DLAB.number_of_days = record.contract_id.date_end.day + 1 - record.date_from.day - total_days
+					else:
+						WD_DLAB.number_of_days = monthrange(record.date_from.year, record.date_from.month)[1] - record.date_from.day + record.contract_id.date_end.day - total_days
 
 		return self.env['popup.it'].get_message('Se calculo correctamente')
 

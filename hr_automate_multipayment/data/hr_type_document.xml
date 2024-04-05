@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model='hr.type.document' id='hr_base_it.document_DNI'>
+            <field name='bbva_code'>L</field>
+            <field name="bcp_code">1</field>
+            <field name="interbank_code">01</field>
+            <field name="banbif_code">1</field>
+        </record>
+        <record model="hr.type.document" id="hr_base_it.document_RUC">
+            <field name="bbva_code">R</field>
+            <field name="bcp_code">6</field>
+            <field name="interbank_code">02</field>
+        </record>
+        <record model="hr.type.document" id="hr_base_it.document_PASAPORTE">
+            <field name="bbva_code">P</field>
+            <field name="bcp_code">4</field>
+            <field name="interbank_code">05</field>
+        </record>
+        <record model="hr.type.document" id="hr_base_it.document_CARNE_EXT">
+            <field name="bbva_code">E</field>
+            <field name="bcp_code">3</field>
+            <field name="interbank_code">03</field>
+            <field name="banbif_code">3</field>
+        </record>
+    </data>
+</odoo>

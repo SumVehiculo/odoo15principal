@@ -187,7 +187,7 @@ class HrPayslip(models.Model):
 
 				try:
 					if payslip.employee_id.work_email:
-						self.env['mail.mail'].create({
+						self.env['mail.mail'].sudo().create({
 								'subject': 'Boleta de Remuneraciones del Periodo %s' % (payslip.payslip_run_id.name.name),
 								'body_html':""" 
 					<div style="margin: 0px; padding: 0px;">

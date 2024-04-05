@@ -7,11 +7,24 @@
 				<form>
 					<h1>Control de Vacaciones</h1>
 					<group>
-						<field name="company_id" readonly="1"/>
-<!--						<field name="fiscal_year_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>-->
-						<field name="showall"/>
-						<field name="employee_id" attrs="{'invisible':[('showall', '=', True)] }" options="{'no_create': True, 'no_create_edit':True}"/>
+						<group>
+							<field name="type_show"/>
+							<field name="showall"/>
+						</group>
+						<group>
+							<field name="company_id" readonly="1"/>
+						</group>
 					</group>
+<!--					<group>-->
+<!--						<field name="company_id" readonly="1"/>-->
+<!--						<field name="showall"/>-->
+<!--						<field name="employee_id" attrs="{'invisible':[('showall', '=', True)] }" options="{'no_create': True, 'no_create_edit':True}"/>-->
+<!--					</group>-->
+					<notebook>
+                        <page string="Empleados" attrs="{'invisible':[('showall', '=', True)]}">
+                            <field name="employees_ids" nolabel="True" />
+                        </page>
+                    </notebook>
 					<footer>
 						<button string="Mostrar" name="make_vacation_rest" type="object" class="oe_highlight"/>
 						<button string="Cancel" class="oe_link" special="cancel"/>

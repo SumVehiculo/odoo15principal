@@ -57,7 +57,7 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 			and hpl.total <> 0
 			%s %s
 			group by he.identification_id, he.id, hsr.id, hsr.code, hsr.sequence
-			order by he.identification_id, hsr.sequence
+			order by he.name, hsr.sequence
 			)T
 			"""%(self.company_id.id,
 				 sql_payslips,
@@ -129,7 +129,7 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 			and hsr.struct_id = {struct_id}
 			{sql_employees}
 			group by he.identification_id, he.id, hc.date_start, hsr.code, hsr.name, hm.name, had.name, hsr.sequence
-			order by he.identification_id, hsr.sequence
+			order by he.name, hsr.sequence
 		""".format(
 				ids = ','.join(list(map(str, self.payslip_run_id.slip_ids.ids))),
 				company = self.company_id.id,
@@ -167,7 +167,7 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 
 		self._cr.execute(self._get_tab_payroll_sql(option))
 		data = self._cr.dictfetchall()
-		x, y = 6, 6
+		x, y = 6, 7
 		limit = len(data[0] if data else 0)
 		# struct_id = self.payslip_run_id.slip_ids[0].struct_id.id
 		# SalaryRules = self.env['hr.salary.rule'].search([('appears_on_payslip', '=', True), ('struct_id', '=', struct_id)], order='sequence')
@@ -188,6 +188,13 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 		size = len(codes)
 
 		# estilo personalizado
+        #numeros
+		number = workbook.add_format({'num_format':'0'})
+		number.set_align('center')
+		number.set_align('vcenter')
+		number.set_font_size(11)
+		number.set_font_name('Calibri')
+
 		boldbord = workbook.add_format({'bold': True, 'font_name': 'Arial'})
 		boldbord.set_border(style=1)
 		boldbord.set_align('center')
@@ -213,12 +220,13 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 			{'bold': True, 'num_format': '0.00', 'font_name': 'Arial', 'align': 'right', 'font_size': 9, 'top': 1, 'bottom': 2})
 		styleFooterSum.set_bottom(6)
 
-		worksheet.write(x, 0, 'NRO IDENTIFICACION', boldbord)
-		worksheet.write(x, 1, 'NOMBRE', boldbord)
-		worksheet.write(x, 2, 'TITULO DE TRABAJO', boldbord)
-		worksheet.write(x, 3, 'INICIO DE CONTRATO', boldbord)
-		worksheet.write(x, 4, 'AFILIACION', boldbord)
-		worksheet.write(x, 5, 'DISTRIBUCION ANALITICA', boldbord)
+		worksheet.write(x, 0, 'N°', boldbord)
+		worksheet.write(x, 1, 'NRO IDENTIFICACION', boldbord)
+		worksheet.write(x, 2, 'NOMBRE', boldbord)
+		worksheet.write(x, 3, 'TITULO DE TRABAJO', boldbord)
+		worksheet.write(x, 4, 'INICIO DE CONTRATO', boldbord)
+		worksheet.write(x, 5, 'AFILIACION', boldbord)
+		worksheet.write(x, 6, 'DISTRIBUCION ANALITICA', boldbord)
 
 		for name in names:
 			worksheet.write(x, y, name, boldbord)
@@ -227,6 +235,7 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 		table = []
 		row = []
 		aux_id, limit = '', len(data)
+		secuencia = 1
 		for c, line in enumerate(data, 1):
 			if aux_id != line['employee_id']:
 				if len(row) > 0:
@@ -234,16 +243,18 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 					x += 1
 				row = []
 				employee = self.env['hr.employee'].browse(line['employee_id'])
-				worksheet.write(x, 0, line['identification_id'] if line['identification_id'] else '', formatLeft)
-				worksheet.write(x, 1, employee.name if employee.name else '', formatLeft)
-				worksheet.write(x, 2, employee.job_title if employee.job_title else '', formatLeft)
-				worksheet.write(x, 3, line['date_start'] if line['date_start'] else '', dateformat)
-				worksheet.write(x, 4, line['membership'] if line['membership'] else '', formatLeft)
-				worksheet.write(x, 5, line['distribution'] if line['distribution'] else '', formatLeft)
-				worksheet.write(x, 6, line['sum'] if line['sum'] else 0.0, numberdos)
+				worksheet.write(x, 0, secuencia if secuencia else '', number)
+				worksheet.write(x, 1, line['identification_id'] if line['identification_id'] else '', formatLeft)
+				worksheet.write(x, 2, employee.name if employee.name else '', formatLeft)
+				worksheet.write(x, 3, employee.job_title if employee.job_title else '', formatLeft)
+				worksheet.write(x, 4, line['date_start'] if line['date_start'] else '', dateformat)
+				worksheet.write(x, 5, line['membership'] if line['membership'] else '', formatLeft)
+				worksheet.write(x, 6, line['distribution'] if line['distribution'] else '', formatLeft)
+				worksheet.write(x, 7, line['sum'] if line['sum'] else 0.0, numberdos)
 				row.append(line['sum'])
-				y = 6
+				y = 7
 				aux_id = line['employee_id']
+				secuencia += 1
 			else:
 				y += 1
 				worksheet.write(x, y, line['sum'] if line['sum'] else 0.0, numberdos)
@@ -254,11 +265,11 @@ class HrPlanillaTabularSalaryWizard(models.TransientModel):
 					x += 1
 
 		zipped_table = zip(*table)
-		y = 6
+		y = 7
 		for row in zipped_table:
 			worksheet.write(x+1, y, sum(list(row)), styleFooterSum)
 			y += 1
-		widths = [12, 30, 22, 12, 16, 15] + size * [13]
+		widths = [4, 12, 30, 22, 12, 16, 15] + size * [13]
 		worksheet = self.resize_cells(worksheet,widths)
 		workbook.close()
 		f = open(directory + 'Planilla_Tabular.xlsx', 'rb')

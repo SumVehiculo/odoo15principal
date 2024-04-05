@@ -50,7 +50,7 @@ class HrFifthCategoryWizard(models.TransientModel):
 			doc.build(Employee.get_pdf_fifth_certificate(self.date, self.employee_id))
 			f = open(route, 'rb')
 			try:
-				self.env['mail.mail'].create({
+				self.env['mail.mail'].sudo().create({
 						'subject': 'Certificado de Quinta Ejercicio: %s' % (MainParameter.fiscal_year_id.name),
 						'body_html':'Estimado (a) %s,<br/>'
 									'Estamos adjuntando su Certificado de Quinta Categoria del Ejercicio %s,<br/>'

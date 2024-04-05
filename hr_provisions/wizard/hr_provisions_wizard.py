@@ -52,6 +52,7 @@ class HrProvisionsWizard(models.TransientModel):
 		t = self.env['account.move'].create({
 				'journal_id': MainParameter.provision_journal_id.id,
 				'date': Provision.payslip_run_id.date_end,
+				'glosa': 'PROVISION DE BBSS '+(Provision.payslip_run_id.name.code).replace("-", ""),
 				'ref': 'PROVISION'+(Provision.payslip_run_id.name.code).replace("-", ""),
 				'line_ids': [(0, 0, {
 								'account_id': line['account_id'],

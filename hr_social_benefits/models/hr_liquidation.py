@@ -215,7 +215,11 @@ class HrLiquidation(models.Model):
                 onp = afp_jub = afp_si = afp_mixed_com = afp_fixed_com = 0
                 if membership.is_afp:
                     afp_jub = ReportBase.custom_round(membership.retirement_fund/100 * total_vacation, 2)
-                    afp_si = ReportBase.custom_round(membership.prima_insurance/100 * total_vacation, 2)
+                    if total_vacation < membership.insurable_remuneration:
+                        afp_si = ReportBase.custom_round(membership.prima_insurance / 100 * total_vacation, 2)
+                    else:
+                        afp_si = ReportBase.custom_round(membership.prima_insurance / 100 * membership.insurable_remuneration, 2)
+
                     if MonthSlip.contract_id.commision_type == 'mixed':
                         afp_mixed_com = ReportBase.custom_round(membership.mixed_commision/100 * total_vacation, 2)
                         afp_fixed_com =0
@@ -563,7 +567,7 @@ class HrLiquidationVacationLine(models.Model):
             onp = afp_jub = afp_si = afp_mixed_com= afp_fixed_com= 0
             if membership.is_afp:
                 afp_jub = ReportBase.custom_round(membership.retirement_fund/100 * record.total_vacation, 2)
-                if record.accrued_vacation>=membership.insurable_remuneration:
+                if record.total_vacation >= membership.insurable_remuneration:
                     afp_si = ReportBase.custom_round(membership.prima_insurance/100 * membership.insurable_remuneration, 2)
                 else:
                     afp_si = ReportBase.custom_round(membership.prima_insurance/100 * record.total_vacation, 2)

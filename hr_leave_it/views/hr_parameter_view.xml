@@ -5,32 +5,32 @@
 		<field name="model">hr.main.parameter</field>
 		<field name="inherit_id" ref="hr_social_benefits.hr_main_parameter_form_inherit"/>
 		<field name="arch" type="xml">
-			<xpath expr="//form/sheet/notebook" position="inside">
-				<page id="leavefields" string="Ausencias">
-					<group>
-						<group string="Vacaciones">
-							<field name="suspension_type_id"/>
-							<field name="vacations_wd_id"/>
-						</group>
-						<group string="Descansos Medicos">
-							<field name="suspension_dm_type_id"/>
-							<field name="medico_wd_id"/>
-						</group>
-					</group>
-					<field name="validator_ids" nolabel="1">
-						<tree id="validatortree" editable="top">
-							<field name="user_id"/>
-							<field name="first_validate"/>
-							<field name="second_validate"/>
-						</tree>
-					</field>
-				</page>
-			</xpath>
+<!--			<xpath expr="//form/sheet/notebook" position="inside">-->
+<!--				<page id="leavefields" string="Ausencias">-->
+<!--					<group>-->
+<!--						<group string="Vacaciones">-->
+<!--							<field name="suspension_type_id"/>-->
+<!--							<field name="vacations_wd_id"/>-->
+<!--						</group>-->
+<!--						<group string="Descansos Medicos">-->
+<!--							<field name="suspension_dm_type_id"/>-->
+<!--							<field name="medico_wd_id"/>-->
+<!--						</group>-->
+<!--					</group>-->
+<!--					<field name="validator_ids" nolabel="1">-->
+<!--						<tree id="validatortree" editable="top">-->
+<!--							<field name="user_id"/>-->
+<!--							<field name="first_validate"/>-->
+<!--							<field name="second_validate"/>-->
+<!--						</tree>-->
+<!--					</field>-->
+<!--				</page>-->
+<!--			</xpath>-->
 			<xpath expr="//form/sheet/notebook/page[@name='cts']" position="after">
 				<page name="vacation" string="Vacaciones">
 					<group>
 						<group>
-							<field name="vaca_input_id"/>
+							<field name="vacation_input_id"/>
 							<field name="bonus_sr_ids" widget="many2many_tags"/>
 							<field name="commission_sr_ids" widget="many2many_tags"/>
 							<field name="extra_hours_sr_id"/>

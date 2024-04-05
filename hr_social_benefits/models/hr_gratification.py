@@ -282,7 +282,7 @@ class HrGratificationLine(models.Model):
 			doc.build(payslip.get_pdf_grati())
 			f = open(route, 'rb')
 			try:
-				self.env['mail.mail'].create({
+				self.env['mail.mail'].sudo().create({
 					'subject': 'Boleta: %s %s' % (
 					dict(payslip.gratification_id._fields['type'].selection).get(payslip.gratification_id.type),
 					payslip.gratification_id.fiscal_year_id.name),

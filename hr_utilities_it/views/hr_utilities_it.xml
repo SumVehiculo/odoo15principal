@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 	<data>
+		<record id="view_hr_utilities_it_line_tree" model="ir.ui.view">
+			<field name="name">hr.utilities.it.line.tree</field>
+			<field name="model">hr.utilities.it.line</field>
+			<field name="arch" type="xml">
+				<tree string="Hr Utilities It Line">
+					<field name="main_id" invisible="1"/>
+					<field name="employee_document"/>
+					<field name="employee"/>
+					<field name="employee_id"  invisible="1"/>
+					<field name="contract_id" optional="hide"/>
+					<field name="distribution_id" optional="show"/>
+					<field name="salary" optional="show"/>
+					<field name="number_of_days" optional="show"/>
+					<field name="for_salary" optional="show"/>
+					<field name="for_number_of_days" optional="show"/>
+					<field name="total_utilities" optional="show"/>
+				</tree>
+			</field>
+		</record>
+
 		<record id="view_hr_utilities_it_form" model="ir.ui.view">
 			<field name="name">hr.utilities.it.form</field>
 			<field name="model">hr.utilities.it</field>
@@ -15,6 +35,16 @@
 						<field name="state" widget="statusbar" readonly="1"/>
 					</header>
 					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="action_open_utili" class="oe_stat_button" icon="fa-book" type="object" help="Boletas" attrs="{'invisible': [('utili_count', '=', 0)]}">
+								<div class="o_field_widget o_stat_info">
+									<span class="o_stat_value">
+										<field name="utili_count"/>
+									</span>
+									<span class="o_stat_text">Boletas</span>
+								</div>
+							</button>
+						</div>
 						<div class="oe_title">
 							<h1>
 								<field name="fiscal_year_id" class="oe_inline" required="1" attrs="{'readonly':[('state','not in',['draft'])]}"/>
@@ -43,12 +73,12 @@
 								<tree editable="bottom" create="false" edit="false" delete="false">
 									<field name="employee_document"/>
 									<field name="employee"/>
-									<field name="distribution_id"/>
-									<field name="salary" sum="salary"/>
-									<field name="number_of_days" sum="number_of_days"/>
-									<field name="for_salary" sum="for_salary"/>
-									<field name="for_number_of_days" sum="for_number_of_days"/>
-									<field name="total_utilities" sum="total_utilities"/>
+									<field name="distribution_id" optional="show"/>
+									<field name="salary" sum="salary" optional="show"/>
+									<field name="number_of_days" sum="number_of_days" optional="show"/>
+									<field name="for_salary" sum="for_salary" optional="show"/>
+									<field name="for_number_of_days" sum="for_number_of_days" optional="show"/>
+									<field name="total_utilities" sum="total_utilities" optional="show"/>
 								</tree>
 							</field>
 						</group>
@@ -63,7 +93,10 @@
 			<field name="arch" type="xml">
 				<tree string="Utilidades" >
 					<field name="fiscal_year_id"/>
-					<field name="company_id" groups="base.group_multi_company"/>  
+					<field name="annual_rent"/>
+					<field name="percentage"/>
+					<field name="state"/>
+					<field name="company_id" groups="base.group_multi_company"/>
 				</tree>
 			</field>
 		</record>
@@ -86,6 +119,14 @@
 			<field name="binding_model_id" ref="hr_utilities_it.model_hr_utilities_it" />
 			<field name="state">code</field>
 			<field name="code">action = records.action_print()</field>
+		</record>
+
+		<record id="voucher_by_email_hr_utilidades" model="ir.actions.server">
+			<field name="name">Enviar Boleta de Utilidad por Correo</field>
+			<field name="model_id" ref="hr_utilities_it.model_hr_utilities_it_line"/>
+			<field name="binding_model_id" ref="hr_utilities_it.model_hr_utilities_it_line"/>
+			<field name="state">code</field>
+			<field name="code">action = records.send_utilities_by_email()</field>
 		</record>
 
 		<menuitem id="menu_hr_utilities_it" name="Utilidades"

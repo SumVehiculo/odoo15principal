@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_res_bank_form_inherit" model="ir.ui.view">
+		<field name="name">view.res.bank.form.inherit</field>
+		<field name="model">res.bank</field>
+		<field name="inherit_id" ref="base.view_res_bank_form"/>
+		<field name="arch" type="xml">
+			<field name="email" position="after">
+				<field name="format_bank"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="hr_type_document_bank_form" model="ir.ui.view">
+		<field name="name">hr.type.document.bank.form</field>
+		<field name="model">hr.type.document</field>
+		<field name="inherit_id" ref="hr_base_it.hr_type_document_form"/>
+		<field name="arch" type="xml">
+			<field name="afp_code" position="after">
+				<field name="bbva_code"/>
+				<field name="bcp_code"/>
+				<field name="interbank_code"/>
+				<field name="banbif_code"/>
+			</field>
+		</field>
+	</record>
+
+
+</odoo>

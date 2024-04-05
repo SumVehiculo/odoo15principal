@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_inherit_pagos" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.inherit.pagos</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_base_it.hr_main_parameter_form"/>
+		<field name="arch" type="xml">
+<!--			<field name="massive_advance_type" position="after">-->
+<!--				<field name="biweekly_advance_sr_id"/>-->
+<!--			</field>-->
+			<xpath expr="//notebook" position="inside">
+				<page name="multipayment_hr" string="Pagos Haberes y CTS">
+<!--					<group>-->
+						<field name="journals_banks" nolabel="1"/>
+<!--					</group>-->
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

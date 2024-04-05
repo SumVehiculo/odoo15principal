@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_automate_multipayment_form" model="ir.ui.view">
+        <field name="name">hr.automate.multipayment.form</field>
+        <field name="model">hr.automate.multipayment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="procesing_payments" string="Finalizar" type="object" class="oe_highlight" states="draft"
+                            confirm="Al realizar esta operacion se sobre entiende que ya se generaron los txt y se pagaron todos los montos ¿Esta seguro que desea pasar a estado finalizado?"/>
+                    <button name="get_hr_txt" string="Generar Txt Haberes" type="object" class="oe_highlight" attrs="{'invisible':[('payslip_run_id', '=', False)]}"/>
+                    <button name="get_hr_txt" string="Generar Txt Gratificacion" context="{'gratification':True}" type="object" class="oe_highlight" attrs="{'invisible':[('gratification_id', '=', False)]}"/>
+                    <button name="get_cts_txt" string="Generar Txt CTS" type="object" class="oe_highlight" attrs="{'invisible':[('cts_id', '=', False)]}"/>
+                    <button name="get_utilities_txt" string="Generar Txt Utilidades" type="object" class="oe_highlight" attrs="{'invisible':[('payslip_run_id', '=', False)]}"/>
+                    <button name="turn_draft" string="Volver a Borrador" type="object" class="oe_highlight" states="done"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="is_hr_payment" invisible="1"/>
+                        <field name="format_bank" invisible="1"/>
+                        <field name="journal_id" required="1" attrs="{'readonly':[('state','in',['done'])]}" domain="['|',('type','=','cash'),('type','=','bank')]"/>
+                        <field name="payment_date" required="1" attrs="{'readonly':[('state','in',['done'])]}"/>
+<!--                        <field name="catalog_payment_id" attrs="{'readonly':[('state','in',['done'])]}"/>-->
+                        <field name="glosa" required="1" attrs="{'readonly':[('state','in',['done'])]}"/>
+                        <field name="tc" attrs="{'readonly':[('state','in',['done'])]}" required="1"/>
+                    </group>
+                    <group>
+                        <field name="payslip_run_id" attrs="{'invisible':[('payslip_run_id', '=', False)]}"/>
+                        <field name="gratification_id" attrs="{'invisible':[('gratification_id', '=', False)]}"/>
+                        <field name="cts_id" attrs="{'invisible':[('cts_id', '=', False)]}"/>
+                        <field name="cts_dollars" attrs="{'invisible':[('cts_id', '=', False)]}"/>
+<!--                        <field name="is_biweekly_advance"/>-->
+                        <field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Nominas" id="slips_tab" attrs="{'invisible':[('payslip_run_id', '=', False)]}">
+                        <field name="slip_ids">
+                            <tree editable="bottom">
+                                <field name="is_text" widget="boolean_toggle"/>
+                                <field name="number" optional="show"/>
+                                <field name="identification_id" string="No Doc" optional="show"/>
+                                <field name="employee_id"/>
+                                <field name="wage_account"/>
+                                <field name="wage_bank"/>
+                                <field name="net_to_pay" sum="net_to_pay" optional="show"/>
+<!--                                <field name="biweekly_advance" sum="biweekly_advance"/>-->
+                                <field name="state" optional="hide"/>
+                                <field name="company_id" readonly="1" invisible="1" groups="base.group_multi_company"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Gratificacion" id="grat_tab" attrs="{'invisible':[('gratification_id', '=', False)]}">
+                        <field name="grat_line_ids">
+                            <tree editable="bottom">
+                                <field name="is_text" widget="boolean_toggle"/>
+                                <field name="identification_id" string="No Doc" optional="show"/>
+                                <field name="employee_id"/>
+                                <field name="wage_account"/>
+                                <field name="wage_bank"/>
+                                <field name="total_grat" sum="total_grat" optional="show"/>
+                                <field name="bonus_essalud" sum="bonus_essalud" optional="show"/>
+                                <field name="total" sum="total" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="CTS" id="cts_tab" attrs="{'invisible':[('cts_id', '=', False)]}">
+                        <field name="cts_line_ids">
+                            <tree editable="bottom">
+                                <field name="is_text" widget="boolean_toggle"/>
+                                <field name="identification_id" string="No Doc" optional="show"/>
+                                <field name="employee_id"/>
+<!--                                <field name="sunat_code"/>-->
+                                <field name="cts_account"/>
+                                <field name="cts_bank"/>
+                                <field name="exchange_type" optional="show"/>
+                                <field name="cts_interest" sum="cts_interest" optional="show"/>
+                                <field name="other_discounts" sum="other_discounts" optional="show"/>
+                                <field name="total_cts" sum="total_cts" optional="show"/>
+                                <field name="cts_soles" sum="cts_soles" optional="show"/>
+                                <field name="cts_dollars" sum="cts_dollars" optional="hide"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page id="config_bank" string="Configuracion del Banco">
+                        <center>
+                            <h1 attrs="{'invisible': [('format_bank', '!=', False)]}">ESTE BANCO NO TIENE UN FORMATO
+                                ESPECIFICADO
+                            </h1>
+                        </center>
+                        <group id="bbva" string="Datos BBVA" attrs="{'invisible': [('format_bank', '!=', 'bbva')]}">
+                            <group>
+                                <field name="process_type"/>
+                                <field name="owner_validation"/>
+                            </group>
+                            <group>
+                                <field name="process_hour" attrs="{'invisible':[('process_type', '!=', 'H')]}"/>
+                                <field name="alert_indicator"/>
+                            </group>
+                        </group>
+                        <group id="bcp" string="Datos BCP" attrs="{'invisible': [('format_bank', '!=', 'bcp')]}">
+                            <group>
+                                <field name="flag"/>
+                                <field name="subtype"/>
+                            </group>
+                            <group>
+                                <field name="idc_flag"/>
+                            </group>
+                        </group>
+                        <group id="interbank" string="Datos Interbank" attrs="{'invisible': [('format_bank', '!=', 'interbank')]}">
+                            <group>
+                                <field name="company_code"/>
+                                <field name="service_code"/>
+                            </group>
+                            <group>
+                                <field name="process_type_interbank"/>
+                                <field name="person_type"/>
+                            </group>
+                        </group>
+                        <group id="scotiabank" string="Datos Scotiabank" attrs="{'invisible': [('format_bank', '!=', 'scotiabank')]}">
+                            <group>
+                                <field name="charge_way"/>
+                                <field name="payment_way"/>
+                            </group>
+                            <group>
+                                <field name="charge_type"/>
+                            </group>
+                        </group>
+                        <group id="banbif" string="Datos BanBif" attrs="{'invisible': [('format_bank', '!=', 'banbif')]}">
+                            <group>
+                                <field name="subtypebanbif"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_automate_multipayment_tree" model="ir.ui.view">
+			<field name="name">hr.automate.multipayment.tree</field>
+			<field name="model">hr.automate.multipayment</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="journal_id"/>
+					<field name="payment_date"/>
+<!--					<field name="nro_operation"/>-->
+					<field name="glosa" optional="hide"/>
+					<field name="state" />
+					<field name="company_id" groups="base.group_multi_company"/>
+				</tree>
+			</field>
+		</record>
+
+<!--    <record id="action_hr_automate_multipayment" model="ir.actions.act_window">-->
+<!--        <field name="name">Pagos Haberes y CTS</field>-->
+<!--        <field name="res_model">hr.automate.multipayment</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--        <field name="view_ids" eval="[(5, 0, 0),-->
+<!--                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_hr_automate_multipayment_tree')}),-->
+<!--                (0, 0, {'view_mode': 'form', 'view_id': ref('view_hr_automate_multipayment_form')})]"/>-->
+<!--        <field name="context">{'default_is_hr_payment': True}</field>-->
+<!--        <field name="domain">[('is_hr_payment', '=', True)]</field>-->
+<!--    </record>-->
+<!--    <menuitem-->
+<!--            id="menu_hr_automate_multipayment"-->
+<!--            action="action_hr_automate_multipayment"-->
+<!--            parent="account_base_it.menu_treasury"-->
+<!--            sequence="7"-->
+<!--            groups="account.group_account_manager"/>-->
+
+</odoo>

@@ -23,12 +23,15 @@ class HrVacationRest(models.Model):
 	amount_rest = fields.Float(string="Saldo Importe")
 	company_id = fields.Many2one('res.company',string=u'Compañía',default=lambda self: self.env.company)
 
+	is_saldo_final = fields.Boolean(string='Saldo Final',default=False)
+
 	def get_vacation_employee(self,employee,show_all):
 		self.search([('internal_motive','=','normal')]).unlink()
 		if show_all:
 			employes = self.env['hr.employee'].search([('company_id','=',self.env.company.id)])
 		else:
-			employes = [employee]
+			employes = employee
+		# print("employes",employes)
 		for employee in employes:
 			last_contract = self.env['hr.contract'].search([('employee_id','=',employee.id),
 						('labor_regime','in',['general','small']),('state', 'in', ['open'])])
@@ -133,6 +136,8 @@ class HrVacationRest(models.Model):
 			vacas_sorted = vacas.sorted(key=lambda avacas: avacas.date_aplication)
 			saldo_dias = 0
 			saldo_amount = 0
+
+			n_ciclos = 1
 			for vaca in vacas_sorted:
 				if saldo_dias == 0:
 					if vaca.internal_motive == 'normal':
@@ -153,3 +158,19 @@ class HrVacationRest(models.Model):
 							saldo_amount = saldo_amount + vaca.amount
 				vaca.days_rest = saldo_dias
 				vaca.amount_rest = saldo_amount
+
+				n_ciclos+=1
+				if n_ciclos == len(vacas_sorted):
+					vaca.is_saldo_final = True
+
+	def view_detail(self):
+		return {
+			'name': 'Saldos de vacaciones',
+			'domain': [('employee_id', '=', self.employee_id.id)],
+			'type': 'ir.actions.act_window',
+			'res_model': 'hr.vacation.rest',
+			'view_mode': 'tree',
+			'view_type': 'form',
+			'views': [(self.env.ref('hr_vacations_it.hr_vacation_rest_tree').id, 'tree')],
+			'target': '_blank',
+		}

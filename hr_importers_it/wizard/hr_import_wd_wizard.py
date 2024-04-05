@@ -131,13 +131,15 @@ class HrImportWdWizard(models.TransientModel):
 				WD = Payslip.worked_days_line_ids.filtered(lambda wd: wd.code == sheet.cell_value(i, 1))
 				if WD:
 					WD.number_of_days = sheet.cell_value(i, 2)
-					hour = sheet.cell_value(i, 3)
-					if hour < 1:
-						hour = int(hour * 24 * 3600)
-						hour = time(hour//3600, (hour % 3600)//60, hour % 60)
-						WD.number_of_hours = hour.hour + hour.minute/60
-					else:
-						WD.number_of_hours = sheet.cell_value(i, 3)
+					# hour = sheet.cell_value(i, 3)
+					# print("dias",sheet.cell_value(i, 2))
+					# print("horas",hour)
+					# if hour < 1:
+					# 	hour = int(hour * 24 * 3600)
+					# 	hour = time(hour//3600, (hour % 3600)//60, hour % 60)
+					# 	WD.number_of_hours = hour.hour + hour.minute/60
+					# else:
+					WD.number_of_hours = sheet.cell_value(i, 3)
 
 		return self.env['popup.it'].get_message('Se importaron todos los worked days satisfactoriamente')
 

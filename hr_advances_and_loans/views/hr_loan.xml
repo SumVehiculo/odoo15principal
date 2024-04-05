@@ -15,12 +15,14 @@
                         <button name="get_pdf" type="object" string="Generar PDF" class="oe_highlight"/>
                     </header>
                     <sheet>
+                        <widget name="web_ribbon" title="Archivado" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                         <group>
                             <group>
                                 <field name="name" invisible="1"/>
                                 <field name="employee_id" required="1"/>
                                 <field name="date" required="1"/>
                                 <field name="amount" required="1"/>
+                                <field name="active" invisible="1"/>
                             </group>
                             <group>
                                 <field name="loan_type_id" required="1"/>
@@ -61,16 +63,33 @@
             </field>
         </record>
 
+        <record id="hr_loan_search" model="ir.ui.view">
+            <field name="name">hr.loan.search</field>
+            <field name="model">hr.loan</field>
+            <field name="arch" type="xml">
+                <search string="Prestamos">
+                    <field name="employee_id"/>
+                    <field name="date"/>
+                    <separator/>
+                    <filter string="Fecha de Prestamo" name="filter_date" date="date"/>
+                    <separator/>
+                    <filter string="Archivados" name="filter_active" domain="[('active', '=', False)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Fecha de Prestamo" name="group_by_date" context="{'group_by':'date'}"/>
+                        <filter string="Empleado" name="group_by_employee_id" context="{'group_by':'employee_id'}"/>
+                        <filter string="Tipo de Prestamo" name="group_by_loan_type_id" context="{'group_by':'loan_type_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="action_loan" model="ir.actions.act_window">
             <field name="name">Prestamos</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.loan</field>
             <field name="view_mode">tree,form</field>
-            <field name="help" type="html"> 
-                <p class="o_view_nocontent_smiling_face"> 
-                    Haga click aqui para crear un nuevo Prestamo.
-                </p>
-            </field>
+            <field name="context">{'search_default_group_by_date': 1}</field>
+            <field name="help" type="html"> <p class="o_view_nocontent_smiling_face"> Haga click aqui para crear un nuevo Prestamo.</p></field>
         </record>
 
         <menuitem id="loan_menu" 

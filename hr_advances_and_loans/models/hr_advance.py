@@ -24,6 +24,8 @@ class HrAdvance(models.Model):
 	advance_type_id = fields.Many2one('hr.advance.type', string='Tipo de Adelanto', states={'paid out': [('readonly', True)]})
 	state = fields.Selection([('not payed', 'No Pagado'), ('paid out', 'Pagado')], default='not payed',string='Estado')
 
+	active = fields.Boolean(string='Activo', default=True)
+
 	def turn_paid_out(self):
 		for record in self:
 			record.state = 'paid out'
