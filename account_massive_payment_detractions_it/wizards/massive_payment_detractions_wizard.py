@@ -41,11 +41,13 @@ class MassivePaymentDetractionsWizard(models.TransientModel):
 			ctxt += '6' + (elem.partner_id.vat or '') + self.get_text_with_size(None,35,' ',True) + '000000000'
 			code_operation = elem.good_services
 			ctxt += self.get_text_with_size(code_operation,3,'0',False)
-			acc_bank = self.env['res.partner.bank'].search([('partner_id','=',elem.partner_id.id),('is_detraction_account','=',True),('company_id','=', elem.main_id.company_id.id)],limit=1)
+			acc_bank = self.env['res.partner.bank'].search([('partner_id','=',elem.partner_id.id),('is_detraction_account','=',True),'|',('company_id','=', elem.main_id.company_id.id),('company_id','=',False)],limit=1)
 			if self.type == 'cp' and acc_bank.acc_number:
 				ctxt += self.get_text_with_size(acc_bank.acc_number,11,' ',False)
-			else:
+			elif self.type == 'cp' and not acc_bank.acc_number:
 				ctxt += self.get_text_with_size(None,11,' ',False)
+			else:
+				ctxt += ''
 			ctxt += self.get_text_with_size(self.get_str_number(ReportBase.custom_round(elem.debe)),15,'0',False) if self.type == 'cp' else self.get_text_with_size(self.get_str_number(ReportBase.custom_round(elem.haber)),15,'0',False)
 			type_op_det = elem.operation_type if elem.operation_type else '01'
 			ctxt += type_op_det
