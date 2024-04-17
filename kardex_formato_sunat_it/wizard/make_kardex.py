@@ -265,15 +265,15 @@ class make_kardex_valorado_formato_sunat(models.TransientModel):
 				xtipo = '09'
 				xserie = guia.split('-')[0]
 				xnumero = guia.split('-')[1] if len(guia.split('-'))>1 else ''
-			elif move.picking_id.id:					
+			elif xtipo == '' and move.picking_id.id:					
 				xtipo = '00'
 				xserie = move.picking_id.name.split('/')[0]
 				xnumero = ''.join(move.picking_id.name.split('/')[1:])
-			elif move.production_id.id:	
+			elif xtipo == '' and move.production_id.id:	
 				xtipo = '19'
 				xserie = ""
 				xnumero = move.production_id.name.replace('/','').replace('-','')
-			elif move.raw_material_production_id.id:	
+			elif xtipo == '' and move.raw_material_production_id.id:	
 				xtipo = '10'
 				xserie = ""
 				xnumero = move.raw_material_production_id.name.replace('/','').replace('-','')
