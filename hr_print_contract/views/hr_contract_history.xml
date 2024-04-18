@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_history_view_list" model="ir.ui.view">
+        <field name="name">hr.contract.history.list</field>
+        <field name="model">hr.contract.history</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_history_view_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="attributes">
+				<attribute name="decoration-danger">state == 'expire'</attribute>
+                <attribute name="decoration-info">state == 'trial'</attribute>
+            </field>
+            <field name="date_hired" position="attributes">
+				<attribute name="optional">hide</attribute>
+            </field>
+            <field name="wage" position="attributes">
+				<attribute name="optional">show</attribute>
+            </field>
+            <field name="date_start" position="after">
+				<field name="date_end" string="Fecha Final"/>
+			</field>
+        </field>
+    </record>
+
+</odoo>

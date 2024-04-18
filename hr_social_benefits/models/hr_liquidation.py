@@ -580,6 +580,7 @@ class HrLiquidationVacationLine(models.Model):
             else:
                 onp = ReportBase.custom_round(membership.retirement_fund/100 * record.total_vacation, 2)
             record.afp_jub = afp_jub
+            afp_si = afp_si if not record.contract_id.is_older else 0
             record.afp_si = afp_si
             record.afp_mixed_com = afp_mixed_com
             record.afp_fixed_com = afp_fixed_com

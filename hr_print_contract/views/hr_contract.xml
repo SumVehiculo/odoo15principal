@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_contract_custom_contract_form" model="ir.ui.view">
+            <field name="name">hr.contract.custom.contract.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_fields_it.hr_contract_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header" position="inside">
+                    <button name="export_contract" type="object" string="Imprimir Contrato" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//group[@name='duration_group']" position="inside">
+                    <field name="trial_date_end" readonly="0" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="send_contract_email" model="ir.actions.server">
+            <field name="name">Enviar Contratos por Correo</field>
+            <field name="model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="state">code</field>
+            <field name="code">action = records.send_contract_email()</field>
+        </record>
+
+        <record id="view_hr_contract_type_form" model="ir.ui.view">
+            <field name="name">hr.contract.type.form</field>
+            <field name="model">hr.contract.type</field>
+            <field name="arch" type="xml">
+                <form string="Contratos personalizados">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <notebook>
+                            <page id = "htmldata" string="Contenido">
+                                <group>
+<!--                                    <field name="contract_html"  options="{'style-inline': false,'collaborative': true, 'codeview': true}"/>-->
+                                    <field name="contract_html" required="1" widget="html" options="{'style-inline': true,'codeview': true}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_contract_type_tree" model="ir.ui.view">
+		<field name="name">hr.contract.type.tree</field>
+		<field name="model">hr.contract.type</field>
+		<field name="arch" type="xml">
+			<tree string="Contratos personalizados">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_hr_contract_type" model="ir.actions.act_window">
+		<field name="name">Tipos de Contrato</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">hr.contract.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="hr_contract_type_menu"
+			  action="action_hr_contract_type"
+			  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+			  sequence="72"
+			  groups="hr_base_it.group_hr_tables_root"/>
+
+    </data>
+</odoo>

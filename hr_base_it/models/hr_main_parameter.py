@@ -199,7 +199,7 @@ class HrMainParameter(models.Model):
 
 		if(miles):
 			if(miles == '001'):
-				converted += 'MIL '
+				converted += 'UN MIL '
 			elif(int(miles) > 0):
 				converted += '%sMIL ' % __convert_group(miles)
 

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="contract_type_1" model="hr.contract.type">
+            <field name="name">CONTRATO POR INCREMENTO DE ACTIVIDADES</field>
+            <field name="contract_html">
+                <p style="margin:0px 0 12px 0;box-sizing:border-box; text-align:center;"><br/></p>
+                <p style="margin:0px 0 12px 0;box-sizing:border-box; text-align:center;">
+                    <b style="box-sizing:border-box;font-weight:normal; text-align:center;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">
+                            CONTRATO DE TRABAJO SUJETO A LA MODALIDAD POR INCREMENTO DE ACTIVIDADES&nbsp;
+                        </span>
+                    </b>
+                </p>
+                <div style="text-align:justify;">
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><b style="box-sizing:border-box;font-weight:normal"><br/></b></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Conste por el presente documento el </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">Contrato de Trabajo sujeto a la modalidad POR INCREMENTO DE ACTIVIDADES</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, que celebran de conformidad con el artículo 57° del Texto Único Ordenado, TUO del Decreto Legislativo No. 728 – Ley de Productividad y Competitividad Laboral, aprobado por Decreto Supremo No. 003-97-TR de una parte, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">{{nombre_empleador}}</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, con RUC N°. {{ruc_empleador}}, domiciliada en {{direccion_empleador}}, distrito de {{distrito}}, Provincia de {{provincia}} Departamento de {{departamento}}, representada por su {{cargo_RL}}, {{apoderado}}, con DNI N° {{dni_apoderado}}, según poderes inscritos en de la Partida Electrónica N° 15012252 del Registro de Personas Jurídicas de Lima, en adelante, se le denominará </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, de la otra parte
+                            <span style="color: #444b5a;font-size: 14px;font-weight: 700">{{nombre_trabajador}}</span></span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700"> </span>
+                        <span style="font-size:10.5pt;background-color:transparent">de nacionalidad {{nacionalidad_trabajador}}, con {{td_trabajador}}. Nº {{dni_trabajador}}</span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">,</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> de estado civil {{estado_civil_trabajador}}, con domicilio en {{direccion_trabajador}}, a quien en adelante se le denominará </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">.</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">El contrato se celebra en los términos y condiciones de las siguientes cláusulas:</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size: 10.5pt; background-color: transparent; text-decoration: underline; font-weight: bolder;">CLAUSULA PRIMERA: BASE LEGAL</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">El presente contrato de trabajo se rige por las disposiciones vigentes en el artículo 57° del Texto Único Ordenado, TUO del Decreto Legislativo No. 728 – Ley de Productividad y Competitividad Laboral, aprobado por Decreto Supremo No. 003-97-TR.</span></p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA SEGUNDA: LOS ANTECEDENTES</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> es una sociedad anónima cerrada que se dedica exclusivamente a la prestación de servicios de intermediación laboral, autorizada para tal efecto por la Dirección de Promoción del Empleo y Formación Profesional del Ministerio de Trabajo y Promoción del Empleo.</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> es&nbsp;
+                            <span style="color: #444b5a;font-size: 14px;font-weight: 700">{{titulo_trabajo}}</span> y</span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;font-style:italic"> </span>
+                        <span style="font-size:10.5pt;background-color:transparent">declara que reúne las condiciones propias y el perfil deseado por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">.</span></p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA TERCERA: OBJETO DEL CONTRATO</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">A fin de cubrir el incremento temporal de las actividades ya existentes del </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">que se desarrollan en las áreas administrativas, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">requiere contratar temporalmente una persona que se desempeñe en el cargo de «puesto». Esta circunstancia está expresamente reconocida por el artículo 57° del Texto Único Ordenado, TUO del Decreto Legislativo No. 728 – Ley de Productividad y Competitividad Laboral, aprobado por Decreto Supremo No. 003-97-TR como causa objetiva para la suscripción de un contrato de trabajo en la modalidad de POR INCREMENTO DE ACTIVIDADES.</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><span style="font-size:10.5pt;background-color:transparent">En tal sentido, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">se obliga a prestar sus servicios en el cargo antes indicado a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">en forma personal, individual y subordinada</span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">,</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> y a cumplir las disposiciones establecidas en la legislación vigente, los reglamentos, y demás normas establecidas por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR,</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> así como las directrices señaladas para la realización de sus labores.&nbsp;</span></p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA CUARTA: JUSTIFICACIÓN DE LA MODALIDAD CONTRACTUAL UTILIZADA</span>
+                        <span style="font-size:10.5pt;background-color:transparent;text-decoration:underline">.&nbsp;</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">El presente contrato sujeto a la modalidad </span>
+                        <span style="font-size:10.5pt;background-color:transparent;text-decoration:underline">POR INCREMENTO DE ACTIVIDADES</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se sustenta en que, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">requiere cubrir el incremento temporal de las actividades ya existentes en su área administrativa, para lo cual ha previsto contratar temporalmente personal que se desempeñe como «puesto», conforme lo establecido en el artículo 57° del Texto Único Ordenado, TUO del Decreto Legislativo No. 728 – Ley de Productividad y Competitividad Laboral, aprobado por Decreto Supremo No. 003-97-TR.</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">En ese sentido, el incremento temporal de las actividades del área administrativa configura la causa objetiva del presente contrato de trabajo por incremento de actividades</span></p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA</span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-style:italic;text-decoration:underline"> </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">QUINTA: OBLIGACIONES DE EL TRABAJADOR</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><span style="font-size:10.5pt;background-color:transparent">Por el presente contrato </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR,</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se obliga a cumplir el horario, la jornada legal permitida por la Ley Laboral y las labores de trabajo que señale </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR,</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> de acuerdo a las necesidades del servicio para el cual ha sido contratado.&nbsp;</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> declara conocer la actividad que desarrollará y se obliga a desempeñar sus funciones con la mayor eficiencia y espíritu de colaboración, actuando con responsabilidad, honestidad, dedicación y diligencia, cumpliendo en todo momento las disposiciones sobre seguridad y salud en el trabajo, así como observando fidelidad hacia </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">.&nbsp;</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">se obliga a prestar sus servicios a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">para realizar las actividades descritas en el Manual de Organización y Funciones para el puesto de «puesto», así como las directivas que éste imparta de acuerdo con las necesidades del servicio que desarrollará </span><span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, de conformidad con el Artículo 9 del Decreto Supremo N° 003-97-TR.</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Asimismo, queda expresamente entendido y aceptado por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> que esas actividades son enunciativas y no limitativas, toda vez que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> tiene la obligación de atender también cualquier otro trabajo anexo o conexo con su obligación principal. </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">El TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> acatará siempre, en todos sus actos lo dispuesto en las normas legales vigentes, el reglamento de trabajo, y demás normas las órdenes y directivas que le impartan los órganos superiores de dirección y administración de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR, </span>
+                        <span style="font-size:10.5pt;background-color:transparent">los cuales declaran conocer y se obliga a cumplir fielmente.</span></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Dichos servicios se llevarán a cabo en las instalaciones de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, sito en «Dirección», distrito de «Distrito», provincia de «Provincia» departamento de «Departamento». Asimismo, las partes acuerdan que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">tendrá la facultad de disponer la realización de las labores para las cuales ha sido contratado </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, en cualquiera de sus áreas, centros, establecimientos u otro lugar que disponga en atención a la facultad de dirección que le otorga la ley.</span></p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA SEXTA: DE LA JORNADA</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">La prestación de servicios de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se realizará bajo las siguientes características:</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">La duración de la jornada laboral es {{horas_jornada}} horas. El refrigerio será de 1 Hora.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Los descansos semanales serán fijados por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA SÉPTIMA</span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-style:italic;text-decoration:underline">:</span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;font-style:italic;text-decoration:underline"> </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">DURACION</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">El presente contrato, al ser uno de naturaleza temporal, tendrá un plazo de vigencia que se iniciará el </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">{{fecha_inicio}} </span>
+                        <span style="font-size:10.5pt;background-color:transparent">y concluirá el </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">{{fecha_fin}}. </span>
+                        <span style="font-size:10.5pt;background-color:transparent">Dicho plazo podrá renovarse y siempre y cuando exista acuerdo escrito entre las partes contratantes.&nbsp;</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA OCTAVA: VIGENCIA DEL CONTRATO</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Queda entendido que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> no está obligado a dar aviso alguno adicional referente al término del presente contrato, operando su extinción en la fecha indicada, oportunidad en la cual se abonará a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> los beneficios sociales que le pudieran corresponder de acuerdo a Ley. La suspensión del contrato de trabajo, cualquiera que fuera el supuesto, no interrumpe ni suspende el plazo de extinción del contrato de trabajo a plazo fijo.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA NOVENA: REMUNERACION</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> percibirá una remuneración mensual de {{salario}} {{salario_letras}} {{moneda}}.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Esta remuneración estará sujeta a los descuentos de ley. </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> pagará además todas las obligaciones estipuladas por la legislación laboral aplicable al presente contrato.</span>
+                    </p><p style="margin:0px 0 12px 0;box-sizing:border-box;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA DÉCIMA: PERIODO DE PRUEBA</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> estará sujeto a un período de prueba de {{fecha_prueba_fin}} computado desde de la fecha de inicio de la relación laboral.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA DÉCIMA PRIMERA: INFORMACIÓN SOBRE RIESGOS Y PELIGROS</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Ambas partes declaran que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> ha cumplido con informar a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> sobre los riesgos y peligros de las actividades a realizar.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> declara estar debidamente informado de los riesgos y peligros de las actividades que realizará, y de haber recibido un ejemplar del Reglamento Interno de Trabajo, del Reglamento de Seguridad y Salud en el Trabajo, Procedimientos Escritos de Trabajo Seguro – PETS, y demás disposiciones sobre seguridad y salud ocupacional en los cuales se detallan los riesgos y peligros de la actividad que desarrollará, los cuales forman parte integrante del presente contrato, obligándose a conocerlos y cumplir cabalmente con lo dispuesto en estos documentos, sobre lo cual será evaluado por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA DECIMA SEGUNDA: DE LAS CAPACITACIONES</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se obliga a brindar una adecuada y periódica capacitación a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> sobre los riesgos y peligros de las actividades desarrolladas, las disposiciones de seguridad y salud en el trabajo que resulten aplicables, así como con las capacitaciones que establezcan la ley y normas correspondientes.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">declara conocer que será capacitado periódicamente sobre los riesgos, peligros y controles de la actividad a realizar, así como las disposiciones sobre seguridad y salud en el trabajo, y demás que resulten aplicables; y se compromete a acudir a las capacitaciones puntualmente otorgándole a las mismas el grado de importancia debido, comprometiéndose a cumplir con lo señalado en éstas, pues resulta de vital importancia para el desempeño de sus funciones de forma idónea y segura.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Asimismo, declara conocer que será evaluado por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, cuando éste lo considere necesario, teniendo en cuenta el resultado de dichas evaluaciones como uno de los indicadores del desempeño de sus funciones.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA DÉCIMA TERCERA: PREVENCIÓN Y SANCIÓN DE TODO ACTO DE HOSTIGAMIENTO Y/O ACOSO</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">declara su rechazo a todo acto de hostigamiento y/o acoso sexual en el trabajo, así como en todo ámbito, pues los mismos constituyen formas de violencia y afectación de los derechos fundamentales de toda persona. Así también, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se compromete a cumplir con las disposiciones establecidas en la Ley No. 27942, Ley de Prevención y Sanción del Hostigamiento Sexual y su Reglamento aprobado por el Decreto Supremo No. 010-2003-MIMDES, normas modificatorias, y en el Decreto Legislativo No 1410, Decreto Legislativo que incorpora el Delito de Acoso, Acoso Sexual, Chantaje Sexual y Difusión de Imágenes, Material Audiovisual o Audios con contenido Sexual al Código Penal, y modifica el Procedimiento de Sanción del Hostigamiento Sexual.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">asume el compromiso de no tolerancia de toda conducta que califique como hostigamiento o acoso sexual y acoso en el lugar de trabajo, así como en todo ámbito, instaurando y manteniendo de forma permanente una política interna que previene y sanciona el acoso y hostigamiento sexual, dentro y fuera de sus instalaciones, con el fin de que su personal mantenga una adecuada conducta y respeto a los demás, en todo momento.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLÁUSULA DÉCIMA CUARTA: DE LOS EXÁMENES MÉDICOS.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">De acuerdo con lo establecido en la Ley No. 29783 y su reglamento aprobado por el Decreto Supremo No. 005-2012-TR, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> deberá someterse a los exámenes médicos o de verificación rutinaria que disponga </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, conforme lo establecido en las indicadas normas y demás que resulten aplicables, sea a través de médicos propios o contratados.&nbsp;</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">La negativa injustificada de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> será considerada causa justa de despido, de acuerdo con lo dispuesto por el inciso c) del artículo 23 del Decreto Supremo No. 003-97-TR.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA DECIMA QUINTA: TRABAJO EN SOBRETIEMPO</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">De acuerdo con lo establecido en el artículo 9 del Texto Único Ordenado de la Ley de Jornada de Trabajo, Horario y Trabajo en Sobretiempo, aprobado por el Decreto Supremo No. 007-2002-TR, en los casos justificados en que la labor resulte indispensable a consecuencia de un hecho fortuito o fuerza mayor que ponga en peligro inminente a las personas o los bienes del centro de trabajo o la continuidad de la actividad productiva, el trabajo en sobretiempo será obligatorio para </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLÁUSULA DÉCIMA SÉXTA: RECURSOS TECNOLÓGICOS E INFORMÁTICOS</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> podrá proporcionar a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> diversos equipos informáticos (hardware y software), así como una dirección de correo electrónico institucional de dominio de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> para el cabal desempeño de sus labores. </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> declara conocer que dicho equipo, así como el correo electrónico institucional proporcionado sólo podrá ser empleado para asuntos propios de su trabajo; consecuentemente; dichas herramientas de trabajo no podrán ser utilizadas para asuntos ajenos a la labor de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> que sean personales.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> y </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> acuerdan que éste último tiene el derecho a acceder por cualquier medio a dicho equipo informático y correo electrónico institucional proporcionado a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, incluyendo a la información guardada en el mismo, con la finalidad de consolidar información, verificar cuestiones relacionadas con la seguridad de su información y comprobar que no estén siendo empleado con fines distintos de aquellos para los cuales fue entregado a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">.&nbsp;</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> reconoce a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> como propietario exclusivo del equipo informático y cuenta de correo electrónico institucional proporcionado, y otorga su total y expresa aceptación y conformidad para que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> pueda acceder a dicho equipo, con los propósitos indicados precedentemente, así como para acceder en cualquier momento a la información del indicado correo electrónico.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">En tal sentido, con la firma del presente contrato, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> reconoce y acepta de manera expresa que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> podrá tener acceso a la información de los equipos informáticos, así como a las cuentas institucionales que le serán proporcionadas por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLÁUSULA DÉCIMA SÉPTIMA: PRIVACIDAD Y PROTECCIÓN DE INFORMACIÓN PERSONAL DEL TRABAJADOR – TRATAMIENTO DE DATOS PERSONALES</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Durante la vigencia de la relación laboral y en virtud a ésta, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se encuentra obligado a proporcionar, remitir y/o entregar información de carácter personal a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, respecto de la cual </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> autoriza a que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> recopile, registre, organice, almacene en una base de datos de titularidad de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, conserven, procesen, transfieran, usen, consulten, bloqueen, supriman y, en general, efectúen el tratamiento de sus datos personales tales como nombres, apellidos, edad, nacionalidad, sexo, estado civil, DNI, carnet de extranjería, pasaporte, domicilio, número telefónico, fotografías, huellas digitales, fecha y lugar de nacimiento, dirección de correo electrónico, firma, datos de afiliación al sistema de pensiones y salud, datos de salud, idioma, datos familiares, datos académicos, experiencia profesional, cargo, ingresos económicos, ocupación, fecha de ingreso, código de identificación en la empresa, horario, así como otra información que resulte necesaria registrar en la planilla, así como cualquier otra información contenida en el file del personal.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> otorga esta autorización con la finalidad de que </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> de cumplimiento a sus obligaciones legales que le corresponden y para los siguientes fines: (i) los datos personales para identificar plenamente al trabajador, tal y como lo exigen las leyes laborales; (ii) datos familiares para identificar a los familiares del trabajador en caso exista algún siniestro u otras circunstancias que requieran una respuesta rápida de la empresa en materia de seguros o pensiones; (iii) información académica para cumplir protocolos internos de requerimientos del cargo de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">; (iv) experiencia profesional e información laboral pasada para conocer la experiencia de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">; (v) datos de salud a fin de conocer cualquier contingencia de los trabajadores en determinados ambientes o zonas de trabajo; y, (vi) datos complementarios que permitan a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> conocer mejor las preferencias laborales de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, a fin de cumplir mínimos estándares y mejorar nuestras relaciones.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Asimismo, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> declara haber sido informado sobre su derecho a solicitar el acceso, actualización, inclusión, rectificación y supresión de sus datos personales, a impedir su suministro, así como al tratamiento objetivo de esta y declara conocer que podrá ejercer sus derechos mediante petición, para lo cual </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> pone a disposición la siguiente dirección electrónica: </span>
+                        <a href="mailto:sistemas@sentrix.com.pe" style="text-decoration:none;box-sizing:border-box;background-color:transparent;color:#008f8c;">
+                            <span style="font-size:10.5pt;color:#0000ff;background-color:transparent;text-decoration:underline">fx@gmail.com</span>
+                        </a>
+                        <span style="font-size:10.5pt;background-color:transparent">.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Por su parte, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> declara que el tratamiento de los datos personales de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se efectuará en estricta observancia de los derechos fundamentales de éste, y, en particular, respetando rigurosamente las disposiciones contenidas en la Ley N° 29733 – Ley de Protección de Datos Personales y su reglamento, aprobado mediante Decreto Supremo N° 003-2013-JUS. Adicionalmente, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se obliga a adoptar las medidas y mecanismos que resulten necesarios para proteger los datos personales </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, de conformidad con los dispositivos normativos antes citados.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> reconoce y declara expresamente que, de manera previa a la firma del presente contrato, ha sido debida y suficientemente informado sobre los alcances y efectos de la presente cláusula.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLÁUSULA DÉCIMA OCTAVA: CONDICIONES DE TRABAJO</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> proporcionará a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> los implementos, sistemas, equipos, materiales, herramientas y demás condiciones de trabajo que sean necesarias. Por su parte, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> reconoce expresamente que le está terminantemente prohibido emplear dichos elementos de trabajo para fines personales o ajenos al cumplimiento del presente contrato de trabajo. El incumplimiento de esta prohibición por parte de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> facultará a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10pt;background-color:transparent"> </span>
+                        <span style="font-size:10.5pt;background-color:transparent">a adoptar las medidas disciplinarias que resulten pertinentes.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Son obligaciones de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> cuidar los bienes entregados por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> para el desarrollo de sus funciones, debiendo devolverlos en perfecto estado de conservación a la terminación del presente contrato, sin más desgaste que el ordinario por el uso regular de los mismos.&nbsp;</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> es responsable por la pérdida de los bienes antes indicados y deberá reembolsar a la empresa el valor de los implementos entregados en caso de pérdida o deterioro no justificado. En este caso, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR </span>
+                        <span style="font-size:10.5pt;background-color:transparent">desde ya autoriza a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> a efectuar el descuento correspondiente de las remuneraciones y/o beneficios sociales que le pudiera corresponder.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Al momento de producirse el cese de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent">, sea por cualquier causa, se encontrará obligado a devolver a </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> todos los bienes antes indicados y demás condiciones de trabajo otorgados por éste.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA DÉCIMA NOVENA: RESOLUCION DEL CONTRATO</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se reserva el derecho de resolver el presente Contrato por causas de fuerza mayor o caso fortuito, o por convenir a los intereses de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> previa comunicación escrita.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">De igual manera, </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> se reserva el derecho de resolver el presente contrato por infracción de </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL TRABAJADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> al Reglamento de Seguridad y Salud en el Trabajo, Reglamento Interno de Trabajo, Políticas, Procedimientos y demás disposiciones establecidas por </span>
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">EL EMPLEADOR</span>
+                        <span style="font-size:10.5pt;background-color:transparent"> o por indisciplina dentro del área operativa.</span>
+                    </p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700;text-decoration:underline">CLAUSULA VIGÉSIMA: MODIFICACIONES DEL CONTRATO</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Las partes contratantes acuerdan que se requiere de una adenda adicional al contrato para toda modificación que implique una variación de las condiciones previstas en este contrato.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Las partes dejan constancia que, desde el 11 de noviembre de 2016 no es obligatoria la presentación del presente contrato ante la Autoridad Administrativa de Trabajo, de acuerdo a lo establecido en el Decreto Legislativo No. 1246.&nbsp;</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent">Suscrito en la ciudad de {{lugar_contrato}}, el {{fecha_firma}}, en dos ejemplares de un mismo tenor para constancia de las partes.</span>
+                    </p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;"><br></p>
+                    <p style="caret-color:#37352f;position:relative;box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="caret-color:#37352f;position:relative;box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="box-sizing:border-box;margin-bottom: 0px;"><br></p>
+                    <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                        <span style="font-size:10.5pt;background-color:transparent;font-weight:700">
+                            <span class="oe-tabs" style="box-sizing:border-box;max-width:40px;text-wrap:wrap;white-space-collapse:preserve;display:inline-block;width: 40px;" width="40">	</span>​
+                            <span class="oe-tabs" style="box-sizing:border-box;max-width:40px;text-wrap:wrap;white-space-collapse:preserve;display:inline-block;width: 40px;" width="40">	</span>​&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; EL TRABAJADOR&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;EL EMPLEADOR</span>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

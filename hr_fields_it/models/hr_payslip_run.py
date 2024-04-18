@@ -115,7 +115,10 @@ class HrPayslipRun(models.Model):
 					if Contract.date_end >= self.date_end:
 						resul = 'S'
 					else:
-						resul = 'N'
+						if Contract.date_end <= self.date_end and Contract.date_end >= self.date_start:
+							resul = 'S'
+						else:
+							resul = 'N'
 				else:
 					if Contract.situation_id.code == '0':
 						resul = 'N'
