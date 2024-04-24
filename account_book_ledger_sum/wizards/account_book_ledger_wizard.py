@@ -28,7 +28,7 @@ class AccountBookLedgerWizard(models.TransientModel):
 			LEFT JOIN (
 				select account_move_line_id, min(account_analytic_tag_id) as account_analytic_tag_id 
 				from account_analytic_tag_account_move_line_rel
-				group by account_move_line_id) rel ON rel.account_move_line_id = may.move_line
+				group by account_move_line_id) rel ON rel.account_move_line_id = may.move_line_id
 			LEFT JOIN account_analytic_tag aat ON aat.id = rel.account_analytic_tag_id
 		""" % (self.date_from.strftime('%Y/%m/%d') if self.show_by == 'date' else self.period_from_id.date_start.strftime('%Y/%m/%d'),
 			self.date_to.strftime('%Y/%m/%d') if self.show_by == 'date' else self.period_to_id.date_end.strftime('%Y/%m/%d'),
