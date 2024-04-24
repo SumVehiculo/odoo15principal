@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_book_ledger_view_tree_inherit" model="ir.ui.view">
+            <field name="name">account.book.ledger.view.tree.inherit</field>
+            <field name="model">account.book.ledger.view</field>
+		    <field name="inherit_id" ref="account_book_ledger_it.view_account_book_ledger_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="cta_analitica" position="after">
+                    <field name="eti_analitica" optional="show"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
