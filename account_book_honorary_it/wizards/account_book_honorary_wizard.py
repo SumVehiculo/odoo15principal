@@ -38,7 +38,9 @@ class AccountBookHonoraryWizard(models.TransientModel):
 	def get_report(self):
 		
 		if self.type_show == 'pantalla':
-			self.env.cr.execute("""CREATE OR REPLACE view account_book_honorary_view as (SELECT row_number() OVER () AS id, T.* FROM ("""+self._get_sql(self.date_from if self.show_by == 'date' else self.period_from_id.date_start,self.date_to if self.show_by == 'date' else self.period_to_id.date_end,self.company_id.id,self.type_date)+""")T)""")
+			self.env.cr.execute("""
+					   DROP VIEW IF EXISTS account_book_honorary_view;
+					   CREATE OR REPLACE view account_book_honorary_view as (SELECT row_number() OVER () AS id, T.* FROM ("""+self._get_sql(self.date_from if self.show_by == 'date' else self.period_from_id.date_start,self.date_to if self.show_by == 'date' else self.period_to_id.date_end,self.company_id.id,self.type_date)+""")T)""")
 
 			return {
 				'name': 'Libro de Honorarios',
