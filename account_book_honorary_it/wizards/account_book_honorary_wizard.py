@@ -158,7 +158,8 @@ class AccountBookHonoraryWizard(models.TransientModel):
 			tt.retencion,
 			tt.neto_p,
 			tt.periodo_p,
-			tt.is_not_home
+			tt.is_not_home,
+			tt.c_d_imp
 			from get_recxhon_1_1('%s','%s',%d,'%s') tt
 			LEFT JOIN account_move am ON am.id = tt.am_id
 			LEFT JOIN res_partner rp ON rp.id = am.partner_id
