@@ -125,7 +125,8 @@ class AccountBaseSunat(models.Model):
 			NULL AS campo43
 			from get_compras_1_1('{date_start}','{date_end}',{company_id},'pen') vst_c
 			left join account_move am on am.id = vst_c.am_id
-			where vst_c.td not in ('91','97','98')
+			LEFT JOIN res_partner rp ON rp.id = vst_c.partner_id
+			where coalesce(rp.is_not_home,FALSE) <> TRUE
 			UNION ALL
 			select vst_c.periodo || '00' as campo1,
 			vst_c.periodo || vst_c.libro || vst_c.voucher as campo2,
@@ -235,8 +236,9 @@ class AccountBaseSunat(models.Model):
 			NULL AS campo43
 			from get_compras_1_1('2000/01/01','{before_date}',{company_id},'pen') vst_c
 			left join account_move am on am.id = vst_c.am_id
+			LEFT JOIN res_partner rp ON rp.id = vst_c.partner_id
 			where (am.date_modify_purchase between '{date_start}' and '{date_end}') 
-			and vst_c.td not in ('91','97','98'))T
+			and coalesce(rp.is_not_home,FALSE) <> TRUE)T
 			ORDER BY T.campo1, T.campo2, T.campo3
 			""".format(
 				date_start = period_id.date_start.strftime('%Y/%m/%d'),
@@ -348,8 +350,8 @@ class AccountBaseSunat(models.Model):
 					ELSE 0
 				END AS campo30,
 				CASE
-					WHEN rp1.c_d_imp is not null THEN rp1.c_d_imp
-					ELSE NULL
+					WHEN rp1.c_d_imp is not null THEN rp1.c_d_imp::character varying
+					ELSE NULL::character varying
 				END AS campo31,
 				CASE
 					WHEN am.campo_32_purchase_nd is not null THEN am.campo_32_purchase_nd
@@ -377,7 +379,7 @@ class AccountBaseSunat(models.Model):
 				LEFT JOIN res_partner rp1 ON rp1.id = vst_c.partner_id
 				LEFT JOIN res_partner rp2 ON rp2.id = am.campo_23_purchase_nd
 				LEFT JOIN l10n_latam_document_type ec01 ON ec01.id = am.campo_11_purchase_nd
-				WHERE vst_c.td in ('00','91','97','98') and rp1.is_not_home = TRUE
+				WHERE rp1.is_not_home = TRUE
 				UNION ALL
 				select 
 				vst_c.periodo || '00' as campo1,
@@ -480,8 +482,8 @@ class AccountBaseSunat(models.Model):
 					ELSE 0
 				END AS campo30,
 				CASE
-					WHEN rp1.c_d_imp is not null THEN rp1.c_d_imp
-					ELSE NULL
+					WHEN rp1.c_d_imp is not null THEN rp1.c_d_imp::character varying
+					ELSE NULL::character varying
 				END AS campo31,
 				CASE
 					WHEN am.campo_32_purchase_nd is not null THEN am.campo_32_purchase_nd
@@ -509,7 +511,7 @@ class AccountBaseSunat(models.Model):
 				LEFT JOIN res_partner rp1 ON rp1.id = vst_c.partner_id
 				LEFT JOIN res_partner rp2 ON rp2.id = am.campo_23_purchase_nd
 				LEFT JOIN l10n_latam_document_type ec01 ON ec01.id = am.campo_11_purchase_nd
-				WHERE vst_c.td in ('00','91','97','98') and rp1.is_not_home = TRUE
+				WHERE rp1.is_not_home = TRUE
 				and (am.date_modify_purchase between '{date_start}' and '{date_end}'))T
 				ORDER BY T.campo1, T.campo2, T.campo3
 				""".format(

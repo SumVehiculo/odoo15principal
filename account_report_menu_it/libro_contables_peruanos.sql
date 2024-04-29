@@ -1092,9 +1092,8 @@ CREATE OR REPLACE FUNCTION public.get_recxhon_1(
 	LEFT JOIN account_account_tag_account_move_line_rel rel ON rel.account_move_line_id = aml.id
 	LEFT JOIN account_account_tag aat ON aat.id = rel.account_account_tag_id
 	LEFT JOIN account_move am on am.id = aml.move_id
-	WHERE aml.type_document_id = (SELECT account_main_parameter.td_recibos_hon
-		   FROM account_main_parameter
-		  WHERE account_main_parameter.company_id = $3) AND am.state::text = 'posted'::text AND aml.display_type IS NULL AND aml.account_id IS NOT NULL 
+	LEFT JOIN account_journal aj ON aj.id = am.journal_id
+	WHERE aj.register_sunat = '3' AND am.state::text = 'posted'::text AND aml.display_type IS NULL AND aml.account_id IS NOT NULL 
 	AND ((CASE WHEN $4 = 'date' THEN am.date WHEN $4 = 'invoice_date_due' THEN am.invoice_date_due END) BETWEEN $1 and $2) AND am.company_id = $3
 	AND rel.account_account_tag_id IS NOT NULL
   GROUP BY am.id;
@@ -1173,9 +1172,7 @@ CREATE OR REPLACE FUNCTION public.get_recxhon_1_1(
 	LEFT JOIN l10n_latam_document_type eic1 ON eic1.id = dr.type_document_id
 	LEFT JOIN get_recxhon_1($1,$2,$3,$4) rh ON rh.move_id = am.id
 	LEFT JOIN res_currency rc ON rc.id = am.currency_id
-	WHERE am.l10n_latam_document_type_id = ( SELECT account_main_parameter.td_recibos_hon
-			FROM account_main_parameter
-		  WHERE account_main_parameter.company_id = $3) AND am.state::text = 'posted'::text AND aj.type = 'purchase'
+	WHERE aj.register_sunat = '3' AND am.state::text = 'posted'::text AND aj.type = 'purchase'
 	AND ((CASE WHEN $4 = 'date' THEN am.date WHEN $4 = 'invoice_date_due' THEN am.invoice_date_due END) BETWEEN $1 and $2) AND am.company_id = $3
   ORDER BY to_char(am.date::timestamp with time zone, 'yyyymm'::text), aj.code, am.name;
  END;
