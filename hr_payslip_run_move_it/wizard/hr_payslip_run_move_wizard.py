@@ -57,6 +57,7 @@ class HrPayslipRunMoveWizard(models.TransientModel):
 		move = self.env['account.move'].create({
 			'journal_id': self.journal_id.id,
 			'date': PR.date_end,
+			'glosa': 'PLANILLA DE REMUNERACIONES '+(PR.name.name),
 			'ref': 'PLA'+(PR.name.code).replace("-", ""),
 			'line_ids': extra_line + [
 				(0, 0, {

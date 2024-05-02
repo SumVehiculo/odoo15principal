@@ -133,7 +133,7 @@ class HrPayslipRun(models.Model):
 				worksheet.write(x, 5, Employee.m_last_name if Employee.m_last_name else '')
 				worksheet.write(x, 6, Employee.names if Employee.names else '')
 				worksheet.write(x, 7, resul)
-				worksheet.write(x, 8, 'S' if FirstContract.date_start >= self.date_start and FirstContract.date_start <= self.date_end and Contract.situation_id.code != '0' else 'N')
+				worksheet.write(x, 8, 'S' if FirstContract.date_start >= self.date_start and FirstContract.date_start <= self.date_end else 'N')
 				worksheet.write(x, 9, 'S' if Contract.situation_id.code == '0' and Contract.date_end and Contract.date_end >= self.date_start and Contract.date_end <= self.date_end else 'N')
 				worksheet.write(x, 10, Contract.exception if Contract.exception else '')
 				worksheet.write(x, 11, ir_line.total if ir_line.total else 0.00, formats['numberdosespecial'])

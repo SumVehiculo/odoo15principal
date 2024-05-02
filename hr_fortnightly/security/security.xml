@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.rule" id="hr_quincenales_rule">
+		<field name="name">Non Shared Records: Quincenase</field>
+		<field name="model_id" ref="hr_fortnightly.model_hr_quincenales"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">[('company_id', 'in', company_ids)]</field>
+	</record>
+</odoo>

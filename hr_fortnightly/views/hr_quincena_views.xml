@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<menuitem id="hr_advances_and_loans.advance_menu"
+				  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+				  sequence="73"
+				  name="Adelantos"
+				  groups="hr_advances_and_loans.group_hr_advances_root"/>
+
+		<menuitem id="hr_advance_menu"
+				  action="hr_advances_and_loans.action_advance"
+				  parent="hr_advances_and_loans.advance_menu"
+				  sequence="73"
+				  groups="hr_advances_and_loans.group_hr_advances_root"/>
+
+		<record id="view_hr_quincenales_tree" model="ir.ui.view">
+			<field name="name">hr.quincenales.tree</field>
+			<field name="model">hr.quincenales</field>
+			<field name="arch" type="xml">
+				<tree string="Quincena">
+					<field name="payslip_run_id"/>
+					<field name="fecha"/>
+					<field name="state"/>
+					<field name="company_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_hr_quincenales_form" model="ir.ui.view">
+			<field name="name">hr.quincenales.form</field>
+			<field name="model">hr.quincenales</field>
+			<field name="arch" type="xml">
+				<form string="Quincena">
+					<header>
+						<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+						<button string="Generar Quincena" name="generate" type="object" class="oe_highlight" states="draft"/>
+						<button string="Importar Adelantos" name="import_advances" type="object" class="oe_highlight" states="draft"/>
+						<button string="Importar Prestamos" name="import_loans" type="object" class="oe_highlight" states="draft"/>
+						<button string="Exportar Quincena" name="export_quincena" type="object" class="oe_highlight" states="draft" confirm="¿Desea exportar como adelanto quincenal?"/>
+						<button string="Generar Excel" name="generar_excel" type="object" class="oe_highlight"/>
+						<button string="Volver a Borrador" name="regresar_borrador" type="object" states="exported" confirm="¿Desea regresar la quincena a borrador?"/>
+					</header>
+					<group>
+						<group>
+							<field name="payslip_run_id" attrs="{'readonly':[('state','not in',['draft'])]}" options="{'no_create': True, 'no_create_edit':True}"/>
+							<field name="fecha"/>
+						</group>
+						<group>
+							<field name="company_id"/>
+						</group>
+					</group>
+					<group>
+						<field name="quincenales_lines" nolabel="1">
+							<tree editable="bottom" create="0">
+								<field name="employee_id" invisible="1"/>
+								<field name="state" invisible="1"/>
+								<field name="codigo_trabajador" readonly="1"/>
+								<field name="nombres" readonly="1"/>
+								<field name="fecha_ingreso" readonly="1"/>
+								<field name="basico" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="asignacion_familiar" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<button name="ingresos_wizard" type="object" string="Ing adicionales" icon="fa-edit" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="onp" attrs="{'readonly':[('state','!=','draft')]}" optional="hide"/>
+								<field name="afp_jub" attrs="{'readonly':[('state','!=','draft')]}" optional="hide"/>
+								<field name="afp_com" attrs="{'readonly':[('state','!=','draft')]}" optional="hide"/>
+								<field name="afp_prima" attrs="{'readonly':[('state','!=','draft')]}" optional="hide"/>
+								<field name="quinta_cat" attrs="{'readonly':[('state','!=','draft')]}" optional="hide"/>
+								<button name="descuentos_wizard" type="object" string="Dsct adicionales" icon="fa-edit"/>
+								<field name="total"/>
+								<field name="monto"/>
+								<field name="income" attrs="{'readonly':[('state','!=','draft')]}" optional="show"/>
+								<field name="expenses" attrs="{'readonly':[('state','!=','draft')]}" optional="show"/>
+								<button name="conceptos_wizard" type="object" string="Ing o Dsct quincenales" icon="fa-edit"/>
+								<field name="quincena"/>
+							</tree>
+						</field>
+					</group>
+				</form>
+			</field>
+		</record>
+		<!--Vista F-->
+
+		<record id="view_hr_quincenales_lines_ing_form" model="ir.ui.view">
+			<field name="name">hr.quincenales.lines.form</field>
+			<field name="model">hr.quincenales.lines</field>
+			<field name="arch" type="xml">
+				<form string="Ingresos">
+					<group string ="Ingresos Adicionales">
+						<field name="quincenales_ingresos_lines" nolabel="1">
+							<tree editable="bottom">
+								<field name="concepto_id" domain="[('category_id.code', '=', 'ING')]" options="{'no_create': True, 'no_create_edit':True}"/>
+								<field name="monto"/>
+							</tree>
+						</field>
+					</group>
+					<footer>
+						<button string="Registrar" name="save_datai" type="object" class="oe_highlight"/>
+						o
+						<button string="Cancelar" special="cancel" class="oe_link"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_hr_quincenales_lines_desc_form" model="ir.ui.view">
+			<field name="name">hr.quincenales.lines.form</field>
+			<field name="model">hr.quincenales.lines</field>
+			<field name="arch" type="xml">
+				<form string="Descuentos">
+					<group string="Descuentos Adicionales">
+						<field name="quincenales_descuentos_lines" nolabel="1">
+							<tree editable="bottom">
+								<field name="concepto_id" domain="[('category_id.code', '=', 'DES_NET')]" options="{'no_create': True, 'no_create_edit':True}"/>
+								<field name="monto"/>
+							</tree>
+						</field>
+					</group>
+					<footer>
+						<button string="Registrar" name="save_datad" type="object" class="oe_highlight"/>
+						o
+						<button string="Cancelar" special="cancel" class="oe_link"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_hr_quincenales_lines_conceptos_form" model="ir.ui.view">
+			<field name="name">hr.quincenales.lines.form</field>
+			<field name="model">hr.quincenales.lines</field>
+			<field name="arch" type="xml">
+				<form string="Otros Conceptos">
+					<group string ="Otros Conceptos">
+						<field name="quincenales_conceptos_lines" nolabel="1">
+							<tree editable="bottom">
+								<field name="name_input_id" options="{'no_create': True, 'no_create_edit':True}"/>
+								<field name="amount" sum="amount"/>
+								<field name="type"/>
+							</tree>
+						</field>
+					</group>
+					<footer>
+						<button string="Registrar" name="add_concept" type="object" class="oe_highlight"/>
+						o
+						<button string="Cancelar" special="cancel" class="oe_link"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_hr_quincenales" model="ir.actions.act_window">
+			<field name="name">Pagos Quincenales</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.quincenales</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="hr_quincenales_menu"
+				  action="action_hr_quincenales"
+				  parent="hr_advances_and_loans.advance_menu"
+				  sequence="72"
+				  groups="hr_advances_and_loans.group_hr_advances_root"/>
+
+	</data>
+</odoo>

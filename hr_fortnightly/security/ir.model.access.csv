@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_quincenales,hr_hr_quincenales,model_hr_quincenales,,1,1,1,1
+access_hr_quincenales_lines,hr_quincenales_lines,model_hr_quincenales_lines,,1,1,1,1
+access_hr_quincenales_ingresos_lines,hr_quincenales_ingresos_lines,model_hr_quincenales_ingresos_lines,,1,1,1,1
+access_hr_quincenales_descuentos_lines,hr_quincenales_descuentos_lines,model_hr_quincenales_descuentos_lines,,1,1,1,1
+access_hr_quincenales_conceptos_lines,hr_quincenales_conceptos_lines,model_hr_quincenales_conceptos_lines,,1,1,1,1
+

@@ -657,7 +657,7 @@ else:
 			<field name='condition_select'>none</field>
 			<field name='amount_select'>code</field>
 			<field name='amount_python_compute'>
-net_rem = TINGR-TDESN-VAC-VATRU-GRA_TRU-BON9_TRU-CTS_TRU-((TAT-QUINTA) * REMAFE)-QUINTA
+net_rem = TINGR-TDESN-VAC-VATRU-GRA_TRU-BON9_TRU-CTS_TRU-((TAT-QUINTA) * REMAFE)-QUINTA+ADE_VAC
 if net_rem &lt; 0:
     result = 0
 else:
@@ -680,7 +680,7 @@ net_vac = VAC+VATRU-((TAT-QUINTA) * VACAFE)
 if net_rem &lt; 0:
     result = net_vac + net_rem
 else:
-    result = net_vac
+    result = (net_vac - ADE_VAC) if abs(net_vac - ADE_VAC) >0.1 else 0
 			</field>
 			<field name='category_id' ref='SUB'/>
 			<field name='struct_id' ref='hr_base_it.base_structure'/>
