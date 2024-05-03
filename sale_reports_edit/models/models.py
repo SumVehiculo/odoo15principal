@@ -12,3 +12,4 @@ class SaleReport(models.Model):
 		fields['payment_term_id'] = ", s.payment_term_id as payment_term_id"
 		groupby += ', s.payment_term_id'
 		return super(SaleReport, self)._query(with_clause, fields, groupby, from_clause)
+		
