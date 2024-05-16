@@ -6,7 +6,7 @@
             <field name="model">account.book.honorary.view</field>
             <field name="inherit_id" ref="account_book_honorary_it.view_account_book_honorary_view_tree" />
             <field name="arch" type="xml">
-                <!-- <xpath expr="//field[@name='apellido_p']" position="attributes">
+                <xpath expr="//field[@name='apellido_p']" position="attributes">
                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='apellido_m']" position="attributes">
@@ -14,7 +14,7 @@
                 </xpath>
                 <xpath expr="//field[@name='namep']" position="attributes">
                    <attribute name="invisible">1</attribute>
-                </xpath> -->
+                </xpath>
                 <xpath expr="//field[@name='docp']" position="after">
                     <field name="name"/>
                 </xpath>

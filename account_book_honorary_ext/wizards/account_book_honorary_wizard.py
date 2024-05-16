@@ -82,7 +82,7 @@ class AccountBookHonoraryWizard(models.TransientModel):
 		worksheet.write(x,16,retencion,formats['numbertotal'])
 		worksheet.write(x,17,neto_p,formats['numbertotal'])
 
-		widths = [10,7,11,9,9,4,5,10,4,11,45,10,15,5,7,12,12,12]
+		widths = [10,7,11,10,10,4,6,10,4,12,45,8,6,12,12,12,12,19]
 		worksheet = ReportBase.resize_cells(worksheet,widths)
 		workbook.close()
 
@@ -117,6 +117,7 @@ class AccountBookHonoraryWizard(models.TransientModel):
 			tt.neto_p,
 			tt.periodo_p,
 			tt.is_not_home,
+			tt.c_d_imp,
 			rp.name
 			from get_recxhon_1_1('%s','%s',%d,'%s') tt
 			LEFT JOIN account_move am ON am.id = tt.am_id
