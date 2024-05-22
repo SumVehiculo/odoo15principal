@@ -10,7 +10,6 @@
         'stock'
     ],
     'data': [
-        'views/sale_order.xml'
     ],
     'auto_install': False,
     'application': False
