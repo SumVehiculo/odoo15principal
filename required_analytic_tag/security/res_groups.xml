@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <record id="create_analytic_tag_group" model="res.groups">
-        <field name="name">Crear Etiquetas Analiticas</field>
+        <field name="name">Permiso Crear Etiqueta Analitica</field>
     </record>
 </odoo>
