@@ -9,7 +9,8 @@
         'sale',
         'stock'
     ],
-    'data': [
+    'data':[
+        'security/res_groups.xml'
     ],
     'auto_install': False,
     'application': False
