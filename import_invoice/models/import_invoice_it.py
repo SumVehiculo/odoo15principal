@@ -164,10 +164,15 @@ class ImportInvoiceIt(models.Model):
 				'detra_amount': values.get('monto_detrac'),
 				'detraction_percent_id': self.env['detractions.catalog.percent'].search([('code','=',values.get('bien_servi'))],limit=1).id if values.get('bien_servi') != '' else None
 			}
+			
 			if inv_date != inv_date_due:
 				value_inv_arr['invoice_payment_term_id'] = None
+			if values.get('tc') != '':
+				value_inv_arr['currency_rate'] = float(values.get('tc'))
 			inv_id = invoice_obj.create(value_inv_arr)
-			inv_id._get_currency_rate()
+			if values.get('tc') == '':
+				inv_id._get_currency_rate()
+			inv_id._onchange_tc_per()
 			self.make_invoice_line(values, inv_id)
 			if doc_relac_type_document_id:
 				inv_id.write({'doc_invoice_relac' :([(0,0,{
@@ -500,7 +505,7 @@ class ImportInvoiceIt(models.Model):
 			else:
 				line = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
 				if self.account_opt == 'default':
-					if len(line) == 30:
+					if len(line) == 31:
 						if line[11] == '':
 							raise UserError(_('Please assign a date'))
 						else:
@@ -558,14 +563,15 @@ class ImportInvoiceIt(models.Model):
 										'fecha_detrac': fecha_detrac,
 										'nro_comp_detrac': str(line[27]),
 										'monto_detrac': line[28],
-										'bien_servi': str(line[29])
+										'bien_servi': str(line[29]),
+										'tc': line[30]
 										})
-					elif len(line) > 30:
+					elif len(line) > 31:
 						raise UserError(u'Tu archivo tiene más columnas que la plantilla de ejemplo.')
 					else:
 						raise UserError(u'Tu archivo tiene menos columnas que la plantilla de ejemplo.')
 				else:
-					if len(line) == 31:
+					if len(line) == 32:
 						if line[12] == '':
 							raise UserError(_('Please assign a date'))
 						else:
@@ -625,14 +631,15 @@ class ImportInvoiceIt(models.Model):
 										'fecha_detrac': fecha_detrac,
 										'nro_comp_detrac': str(line[28]),
 										'monto_detrac': line[29],
-										'bien_servi': str(line[30])
+										'bien_servi': str(line[30]),
+										'tc': line[31]
 										})
-					elif len(line) > 31:
+					elif len(line) > 32:
 						raise UserError(u'Tu archivo tiene más columnas que la plantilla de ejemplo.')
 					else:
 						raise UserError(u'Tu archivo tiene menos columnas que la plantilla de ejemplo.')
 				res = self.make_invoice(values)
-				res._get_currency_rate()
+				res._onchange_tc_per()
 				res._compute_amount()
 				res.flush()
 				if date_string != date_invoice_string:

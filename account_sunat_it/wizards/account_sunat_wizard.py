@@ -313,7 +313,6 @@ class AccountSunatWizard(models.TransientModel):
 		return sql
 
 	def get_daot(self,sql,nomenclatura):
-
 		name_doc = nomenclatura+".txt"
 		self.env.cr.execute(sql)
 		sql = "COPY (%s) TO STDOUT WITH %s" % (sql, "CSV DELIMITER '|'")
@@ -322,14 +321,18 @@ class AccountSunatWizard(models.TransientModel):
 		try:
 			output = BytesIO()
 			self.env.cr.copy_expert(sql, output)
-			res = base64.b64encode(output.getvalue())
+			csv_content = output.getvalue().decode('utf-8')
+			csv_lines = csv_content.split('\n')
+			csv_lines.pop(len(csv_lines)-1)
+			csv_lines_with_cr = [line + '\r' for line in csv_lines]
+			csv_content_with_cr = '\n'.join(csv_lines_with_cr)
+			csv_content_with_cr += '\n'
+			res = base64.b64encode(csv_content_with_cr.encode('utf-8'))
 			output.close()
 		finally:
 			self._rollback_savepoint(rollback_name)
-
-		res = res.decode('utf-8')
-
-		return self.env['popup.it'].get_file(name_doc,res if res else base64.encodebytes(b"== Sin Registros =="))
+		#res = res.encode('utf-8')
+		return self.env['popup.it'].get_file(name_doc,res if res else base64.encodestring(b"== Sin Registros =="))
 
 	def get_pdb_currency_rate(self):
 		ruc = self.company_id.partner_id.vat

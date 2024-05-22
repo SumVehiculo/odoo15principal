@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="import_partner_bank_it_wizard_view" model="ir.ui.view">
+			<field name="name">import.partner.bank.it.form</field>
+			<field name="model">import.partner.bank.it</field>
+			<field name="arch" type="xml">
+				<form string="Importar Cuentas Bancarias">
+					<group>
+						<field name="file" filename="file_name" />
+						<field name="file_name" invisible="1"/>
+					</group>
+					<footer>
+						<button class="fa fa-upload btn-primary" name="import_partner" string="Importar" type="object"/>
+						<button class="fa fa-download btn-primary" name="download_template" string="Descargar Plantilla" type="object"/>
+						or
+                    	<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_import_partner_bank_it_import_wizard" model="ir.actions.act_window">
+			<field name="name">Importar Cuentas Bancarias</field>
+			<field name="res_model">import.partner.bank.it</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<menuitem action="action_import_partner_bank_it_import_wizard" 
+			id="import_partner_bank_it_import_menu"
+			parent="account_base_import_it.menu_import_imports_partner" 
+			sequence="7"/>
+
+	</data>
+</odoo>
+ 

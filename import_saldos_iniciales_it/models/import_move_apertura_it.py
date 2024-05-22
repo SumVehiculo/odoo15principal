@@ -110,7 +110,7 @@ class ImportMoveAperturaIt(models.Model):
 			raise UserError("Archivo invalido!")
 
 		lineas = []
-
+		partner = []
 		for row_no in range(sheet.nrows):
 			if row_no <= 0:
 				continue
@@ -127,6 +127,13 @@ class ImportMoveAperturaIt(models.Model):
 						a1 = int(float(line[3]))
 						a1_as_datetime = datetime(*xlrd.xldate_as_tuple(a1, workbook.datemode))
 						date_due_string = a1_as_datetime.date().strftime('%Y-%m-%d')
+					
+					
+					partner_obj = self.env['res.partner']
+					partner_search = partner_obj.search([('vat', '=', str(line[0])),('parent_id','=',False)],limit=1)	
+					if not partner_search:
+						partner.append(line[0])
+					
 					values = (0,0,{'n_ruc': line[0],
 								'n_razonsoc': line[1],
 								'n_fecha_emision': date_string,
@@ -147,7 +154,8 @@ class ImportMoveAperturaIt(models.Model):
 					raise UserError('Tu archivo tiene columnas menos columnas de lo esperado.')
 
 				lineas.append(values)
-
+		if partner:
+			return self.get_excel_not_partner(partner)
 		self.write({'detalle': lineas})
 
 		self.env.cr.execute("""
@@ -208,15 +216,17 @@ class ImportMoveAperturaIt(models.Model):
 			""" % (self.id))
 
 		problemas = ""
+		
 		for i in self.env.cr.fetchall():
 			if not i[1]:
+				
 				problemas += "No se encontro el partner: " + i[0] + '\n'
 			if not i[4]:
 				problemas += "No se encontro la cuenta : " + i[5] + '\n'
 			if i[3]:
 				if not i[2]:
 					problemas += "No se encontro el Vendedor: " + i[3] + '\n'
-
+		
 		if problemas != "":
 			raise UserError(problemas)
 
@@ -245,10 +255,12 @@ class ImportMoveAperturaIt(models.Model):
 			currency = self.env['res.currency'].search([('id','=',acc[6])],limit=1)
 			lineas = []
 			amount_mn = 0
+			amount_me = 0
 			if self.tipo == 'out':
 				
 				type_invoice = ('out_refund' if parametros.dt_national_credit_note.id == acc[4] else 'out_invoice') if parametros.dt_national_credit_note else 'out_invoice'
 				amount_mn = acc[7] if type_invoice == 'out_invoice' else acc[7]*-1
+				amount_me = acc[8]*-1 if type_invoice == 'out_invoice' else acc[8]
 				vals = (0,0,{
 					'account_id': self.account_descargo_me.id if currency.name != 'PEN' else self.account_descargo_mn.id,
 					'partner_id': self.partner_descargo.id,
@@ -256,7 +268,7 @@ class ImportMoveAperturaIt(models.Model):
 					'nro_comp': self.document_descargo,
 					'name': 'SALDOS DE APERTURA',
 					'currency_id': currency.id if currency.name != 'PEN' else self.company_id.currency_id.id,
-					'amount_currency': acc[8]*-1 if currency.name != 'PEN' else 0,
+					'amount_currency': amount_me if currency.name != 'PEN' else 0,
 					'debit': 0 if amount_mn > 0 else abs(amount_mn),
 					'credit': amount_mn if amount_mn > 0 else 0,
 					'price_subtotal':acc[8] if currency.name != 'PEN' else amount_mn,
@@ -276,7 +288,7 @@ class ImportMoveAperturaIt(models.Model):
 					'nro_comp': acc[5],
 					'name': 'SALDOS DE APERTURA',
 					'currency_id': currency.id if currency.name != 'PEN' else self.company_id.currency_id.id,
-					'amount_currency': acc[8],
+					'amount_currency': amount_me*-1,
 					'debit': amount_mn if amount_mn > 0 else 0,
 					'credit': 0 if amount_mn > 0 else abs(amount_mn),
 					'price_subtotal':acc[8]*-1 if currency.name != 'PEN' else amount_mn*-1,
@@ -294,6 +306,7 @@ class ImportMoveAperturaIt(models.Model):
 			else:
 				type_invoice = ('in_refund' if parametros.dt_national_credit_note.id == acc[4] else 'in_invoice') if parametros.dt_national_credit_note else 'in_invoice'
 				amount_mn = acc[7] if type_invoice == 'in_invoice' else acc[7]*-1
+				amount_me = acc[8] if type_invoice == 'in_invoice' else acc[8]*-1
 				vals = (0,0,{
 					'account_id': self.account_descargo_me.id if currency.name != 'PEN' else self.account_descargo_mn.id,
 					'partner_id': self.partner_descargo.id,
@@ -301,7 +314,7 @@ class ImportMoveAperturaIt(models.Model):
 					'nro_comp': self.document_descargo,
 					'name': 'SALDOS DE APERTURA',
 					'currency_id': currency.id if currency.name != 'PEN' else self.company_id.currency_id.id,
-					'amount_currency': acc[8],
+					'amount_currency': amount_me,
 					'debit': amount_mn if amount_mn > 0 else 0,
 					'credit': 0 if amount_mn > 0 else abs(amount_mn),
 					'price_subtotal':acc[8] if currency.name != 'PEN' else amount_mn,
@@ -321,7 +334,7 @@ class ImportMoveAperturaIt(models.Model):
 					'nro_comp': acc[5],
 					'name': 'SALDOS DE APERTURA',
 					'currency_id': currency.id if currency.name != 'PEN' else self.company_id.currency_id.id,
-					'amount_currency': acc[8]*-1,
+					'amount_currency': amount_me*-1,
 					'debit': 0 if amount_mn > 0 else abs(amount_mn),
 					'credit': amount_mn if amount_mn > 0 else 0,
 					'price_subtotal':acc[8]*-1 if currency.name != 'PEN' else amount_mn*-1,
@@ -390,6 +403,47 @@ class ImportMoveAperturaIt(models.Model):
 			 'url': '/web/binary/download_template_import_initial?model=import.move.apertura.it&id=%s'%(self.id),
 			 'target': 'new',
 			 }
+	
+	#NUEVA FUNCIONALIDAD
+	def get_excel_not_partner(self,partner):			
+		import io
+		from xlsxwriter.workbook import Workbook
+		ReportBase = self.env['report.base']
+
+		direccion = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).dir_create_file
+
+		if not direccion:
+			raise UserError(u'No existe un Directorio Exportadores configurado en Parametros Principales de Contabilidad para su Compañía')
+
+		namefile = 'partners_missing.xlsx'
+		
+		workbook = Workbook(direccion + namefile)
+		workbook, formats = ReportBase.get_formats(workbook)
+
+		import importlib
+		import sys
+		importlib.reload(sys)
+
+		worksheet = workbook.add_worksheet("PARTNER")
+
+		worksheet.set_tab_color('blue')
+
+		HEADERS = [u'NRO PARTNER']
+
+		worksheet = ReportBase.get_headers(worksheet,HEADERS,0,0,formats['boldbord'])
+		x=1
+  
+		for line in partner:
+			worksheet.write(x,0,line if line else '',formats['especial1'])
+			x += 1
+
+		widths = [15]
+
+		worksheet = ReportBase.resize_cells(worksheet,widths)
+		workbook.close()
+
+		f = open(direccion + namefile, 'rb')
+		return self.env['popup.it'].get_file(u'Partner no encontrados.xlsx',base64.encodebytes(b''.join(f.readlines())))
 
 class ImportMoveAperturaItLine(models.Model):
 	_name = 'import.move.apertura.it.line'
