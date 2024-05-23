@@ -7,12 +7,12 @@ class SaleOrderLine(models.Model):
     @api.model
     def create(self, vals):
         res=super().create(vals)
-        if not res.analytic_tag_ids:
+        if not res.analytic_tag_ids and not res.display_type:
             raise UserError("Es necesaria la Etiqueta analitica")
         return res
     
     def write(self, vals):
         res = super().write(vals)
-        if not self.analytic_tag_ids:
+        if not self.analytic_tag_ids and not self.display_type:
             raise UserError("Es necesaria la Etiqueta analitica")
         return res
