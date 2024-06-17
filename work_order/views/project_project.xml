@@ -15,10 +15,8 @@
                         <field name="name" readonly="1"/>
                     </h1>
 
-                    <h2 class="d-flex flex-row justify-content-between">
-                        <field name="priority" widget="priority" class="mr-3"/>
-                        <field name="project_name" class="o_task_name text-truncate" placeholder="Nombre del Proyecto" default_focus="1"/>
-                        <field name="kanban_state" widget="state_selection" class="ml-auto"/>
+                    <h2>
+                        <field name="project_name" placeholder="Nombre del Proyecto"/>
                     </h2>
                 </div>
             </xpath>
