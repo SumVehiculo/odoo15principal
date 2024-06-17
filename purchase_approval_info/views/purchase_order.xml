@@ -13,7 +13,7 @@
                             <field name="approved_by" />
                         </group>
                         <group>
-                            <field name="date_approve" />
+                            <field name="date_approve" string="Fecha de Aprobación"/>
                         </group>
                     </group>
                 </page>
