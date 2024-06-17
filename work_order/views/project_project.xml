@@ -10,11 +10,10 @@
             </xpath>
             <xpath expr="//div[@class='oe_title']" position="after">
                 <div class="oe_title">
-                    <span class="o_form_label">Orden de Trabaje</span>
+                    <span class="o_form_label">Orden de Trabajo</span>
                     <h1>
                         <field name="name" readonly="1"/>
                     </h1>
-
                     <h2>
                         <field name="project_name" placeholder="Nombre del Proyecto"/>
                     </h2>

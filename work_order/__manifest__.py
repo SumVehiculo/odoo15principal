@@ -9,7 +9,9 @@
         'project'
     ],
     'data': [
-        'views/project_project.xml'
+        'views/project_project.xml',
+        'views/purchase_order.xml',
+        'views/stock_picking.xml',
     ],
     'auto_install': False,
     'application': False
