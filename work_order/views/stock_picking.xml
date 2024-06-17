@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <record id="inherit_view_id_inherit_module_name" model="ir.ui.view">
-        <field name="name">model.name.view.form.inherit</field>
-        <field name="model">model.name</field>
-        <field name="inherit_id" ref="inherit_module_name.inherit_view_id"/>
+    <record id="stock_picking_view_form_inherit_work_order" model="ir.ui.view">
+        <field name="name">stock.picking.view.form.inherit.work_order</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_packaging_id']" position="inside">
                 <field name="work_order_id" />
