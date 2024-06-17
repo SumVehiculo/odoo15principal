@@ -5,20 +5,22 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@class='oe_title pr-0']/div[1]" position="attributes">
+            <xpath expr="//div[@class='oe_title']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//div[@class='oe_title pr-0']/div[1]" position="after">
-                <span class="o_form_label">Orden de Trabaje</span>
-                <h1>
-                    <field name="name" readonly="1"/>
-                </h1>
+            <xpath expr="//div[@class='oe_title']" position="after">
+                <div class="oe_title">
+                    <span class="o_form_label">Orden de Trabaje</span>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
 
-                <h2 class="d-flex flex-row justify-content-between">
-                    <field name="priority" widget="priority" class="mr-3"/>
-                    <field name="project_name" class="o_task_name text-truncate" placeholder="Nombre del Proyecto" default_focus="1"/>
-                    <field name="kanban_state" widget="state_selection" class="ml-auto"/>
-                </h2>
+                    <h2 class="d-flex flex-row justify-content-between">
+                        <field name="priority" widget="priority" class="mr-3"/>
+                        <field name="project_name" class="o_task_name text-truncate" placeholder="Nombre del Proyecto" default_focus="1"/>
+                        <field name="kanban_state" widget="state_selection" class="ml-auto"/>
+                    </h2>
+                </div>
             </xpath>
         </field>
     </record>
