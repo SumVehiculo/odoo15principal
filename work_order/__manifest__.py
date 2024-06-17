@@ -6,7 +6,9 @@
     'author': 'ITGRUPO, Jhorel Revilla',
     'license': 'LGPL-3',
     'depends': [
-        'project'
+        'project',
+        'purchase',
+        'stock'
     ],
     'data': [
         'views/project_project.xml',
