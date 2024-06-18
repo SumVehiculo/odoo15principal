@@ -51,6 +51,6 @@
         id="hr_employee_hourly_cost_menu"
         name="Empleados-Costo por Hora"
         action="hr_employee_hourly_cost_action"
-        parent="	hr_timesheet.timesheet_menu_root"
+        parent="hr_timesheet.timesheet_menu_root"
         sequence="11"/>
 </odoo>
