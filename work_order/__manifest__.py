@@ -14,6 +14,7 @@
         'views/project_project.xml',
         'views/purchase_order.xml',
         'views/stock_picking.xml',
+        'views/account_move.xml',
     ],
     'auto_install': False,
     'application': False
