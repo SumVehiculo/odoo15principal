@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="account_move_view_form_inherit_work_order" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit.work_order</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']" position="after">
+                <field name="work_order_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
