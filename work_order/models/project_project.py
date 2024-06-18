@@ -6,7 +6,7 @@ class ProjectProject(models.Model):
     _inherit="project.project"
     
 
-    project_name = fields.Char('Nombre del Proyecto',default= lambda self:self.name)
+    project_name = fields.Char('Nombre del Proyecto')
     
     @api.model
     def create(self, vals):
@@ -20,11 +20,13 @@ class ProjectProject(models.Model):
             date += actual_month
         # date = year+month
         id_seq = self.env['ir.sequence'].sudo().search([
-            ('name','=','Correlativo OT SUMVEHICULOS'+date)
+            ('name','=','Correlativo OT SUMVEHICULOS'+date),
+            ('company_id','=',self.env.company.id)
         ], limit=1)
         if not id_seq:
             id_seq = self.env['ir.sequence'].sudo().create({
                 'name': 'Correlativo OT SUMVEHICULOS'+date,
+                'company_id': self.env.company.id,
                 'implementation': 'no_gap',
                 'active': True,
                 'prefix': 'OT',

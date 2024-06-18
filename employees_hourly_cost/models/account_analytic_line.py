@@ -4,7 +4,11 @@ from odoo.exceptions import UserError
 class AccountAnalyticLine(models.Model):
     _inherit="account.analytic.line"
     
-    total_cost_per_hour = fields.Float('Costo Total Por Hora', compute="_compute_total_cost_per_hour")
+    total_cost_per_hour = fields.Float(
+        'Costo Total Por Hora', 
+        compute="_compute_total_cost_per_hour",
+        store=True
+    )
     
     def _compute_total_cost_per_hour(self):
         for rec in self:
@@ -14,4 +18,4 @@ class AccountAnalyticLine(models.Model):
             if not related_employee:
                 self.total_cost_per_hour=0.00
                 return
-            self.total_cost_per_hour = related_employee.cost * self.unit_amount
+            self.total_cost_per_hour = round(related_employee.cost  * round(self.unit_amount,2), 2)
