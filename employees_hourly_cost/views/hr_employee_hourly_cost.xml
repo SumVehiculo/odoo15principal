@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_employee_hourly_cost_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.hourly.cost.view.form</field>
+        <field name="model">hr.employee.hourly.cost</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <div class="oe_title">
+                            <span class="o_form_label">Em</span>
+                            <h1>
+                                <field name="employee_id" />
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="cost" />
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers"/>
+					<field name="message_ids" widget="mail_thread"/>
+				</div>
+            </form>
+        </field>
+    </record>
+    <record id="hr_employee_hourly_cost_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.hourly.cost.view.tree</field>
+        <field name="model">hr.employee.hourly.cost</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                   <field name="name" />
+                   <field name="cost" />
+            </tree>
+        </field>
+    </record>
+    <record id="hr_employee_hourly_cost_action" model="ir.actions.act_window">
+        <field name="name">Empleados-Costo por Hora</field>
+        <field name="res_model">hr.employee.hourly.cost</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer costo por empleados aquí
+              </p>            
+        </field>
+    </record>
+    <menuitem
+        id="hr_employee_hourly_cost_menu"
+        name="Empleados-Costo por Hora"
+        action="hr_employee_hourly_cost_action"
+        parent="	hr_timesheet.timesheet_menu_root"
+        sequence="11"/>
+</odoo>
