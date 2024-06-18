@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="account_analytic_line_view_form_inherit_employees_hourly_cost" model="ir.ui.view">
+        <field name="name">account.analytic.line.view.form.inherit.employees_hourly_cost</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.timesheet_view_tree_user"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='unit_amount']" position="after">
+                <field name="total_cost_per_hour" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

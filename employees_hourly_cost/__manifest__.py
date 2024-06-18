@@ -11,8 +11,10 @@
         'mail'
     ],
     'data': [
+        'security/res_groups.xml',
         'security/ir.model.access.csv',
         'views/hr_employee_hourly_cost.xml',
+        'views/account_analytic_line.xml',
     ],
     'auto_install': False,
     'application': False

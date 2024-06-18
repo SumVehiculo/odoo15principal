@@ -6,19 +6,16 @@
         <field name="arch" type="xml">
             <form string="">
                 <sheet>
-                    <group>
-                        <div class="oe_title">
-                            <span class="o_form_label">Em</span>
-                            <h1>
-                                <field name="employee_id" />
-                            </h1>
-                        </div>
-                        <group>
-                            <field name="cost" />
-                        </group>
-                        <group>
-                        </group>
-                    </group>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="employee_id" placeholder="Empleado ..."/>
+                        </h1>
+                      </div>  
+                      <group>
+                          <group>
+                            <field name="cost"/>      
+                          </group>
+                      </group>
                 </sheet>
                 <div class="oe_chatter">
 					<field name="message_follower_ids" widget="mail_followers"/>
@@ -52,5 +49,6 @@
         name="Empleados-Costo por Hora"
         action="hr_employee_hourly_cost_action"
         parent="hr_timesheet.timesheet_menu_root"
+        groups="hr_employee_hourly_cost_group"
         sequence="11"/>
 </odoo>
