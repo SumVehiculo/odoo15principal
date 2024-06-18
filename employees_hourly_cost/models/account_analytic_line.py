@@ -9,7 +9,7 @@ class AccountAnalyticLine(models.Model):
     def _compute_total_cost_per_hour(self):
         for rec in self:
             related_employee = self.env['hr.employee.hourly.cost'].search([
-                ('employee_id','=', self.employee_id)
+                ('employee_id','=', self.employee_id.id)
             ])
             if not related_employee:
                 self.total_cost_per_hour=0.00
