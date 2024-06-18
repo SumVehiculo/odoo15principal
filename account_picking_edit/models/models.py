@@ -3,7 +3,6 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo import tools
 
-from pickingtime import pickingtime, timedelta, picking
 
 
 class UpdateExpectedDateWizard(models.TransientModel):
