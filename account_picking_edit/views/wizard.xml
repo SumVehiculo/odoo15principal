@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_edit_expeced_picking" model="res.groups">
+        <field name="name">Grupo para editar Fecha Prevista</field>
+    </record>
+    <record model="ir.ui.view" id="view_update_account_picking_wizard">
+        <field name="name">update.account.picking.wizard.form</field>
+        <field name="model">update.account.picking.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Fechas">
+                <group>
+                    <group>
+                        <h1>Indique la Factura:</h1>
+                    </group>
+                </group>
+                <group>
+                    <field name="picking_id" readonly="1" force_save="1"/>
+                    <field name="account_picking" options="{'no_open': True, 'no_edit': True, 'no_create': True, 'no_delete':True}"/>
+                </group>
+                <footer>
+                    <button string="Actualizar" name="save_account_picking_it" type="object" class="oe_highlight" onlyRead="1"/>
+                    o
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="view_purchase_picking_form_tree_it" model="ir.ui.view">
+        <field name="name">stock.picking.line.form.tree.it</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="kardex_fisico_it.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_id']" position="after">
+                <field name="vs_wizard" invisible="1"/>
+                <button name="update_account_picking_wizard_it" type="object" icon="fa-list" string="Actualizar factura"/>
+                <!-- <button string="Fecha prevista" name="update_account_picking_wizard_it" attrs="{'invisible':[('state','!=','done')]}" type="object" class="btn-success oe_inline"/> -->
+            </xpath>
+        </field>
+    </record>
+</odoo>
