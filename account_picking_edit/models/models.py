@@ -33,7 +33,7 @@ class StockPicking(models.Model):
 
 	def update_account_picking_wizard_it(self):
 		for wi in self:
-			if wi.vs_wizard and wi.state != 'cancel':
+			if wi.vs_wizard and wi.state not in ('cancel','draft'):
 			# if wi.vs_wizard and wi.state == 'done':
 				context = {
 					'default_picking_id': wi.id, 
@@ -49,4 +49,4 @@ class StockPicking(models.Model):
 					'context': context,
 				}
 			else:
-				raise UserError('No puede ingresar si no se encuentra en el grupo')
+				raise UserError('No puede ingresar si no se encuentra en el grupo, o la transferencia se encuentra en Borrador o Cancelado')
