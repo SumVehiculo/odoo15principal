@@ -8,6 +8,9 @@
             <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='analytic_tag_ids']" position="after">
                 <field name="work_order_id" />
             </xpath>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='analytic_tag_ids']" position="after">
+                <field name="work_order_id" />
+            </xpath>
         </field>
     </record>
 </odoo>
