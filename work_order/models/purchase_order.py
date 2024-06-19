@@ -7,9 +7,11 @@ class PurchaseOrder(models.Model):
     def button_confirm(self):
         new_picks = self.picking_ids
         res = super().button_confirm()
-        new_picks -= self.picking_ids
-        raise UserError(f"new_picks {new_picks}")
+        new_picks = self.picking_ids - new_picks
         for pick in new_picks:
             for line in pick.move_ids_without_package:
-                line.work_order_id = line.purchase_line_id.work_order_id.id
+                line.write({
+                    'work_order_id': line.purchase_line_id.work_order_id.id
+                })
         return res 
+    
