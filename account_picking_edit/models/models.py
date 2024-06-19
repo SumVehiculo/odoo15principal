@@ -16,7 +16,7 @@ class UpdateExpectedDateWizard(models.TransientModel):
 	def save_account_picking_it(self):
 		for sav in self:
 			if sav.picking_id:
-				sav.picking_id.invoice_id = sav.account_picking
+				sav.picking_id.invoice_id = sav.account_picking.id
 
 class StockPicking(models.Model):
 	_inherit = 'stock.picking'
@@ -33,11 +33,11 @@ class StockPicking(models.Model):
 
 	def update_account_picking_wizard_it(self):
 		for wi in self:
-			if wi.vs_wizard:
+			if wi.vs_wizard and wi.state != 'cancel':
 			# if wi.vs_wizard and wi.state == 'done':
 				context = {
 					'default_picking_id': wi.id, 
-					'default_account_picking': wi.invoice_id, 
+					'default_account_picking': wi.invoice_id.id if wi.invoice_id else False, 
 				}
 				return {
 					'type': 'ir.actions.act_window',
@@ -49,4 +49,4 @@ class StockPicking(models.Model):
 					'context': context,
 				}
 			else:
-				raise UserError('No puede ingresar si no se encuentra en el grupo y la orden se encuentre en un estado diferente a bloqueado')
+				raise UserError('No puede ingresar si no se encuentra en el grupo')
