@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="group_edit_expeced_picking" model="res.groups">
-        <field name="name">Grupo para editar Fecha Prevista</field>
+    <record id="group_edit_add_account_move_by_wizard" model="res.groups">
+        <field name="name">Grupo para agregar facturas a albaranes por wizard.</field>
     </record>
     <record model="ir.ui.view" id="view_update_account_picking_wizard">
         <field name="name">update.account.picking.wizard.form</field>

@@ -27,13 +27,14 @@ class StockPicking(models.Model):
 	def _compute_vs_wizard(self):
 		for record in self:
 			user = self.env.user
-			record.vs_wizard = user.has_group('account_picking_edit.group_edit_expeced_picking')
+			record.vs_wizard = user.has_group('account_picking_edit.group_edit_add_account_move_by_wizard')
 
 
 
 	def update_account_picking_wizard_it(self):
 		for wi in self:
-			if wi.vs_wizard and wi.state == 'done':
+			if wi.vs_wizard:
+			# if wi.vs_wizard and wi.state == 'done':
 				context = {
 					'default_picking_id': wi.id, 
 					'default_account_picking': wi.invoice_id, 
