@@ -6,83 +6,83 @@
 		<field name="arch" type="xml">
 			<form string="Archivo">
 				<field name="output_name_1" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_1', '=', False)]}">
 					<label for="output_file_1"/><field name="output_file_1" readonly="1" filename="output_name_1"/>
 				</div>
 				<field name="output_name_2" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_2', '=', False)]}">
 					<label for="output_file_2"/><field name="output_file_2" readonly="1" filename="output_name_2"/>
 				</div>
 				<field name="output_name_3" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_3', '=', False)]}">
 					<label for="output_file_3"/><field name="output_file_3" readonly="1" filename="output_name_3"/>
 				</div>
 				<field name="output_name_4" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_4', '=', False)]}">
 					<label for="output_file_4"/><field name="output_file_4" readonly="1" filename="output_name_4"/>
 				</div>
 				<field name="output_name_5" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_5', '=', False)]}">
 					<label for="output_file_5"/><field name="output_file_5" readonly="1" filename="output_name_5"/>
 				</div>
 				<field name="output_name_6" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_6', '=', False)]}">
 					<label for="output_file_6"/><field name="output_file_6" readonly="1" filename="output_name_6"/>
 				</div>
 				<field name="output_name_7" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_7', '=', False)]}">
 					<label for="output_file_7"/><field name="output_file_7" readonly="1" filename="output_name_7"/>
 				</div>
 				<field name="output_name_8" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_8', '=', False)]}">
 					<label for="output_file_8"/><field name="output_file_8" readonly="1" filename="output_name_8"/>
 				</div>
 				<field name="output_name_9" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_9', '=', False)]}">
 					<label for="output_file_9"/><field name="output_file_9" readonly="1" filename="output_name_9"/>
 				</div>
 				<field name="output_name_10" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_10', '=', False)]}">
 					<label for="output_file_10"/><field name="output_file_10" readonly="1" filename="output_name_10"/>
 				</div>
 				<field name="output_name_11" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_11', '=', False)]}">
 					<label for="output_file_11"/><field name="output_file_11" readonly="1" filename="output_name_11"/>
 				</div>
 				<field name="output_name_12" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_12', '=', False)]}">
 					<label for="output_file_12"/><field name="output_file_12" readonly="1" filename="output_name_12"/>
 				</div>
 				<field name="output_name_13" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_13', '=', False)]}">
 					<label for="output_file_13"/><field name="output_file_13" readonly="1" filename="output_name_13"/>
 				</div>
 				<field name="output_name_14" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_14', '=', False)]}">
 					<label for="output_file_14"/><field name="output_file_14" readonly="1" filename="output_name_14"/>
 				</div>
 				<field name="output_name_15" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_15', '=', False)]}">
 					<label for="output_file_15"/><field name="output_file_15" readonly="1" filename="output_name_15"/>
 				</div>
 				<field name="output_name_16" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_16', '=', False)]}">
 					<label for="output_file_16"/><field name="output_file_16" readonly="1" filename="output_name_16"/>
 				</div>
 				<field name="output_name_17" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_17', '=', False)]}">
 					<label for="output_file_17"/><field name="output_file_17" readonly="1" filename="output_name_17"/>
 				</div>
 				<field name="output_name_18" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_18', '=', False)]}">
 					<label for="output_file_18"/><field name="output_file_18" readonly="1" filename="output_name_18"/>
 				</div>
 				<field name="output_name_19" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_19', '=', False)]}">
 					<label for="output_file_19"/><field name="output_file_19" readonly="1" filename="output_name_19"/>
 				</div>
 				<field name="output_name_20" invisible="1"/>
-				<div >
+				<div attrs="{'invisible':[('output_name_20', '=', False)]}">
 					<label for="output_file_20"/><field name="output_file_20" readonly="1" filename="output_name_20"/>
 				</div>
 				<!--field name="output_name_21" invisible="1"/-->
@@ -90,12 +90,12 @@
 					<label for="output_file_21"/><field name="output_file_21" readonly="1" filename="output_name_21"/>
 				</div-->
 				<field name="output_name_22" invisible="1"/>
-				<div >
-					<label for="output_file_22"/><field name="output_file_22" readonly="1" filename="output_name_22"/>
+				<div attrs="{'invisible':[('output_name_22', '=', False)]}">
+					<label for="output_file_22"/><field name="output_file_22" readonly="1" widget="binary" filename="output_name_22"/>
 				</div>
 				<field name="output_name_23" invisible="1"/>
-				<div >
-					<label for="output_file_23"/><field name="output_file_23" readonly="1" filename="output_name_23"/>
+				<div attrs="{'invisible':[('output_name_23', '=', False)]}">
+					<label for="output_file_23"/><field name="output_file_23" readonly="1" widget="binary" filename="output_name_23"/>
 				</div>
 				<footer>
 				</footer>

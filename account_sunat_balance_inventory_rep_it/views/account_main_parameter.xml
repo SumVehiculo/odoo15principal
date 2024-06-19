@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_balance_inventory" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit.balance.inventory</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Libros de Inventarios y Balances" name='balance_inventory'>
+					<group>
+						<group>
+							<field name="use_balance_inventory_kardex"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

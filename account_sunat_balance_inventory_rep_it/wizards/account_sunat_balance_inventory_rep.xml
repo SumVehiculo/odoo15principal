@@ -6,21 +6,53 @@
 			<field name="model">account.sunat.balance.inventory.rep</field>
 			<field name="arch" type="xml">
 				<form string="PLE Libro Inventarios y Balances">
-						<group>
+					<notebook>
+						<page string="Datos Principales">
 							<group>
-								<field name="company_id"/>
-								<field name="fiscal_year_id" required="1"/>
-								<field name="period" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+								<group>
+									<field name="company_id"/>
+									<field name="fiscal_year_id" attrs="{'invisible': [('cc', 'in', ['05','06','07'])], 'required': [('cc', 'not in', ['05','06','07'])]}" force_save="1"/>
+									<field name="period" attrs="{'invisible': [('cc', 'in', ['05','06','07'])], 'required': [('cc', 'not in', ['05','06','07'])]}" force_save="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+								</group>
+								<group>
+									<field name="cc" widget="radio"/>
+									<field name="date" attrs="{'invisible': [('cc', 'not in', ['05','06','07'])], 'required': [('cc', 'in', ['05','06','07'])]}"/>
+								</group>
 							</group>
-							<group>
-								<field name="cc" widget="radio"/>
-							</group>
-						</group>
-						<footer>
-							<button string="Generar PLEs" name="get_balance_inventory" type="object" class="oe_highlight"/>
-							or
-							<button string="Cancel" class="oe_link" special="cancel"/>
-						</footer>
+						</page>
+						<page string="Libros">
+							<button string="Añadir Todos" name="action_add_all" type="object"/>
+							<br />
+							<field name="show_1" nolabel="1"/><label for="show_1"/><br />
+							<field name="show_2" nolabel="1"/><label for="show_2"/><br />
+							<field name="show_3" nolabel="1"/><label for="show_3"/><br />
+							<field name="show_4" nolabel="1"/><label for="show_4"/><br />
+							<field name="show_5" nolabel="1"/><label for="show_5"/><br />
+							<field name="show_6" nolabel="1"/><label for="show_6"/><br />
+							<field name="show_7" nolabel="1"/><label for="show_7"/><br />
+							<field name="show_8" nolabel="1"/><label for="show_8"/><br />
+							<field name="show_9" nolabel="1"/><label for="show_9"/><br />
+							<field name="show_10" nolabel="1"/><label for="show_10"/><br />
+							<field name="show_11" nolabel="1"/><label for="show_11"/><br />
+							<field name="show_12" nolabel="1"/><label for="show_12"/><br />
+							<field name="show_13" nolabel="1"/><label for="show_13"/><br />
+							<field name="show_14" nolabel="1"/><label for="show_14"/><br />
+							<field name="show_15" nolabel="1"/><label for="show_15"/><br />
+							<field name="show_16" nolabel="1"/><label for="show_16"/><br />
+							<field name="show_17" nolabel="1"/><label for="show_17"/><br />
+							<field name="show_18" nolabel="1"/><label for="show_18"/><br />
+							<field name="show_19" nolabel="1"/><label for="show_19"/><br />
+							<field name="show_20" nolabel="1"/><label for="show_20"/><br />
+							<!-- <field name="show_21" nolabel="1"/><label for="show_21"/><br /> -->
+							<field name="show_22" nolabel="1"/><label for="show_22"/><br />
+							<field name="show_23" nolabel="1"/><label for="show_23"/><br />
+						</page>
+					</notebook>
+					<footer>
+						<button string="Generar PLEs" name="get_balance_inventory" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
 				</form>
 			</field>
 		</record>
