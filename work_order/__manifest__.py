@@ -8,7 +8,8 @@
     'depends': [
         'project',
         'purchase',
-        'stock'
+        'stock',
+        'stock_move_picking_hook'
     ],
     'data': [
         'views/project_project.xml',
