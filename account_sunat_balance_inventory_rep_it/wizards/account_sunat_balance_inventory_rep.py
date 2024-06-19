@@ -24,6 +24,32 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 							('05',u'Al día anterior a la entrada en vigencia de la fusión, escisión y demás formas de reorganización de sociedades o empresas o extinción de la persona jurídica'),
 							('06',u'A la fecha del balance de liquidación, cierre o cese definitivo del deudor tributario'),
 							('07',u'A la fecha de presentación para libre propósito')],default='01',string=u'Código de oportunidad de presentación del EEFF')
+	date = fields.Date(string='Fecha')
+
+	show_1 = fields.Boolean(string=u'3.1 - ESTADO DE SITUACIÓN FINANCIERA',default=False)
+	show_2 = fields.Boolean(string=u'3.2 - CTA. 10 EFECTIVO Y EQUIVALENTES DE EFECTIVO',default=False)
+	show_3 = fields.Boolean(string=u'3.3 - CTA. 12 CTA POR COBRAR COM. – TERC. Y 13 CTA POR COBRAR COM. – REL.',default=False)
+	show_4 = fields.Boolean(string=u'3.4 - CTA. 14 CTA POR COBRAR AL PERSONAL, ACCIONISTAS, DIRECTORES Y GERENTES',default=False)
+	show_5 = fields.Boolean(string=u'3.5 - CTA. 16 CTA POR COBRAR DIV. - TERC. O CTA. 17 CTA POR COBRAR DIV. - REL.',default=False)
+	show_6 = fields.Boolean(string=u'3.6 - CTA. 19 ESTIMACIÓN DE CTA DE COBRANZA DUDOSA',default=False)
+	show_7 = fields.Boolean(string=u'3.7 - CTA. 20 - MERCADERIAS Y LA CTA. 21 - PROD. TERMINADOS',default=False)
+	show_8 = fields.Boolean(string=u'3.8 - CTA. 30 INVERSIONES MOBILIARIAS',default=False)
+	show_9 = fields.Boolean(string=u'3.9 - CTA. 34 - INTANGIBLES',default=False)
+	show_10 = fields.Boolean(string=u'3.11 - CTA. 41 REMUNERACIONES Y PARTICIPACIONES POR PAGAR',default=False)
+	show_11 = fields.Boolean(string=u'3.12 - CTA. 42 CTA POR PAGAR COM. – TERC. Y LA CTA. 43 CTA POR PAGAR COM. – REL.',default=False)
+	show_12 = fields.Boolean(string=u'3.13 - CTA. 46 CTA POR PAGAR DIV. – TERC. Y DE LA CTA. 47 CTA POR PAGAR DIV. – REL.',default=False)
+	show_13 = fields.Boolean(string=u'3.14 - CTA. 47 - BEN. SOCIALES DE LOS TRABAJADORES (PCGR) - NO APLICA PARA EL PCGE',default=False)
+	show_14 = fields.Boolean(string=u'3.15 - CTA. 37 ACTIVO DIFERIDO Y DE LA CTA. 49 PASIVO DIFERIDO',default=False)
+	show_15 = fields.Boolean(string=u'3.16.1 - CTA. 50 CAPITAL',default=False)
+	show_16 = fields.Boolean(string=u'3.16.2 - EST. DE LA PARTICIPACIÓN ACCIONARIA SOCIALES',default=False)
+	show_17 = fields.Boolean(string=u'3.17 - BALANCE DE COMPROBACIÓN',default=False)
+	show_18 = fields.Boolean(string=u'3.18 - ESTADO DE FLUJOS DE EFECTIVO - MÉTODO DIRECTO',default=False)
+	show_19 = fields.Boolean(string=u'3.19 - ESTADO DE CAMBIOS EN EL PATRIMONIO NETO',default=False)
+	show_20 = fields.Boolean(string=u'3.20 - ESTADO DE RESULTADOS',default=False)
+	#show_21 = fields.Boolean(string=u'3.23 - NOTAS A LOS ESTADOS FINANCIEROS',default=False)
+	show_22 = fields.Boolean(string=u'3.24 - ESTADO DE RESULTADOS INTEGRALES',default=False)
+	show_23 = fields.Boolean(string=u'3.25 - ESTADO DE FLUJOS DE EFECTIVO - MÉTODO INDIRECTO',default=False)
+
 
 	@api.onchange('company_id')
 	def get_fiscal_year(self):
@@ -33,30 +59,37 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			if fiscal_year:
 				self.fiscal_year_id = fiscal_year.id
 
+	
+	@api.onchange('date')
+	def get_period(self):
+		if self.date and self.cc in ('05','06','07'):
+			self.fiscal_year_id = self.env['account.fiscal.year'].search([('name','=',self.date.strftime('%Y'))],limit=1).id
+			self.period = self.env['account.period'].search([('code','=',self.date.strftime('%Y%m')),('fiscal_year_id','=',self.fiscal_year_id.id)],limit=1).id
+
 	def get_balance_inventory(self):
-		output_name_1,output_file_1 = self._get_ple(1)
-		output_name_2,output_file_2 = self._get_ple(2)
-		output_name_3,output_file_3 = self._get_ple(3)
-		output_name_4,output_file_4 = self._get_ple(4)
-		output_name_5,output_file_5 = self._get_ple(5)
-		output_name_6,output_file_6 = self._get_ple(6)
-		output_name_7,output_file_7 = self._get_ple(7)
-		output_name_8,output_file_8 = self._get_ple(8)
-		output_name_9,output_file_9 = self._get_ple(9)
-		output_name_10,output_file_10 = self._get_ple(10)
-		output_name_11,output_file_11 = self._get_ple(11)
-		output_name_12,output_file_12 = self._get_ple(12)
-		output_name_13,output_file_13 = self._get_ple(13)
-		output_name_14,output_file_14 = self._get_ple(14)
-		output_name_15,output_file_15 = self._get_ple(15)
-		output_name_16,output_file_16 = self._get_ple(16)
-		output_name_17,output_file_17 = self._get_ple(17)
-		output_name_18,output_file_18 = self._get_ple(18)
-		output_name_19,output_file_19 = self._get_ple(19)
-		output_name_20,output_file_20 = self._get_ple(20)
+		output_name_1,output_file_1 = (self._get_ple(1)) if self.show_1 else (None,None)
+		output_name_2,output_file_2 = (self._get_ple(2)) if self.show_2 else (None,None)
+		output_name_3,output_file_3 = (self._get_ple(3)) if self.show_3 else (None,None)
+		output_name_4,output_file_4 = (self._get_ple(4)) if self.show_4 else (None,None)
+		output_name_5,output_file_5 = (self._get_ple(5)) if self.show_5 else (None,None)
+		output_name_6,output_file_6 = (self._get_ple(6)) if self.show_6 else (None,None)
+		output_name_7,output_file_7 = (self._get_ple(7)) if self.show_7 else (None,None)
+		output_name_8,output_file_8 = (self._get_ple(8)) if self.show_8 else (None,None)
+		output_name_9,output_file_9 = (self._get_ple(9)) if self.show_9 else (None,None)
+		output_name_10,output_file_10 = (self._get_ple(10)) if self.show_10 else (None,None)
+		output_name_11,output_file_11 = (self._get_ple(11)) if self.show_11 else (None,None)
+		output_name_12,output_file_12 = (self._get_ple(12)) if self.show_12 else (None,None)
+		output_name_13,output_file_13 = (self._get_ple(13)) if self.show_13 else (None,None)
+		output_name_14,output_file_14 = (self._get_ple(14)) if self.show_14 else (None,None)
+		output_name_15,output_file_15 = (self._get_ple(15)) if self.show_15 else (None,None)
+		output_name_16,output_file_16 = (self._get_ple(16)) if self.show_16 else (None,None)
+		output_name_17,output_file_17 = (self._get_ple(17)) if self.show_17 else (None,None)
+		output_name_18,output_file_18 = (self._get_ple(18)) if self.show_18 else (None,None)
+		output_name_19,output_file_19 = (self._get_ple(19)) if self.show_19 else (None,None)
+		output_name_20,output_file_20 = (self._get_ple(20)) if self.show_20 else (None,None)
 		#output_name_21,output_file_21 = self._get_ple(2)
-		output_name_22,output_file_22 = self._get_ple(22)
-		output_name_23,output_file_23 = self._get_ple(23)
+		output_name_22,output_file_22 = (self._get_ple(22)) if self.show_22 else (None,None)
+		output_name_23,output_file_23 = (self._get_ple(23)) if self.show_23 else (None,None)
 		return self.env['popup.it.balance.inventory'].get_file(output_name_1,output_file_1,
 																output_name_2,output_file_2,
 																output_name_3,output_file_3,
@@ -368,9 +401,9 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			PT.name as campo7,
 			sc06.code as campo8,
 			'1' as campo9,
-			T2.saldo_fisico as campo10,
-			T2.costo_prom as campo11,
-			T2.saldo_valorado as campo12,
+			case when T2.saldo_fisico <> 0 then round(T2.saldo_fisico::numeric,8) else 0.00::numeric end as campo10,
+			case when T2.costo_prom <> 0 then round(T2.costo_prom::numeric,8) else 0.00::numeric end as campo11,
+			round(T2.saldo_valorado::numeric,2) as campo12,
 			'1' as campo13,
 			NULL as campo14
 			FROM
@@ -412,7 +445,7 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			date_end_s = str(period.date_end).replace('-',''),
 			date_start = period.date_start.strftime('%Y/%m/%d'),
 			date_end = period.date_end.strftime('%Y/%m/%d'),
-			period_code = period.code + '00'
+			period_code = str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day)))
 		)
 		return sql
 
@@ -652,6 +685,7 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 		return sql,nomenclatura
 
 	def _get_ple(self,type):
+		use_balance_inventory_kardex = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).use_balance_inventory_kardex
 		ruc = self.company_id.partner_id.vat
 		mond = self.company_id.currency_id.name
 
@@ -662,8 +696,11 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			raise UserError('No configuro la moneda de su Compañia.')
 
 		#LE + RUC + AÑO(YYYY) + MES(MM) + DIA(00) 
-		name_doc = "LE"+str(ruc)+str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+"00"
+		name_doc = "LE"+str(ruc)+str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day)))
+		che = True
 		sql_ple,nomenclatura = self._get_sql_nom(type)
+		if type == 7 and not use_balance_inventory_kardex:
+			che = False
 		self.env.cr.execute(sql_ple)
 		sql_ple = "COPY (%s) TO STDOUT WITH %s" % (sql_ple, "CSV DELIMITER '|'")
 
@@ -685,6 +722,5 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 		# INDICADOR DE MONEDA UTILIZADA Nuevos Soles(1), US Dolares(2) +
 		# INDICADOR DE LIBRO ELECTRONICO GENERADO POR EL PLE (1)
 
-		name_doc += self.cc+"1"+("1" if len(res) > 0 else "0") + ("1" if mond == 'PEN' else "2") + "1.txt"
-
-		return name_doc,res if res else base64.encodestring(b"== Sin Registros ==")
+		name_doc += self.cc+"1"+("1" if len(res) > 0 and che else "0") + ("1" if mond == 'PEN' else "2") + "1.txt"
+		return name_doc,(res if res and che else base64.encodestring(b"== Sin Registros =="))
