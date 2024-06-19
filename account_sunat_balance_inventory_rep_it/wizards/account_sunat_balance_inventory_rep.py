@@ -50,6 +50,39 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 	show_22 = fields.Boolean(string=u'3.24 - ESTADO DE RESULTADOS INTEGRALES',default=False)
 	show_23 = fields.Boolean(string=u'3.25 - ESTADO DE FLUJOS DE EFECTIVO - MÉTODO INDIRECTO',default=False)
 
+	def action_add_all(self):
+		self.show_1 = True
+		self.show_2 = True
+		self.show_3 = True
+		self.show_4 = True
+		self.show_5 = True
+		self.show_6 = True
+		self.show_7 = True
+		self.show_8 = True
+		self.show_9 = True
+		self.show_10 = True
+		self.show_11 = True
+		self.show_12 = True
+		self.show_13 = True
+		self.show_14 = True
+		self.show_15 = True
+		self.show_16 = True
+		self.show_17 = True
+		self.show_18 = True
+		self.show_19 = True
+		self.show_20 = True
+		#self.show_21 = True
+		self.show_22 = True
+		self.show_23 = True
+		return {
+			"view_mode": "form",
+			"res_model": "account.sunat.balance.inventory.rep",
+			"res_id": self.id,
+			"type": "ir.actions.act_window",
+			"target": "new",
+			"context": self.env.context,
+			"nodestroy": True,
+		}
 
 	@api.onchange('company_id')
 	def get_fiscal_year(self):
