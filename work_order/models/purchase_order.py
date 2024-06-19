@@ -15,3 +15,13 @@ class PurchaseOrder(models.Model):
                 })
         return res 
     
+    def action_create_invoice(self):
+        new_invoices = self.invoice_ids
+        res = super().action_create_invoice()
+        new_invoices = self.invoice_ids - new_invoices
+        for invoice in new_invoices:
+            for line in invoice.invoice_line_ids:
+                line.write({
+                    'work_order_id':line.purchase_line_id.work_order_id.id
+                })
+        return res
