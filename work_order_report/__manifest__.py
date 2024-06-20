@@ -9,7 +9,7 @@
         'work_order'
     ],
     'data': [
-        'wizard/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'wizard/work_order_report_wizard.xml',
         
     ],
