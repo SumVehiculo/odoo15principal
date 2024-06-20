@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <record id="purchase_approval_group" model="res_groups">
+    <record id="purchase_approval_group" model="res.groups">
         <field name="name">Aprobaciones de Compra</field>
     </record>
 </odoo>
