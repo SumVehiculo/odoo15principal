@@ -16,7 +16,7 @@ class SaleAdvancePaymentInv(models.Model):
                 if not work_order_id:
                     continue
                 line.write({
-                    'work_order_id':work_order_id[0]. id 
+                    'work_order_id':work_order_id[0].id 
                 })
             pass
         return res
