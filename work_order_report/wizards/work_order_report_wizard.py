@@ -7,8 +7,8 @@ class WorkOrderReportWizard(models.TransientModel):
     
     company_id = fields.Many2one('res.company', string='Compañia')
     work_order_id = fields.Many2one('project.project', string='OT')
-    start_name = fields.Date('Desde ')
-    end_name = fields.Date('Hasta')
+    start_date= fields.Date('Desde ')
+    end_date = fields.Date('Hasta')
    
     def get_report(self):
         pass
