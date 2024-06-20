@@ -16,6 +16,7 @@
         'views/purchase_order.xml',
         'views/stock_picking.xml',
         'views/account_move.xml',
+        'views/sale_order.xml',
     ],
     'auto_install': False,
     'application': False

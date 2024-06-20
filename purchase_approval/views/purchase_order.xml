@@ -7,13 +7,14 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page name="approval_description" string="Detalles Aprobación">
+                <page name="approval_description" string="Aprobación">
                     <group>
+                        <button string="Aprobar" name="button_approve" type="object" class="oe_highlight"/>
                         <group>
-                            <field name="approved_by" />
+                            <field name="confirmed_by" />
                         </group>
                         <group>
-                            <field name="date_approve" string="Fecha de Aprobación"/>
+                            <field name="date_confirmed"/>
                         </group>
                     </group>
                 </page>

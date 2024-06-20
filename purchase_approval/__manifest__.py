@@ -10,6 +10,7 @@
         'purchase'
     ],
     'data': [
+        'security/res_groups.xml',
         'views/purchase_order.xml'
     ],
     'auto_install': False,
