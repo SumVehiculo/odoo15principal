@@ -26,6 +26,8 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 							('07',u'A la fecha de presentación para libre propósito')],default='01',string=u'Código de oportunidad de presentación del EEFF')
 	date = fields.Date(string='Fecha')
 
+	show_all = fields.Boolean(string=u'Mostrar Todo',default=False)
+
 	show_1 = fields.Boolean(string=u'3.1 - ESTADO DE SITUACIÓN FINANCIERA',default=False)
 	show_2 = fields.Boolean(string=u'3.2 - CTA. 10 EFECTIVO Y EQUIVALENTES DE EFECTIVO',default=False)
 	show_3 = fields.Boolean(string=u'3.3 - CTA. 12 CTA POR COBRAR COM. – TERC. Y 13 CTA POR COBRAR COM. – REL.',default=False)
@@ -50,39 +52,31 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 	show_22 = fields.Boolean(string=u'3.24 - ESTADO DE RESULTADOS INTEGRALES',default=False)
 	show_23 = fields.Boolean(string=u'3.25 - ESTADO DE FLUJOS DE EFECTIVO - MÉTODO INDIRECTO',default=False)
 
+	@api.onchange('show_all')
 	def action_add_all(self):
-		self.show_1 = True
-		self.show_2 = True
-		self.show_3 = True
-		self.show_4 = True
-		self.show_5 = True
-		self.show_6 = True
-		self.show_7 = True
-		self.show_8 = True
-		self.show_9 = True
-		self.show_10 = True
-		self.show_11 = True
-		self.show_12 = True
-		self.show_13 = True
-		self.show_14 = True
-		self.show_15 = True
-		self.show_16 = True
-		self.show_17 = True
-		self.show_18 = True
-		self.show_19 = True
-		self.show_20 = True
-		#self.show_21 = True
-		self.show_22 = True
-		self.show_23 = True
-		return {
-			"view_mode": "form",
-			"res_model": "account.sunat.balance.inventory.rep",
-			"res_id": self.id,
-			"type": "ir.actions.act_window",
-			"target": "new",
-			"context": self.env.context,
-			"nodestroy": True,
-		}
+		self.show_1 = self.show_all
+		self.show_2 = self.show_all
+		self.show_3 = self.show_all
+		self.show_4 = self.show_all
+		self.show_5 = self.show_all
+		self.show_6 = self.show_all
+		self.show_7 = self.show_all
+		self.show_8 = self.show_all
+		self.show_9 = self.show_all
+		self.show_10 = self.show_all
+		self.show_11 = self.show_all
+		self.show_12 = self.show_all
+		self.show_13 = self.show_all
+		self.show_14 = self.show_all
+		self.show_15 = self.show_all
+		self.show_16 = self.show_all
+		self.show_17 = self.show_all
+		self.show_18 = self.show_all
+		self.show_19 = self.show_all
+		self.show_20 = self.show_all
+		#self.show_21 = self.show_all
+		self.show_22 = self.show_all
+		self.show_23 = self.show_all
 
 	@api.onchange('company_id')
 	def get_fiscal_year(self):
