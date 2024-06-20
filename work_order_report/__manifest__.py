@@ -10,7 +10,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
-        'wizard/work_order_report_wizard.xml',
+        'wizards/work_order_report_wizard.xml',
         
     ],
     'auto_install': False,
