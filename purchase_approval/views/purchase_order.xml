@@ -9,9 +9,10 @@
             <xpath expr="//notebook" position="inside">
                 <page name="approval_description" string="Aprobación">
                     <group>
-                        <button string="Aprobar" name="button_approve" type="object" class="oe_highlight"/>
+                        <button string="Aprobar" name="button_approve" type="object" class="oe_highlight o_group_col_12"/>  
+                        <div class="oe_clear o_group_col_12" style="margin-top: 20px;"/>
                         <group>
-                            <field name="confirmed_by" />
+                            <field name="confirmed_by"/>
                         </group>
                         <group>
                             <field name="date_confirmed"/>
