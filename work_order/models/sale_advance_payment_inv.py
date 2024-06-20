@@ -1,7 +1,7 @@
 from odoo   import models, fields, api, _
 from odoo.exceptions import UserError
 
-class SaleAdvancePaymentInv(models.Model):
+class SaleAdvancePaymentInv(models.TransientModel):
     _inherit="sale.advance.payment.inv"
     
     def create_invoices(self):
