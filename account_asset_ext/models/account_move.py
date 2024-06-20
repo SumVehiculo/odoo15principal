@@ -9,6 +9,8 @@ class AccountMove(models.Model):
 
     def _auto_create_asset(self):
         assets = super(AccountMove, self)._auto_create_asset()
-        raise UserError(str(assets))
-        
+        if assets:
+            if self.partner_id:
+                assets.partner_id= self.partner_id.id
+        return assets
 
