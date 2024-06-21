@@ -120,7 +120,7 @@ class WorkOrderReportWizard(models.TransientModel):
             WHERE 
                 vst1.cuenta LIKE '7%' AND
                 aml.work_order_id  = {self.work_order_id.id} AND
-                vst1.company_id = {self.company_id.id}
+                aa.company_id = {self.company_id.id}
             ;
         """
         worksheet.merge_range(row, 0, row, 4, "Lineas de Ventas Facturadas" , formats.get('red_base'))
@@ -190,7 +190,7 @@ class WorkOrderReportWizard(models.TransientModel):
             WHERE 
                 vst1.cuenta SIMILAR TO '62% | 63% | 64% | 65% | 67%' AND
                 aml.work_order_id  = {self.work_order_id.id} AND
-                vst1.company_id = {self.company_id.id}
+                aa.company_id = {self.company_id.id}
             ;
         """
         worksheet.merge_range(row, 0, row, 4, "Lineas de Gastos Facturados" , formats.get('red_base'))
