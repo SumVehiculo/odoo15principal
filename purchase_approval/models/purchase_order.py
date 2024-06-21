@@ -22,7 +22,7 @@ class PurchaseOrder(models.Model):
                 raise UserError("La compra necesita ser aprobada. ")
         return res
         
-    def button_approve(self):
+    def button_custom_confirm(self):
         if not self.env.user.has_group("purchase_approval.purchase_approval_group"):
             raise UserError(f"Usted no tiene suficientes permisos para aprobar esta compra.")
         self.write({
