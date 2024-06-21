@@ -66,7 +66,7 @@ class WorkOrderReportWizard(models.TransientModel):
         row+=1
         header_details=[
             f"ORDEN DE TRABAJO : {self.work_order_id.name}",
-            f"DEL {self.start_date.strftime("%d/%m/%Y")} - {self.end_date.strftime("%d/%m/%Y")}"
+            f"DEL {self.start_date.strftime('%d/%m/%Y')} - {self.end_date.strftime('%d/%m/%Y')}"
         ]
         for detail in header_details:
             worksheet.merge_range(row, 0, row, 4, detail, formats['base'])
