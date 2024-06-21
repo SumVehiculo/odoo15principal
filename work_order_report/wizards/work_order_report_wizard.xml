@@ -6,7 +6,9 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="company_id" readonly="1"/>
+                    <h2 class="o_group_col_12">
+                        <field name="company_id" readonly="1" options="{'no_open':True}"/>
+                      </h2>
                     <group>
                       <field name="work_order_id" required="1"/>
                     </group>      

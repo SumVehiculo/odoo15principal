@@ -33,6 +33,14 @@ class WorkOrderReportWizard(models.TransientModel):
         format_title.set_font_name('Times New Roman')
         formats['title'] = format_title
         
+        format_detail = workbook.add_format({'bold': True})
+        format_detail.set_align('left')
+        format_detail.set_align('vcenter')
+        format_detail.set_text_wrap()
+        format_detail.set_font_size(9)
+        format_detail.set_font_name('Times New Roman')
+        formats['detail'] = format_detail
+        
         format_header = workbook.add_format({'bold': True})
         format_header.set_align('center')
         format_header.set_align('vcenter')
@@ -69,12 +77,13 @@ class WorkOrderReportWizard(models.TransientModel):
             f"DEL {self.start_date.strftime('%d/%m/%Y')} - {self.end_date.strftime('%d/%m/%Y')}"
         ]
         for detail in header_details:
-            worksheet.merge_range(row, 0, row, 4, detail, formats['base'])
+            worksheet.merge_range(row, 0, row, 4, detail, formats['detail'])
             row+=1
         header_details=None
-        row+=self.sale_invoiced_data(row,worksheet,formats)
         row+=3
-        row+=self.invoiced_expense_data(row,worksheet,formats)
+        row=self.sale_invoiced_data(row,worksheet,formats)
+        row+=3
+        row=self.invoiced_expense_data(row,worksheet,formats)
         
         column_widths = [15,15,15,30,30,15,20,15,15,15,15]
         for i, width in enumerate(column_widths):
@@ -113,7 +122,7 @@ class WorkOrderReportWizard(models.TransientModel):
                 aml.work_order_id  = {self.work_order_id.id}
             ;
         """
-        worksheet.write(row, 0, "Lineas de Ventas Facturadas" , formats.get('red_base'))
+        worksheet.merge_range(row, 0, row, 4, "Lineas de Ventas Facturadas" , formats.get('red_base'))
         row+=1
         header_list=[
             'FECHA',
@@ -182,7 +191,7 @@ class WorkOrderReportWizard(models.TransientModel):
                 aml.work_order_id  = {self.work_order_id.id}
             ;
         """
-        worksheet.write(row, 0, "Lineas de Gastos Facturados" , formats.get('red_base'))
+        worksheet.merge_range(row, 0, row, 4, "Lineas de Gastos Facturados" , formats.get('red_base'))
         row+=1
         header_list=[
             'FECHA',
@@ -224,9 +233,59 @@ class WorkOrderReportWizard(models.TransientModel):
     
     def warehouse_item_date(self, row, worksheet, formats):
         query= f"""
-            
+            SELECT 
+                fechax AS kardex_date,
+                serial AS kardex_serial,
+                nro AS kardex_nro,
+                numdoc_cuadre AS kardex_doc,
+                name AS kardex_partner,
+                operation_type AS kardex_op,
+                new_name AS kardex_product,
+                default_code AS kardex_prod_cod,
+                unidad AS kardex_unit,
+                ingreso AS kardex_income,
+                salida AS kardex_release
+            FROM 
+                (SELECT 
+                    vst_kardex_sunat.*,
+                    np.new_name
+                FROM vst_kardex_fisico_valorado AS vst_kardex_sunat
+                    LEFT JOIN (
+                        SELECT 
+                            t_pp.id, 
+                            ((coalesce(max(it.value),max(t_pt.name::TEXT))::CHARACTER varying::TEXT || ' '::TEXT) || replace(array_agg(pav.name)::CHARACTER varying::TEXT, '{{NULL}}'::TEXT, ''::TEXT))::CHARACTER varying AS new_name
+                        FROM 
+                            product_product t_pp
+                            JOIN product_template t_pt ON t_pp.product_tmpl_id = t_pt.id
+                            LEFT JOIN ir_translation it ON t_pt.id = it.res_id AND 
+                                it.name = 'product.template,name' AND 
+                                it.lang = 'es_PE' AND 
+                                it.state = 'translated'
+                            LEFT JOIN product_variant_combination pvc ON pvc.product_product_id = t_pp.id
+                            LEFT JOIN product_template_attribute_value ptav ON ptav.id = pvc.product_template_attribute_value_id
+                            LEFT JOIN product_attribute_value pav ON pav.id = ptav.product_attribute_value_id
+                        GROUP BY t_pp.id
+                    ) np ON np.id = vst_kardex_sunat.product_id	
+                WHERE 
+                    (
+                        fecha_num((vst_kardex_sunat.fecha - interval '5' HOUR)::DATE) 
+                        BETWEEN 
+                            {self.start_date} AND 
+                            {self.end_date}
+                    ) AND 
+                    vst_kardex_sunat.location_id IN {'almacenes'} AND 
+                    vst_kardex_sunat.product_id IN {'productos'} AND 
+                    vst_kardex_sunat.company_id = {self.company_id.id}
+                ORDER BY 
+                    vst_kardex_sunat.location_id,
+                    vst_kardex_sunat.product_id,
+                    vst_kardex_sunat.fecha,
+                    vst_kardex_sunat.esingreso,
+                    vst_kardex_sunat.stock_moveid,
+                    vst_kardex_sunat.nro		
+                )Total	
         """
-        worksheet.write(row, 0, "Articulos de Almacen" , formats.get('red_base'))
+        worksheet.merge_range(row, 0, row, 4, "Articulos de Almacen" , formats.get('red_base'))
         row+=1
         header_list=[
             'FECHA',
