@@ -14,18 +14,67 @@ class WorkOrderReportWizard(models.TransientModel):
         string='Compañia',
         default= lambda self: self.env.company.id
     )
-    work_order_id = fields.Many2one('project.project', string='OT')
-    start_date= fields.Date('Desde ')
-    end_date = fields.Date('Hasta')
+    work_order_id = fields.Many2one('project.project', string='OT', required=True)
+    start_date= fields.Date('Desde', required=True)
+    end_date = fields.Date('Hasta', required=True)
    
     def get_report(self):
         filename = "Reporte General OT.xlsx"
         workbook = Workbook(filename)
         worksheet = workbook.add_worksheet("Reporte OT")
         worksheet.set_tab_color('blue')
+        # Formats
+        formats={}
+        format_title = workbook.add_format({'bold': True})
+        format_title.set_align('center')
+        format_title.set_align('vcenter')
+        format_title.set_text_wrap()
+        format_title.set_font_size(12)
+        format_title.set_font_name('Times New Roman')
+        formats['title'] = format_title
+        
+        format_header = workbook.add_format({'bold': True})
+        format_header.set_align('center')
+        format_header.set_align('vcenter')
+        format_header.set_border(style=1)
+        format_header.set_text_wrap()
+        format_header.set_bg_color('#DCE6F1')
+        format_header.set_font_size(10.5)
+        format_header.set_font_name('Times New Roman')
+        formats['header'] = format_header
+
+        format_base = workbook.add_format()
+        format_base.set_align('left')
+        format_base.set_border(style=1)
+        format_base.set_text_wrap()
+        format_base.set_font_size(9)
+        format_base.set_font_name('Times New Roman')
+        formats['base'] = format_base
+        
+        red_base = workbook.add_format()
+        red_base.set_font_color('red')
+        red_base.set_align('left')
+        red_base.set_text_wrap()
+        red_base.set_font_size(11)
+        red_base.set_font_name('Times New Roman')
+        formats['red_base'] = red_base
+        
+        
         # Header
         row=0
-        row+=self.sale_invoiced_data(row,worksheet,workbook)
+        worksheet.merge_range(row, 0, row, 11, "REPORTE GENERAL OT", formats['title'])
+        row+=1
+        header_details=[
+            f"ORDEN DE TRABAJO : {self.work_order_id.name}",
+            f"DEL {self.start_date.strftime("%d/%m/%Y")} - {self.end_date.strftime("%d/%m/%Y")}"
+        ]
+        for detail in header_details:
+            worksheet.merge_range(row, 0, row, 4, detail, formats['base'])
+            row+=1
+        header_details=None
+        row+=self.sale_invoiced_data(row,worksheet,formats)
+        row+=3
+        row+=self.invoiced_expense_data(row,worksheet,formats)
         
         column_widths = [15,15,15,30,30,15,20,15,15,15,15]
         for i, width in enumerate(column_widths):
@@ -35,22 +84,12 @@ class WorkOrderReportWizard(models.TransientModel):
         f = open(filename, 'rb')
         return self.env['popup.it'].get_file(filename,base64.encodestring(b''.join(f.readlines())))
     
-    def sale_invoiced_data(self, row, worksheet, workbook):
-        # Formats 
-        format_header = workbook.add_format({'bold': True})
-        format_header.set_align('center')
-        format_header.set_align('vcenter')
-        format_header.set_border(style=1)
-        format_header.set_text_wrap()
-        format_header.set_bg_color('#DCE6F1')
-        format_header.set_font_size(15)
-        format_header.set_font_name('Times New Roman')
-
+    def sale_invoiced_data(self, row, worksheet, formats):
         query= f"""
             SELECT 
                 vst1.fecha,
                 vst1.cuenta,
-                aa.name,
+                aa.name as cuenta_name,
                 vst1.partner,
                 vst1.glosa,
                 pp.default_code,
@@ -63,15 +102,19 @@ class WorkOrderReportWizard(models.TransientModel):
                 get_diariog(
                     '{self.start_date.strftime('%Y/%m/%d')}',
                     '{self.end_date.strftime('%Y/%m/%d')}',
-                    {self.company_id}
+                    {self.company_id.id}
                 ) vst1
                 LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
                 LEFT JOIN product_product pp on pp.id = aml.product_id
                 LEFT JOIN product_template pt on pt.id = pp.product_tmpl_id
                 LEFT JOIN account_account aa on aa.code = vst1.cuenta
             WHERE 
-                vst1.cuenta LIKE '7%';
+                vst1.cuenta LIKE '7%' AND
+                aml.work_order_id  = {self.work_order_id.id}
+            ;
         """
+        worksheet.write(row, 0, "Lineas de Ventas Facturadas" , formats.get('red_base'))
+        row+=1
         header_list=[
             'FECHA',
             'CUENTA',
@@ -90,29 +133,135 @@ class WorkOrderReportWizard(models.TransientModel):
                 row,
                 count,
                 label,
-                format_header
+                formats.get('header')
             )
         row+=1
         self.env.cr.execute(query)
         data_list = self.env.cr.dictfetchall()
         for data in data_list:
-            worksheet.write(row, 0, data['fecha'] if data['fecha'] else '', format_header)
-            worksheet.write(row, 0, data['fecha'] if data['fecha'] else '', format_header)
-            worksheet.write(row, 1, data['cuenta'] if data['cuenta'] else '', format_header)
-            worksheet.write(row, 2, data['name'] if data['name'] else '', format_header)
-            worksheet.write(row, 3, data['partner'] if data['partner'] else '', format_header)
-            worksheet.write(row, 4, data['glosa'] if data['glosa'] else '', format_header)
-            worksheet.write(row, 5, data['default_code'] if data['default_code'] else '', format_header)
-            worksheet.write(row, 6, data['name'] if data['name'] else '', format_header)
-            worksheet.write(row, 7, data['voucher'] if data['voucher'] else '', format_header)
-            worksheet.write(row, 8, data['nro_comprobante'] if data['nro_comprobante'] else '', format_header)
-            worksheet.write(row, 9, data['soles'] if data['soles'] else '', format_header)
-            worksheet.write(row, 10, data['dollars'] if  data['dollars'] else '', format_header)
+            worksheet.write(row, 0, data['fecha'].strftime("%d/%m/%Y") if data['fecha'] else '', formats.get('base'))
+            worksheet.write(row, 1, data['cuenta'] if data['cuenta'] else '', formats.get('base'))
+            worksheet.write(row, 2, data['cuenta_name'] if data['cuenta_name'] else '', formats.get('base'))
+            worksheet.write(row, 3, data['partner'] if data['partner'] else '', formats.get('base'))
+            worksheet.write(row, 4, data['glosa'] if data['glosa'] else '', formats.get('base'))
+            worksheet.write(row, 5, data['default_code'] if data['default_code'] else '', formats.get('base'))
+            worksheet.write(row, 6, data['name'] if data['name'] else '', formats.get('base'))
+            worksheet.write(row, 7, data['voucher'] if data['voucher'] else '', formats.get('base'))
+            worksheet.write(row, 8, data['nro_comprobante'] if data['nro_comprobante'] else '', formats.get('base'))
+            worksheet.write(row, 9, data['soles'] if data['soles'] else '', formats.get('base'))
+            worksheet.write(row, 10, data['dollars'] if  data['dollars'] else '', formats.get('base'))
             row+=1
         return row
     
-    def invoiced_expense_data(self,worksheet):
-        pass
+    def invoiced_expense_data(self, row, worksheet, formats):
+        query= f"""
+            SELECT 
+                vst1.fecha,
+                vst1.cuenta,
+                aa.name as cuenta_name,
+                vst1.partner,
+                vst1.glosa,
+                pp.default_code,
+                pt.name,
+                vst1.voucher,
+                vst1.nro_comprobante,
+                vst1.balance as soles,
+                vst1.importe_me as dollars
+            FROM 
+                get_diariog(
+                    '{self.start_date.strftime('%Y/%m/%d')}',
+                    '{self.end_date.strftime('%Y/%m/%d')}',
+                    {self.company_id.id}
+                ) vst1
+                LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
+                LEFT JOIN product_product pp on pp.id = aml.product_id
+                LEFT JOIN product_template pt on pt.id = pp.product_tmpl_id
+                LEFT JOIN account_account aa on aa.code = vst1.cuenta
+            WHERE 
+                vst1.cuenta SIMILAR TO '62%|63%|64%|65%|67%' AND
+                aml.work_order_id  = {self.work_order_id.id}
+            ;
+        """
+        worksheet.write(row, 0, "Lineas de Gastos Facturados" , formats.get('red_base'))
+        row+=1
+        header_list=[
+            'FECHA',
+            'CUENTA',
+            'NOMBRE CUENTA',
+            'PARTNER',
+            'GLOSA',
+            'COD. PRODUCTO',
+            'PRODUCTO',
+            'VOUCHER',
+            'NRO. COMP.',
+            'SOLES',
+            'DÓLARES',
+        ]
+        for count,label in enumerate(header_list):
+            worksheet.write(
+                row,
+                count,
+                label,
+                formats.get('header')
+            )
+        row+=1
+        self.env.cr.execute(query)
+        data_list = self.env.cr.dictfetchall()
+        for data in data_list:
+            worksheet.write(row, 0, data['fecha'].strftime("%d/%m/%Y") if data['fecha'] else '', formats.get('base'))
+            worksheet.write(row, 1, data['cuenta'] if data['cuenta'] else '', formats.get('base'))
+            worksheet.write(row, 2, data['cuenta_name'] if data['cuenta_name'] else '', formats.get('base'))
+            worksheet.write(row, 3, data['partner'] if data['partner'] else '', formats.get('base'))
+            worksheet.write(row, 4, data['glosa'] if data['glosa'] else '', formats.get('base'))
+            worksheet.write(row, 5, data['default_code'] if data['default_code'] else '', formats.get('base'))
+            worksheet.write(row, 6, data['name'] if data['name'] else '', formats.get('base'))
+            worksheet.write(row, 7, data['voucher'] if data['voucher'] else '', formats.get('base'))
+            worksheet.write(row, 8, data['nro_comprobante'] if data['nro_comprobante'] else '', formats.get('base'))
+            worksheet.write(row, 9, data['soles'] if data['soles'] else '', formats.get('base'))
+            worksheet.write(row, 10, data['dollars'] if  data['dollars'] else '', formats.get('base'))
+            row+=1
+        return row
     
-    def warehouse_item_date(self, worksheet):
-        pass
+    def warehouse_item_date(self, row, worksheet, formats):
+        query= f"""
+            
+        """
+        worksheet.write(row, 0, "Articulos de Almacen" , formats.get('red_base'))
+        row+=1
+        header_list=[
+            'FECHA',
+            'T. OP.',
+            'T. OP. (NOMBRE)',
+            'PARTNER',
+            'PRODUCTO',
+            'COD. PRODUCTO',
+            'DOC. ALMACEN',
+            'CANT.',
+            'COSTO UNIT. SOLES',
+            'SOLES',
+            'DÓLARES',
+        ]
+        for count,label in enumerate(header_list):
+            worksheet.write(
+                row,
+                count,
+                label,
+                formats.get('header')
+            )
+        row+=1
+        self.env.cr.execute(query)
+        data_list = self.env.cr.dictfetchall()
+        for data in data_list:
+            worksheet.write(row, 0, data['fecha'].strftime("%d/%m/%Y") if data['fecha'] else '', formats.get('base'))
+            worksheet.write(row, 1, data['cuenta'] if data['cuenta'] else '', formats.get('base'))
+            worksheet.write(row, 2, data['cuenta_name'] if data['cuenta_name'] else '', formats.get('base'))
+            worksheet.write(row, 3, data['partner'] if data['partner'] else '', formats.get('base'))
+            worksheet.write(row, 4, data['glosa'] if data['glosa'] else '', formats.get('base'))
+            worksheet.write(row, 5, data['default_code'] if data['default_code'] else '', formats.get('base'))
+            worksheet.write(row, 6, data['name'] if data['name'] else '', formats.get('base'))
+            worksheet.write(row, 7, data['voucher'] if data['voucher'] else '', formats.get('base'))
+            worksheet.write(row, 8, data['nro_comprobante'] if data['nro_comprobante'] else '', formats.get('base'))
+            worksheet.write(row, 9, data['soles'] if data['soles'] else '', formats.get('base'))
+            worksheet.write(row, 10, data['dollars'] if  data['dollars'] else '', formats.get('base'))
+            row+=1
+        return row

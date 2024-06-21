@@ -8,14 +8,14 @@
                 <group>
                     <field name="company_id" readonly="1"/>
                     <group>
-                      <field name="work_order_id"/>
+                      <field name="work_order_id" required="1"/>
                     </group>      
                     <group>
                       <label for="start_date" string="Desde"/>    
                       <div class="o_row">
-                          <field name="start_date" widget="daterange" options="{'related_end_date': 'end_date'}"/>
+                          <field name="start_date" widget="daterange" options="{'related_end_date': 'end_date'}"  required="1"/>
                           Hasta 
-                          <field name="end_date" widget="daterange" options="{'related_start_date': 'start_date'}"/>
+                          <field name="end_date" widget="daterange" options="{'related_start_date': 'start_date'}"  required="1"/>
                       </div>
                     </group>
                   </group>
