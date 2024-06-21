@@ -10,11 +10,16 @@
                 <page name="approval_description" string="Aprobación">
                     <group>
                         <group>
-                            <button string="Aprobar" name="button_custom_confirm" type="object"/>  
+                            <field name="custom_approve" invisible="1"/>
+                            <button string="Aprobar" name="button_custom_confirm" type="object" class="oe_highlight" attrs="{'invisible'}:[('custom_approve','=', True)]"/> 
+                            <button string="Desaprobar" name="button_custom_unconfirm" type="object" class="btn-danger" attrs="{'invisible':[('custom_approve', '=', False)]}"/> 
+                        
                             <field name="confirmed_by"/>
+                            <field name="unconfirmed_by"/>
                         </group>
                         <group>
                             <field name="date_confirmed"/>
+                            <field name="date_unconfirmed"/>
                         </group>
                     </group>
                 </page>
