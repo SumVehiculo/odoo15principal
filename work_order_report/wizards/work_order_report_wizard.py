@@ -84,6 +84,8 @@ class WorkOrderReportWizard(models.TransientModel):
         row=self.sale_invoiced_data(row,worksheet,formats)
         row+=3
         row=self.invoiced_expense_data(row,worksheet,formats)
+        row+=3
+        row=self.warehouse_item_date(row,worksheet,formats)
         
         column_widths = [15,15,15,30,30,15,20,15,15,15,15]
         for i, width in enumerate(column_widths):
@@ -250,8 +252,10 @@ class WorkOrderReportWizard(models.TransientModel):
             FROM 
                 (SELECT 
                     vst_kardex_sunat.*,
+                    vst_kardex_sunat.fecha - interval '5' hour as fechax,
                     np.new_name
                 FROM vst_kardex_fisico_valorado AS vst_kardex_sunat
+                    LEFT JOIN stock_move sm ON sm.id = vst_kardex_sunat.stock_moveid
                     LEFT JOIN (
                         SELECT 
                             t_pp.id, 
@@ -272,19 +276,11 @@ class WorkOrderReportWizard(models.TransientModel):
                     (
                         fecha_num((vst_kardex_sunat.fecha - interval '5' HOUR)::DATE) 
                         BETWEEN 
-                            {self.start_date} AND 
-                            {self.end_date}
+                            {self.start_date.strftime('%Y%m%d')} AND 
+                            {self.end_date.strftime('%Y%m%d')}
                     ) AND 
-                    vst_kardex_sunat.location_id IN {'almacenes'} AND 
-                    vst_kardex_sunat.product_id IN {'productos'} AND 
-                    vst_kardex_sunat.company_id = {self.company_id.id}
-                ORDER BY 
-                    vst_kardex_sunat.location_id,
-                    vst_kardex_sunat.product_id,
-                    vst_kardex_sunat.fecha,
-                    vst_kardex_sunat.esingreso,
-                    vst_kardex_sunat.stock_moveid,
-                    vst_kardex_sunat.nro		
+                    vst_kardex_sunat.company_id = {self.company_id.id} AND
+                    sm.work_order_id  = {self.work_order_id.id}
                 )Total	
         """
         worksheet.merge_range(row, 0, row, 4, "Articulos de Almacen" , formats.get('red_base'))
