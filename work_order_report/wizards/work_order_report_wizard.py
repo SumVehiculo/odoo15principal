@@ -119,7 +119,8 @@ class WorkOrderReportWizard(models.TransientModel):
                 LEFT JOIN account_account aa on aa.code = vst1.cuenta
             WHERE 
                 vst1.cuenta LIKE '7%' AND
-                aml.work_order_id  = {self.work_order_id.id}
+                aml.work_order_id  = {self.work_order_id.id} AND
+                vst1.company_id = {self.company_id.id}
             ;
         """
         worksheet.merge_range(row, 0, row, 4, "Lineas de Ventas Facturadas" , formats.get('red_base'))
@@ -187,8 +188,9 @@ class WorkOrderReportWizard(models.TransientModel):
                 LEFT JOIN product_template pt on pt.id = pp.product_tmpl_id
                 LEFT JOIN account_account aa on aa.code = vst1.cuenta
             WHERE 
-                vst1.cuenta SIMILAR TO '62%|63%|64%|65%|67%' AND
-                aml.work_order_id  = {self.work_order_id.id}
+                vst1.cuenta SIMILAR TO '62% | 63% | 64% | 65% | 67%' AND
+                aml.work_order_id  = {self.work_order_id.id} AND
+                vst1.company_id = {self.company_id.id}
             ;
         """
         worksheet.merge_range(row, 0, row, 4, "Lineas de Gastos Facturados" , formats.get('red_base'))
@@ -311,16 +313,16 @@ class WorkOrderReportWizard(models.TransientModel):
         self.env.cr.execute(query)
         data_list = self.env.cr.dictfetchall()
         for data in data_list:
-            worksheet.write(row, 0, data['fecha'].strftime("%d/%m/%Y") if data['fecha'] else '', formats.get('base'))
-            worksheet.write(row, 1, data['cuenta'] if data['cuenta'] else '', formats.get('base'))
-            worksheet.write(row, 2, data['cuenta_name'] if data['cuenta_name'] else '', formats.get('base'))
-            worksheet.write(row, 3, data['partner'] if data['partner'] else '', formats.get('base'))
-            worksheet.write(row, 4, data['glosa'] if data['glosa'] else '', formats.get('base'))
-            worksheet.write(row, 5, data['default_code'] if data['default_code'] else '', formats.get('base'))
-            worksheet.write(row, 6, data['name'] if data['name'] else '', formats.get('base'))
-            worksheet.write(row, 7, data['voucher'] if data['voucher'] else '', formats.get('base'))
-            worksheet.write(row, 8, data['nro_comprobante'] if data['nro_comprobante'] else '', formats.get('base'))
-            worksheet.write(row, 9, data['soles'] if data['soles'] else '', formats.get('base'))
-            worksheet.write(row, 10, data['dollars'] if  data['dollars'] else '', formats.get('base'))
+            worksheet.write(row, 0, data['kardex_date'] if data['kardex_date'] else '', formats.get('base'))
+            worksheet.write(row, 1, data['kardex_serial'] if data['kardex_serial'] else '', formats.get('base'))
+            worksheet.write(row, 2, data['kardex_nro'] if data['kardex_nro'] else '', formats.get('base'))
+            worksheet.write(row, 3, data['kardex_doc'] if data['kardex_doc'] else '', formats.get('base'))
+            worksheet.write(row, 4, data['kardex_partner'] if data['kardex_partner'] else '', formats.get('base'))
+            worksheet.write(row, 5, data['kardex_op'] if data['kardex_op'] else '', formats.get('base'))
+            worksheet.write(row, 6, data['kardex_product'] if data['kardex_product'] else '', formats.get('base'))
+            worksheet.write(row, 7, data['kardex_prod_cod'] if data['kardex_prod_cod'] else '', formats.get('base'))
+            worksheet.write(row, 8, data['kardex_unit'] if data['kardex_unit'] else '', formats.get('base'))
+            worksheet.write(row, 9, data['kardex_income'] if data['kardex_income'] else '', formats.get('base'))
+            worksheet.write(row, 10, data['kardex_release'] if data['kardex_release'] else '', formats.get('base'))
             row+=1
         return row
