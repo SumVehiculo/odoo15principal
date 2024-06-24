@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_view_form_inherit_purchase_approval_info" model="ir.ui.view">
+        <field name="name">purchase.order.view.form.inherit.purchase_approval_info</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="approval_description" string="Aprobación">
+                    <group>
+                        <group>
+                            <field name="custom_approve" invisible="1"/>
+                            <button string="Aprobar" name="button_custom_confirm" type="object" class="oe_highlight" attrs="{'invisible':[('custom_approve','=', True)]}"/> 
+                            <button string="Desaprobar" name="button_custom_unconfirm" type="object" class="btn-danger" attrs="{'invisible':[('custom_approve', '=', False)]}"/> 
+                        
+                            <field name="confirmed_by" attrs="{'invisible':[('custom_approve','=', False)]}"/>
+                            <field name="unconfirmed_by" attrs="{'invisible':[('custom_approve', '=', True)]}"/>
+                        </group>
+                        <group>
+                            <field name="date_confirmed" attrs="{'invisible':[('custom_approve','=', False)]}"/>
+                            <field name="date_unconfirmed" attrs="{'invisible':[('custom_approve', '=', True)]}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_employee_hourly_cost_group" model="res.groups">
+        <field name="name">Modificar Empleado-Costo por Hora</field>
+    </record>
+</odoo>

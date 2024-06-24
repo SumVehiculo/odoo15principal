@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="project_project_view_form_inherit_work_order" model="ir.ui.view">
+        <field name="name">project.project.view.form.inherit.work_order</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@class='oe_title']" position="replace">
+                <div class="oe_title">
+                    <span class="o_form_label">Orden de Trabajo</span>
+                    <h1>
+                        <field name="name" readonly="1" required="0"/>
+                    </h1>
+                    <h2>
+                        <field name="project_name" placeholder="Nombre del Proyecto"/>
+                    </h2>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_project_view_tree_all" model="ir.ui.view">
+        <field name="name">project.project.view.tree.all</field>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" optional="show" widget="handle"/>
+                <field name="message_needaction" invisible="1"/>
+                <field name="active" invisible="1"/>
+                <field name="name" string="Nombre" class="font-weight-bold"/>
+                <field name="project_name" string="Nombre del Proyecto" />
+                <field name="partner_id" optional="show" string="Cliente"/>
+                <field name="privacy_visibility" optional="hide"/>
+                <field name="company_id" optional="show" groups="base.group_multi_company" options="{'no_create': True, 'no_create_edit': True}"/>
+                <field name="analytic_account_id" optional="hide" groups="analytic.group_analytic_accounting"/>
+                <field name="date_start" string="Fecha de Inicio" widget="daterange" options="{'related_end_date': 'date'}"/>
+                <field name="date" string="Fecha Final" widget="daterange" options="{'related_start_date': 'date_start'}"/>
+                <field name="user_id" optional="show" string="Responsable de Proyecto" widget="many2one_avatar_user" options="{'no_open':True, 'no_create': True, 'no_create_edit': True}"/>
+                <field name="last_update_color" invisible="1"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
+                <field name="last_update_status" string="Estado" optional="show" widget="status_with_color" options="{'color_field': 'last_update_color'}"/>
+                <field name="stage_id" options="{'no_open': True}" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="work_order.project_project_view_tree_all"/>
+    </record>
+</odoo>
