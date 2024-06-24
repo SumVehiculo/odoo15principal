@@ -68,6 +68,7 @@ class WorkOrderReportWizard(models.TransientModel):
         formats['red_base'] = red_base
         
         
+        
         # Header
         row=0
         worksheet.merge_range(row, 0, row, 11, "REPORTE GENERAL OT", formats['title'])
@@ -136,8 +137,8 @@ class WorkOrderReportWizard(models.TransientModel):
                 pt.name,
                 vst1.voucher,
                 vst1.nro_comprobante,
-                vst1.balance as soles,
-                vst1.importe_me as dollars
+                ABS(vst1.balance) as soles,
+                ABS(vst1.importe_me) as dollars
             FROM 
                 get_diariog(
                     '{self.start_date.strftime('%Y/%m/%d')}',
@@ -210,8 +211,8 @@ class WorkOrderReportWizard(models.TransientModel):
                 pt.name,
                 vst1.voucher,
                 vst1.nro_comprobante,
-                vst1.balance as soles,
-                vst1.importe_me as dollars
+                ABS(vst1.balance) as soles,
+                ABS(vst1.importe_me) as dollars
             FROM 
                 get_diariog(
                     '{self.start_date.strftime('%Y/%m/%d')}',
@@ -437,3 +438,6 @@ class WorkOrderReportWizard(models.TransientModel):
             row+=1
             
         return row,warehouse_item_total
+    
+    def employees_hourly_cost(self,self, row, worksheet, formats):
+        pass
