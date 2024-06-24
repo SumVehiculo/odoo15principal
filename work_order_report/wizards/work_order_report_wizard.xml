@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="work_order_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">work.order.report.wizard.view.form</field>
+        <field name="model">work.order.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <h2 class="o_group_col_12">
+                        <field name="company_id" readonly="1" options="{'no_open':True}"/>
+                      </h2>
+                    <group>
+                      <field name="work_order_id" required="1"/>
+                    </group>      
+                    <group>
+                      <label for="start_date" string="Desde"/>    
+                      <div class="o_row">
+                          <field name="start_date" widget="daterange" options="{'related_end_date': 'end_date'}"  required="1"/>
+                          Hasta 
+                          <field name="end_date" widget="daterange" options="{'related_start_date': 'start_date'}"  required="1"/>
+                      </div>
+                    </group>
+                  </group>
+                  <footer>
+                      <button string="Mostrar Reporte" name="get_report" type="object" class="oe_highlight"/>
+                      o
+                      <button string="Cancel" class="oe_link" special="cancel"/>
+                  </footer>
+            </form>
+
+        </field>
+    </record>
+    <record id="work_order_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Reporte General OT</field>
+        <field name="res_model">work.order.report.wizard</field>
+        <field name="view_mode">form</field>
+		<field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="work_order_report_wizard_menu"
+        name="Reporte General OT"
+        action="work_order_report_wizard_action"
+        parent="project.menu_project_report"
+        sequence="10"/>
+</odoo>
