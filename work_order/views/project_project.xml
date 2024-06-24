@@ -47,7 +47,7 @@
         </field>
     </record>
 
-    <record id="project.open_view_project_all_group_stage" model="ir.actions.act_window">
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
         <field name="view_mode">tree,kanban,form</field>
         <field name="view_id" ref="work_order.project_project_view_tree_all"/>
     </record>

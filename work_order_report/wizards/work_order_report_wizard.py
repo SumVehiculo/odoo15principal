@@ -111,7 +111,7 @@ class WorkOrderReportWizard(models.TransientModel):
         worksheet.merge_range(5, 4, 5, 6, "NETO", formats.get('detail'))
         worksheet.write(5, 9, total_net, formats.get('detail'))
         
-        total_sale_percentage = (abs(total_net)/sale_invoice_total)*100
+        total_sale_percentage = (abs(total_net)/(sale_invoice_total if sale_invoice_total else 1))*100
         worksheet.merge_range(6, 4, 6, 6, "% NETO / VENTAS", formats.get('detail'))
         worksheet.write(6, 9, total_sale_percentage, formats.get('detail'))
         
