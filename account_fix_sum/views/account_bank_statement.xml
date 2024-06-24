@@ -8,7 +8,7 @@
 			<field name="arch" type="xml">
 				<data>
 					<xpath expr="//group[1]" position="before">
-						<field name="sequence_number" readonly="1" force_save="1" attrs="{'invisible':['|',('journal_type','!=','cash'),('journal_check_surrender','!=',True)]}"/>
+						<field name="sequence_number_statement" readonly="1" force_save="1" attrs="{'invisible':['|',('journal_type','!=','cash'),('journal_check_surrender','!=',True)]}"/>
 					</xpath>
 				</data>
 			</field>

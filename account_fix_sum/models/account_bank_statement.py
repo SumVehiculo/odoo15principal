@@ -6,7 +6,7 @@ import re
 class AccountBankStatement(models.Model):
 	_inherit = 'account.bank.statement'
 	
-	sequence_number = fields.Char(string='Secuencia')
+	sequence_number_statement = fields.Char(string='Secuencia')
 
 	@api.model
 	def create(self,vals):
@@ -15,7 +15,7 @@ class AccountBankStatement(models.Model):
 			if not id_seq:
 				id_seq = self.env['ir.sequence'].sudo().create({'name':'Rendiciones Tesoreria','implementation':'no_gap','active':True,'prefix':'REN-','padding':6,'number_increment':1,'number_next_actual' :1, 'company_id': self.env.company.id})
 			sequ = id_seq._next()
-			vals['sequence_number'] = sequ		
+			vals['sequence_number_statement'] = sequ		
 			vals['name'] = sequ
 
 		t = super(AccountBankStatement,self).create(vals)
