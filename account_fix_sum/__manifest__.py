@@ -11,7 +11,8 @@
 	'auto_install': False,
 	'demo': [],
 	'data':	[
-        'views/account_bank_statement.xml'
+        'views/account_bank_statement.xml',
+        'views/account_move.xml'
 	],
 	'installable': True,
 	'license': 'LGPL-3'
