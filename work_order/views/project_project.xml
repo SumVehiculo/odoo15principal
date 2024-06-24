@@ -31,6 +31,7 @@
                 <field name="message_needaction" invisible="1"/>
                 <field name="active" invisible="1"/>
                 <field name="name" string="Nombre" class="font-weight-bold"/>
+                <field name="project_name" string="Nombre del Proyecto" />
                 <field name="partner_id" optional="show" string="Cliente"/>
                 <field name="privacy_visibility" optional="hide"/>
                 <field name="company_id" optional="show" groups="base.group_multi_company" options="{'no_create': True, 'no_create_edit': True}"/>
