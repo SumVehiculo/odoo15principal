@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_bank_statement_form_inherit_sum" model="ir.ui.view">
+			<field name="name">bank.statement.form.inherit.sum</field>
+			<field name="model">account.bank.statement</field>
+			<field name="inherit_id" ref="account_fields_it.view_bank_statement_form_inherit"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//group[1]" position="before">
+						<field name="sequence_number" readonly="1" force_save="1" attrs="{'invisible':['|',('journal_type','!=','cash'),('journal_check_surrender','!=',True)]}"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>
