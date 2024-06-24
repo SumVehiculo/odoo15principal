@@ -39,7 +39,7 @@
 
     <menuitem
         id="work_order_report_wizard_menu"
-        name="Reporte General OT"
+        name="Reporte Por OT"
         action="work_order_report_wizard_action"
         parent="project.menu_project_report"
         sequence="10"/>
