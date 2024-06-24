@@ -40,8 +40,8 @@ class PurchaseOrder(models.Model):
         if not self.env.user.has_group("purchase_approval.purchase_approval_group"):
             raise UserError(f"Usted no tiene suficientes permisos para aprobar esta compra.")
         self.write({
-            'confirmed_by' : datetime.now() - timedelta(hours=5),
-            'date_confirmed' : self.env.user.id,
+            'confirmed_by' : self.env.user.id,
+            'date_confirmed' : datetime.now() - timedelta(hours=5),
             'custom_approve': True
         })
 
@@ -51,7 +51,7 @@ class PurchaseOrder(models.Model):
         if self.state != 'draft':
             raise UserError(f"Solo se puede desaprobar compras en estado Borrador")
         self.write({
-            'unconfirmed_by' : datetime.now() - timedelta(hours=5),
-            'date_unconfirmed' : self.env.user.id,
+            'unconfirmed_by' : self.env.user.id,
+            'date_unconfirmed' : datetime.now() - timedelta(hours=5),
             'custom_approve': False
         })

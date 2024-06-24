@@ -221,7 +221,15 @@ class WorkOrderReportWizard(models.TransientModel):
                 LEFT JOIN product_template pt on pt.id = pp.product_tmpl_id
                 LEFT JOIN account_account aa on aa.code = vst1.cuenta
             WHERE 
-                vst1.cuenta SIMILAR TO '62% | 63% | 64% | 65% | 67%' AND
+                (
+                    vst1.cuenta LIKE '62%' OR 
+                    vst1.cuenta LIKE '63%' OR 
+                    vst1.cuenta LIKE '64%' OR
+                    vst1.cuenta LIKE '65%' OR
+                    vst1.cuenta LIKE '66%' OR
+                    vst1.cuenta LIKE '67%' OR
+                    vst1.cuenta LIKE '68%'
+                ) AND
                 aml.work_order_id  = {self.work_order_id.id} AND
                 aa.company_id = {self.company_id.id}
             ;

@@ -14,12 +14,12 @@
                             <button string="Aprobar" name="button_custom_confirm" type="object" class="oe_highlight" attrs="{'invisible':[('custom_approve','=', True)]}"/> 
                             <button string="Desaprobar" name="button_custom_unconfirm" type="object" class="btn-danger" attrs="{'invisible':[('custom_approve', '=', False)]}"/> 
                         
-                            <field name="confirmed_by" attrs="{'invisible':[('custom_approve','=', True)]}"/>
-                            <field name="unconfirmed_by" attrs="{'invisible':[('custom_approve', '=', False)]}"/>
+                            <field name="confirmed_by" attrs="{'invisible':[('custom_approve','=', False)]}"/>
+                            <field name="unconfirmed_by" attrs="{'invisible':[('custom_approve', '=', True)]}"/>
                         </group>
                         <group>
-                            <field name="date_confirmed" attrs="{'invisible':[('custom_approve','=', True)]}"/>
-                            <field name="date_unconfirmed" attrs="{'invisible':[('custom_approve', '=', False)]}"/>
+                            <field name="date_confirmed" attrs="{'invisible':[('custom_approve','=', False)]}"/>
+                            <field name="date_unconfirmed" attrs="{'invisible':[('custom_approve', '=', True)]}"/>
                         </group>
                     </group>
                 </page>
