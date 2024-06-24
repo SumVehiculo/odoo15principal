@@ -439,5 +439,5 @@ class WorkOrderReportWizard(models.TransientModel):
             
         return row,warehouse_item_total
     
-    def employees_hourly_cost(self,self, row, worksheet, formats):
+    def employees_hourly_cost(self, row, worksheet, formats):
         pass
