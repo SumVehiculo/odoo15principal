@@ -685,6 +685,7 @@ class MakeKardexValorado(models.TransientModel):
                 inner join uom_uom uu on uu.id = pt.uom_id
                 inner join product_category pc on pc.id = pt.categ_id
                 left join stock_production_lot spt on spt.id = ksp.lote
+                
                     LEFT JOIN ( SELECT t_pp.id,
                         ((     coalesce(max(it.value),max(t_pt.name::text))::character varying::text || ' '::text) || replace(array_agg(pav.name)::character varying::text, '{NULL}'::text, ''::text))::character varying AS new_name
                         FROM product_product t_pp
@@ -766,66 +767,109 @@ class MakeKardexValorado(models.TransientModel):
             worksheet.write(9,3, u"Ubicacion Destino",boldbord)
             worksheet.write(9,4, u"Almacen",boldbord)
             worksheet.write(9,5, u"Tipo de Operación",boldbord)
-            worksheet.write(9,6, u"Categoria",boldbord)
-            worksheet.write(9,7, u"Producto",boldbord)
-            worksheet.write(9,8, u"Codigo P.",boldbord)
-            worksheet.write(9,9, u"Lote",boldbord)
-            worksheet.write(9,10, u"Unidad",boldbord)
-            worksheet.write(9,11, u"Doc. Almacen",boldbord)
-            worksheet.write(9,12, "Cantidad",boldbord)
+            worksheet.write(9,6, u"Nombre del Tipo de Operación",boldbord)
+            worksheet.write(9,7, u"Categoria",boldbord)
+            worksheet.write(9,8, u"Producto",boldbord)
+            worksheet.write(9,9, u"Codigo P.",boldbord)
+            worksheet.write(9,10, u"Lote",boldbord)
+            worksheet.write(9,11, u"Unidad",boldbord)
+            worksheet.write(9,12, u"Doc. Almacen",boldbord)
             worksheet.write(9,13, "Cantidad",boldbord)
             worksheet.write(9,14, "Cantidad",boldbord)
-            worksheet.write(9,15, "Precio Unitario",boldbord)			
-            worksheet.write(9,16, "Cliente",boldbord)
-            worksheet.write(9,17, "Nro Factura",boldbord)
+            worksheet.write(9,15, "Cantidad",boldbord)
+            worksheet.write(9,16, "Precio Unitario",boldbord)			
+            worksheet.write(9,17, "Cliente",boldbord)
+            worksheet.write(9,18, "Nro Factura",boldbord)
 
 
 
 
             self.env.cr.execute("""
-
-    select 
-    (vstf.fecha - interval '5' hour)::date as "Fecha",
-    (vstf.fecha - interval '5' hour) ::time as "Hora",
-    origen AS "Ubicación Origen",
-    destino AS "Ubicación Destino",
-    almacen AS "Almacén",
-    vstf.motivo_guia::varchar AS "Tipo de operación",
-    categoria as "Categoria",
-    producto as "Producto",
-    cod_pro as "Codigo P.",
-    vstf.lote as "Lote",
-
-    unidad as "unidad",
-
-    vstf.name as "Doc. Almacén",
-    vstf.entrada as "Entrada",
-    vstf.salida as "Salida",
-    rp.name as partner,
-    am.ref as comprobante,
-    vstf.lote_id as loteid
-    --sp.numberg as guia
-
-    from
-    (""" +si_existe+ """	
-    select vst_kardex_fisico.date as fecha,u_origen as origen, u_destino as destino, u_destino as almacen, vst_kardex_fisico.product_qty as entrada, 0 as salida,vst_kardex_fisico.id  as stock_move,vst_kardex_fisico.guia as motivo_guia, producto,vst_kardex_fisico.estado,vst_kardex_fisico.name, cod_pro, categoria, unidad,product_id,location_dest_id as almacen_id,lote, lote_id from vst_kardex_fisico_lote() as vst_kardex_fisico where company_id = """+str(self.env.company.id)+"""
-    and (date - interval '5' hour)::date >='""" +str(date_ini)+ """' and (date - interval '5' hour)::date <='""" +str(date_fin)+ """'			
-    union all
-    select vst_kardex_fisico.date as fecha,u_origen as origen, u_destino as destino, u_origen as almacen, 0 as entrada, vst_kardex_fisico.product_qty as salida,vst_kardex_fisico.id  as stock_move ,vst_kardex_fisico.guia as motivo_guia ,producto ,vst_kardex_fisico.estado,vst_kardex_fisico.name, cod_pro, categoria, unidad,product_id, location_id as almacen_id , lote, lote_id from vst_kardex_fisico_lote() as vst_kardex_fisico where company_id = """+str(self.env.company.id)+"""
-    and (date - interval '5' hour)::date >='""" +str(date_ini)+ """' and (date - interval '5' hour)::date <='""" +str(date_fin)+ """'			
-    ) as vstf
-    left join stock_move sm on sm.id = vstf.stock_move
-    left join stock_picking sp on sp.id = sm.picking_id
-    left join res_partner rp on rp.id =  sp.partner_id
-    left join account_move am on am.id = sm.invoice_id
-    where 
-    vstf.product_id in """ +str(tuple(s_prod))+ """
-    and vstf.almacen_id in """ +str(tuple(s_loca))+ """
-    and vstf.estado = 'done'
-    order by
-    almacen,producto,lote,vstf.fecha;
-
-
+                select 
+                    (vstf.fecha - interval '5' hour)::date as "Fecha",
+                    (vstf.fecha - interval '5' hour) ::time as "Hora",
+                    origen AS "Ubicación Origen",
+                    destino AS "Ubicación Destino",
+                    almacen AS "Almacén",
+                    vstf.motivo_guia::varchar AS "Tipo de operación",
+                    categoria as "Categoria",
+                    producto as "Producto",
+                    cod_pro as "Codigo P.",
+                    vstf.lote as "Lote",
+                    unidad as "unidad",
+                    vstf.name as "Doc. Almacén",
+                    vstf.entrada as "Entrada",
+                    vstf.salida as "Salida",
+                    rp.name as partner,
+                    am.ref as comprobante,
+                    vstf.lote_id as loteid,
+                    --sp.numberg as guia
+                    tok.name as operation_type_label
+                from
+                    (""" +si_existe+ """	
+                        select 
+                            vst_kardex_fisico.date as fecha,
+                            u_origen as origen, 
+                            u_destino as destino, 
+                            u_destino as almacen, 
+                            vst_kardex_fisico.product_qty as entrada, 
+                            0 as salida,
+                            vst_kardex_fisico.id  as stock_move,
+                            vst_kardex_fisico.guia as motivo_guia, 
+                            producto,
+                            vst_kardex_fisico.estado,
+                            vst_kardex_fisico.name, 
+                            cod_pro, 
+                            categoria, 
+                            unidad,
+                            product_id,
+                            location_dest_id as almacen_id,
+                            lote, 
+                            lote_id 
+                        from 
+                            vst_kardex_fisico_lote() as vst_kardex_fisico
+                        where
+                            company_id = """+str(self.env.company.id)+""" and 
+                            (date - interval '5' hour)::date >='""" +str(date_ini)+ """' and 
+                            (date - interval '5' hour)::date <='""" +str(date_fin)+ """'			
+                        union all
+                        select 
+                            vst_kardex_fisico.date as fecha,
+                            u_origen as origen, 
+                            u_destino as destino, 
+                            u_origen as almacen, 
+                            0 as entrada, 
+                            vst_kardex_fisico.product_qty as salida,
+                            vst_kardex_fisico.id  as stock_move ,
+                            vst_kardex_fisico.guia as motivo_guia ,
+                            producto ,
+                            vst_kardex_fisico.estado,
+                            vst_kardex_fisico.name, 
+                            cod_pro, 
+                            categoria, 
+                            unidad,
+                            product_id, 
+                            location_id as almacen_id , 
+                            lote, 
+                            lote_id from vst_kardex_fisico_lote() as vst_kardex_fisico 
+                        where 
+                            company_id = """+str(self.env.company.id)+""" and 
+                            (date - interval '5' hour)::date >='""" +str(date_ini)+ """' and 
+                            (date - interval '5' hour)::date <='""" +str(date_fin)+ """'			
+                    ) as vstf
+                    left join stock_move sm on sm.id = vstf.stock_move
+                    left join stock_picking sp on sp.id = sm.picking_id
+                    left join res_partner rp on rp.id =  sp.partner_id
+                    left join account_move am on am.id = sm.invoice_id
+                    
+                    left join type_operation_kardex tok on tok.id = sp.type_operation_sunat_id
+                where 
+                    vstf.product_id in """ +str(tuple(s_prod))+ """ and 
+                    vstf.almacen_id in """ +str(tuple(s_loca))+ """ and 
+                    vstf.estado = 'done'
+                order by
+                    almacen,producto,lote,vstf.fecha
+            ;
             """)
 
             ingreso1= 0
@@ -875,15 +919,16 @@ class MakeKardexValorado(models.TransientModel):
                 worksheet.write(x,3,line[3] if line[3] else '' ,bord )
                 worksheet.write(x,4,line[4] if line[4] else '' ,bord )
                 worksheet.write(x,5,line[5] if line[5] else '' ,bord )
-                worksheet.write(x,6,line[6] if line[6] else '' ,bord )
-                worksheet.write(x,7,line[7] if line[7] else '' ,bord )
-                worksheet.write(x,8,line[8] if line[8] else '' ,bord )
-                worksheet.write(x,9,line[9] if line[9] else '' ,bord)
-                worksheet.write(x,10,line[10] if line[10] else '' ,bord )
-                worksheet.write(x,11,line[11] if line[11] else 0 ,numberdos )
-                worksheet.write(x,12,line[12] if line[12] else 0 ,numberdos )
-                worksheet.write(x,13,line[13] if line[13] else 0 ,numberdos )
-                worksheet.write(x,14,saldo ,numberdos )
+                worksheet.write(x,6,line[17] if line[17] else '' ,bord )
+                worksheet.write(x,7,line[6] if line[6] else '' ,bord )
+                worksheet.write(x,8,line[7] if line[7] else '' ,bord )
+                worksheet.write(x,9,line[8] if line[8] else '' ,bord )
+                worksheet.write(x,10,line[9] if line[9] else '' ,bord)
+                worksheet.write(x,11,line[10] if line[10] else '' ,bord )
+                worksheet.write(x,12,line[11] if line[11] else 0 ,numberdos )
+                worksheet.write(x,13,line[12] if line[12] else 0 ,numberdos )
+                worksheet.write(x,14,line[13] if line[13] else 0 ,numberdos )
+                worksheet.write(x,15,saldo ,numberdos )
 
                 idlote = line[16] if line[16] else 0
                 lotegg = self.env['stock.production.lot'].browse(idlote)
@@ -891,10 +936,10 @@ class MakeKardexValorado(models.TransientModel):
                 if lotegg:
                     pue = lotegg[0].precio_final
 
-                worksheet.write(x,15,pue ,numberdos )
-                worksheet.write(x,16,line[14] if line[14] else '' ,bord )
+                worksheet.write(x,16,pue ,numberdos )
+                worksheet.write(x,17,line[14] if line[14] else '' ,bord )
                 #worksheet.write(x,16,line[16] if line[16] else '' ,bord )
-                worksheet.write(x,17,line[15] if line[15] else '' ,bord )
+                worksheet.write(x,18,line[15] if line[15] else '' ,bord )
 
 
                 x = x +1
