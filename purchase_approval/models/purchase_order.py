@@ -31,9 +31,9 @@ class PurchaseOrder(models.Model):
     
     def button_confirm(self):
         res = super().button_confirm()
-        for rec in self:
-            if not rec.custom_approve:
-                raise UserError("La compra necesita ser aprobada. ")
+        # for rec in self:
+        #     if not rec.custom_approve:
+        #         raise UserError("La compra necesita ser aprobada. ")
         return res
         
     def button_custom_confirm(self):
