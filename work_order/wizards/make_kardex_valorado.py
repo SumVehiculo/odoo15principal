@@ -47,7 +47,6 @@ class MakeKardexValorado(models.TransientModel):
 
     def do_csvtoexcel(self):
         if self.tipo_kardex == 'promedio':
-
             import openpyxl
             from openpyxl.styles import Border, Side, PatternFill, Font, GradientFill, Alignment
             from openpyxl.styles.borders import Border, Side, BORDER_THIN
@@ -157,7 +156,7 @@ class MakeKardexValorado(models.TransientModel):
             ws.append([""]*12 + [border(ws,"Ingreso"),border(ws,""),border(ws,"Salida"),border(ws,""),border(ws,"Saldo"),border(ws,"")] )
 
 
-            linea = [border(ws,u"Fecha"),border(ws,u"Hora"),border(ws,u"Tipo"),border(ws,u"Serie"),border(ws,u"Número"),border(ws,u"Doc. Almacen"),border(ws,u"RUC"),border(ws,u"Empresa"),border(ws,u"T. OP."),border(ws,u"Producto"),border(ws,u"Codigo Producto"),border(ws,u"Unidad"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border_sub(ws,u"Costo Adquisición"),border_sub(ws,u"Costo Promedio"),border(ws,u"Ubicacion Origen"),border(ws,u"Ubicacion Destino"),border(ws,u"Almacen"),border(ws,u"IDProducto"),border(ws,u"Pedido")]
+            linea = [border(ws,u"Fecha"),border(ws,u"Hora"),border(ws,u"Tipo"),border(ws,u"Serie"),border(ws,u"Número"),border(ws,u"Doc. Almacen"),border(ws,u"RUC"),border(ws,u"Empresa"),border(ws,u"T. OP."), border(ws,u"T. OP. Nombre"), border(ws,u"Producto"),border(ws,u"Codigo Producto"),border(ws,u"Unidad"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border_sub(ws,u"Costo Adquisición"),border_sub(ws,u"Costo Promedio"),border(ws,u"Ubicacion Origen"),border(ws,u"Ubicacion Destino"),border(ws,u"Almacen"),border(ws,u"IDProducto"),border(ws,u"Pedido"),border(ws,u"OT")]
 
 
 
@@ -231,7 +230,9 @@ class MakeKardexValorado(models.TransientModel):
                     sl.complete_name as almacen,
                     '' as ctanalitica,
                     0 as stock_moveid,
-                    '' as pedido
+                    '' as pedido,
+                    '' as operation_type_label,
+                    '' as work_order
 
                 from kardex_save_period ksp 
                 inner join stock_location sl on sl.id = ksp.almacen
@@ -239,6 +240,7 @@ class MakeKardexValorado(models.TransientModel):
                 inner join product_template pt on pt.id = pp.product_tmpl_id
                 inner join uom_uom uu on uu.id = pt.uom_id
                 inner join product_category pc on pc.id = pt.categ_id
+                
                 left join stock_production_lot spt on spt.id = ksp.lote
                     LEFT JOIN ( SELECT t_pp.id,
                         ((     coalesce(max(it.value),max(t_pt.name::text))::character varying::text || ' '::text) || replace(array_agg(pav.name)::character varying::text, '{NULL}'::text, ''::text))::character varying AS new_name
@@ -282,7 +284,9 @@ class MakeKardexValorado(models.TransientModel):
                     almacen,
                     ctanalitica,
                     stock_moveid,
-                    pedido
+                    pedido,
+                    operation_type_label,
+                    work_order_label
                 from (
                     select 
                     product_id,
@@ -310,12 +314,16 @@ class MakeKardexValorado(models.TransientModel):
                     almacen,
                     ctanalitica,
                     stock_moveid,
-                    pedido
+                    pedido,
+                    operation_type_label,
+                    work_order_label
                     from (
         select vst_kardex_sunat.*,sp.name as doc_almac,sm.kardex_date as fecha_albaran,
         vst_kardex_sunat.fecha - interval '5' hour as fechax,sl_o.usage as origen_usage , sl_d.usage as destino_usage, np.new_name,
-        coalesce(po.name,so.name) as pedido
-                    from vst_kardex_fisico_valorado as vst_kardex_sunat
+        coalesce(po.name,so.name) as pedido,
+        tok.name as operation_type_label,
+        pp.name as work_order_label
+        from vst_kardex_fisico_valorado as vst_kardex_sunat
         left join stock_move sm on sm.id = vst_kardex_sunat.stock_moveid
         left join purchase_order_line pol on pol.id = sm.purchase_line_id
         left join purchase_order po on po.id = pol.order_id
@@ -325,8 +333,10 @@ class MakeKardexValorado(models.TransientModel):
 
         left join stock_picking sp on sp.id = sm.picking_id
 
-                            left join stock_location sl_o on sl_o.id = sm.location_id
-                            left join stock_location sl_d on sl_d.id = sm.location_dest_id
+        left join stock_location sl_o on sl_o.id = sm.location_id
+        left join stock_location sl_d on sl_d.id = sm.location_dest_id
+        left join type_operation_kardex tok on tok.id = sp.type_operation_sunat_id
+        left join project_project pp on pp.id = sm.work_order_id
         left join (
             select t_pp.id, 
                     ((     coalesce(max(it.value),max(t_pt.name::text))::character varying::text || ' '::text) || replace(array_agg(pav.name)::character varying::text, '{NULL}'::text, ''::text))::character varying AS new_name
@@ -378,7 +388,9 @@ class MakeKardexValorado(models.TransientModel):
                     almacen,
                     ctanalitica,
                     stock_moveid,
-                    pedido
+                    pedido,
+                    operation_type_label,
+                    work_order_label
                 from (
                     select 
                     product_id,
@@ -406,19 +418,28 @@ class MakeKardexValorado(models.TransientModel):
                     almacen,
                     ctanalitica,
                     stock_moveid,
-                    pedido
+                    pedido,
+                    operation_type_label,
+                    work_order_label
                     from (
         select vst_kardex_sunat.*,sp.name as doc_almac,sm.kardex_date as fecha_albaran,
         vst_kardex_sunat.fecha - interval '5' hour as fechax,sl_o.usage as origen_usage , sl_d.usage as destino_usage, np.new_name,
-        po.name as pedido
-                    from vst_kardex_fisico_valorado_dolar as vst_kardex_sunat
+        po.name as pedido,
+        tok.name as operation_type_label,
+        pp.name as work_order_label
+        from vst_kardex_fisico_valorado_dolar as vst_kardex_sunat
         left join stock_move sm on sm.id = vst_kardex_sunat.stock_moveid
         left join purchase_order_line pol on pol.id = sm.purchase_line_id
         left join purchase_order po on po.id = pol.order_id
         left join stock_picking sp on sp.id = sm.picking_id
 
-                            left join stock_location sl_o on sl_o.id = sm.location_id
-                            left join stock_location sl_d on sl_d.id = sm.location_dest_id
+        left join stock_location sl_o on sl_o.id = sm.location_id
+        left join stock_location sl_d on sl_d.id = sm.location_dest_id
+        
+        left join type_operation_kardex tok on tok.id = sp.type_operation_sunat_id,
+        left join project_project pp on pp.id = sm.work_order_id
+        
+        
         left join (
             select t_pp.id, 
                     ((     coalesce(max(it.value),max(t_pt.name::text))::character varying::text || ' '::text) || replace(array_agg(pav.name)::character varying::text, '{NULL}'::text, ''::text))::character varying AS new_name
@@ -481,7 +502,9 @@ class MakeKardexValorado(models.TransientModel):
                     'almacen':xl[22],
                     'ctanalitica':xl[23],	
                     'stock_moveid':xl[24],	
-                    'pedido':xl[25],	
+                    'pedido':xl[25],
+                    'operation_type_label': xl[26],
+                    'work_order_label': xl[27]
                 }
                 cont_report += 1
                 if cont_report%300 == 0:
@@ -555,6 +578,7 @@ class MakeKardexValorado(models.TransientModel):
                 linea.append( l['nro_documento'] if l['nro_documento'] else '' )
                 linea.append( l['name'] if l['name'] else '' )
                 linea.append( l['operation_type'] if l['operation_type'] else '' )
+                linea.append( l['operation_type_label'] if l['operation_type_label'] else '' )
                 linea.append( l['new_name'] if l['new_name'] else '' )
                 linea.append( l['default_code'] if l['default_code'] else '')
                 linea.append( l['unidad'] if l['unidad'] else '' )
@@ -572,6 +596,8 @@ class MakeKardexValorado(models.TransientModel):
 
                 linea.append( l['product_id'] if l['product_id'] else '' )
                 linea.append( l['pedido'] if l['pedido'] else '' )
+                linea.append( l['work_order_label'] if l['work_order_label'] else '' )
+                
 
                 
                 if self.check_account:
@@ -804,7 +830,6 @@ class MakeKardexValorado(models.TransientModel):
                     am.ref as comprobante,
                     vstf.lote_id as loteid,
                     --sp.numberg as guia
-                    tok.name as operation_type_label
                 from
                     (""" +si_existe+ """	
                         select 
@@ -862,7 +887,6 @@ class MakeKardexValorado(models.TransientModel):
                     left join res_partner rp on rp.id =  sp.partner_id
                     left join account_move am on am.id = sm.invoice_id
                     
-                    left join type_operation_kardex tok on tok.id = sp.type_operation_sunat_id
                 where 
                     vstf.product_id in """ +str(tuple(s_prod))+ """ and 
                     vstf.almacen_id in """ +str(tuple(s_loca))+ """ and 
@@ -919,27 +943,26 @@ class MakeKardexValorado(models.TransientModel):
                 worksheet.write(x,3,line[3] if line[3] else '' ,bord )
                 worksheet.write(x,4,line[4] if line[4] else '' ,bord )
                 worksheet.write(x,5,line[5] if line[5] else '' ,bord )
-                worksheet.write(x,6,line[17] if line[17] else '' ,bord )
-                worksheet.write(x,7,line[6] if line[6] else '' ,bord )
-                worksheet.write(x,8,line[7] if line[7] else '' ,bord )
-                worksheet.write(x,9,line[8] if line[8] else '' ,bord )
-                worksheet.write(x,10,line[9] if line[9] else '' ,bord)
-                worksheet.write(x,11,line[10] if line[10] else '' ,bord )
-                worksheet.write(x,12,line[11] if line[11] else 0 ,numberdos )
-                worksheet.write(x,13,line[12] if line[12] else 0 ,numberdos )
-                worksheet.write(x,14,line[13] if line[13] else 0 ,numberdos )
-                worksheet.write(x,15,saldo ,numberdos )
+                worksheet.write(x,6,line[6] if line[6] else '' ,bord )
+                worksheet.write(x,7,line[7] if line[7] else '' ,bord )
+                worksheet.write(x,8,line[8] if line[8] else '' ,bord )
+                worksheet.write(x,9,line[9] if line[9] else '' ,bord)
+                worksheet.write(x,10,line[10] if line[10] else '' ,bord )
+                worksheet.write(x,11,line[11] if line[11] else 0 ,numberdos )
+                worksheet.write(x,12,line[12] if line[12] else 0 ,numberdos )
+                worksheet.write(x,13,line[13] if line[13] else 0 ,numberdos )
+                worksheet.write(x,14,saldo ,numberdos )
 
-                idlote = line[16] if line[16] else 0
+                idlote = line[15] if line[15] else 0
                 lotegg = self.env['stock.production.lot'].browse(idlote)
                 pue = 0
                 if lotegg:
                     pue = lotegg[0].precio_final
 
-                worksheet.write(x,16,pue ,numberdos )
-                worksheet.write(x,17,line[14] if line[14] else '' ,bord )
+                worksheet.write(x,15,pue ,numberdos )
+                worksheet.write(x,16,line[14] if line[14] else '' ,bord )
                 #worksheet.write(x,16,line[16] if line[16] else '' ,bord )
-                worksheet.write(x,18,line[15] if line[15] else '' ,bord )
+                worksheet.write(x,17,line[15] if line[15] else '' ,bord )
 
 
                 x = x +1
