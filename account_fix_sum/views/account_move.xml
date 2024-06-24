@@ -6,7 +6,7 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_invoice_tree"/>
             <field name="arch" type="xml">
-                <field name="amount_residual_signed" position="before">
+                <field name="amount_residual_signed" position="after">
                     <field name="amount_residual" optional="hide" string="Importe Adeudado en Divisa"/>
                 </field>
             </field>
