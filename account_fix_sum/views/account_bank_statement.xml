@@ -7,8 +7,11 @@
 			<field name="inherit_id" ref="account_fields_it.view_bank_statement_form_inherit"/>
 			<field name="arch" type="xml">
 				<data>
+					<xpath expr="//field[@name='name']" position="attributes">
+                   		<attribute name="attrs">{'readonly':[('journal_type', '=', 'cash'),('journal_check_surrender', '=', True)]}</attribute>
+					</xpath>
 					<xpath expr="//group[1]" position="before">
-						<field name="sequence_number_statement" readonly="1" force_save="1" attrs="{'invisible':['|',('journal_type','!=','cash'),('journal_check_surrender','!=',True)]}"/>
+						<field name="sequence_number_statement" invisible="1" force_save="1" attrs="{'invisible':['|',('journal_type','!=','cash'),('journal_check_surrender','!=',True)]}"/>
 					</xpath>
 				</data>
 			</field>
