@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 class GeneralWorkOrderReport(models.Model):
     _name="general.work.order.report"
-    _description="Reporte de Orden de Trabajo General" 
+    _description="Reporte de Orden de Trabajo Ingresos-Gastos" 
     
     date = fields.Date('Fecha')
     account = fields.Char('Cuenta')
@@ -34,7 +34,7 @@ class GeneralWorkOrderReport(models.Model):
                 aml.product_id AS product_id,
                 vst1.voucher AS voucher,
                 vst1.nro_comprobante AS voucher_number,
-                ABS(vst1.balance) AS soles,
+                vst1.balance AS soles,
                 aml.work_order_id AS work_order_id
             FROM 
                 get_diariog(
@@ -76,6 +76,6 @@ class GeneralWorkOrderReport(models.Model):
             result['product_id']=data['product_id']
             result['voucher']=data['voucher']
             result['voucher_number']=data['voucher_number']
-            result['soles']=data['soles']
+            result['soles']=-1 * data['soles']
             result['work_order_id']=data['work_order_id']
             self.env['general.work.order.report'].create(result)

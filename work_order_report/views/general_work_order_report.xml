@@ -21,7 +21,7 @@
     </record>
 
     <record id="general_work_order_report_action" model="ir.actions.act_window">
-        <field name="name">Reporte General OT</field>
+        <field name="name">Reporte Ingresos-Gastos OT</field>
         <field name="res_model">general.work.order.report</field>
         <field name="view_mode">tree</field>
         <field name="help" type="html">
@@ -33,7 +33,7 @@
     <!-- <field name="domain">[]</field> -->
 
     <record id="general_work_order_report_action_server" model="ir.actions.server">
-        <field name="name">Reporte General OT</field>
+        <field name="name">Reporte Ingresos-Gastos OT</field>
         <field name="model_id" ref="work_order_report.model_general_work_order_report"/>
         <field name="binding_model_id" ref="work_order_report.model_general_work_order_report"/>
         <field name="state">code</field>
@@ -42,7 +42,7 @@
     
     <menuitem
         id="general_work_order_report_menu"
-        name="Reporte General OT"
+        name="Reporte Ingresos-Gastos OT"
         action="general_work_order_report_action_server"
         parent="project.menu_project_report"
         sequence="12"/>
