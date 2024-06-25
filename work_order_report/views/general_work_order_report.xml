@@ -5,6 +5,7 @@
         <field name="model">general.work.order.report</field>
         <field name="arch" type="xml">
             <tree string="">
+                <field name="work_order_id" />
                 <field name="date" />
                 <field name="account" />
                 <field name="account_label" />

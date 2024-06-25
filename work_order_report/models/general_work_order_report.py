@@ -14,6 +14,7 @@ class GeneralWorkOrderReport(models.Model):
     voucher = fields.Char('Voucher')
     voucher_number = fields.Char('Nro. Compr.')
     soles = fields.Float('Soles')
+    work_order_id = fields.Many2one('project.project', string='O. T.')
     
     def get_report(self):
         self.env.cr.execute("DELETE FROM general_work_order_report")
@@ -33,7 +34,8 @@ class GeneralWorkOrderReport(models.Model):
                 aml.product_id AS product_id,
                 vst1.voucher AS voucher,
                 vst1.nro_comprobante AS voucher_number,
-                ABS(vst1.balance) AS soles
+                ABS(vst1.balance) AS soles,
+                aml.work_order_id AS work_order_id
             FROM 
                 get_diariog(
                     '2000/01/01',
@@ -75,4 +77,5 @@ class GeneralWorkOrderReport(models.Model):
             result['voucher']=data['voucher']
             result['voucher_number']=data['voucher_number']
             result['soles']=data['soles']
+            result['work_order_id']=data['work_order_id']
             self.env['general.work.order.report'].create(result)
