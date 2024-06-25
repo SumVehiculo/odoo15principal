@@ -19,7 +19,7 @@ class WorkOrderReportWizard(models.TransientModel):
     end_date = fields.Date('Hasta', required=True)
    
     def get_report(self):
-        filename = "Reporte General OT.xlsx"
+        filename = f"Reporte Por OT-{self.work_order_id.name}.xlsx"
         workbook = Workbook(filename)
         worksheet = workbook.add_worksheet("Reporte OT")
         worksheet.set_tab_color('blue')
@@ -83,6 +83,14 @@ class WorkOrderReportWizard(models.TransientModel):
         format_base.set_font_name('Times New Roman')
         formats['base'] = format_base
         
+        format_base_right = workbook.add_format({'num_format':'0.00'})
+        format_base_right.set_align('right')
+        format_base_right.set_border(style=1)
+        format_base_right.set_text_wrap()
+        format_base_right.set_font_size(9)
+        format_base_right.set_font_name('Times New Roman')
+        formats['base_number'] = format_base_right
+        
         red_base = workbook.add_format()
         red_base.set_font_color('red')
         red_base.set_align('left')
@@ -93,7 +101,7 @@ class WorkOrderReportWizard(models.TransientModel):
         
         # Header
         row=0
-        worksheet.merge_range(row, 0, row, 9, "REPORTE GENERAL OT", formats['title'])
+        worksheet.merge_range(row, 0, row, 9, "REPORTE POR OT", formats['title'])
         row+=1
         header_details=[
             f"ORDEN DE TRABAJO : {self.work_order_id.name}",
@@ -135,12 +143,17 @@ class WorkOrderReportWizard(models.TransientModel):
         worksheet.merge_range(5, 6, 5, 8, "Total Lineas de Kardex", formats.get('detail'))
         worksheet.write(5, 9, warehouse_item_total, formats['detail_right'])
         
-        worksheet.merge_range(6, 6, 6, 8, "Total Costo Horas", formats.get('detail'))
-        worksheet.write(6, 9, total_hourly_cost, formats['detail_right'])
+        worksheet.merge_range(6, 6, 6, 8, "Total Costo Horas", formats.get('detail_border'))
+        worksheet.write(6, 9, total_hourly_cost, formats['detail_border_right'])
         
-        total_net=(sale_invoice_total+invoiced_expenses_total+warehouse_item_total)
-        worksheet.merge_range(7, 6, 7, 8, "NETO", formats['detail_border'])
-        worksheet.write(7, 9, total_net, formats['detail_border_right'])
+        total_net=sum([
+            sale_invoice_total,
+            invoiced_expenses_total,
+            warehouse_item_total,
+            total_hourly_cost
+        ])
+        worksheet.merge_range(7, 6, 7, 8, "NETO", formats['detail'])
+        worksheet.write(7, 9, total_net, formats['detail_right'])
         
         total_sale_percentage = round((abs(total_net)/(sale_invoice_total if sale_invoice_total else 1))*100,2)
         worksheet.merge_range(8, 6, 8, 8, "% NETO / VENTAS", formats.get('detail'))
@@ -222,7 +235,7 @@ class WorkOrderReportWizard(models.TransientModel):
             worksheet.write(row, 6, data['name'] if data['name'] else '', formats.get('base'))
             worksheet.write(row, 7, data['voucher'] if data['voucher'] else '', formats.get('base'))
             worksheet.write(row, 8, data['nro_comprobante'] if data['nro_comprobante'] else '', formats.get('base'))
-            worksheet.write(row, 9, amount_soles if amount_soles else '', formats.get('base'))
+            worksheet.write(row, 9, amount_soles if amount_soles else '', formats.get('base_number'))
             # worksheet.write(row, 10, data['dollars'] if  data['dollars'] else '', formats.get('base'))
             total_sale_invoice += amount_soles
             row+=1
@@ -304,7 +317,7 @@ class WorkOrderReportWizard(models.TransientModel):
             worksheet.write(row, 6, data['name'] if data['name'] else '', formats.get('base'))
             worksheet.write(row, 7, data['voucher'] if data['voucher'] else '', formats.get('base'))
             worksheet.write(row, 8, data['nro_comprobante'] if data['nro_comprobante'] else '', formats.get('base'))
-            worksheet.write(row, 9, amount_soles if amount_soles else '', formats.get('base'))
+            worksheet.write(row, 9, amount_soles if amount_soles else '', formats.get('base_number'))
             # worksheet.write(row, 10, data['dollars'] if  data['dollars'] else '', formats.get('base'))
             total_invoiced_expenses+= amount_soles
             row+=1
@@ -468,7 +481,7 @@ class WorkOrderReportWizard(models.TransientModel):
             worksheet.write(row, 8, unit_price, formats.get('base'))
             # Costo Total
             total_cost=round(quantity * unit_price * -1,2)
-            worksheet.write(row, 9, total_cost, formats.get('base'))
+            worksheet.write(row, 9, total_cost, formats.get('base_number'))
             warehouse_item_total += total_cost
             row+=1
             
@@ -520,7 +533,7 @@ class WorkOrderReportWizard(models.TransientModel):
             worksheet.write(row, 2, data['task_id'] if data['task_id'] else '', formats.get('base'))
             worksheet.write(row, 3, data['unit_amount'] if data['unit_amount'] else 0, formats.get('base'))
             worksheet.write(row, 4, data['hourly_cost'] if data['hourly_cost'] else 0, formats.get('base'))
-            worksheet.write(row, 5, total_cost_per_hour if total_cost_per_hour else '', formats.get('base'))
+            worksheet.write(row, 5, total_cost_per_hour if total_cost_per_hour else '', formats.get('base_number'))
             total_hourly_cost+= total_cost_per_hour
             row+=1
         return row, total_hourly_cost

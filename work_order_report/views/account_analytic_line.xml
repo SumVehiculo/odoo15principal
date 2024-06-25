@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="account_analytic_line_view_tree" model="ir.ui.view">
+        <field name="name">account.analytic.line.view.tree</field>
+        <field name="model">account.analytic.line</field>
+        <field name="arch" type="xml">
+            <tree readonly="1">
+                <field name="date"/>
+                <field name="employee_id" />
+                <field name="project_id" options="{'no_create_edit': True}"/>
+                <field name="task_id" optional="show" options="{'no_create_edit': True, 'no_open': True}" widget="task_with_hours" context="{'default_project_id': project_id}" domain="[('project_id', '=', project_id)]"/>
+                <field name="name" optional="show" required="0"/>
+                <field name="unit_amount" optional="show" widget="timesheet_uom" sum="Total" decoration-danger="unit_amount &gt; 24"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- <field name="company_id" invisible="1"/>
+    <field name="user_id" invisible="1"/> -->
+
+    <record id="account_analytic_line_action" model="ir.actions.act_window">
+        <field name="name">Reporte de Partes de Horas</field>
+        <field name="res_model">account.analytic.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="work_order_report.account_analytic_line_view_tree"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem
+        id="account_analytic_line_menu"
+        name="Reporte de Parte de Horas"
+        action="account.analytic.line_action"
+        parent="project.menu_project_report"
+        sequence="11"/>
+
+</odoo>
