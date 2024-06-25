@@ -375,7 +375,8 @@ class WorkOrderReportWizard(models.TransientModel):
                             {self.end_date.strftime('%Y%m%d')}
                     ) AND 
                     vst_kardex_sunat.company_id = {self.company_id.id} AND
-                    sm.work_order_id  = {self.work_order_id.id}
+                    sm.work_order_id  = {self.work_order_id.id} AND
+                    vst_kardex_sunat.operation_type IN ('01','10','20','91','92')
                 )Total	
         """
         worksheet.merge_range(row, 0, row, 4, "Articulos de Almacen" , formats.get('red_base'))
