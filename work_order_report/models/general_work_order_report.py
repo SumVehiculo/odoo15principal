@@ -68,7 +68,7 @@ class GeneralWorkOrderReport(models.Model):
             result['date']=data['date']
             result['account']=data['account']
             result['account_label']=data['account_label']
-            result['partner_id']=data['partner']
+            result['partner']=data['partner']
             result['gloss']=data['gloss']
             result['product_reference']=data['product_reference']
             result['product_id']=data['product_id']
