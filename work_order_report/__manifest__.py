@@ -13,6 +13,7 @@
         'security/ir.model.access.csv',
         'wizards/work_order_report_wizard.xml',
         'views/account_analytic_line.xml',
+        'views/general_work_order_report.xml'
     ],
     'auto_install': False,
     'application': False

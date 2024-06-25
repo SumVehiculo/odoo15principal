@@ -254,8 +254,8 @@ class WorkOrderReportWizard(models.TransientModel):
                 pt.name,
                 vst1.voucher,
                 vst1.nro_comprobante,
-                ABS(vst1.balance) as soles,
-                ABS(vst1.importe_me) as dollars
+                vst1.balance as soles,
+                vst1.importe_me as dollars
             FROM 
                 get_diariog(
                     '{self.start_date.strftime('%Y/%m/%d')}',
