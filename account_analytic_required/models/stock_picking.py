@@ -26,11 +26,14 @@ class stock_move(models.Model):
     _inherit = 'stock.move'
     
     def verify_required(self):
-        if self.picking_id.type_operation_sunat_id.code in ('10', '91', '92'):
+        # Update 6/26/24  Ticket(#27083)
+        # al momento de cancelar la SDP da error por transferencias con distintos tipos de operaciones
+        # Linea eliminada:
+        # if self.picking_id.type_operation_sunat_id.code in ('10', '91', '92'):
+        if any([pick.code in ('10', '91', '92') for pick in self.picking_id.type_operation_sunat_id]):
             for move in self:
                 if not move.analytic_account_id or not move.analytic_tag_id:
                     raise UserError("Falta completar Cuenta Analítica o Etiqueta Analítica")
-       
         return
 
     @api.model
