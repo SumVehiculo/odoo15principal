@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="purchase_inherit_state_condition" name="purchase_inherit_state_condition" inherit_id="purchase.report_purchaseorder">
+        <xpath expr="//t[@t-call='purchase_report.report_purchase_order_document']" position="attributes">
+            <attribute name="t-if">doc.state == 'purchase'</attribute>
+        </xpath>
+    </template>
+</odoo>
