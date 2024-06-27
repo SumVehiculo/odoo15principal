@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="account_bank_statement_view_tree_inherit_memory" model="ir.ui.view">
+        <field name="name">account.bank.statement.view.tree.inherit.memory</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account_treasury_it.view_bank_statement_surrender_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="memory" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
