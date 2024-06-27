@@ -9,8 +9,7 @@
         'sale',
     ],
     'data':[
-        'security/res_groups.xml',
-        'views/sale_order.xml',
+        'security/res_groups.xml'
     ],
     'auto_install': False,
     'application': False
