@@ -7,10 +7,10 @@
     'license': 'LGPL-3',
     'depends': [
         'sale',
-        'stock'
     ],
     'data':[
-        'security/res_groups.xml'
+        'security/res_groups.xml',
+        'views/sale_order.xml',
     ],
     'auto_install': False,
     'application': False
