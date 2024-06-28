@@ -8,19 +8,10 @@ class ProjectProject(models.Model):
 
     project_name = fields.Char('Nombre del Proyecto')
     
-    analytic_account_id = fields.Many2one(
-        'account.analytic.account', 
-        string="Analytic Account", 
-        copy=False, 
-        ondelete='set null',
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", check_company=True,
-        required=True
-    )
-    
-    
     
     @api.model
     def create(self, vals):
+        
         actual_month = str(datetime.today().month)
         date = str(datetime.today().year) + '-'
         if len(actual_month) == 1:
