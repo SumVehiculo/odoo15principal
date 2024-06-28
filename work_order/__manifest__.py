@@ -10,7 +10,8 @@
         'purchase',
         'stock',
         'stock_move_picking_hook',
-        'sale'
+        'sale',
+        'sale_project_account'
     ],
     'data': [
         'views/project_project.xml',
