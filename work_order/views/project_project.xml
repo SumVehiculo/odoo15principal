@@ -5,6 +5,18 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_project_vendor_bills']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+            <xpath expr="//button[@name='action_open_project_invoices']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+
             <xpath expr="//div[@class='oe_title']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
