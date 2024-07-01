@@ -236,7 +236,7 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 		sql ="""
 			SELECT 
 			'{period_code}' as campo1,
-			'01'as campo2,
+			'09'as campo2,
 			at.code as campo3,
 			SUM(CASE WHEN apt.code='001' THEN -a1.balance ELSE 0 END) AS campo4,
 			SUM(CASE WHEN apt.code='002' THEN -a1.balance ELSE 0 END) AS campo5,
