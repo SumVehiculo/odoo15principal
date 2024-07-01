@@ -61,7 +61,7 @@
                     name="action_open_order_purchase_invoices" 
                     type="object" 
                     class="oe_stat_button" 
-                    icon="fa-pencil-square-o" 
+                    icon="fa-pencil-square" 
                 >
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
@@ -77,7 +77,7 @@
                     name="action_open_order_picks" 
                     type="object" 
                     class="oe_stat_button" 
-                    icon="fa-pencil-square-o" 
+                    icon="fa-truck" 
                 >
                 <!--                     attrs="{'invisible': [('vendor_bill_count', '=', 0)]}" -->
                     <div class="o_field_widget o_stat_info">
