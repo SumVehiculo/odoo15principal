@@ -192,8 +192,8 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
                   str('{:02d}'.format(self.period.date_start.month)) + \
                   (str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day)))
 
-			period_start = self.env['account.period'].search([('code', '=', self.period.code[:4] + '00')], limit=1).code
-			period_end = self.period.code
+			period_start = self.env['account.period'].search([('code', '=', self.period.code[:4] + '00')], limit=1).date_start.strftime('%Y-%m-%d')
+			period_end = self.period.date_end.strftime('%Y-%m-%d')
 			company_id = self.company_id.id
 
 			sql = f"""
@@ -201,12 +201,12 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 				'{period_code}'::varchar as campo1,
 				'09' as campo2,
 				at.code as campo3,
-				sum(bcr.debe) - sum(bcr.haber) as campo4,
+				-sum(a1.balance) as campo4,
 				'1'::varchar as campo5,
 				NULL as campo6
-			FROM get_bc_register('{period_start}','{period_end}', {company_id}) bcr
-			LEFT JOIN account_account aa ON aa.code = bcr.cuenta AND aa.company_id = {company_id}
-			LEFT JOIN account_type_it at ON at.id = aa.account_type_it_id
+				
+			FROM get_eeff('{period_start}','{period_end}',{company_id}) a1
+			left join account_type_it at on at.id = a1.rubro_id
 			WHERE at.group_function IS NOT NULL
 			GROUP BY at.code
 			ORDER BY at.code
