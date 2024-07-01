@@ -12,19 +12,19 @@ class ProjectProject(models.Model):
         'Contador de Transferencias', 
         compute="_compute_pick_count"
     )
-    pick_ids = fields.Many2many('stock.picking', string='Transferencias')
+    pick_ids = fields.One2many('stock.picking','work_order_id', string='Transferencias')
     
     sale_invoice_count = fields.Integer(
         'Contador de Facturas de Venta', 
         compute="_compute_sale_invoice_count"
     )
-    sale_invoice_ids = fields.Many2many('account.move', string='Facturas de Venta')
+    sale_invoice_ids = fields.One2many('account.move','work_order_id', string='Facturas de Venta')
     
     purchase_invoice_count = fields.Integer(
         'Contador de Facturas de Compra',
         compute="_compute_purchase_invoice_count"
     )
-    purchase_invoice_ids = fields.Many2many('account.move', string='Facturas de Compra')
+    purchase_invoice_ids = fields.One2many('account.move','work_order_id', string='Facturas de Compra')
     
     
     
