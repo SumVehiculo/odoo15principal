@@ -12,20 +12,13 @@ class ProjectProject(models.Model):
         'Contador de Transferencias', 
         compute="_compute_pick_count"
     )
-    pick_ids = fields.One2many('stock.picking','work_order_id', string='Transferencias')
+    pick_ids = fields.Many2many('stock.picking', string='Transferencias')
     
-    sale_invoice_count = fields.Integer(
-        'Contador de Facturas de Venta', 
-        compute="_compute_sale_invoice_count"
-    )
-    sale_invoice_ids = fields.One2many('account.move','work_order_id', string='Facturas de Venta')
-    
-    purchase_invoice_count = fields.Integer(
-        'Contador de Facturas de Compra',
-        compute="_compute_purchase_invoice_count"
-    )
-    purchase_invoice_ids = fields.One2many('account.move','work_order_id', string='Facturas de Compra')
-    
+    # invoice_count = fields.Integer(
+    #     'Contador de Facturas', 
+    #     compute="_compute_invoice_count"
+    # )
+    # invoice_ids = fields.Many2many('account.move', string='Facturas Relacionadas')
     
     
     @api.model
@@ -69,31 +62,31 @@ class ProjectProject(models.Model):
             rec.pick_count=len(stock_moves)
             rec.pick_ids=stock_moves.picking_id.ids
     
-    def _compute_sale_invoice_count(self):
-        for rec in self:
-            account_lines=self.env['account.move.line'].sudo().search([
-                ('work_order_id','=',rec.id),
-                ('sale_line_id','!=',False)
-            ])
-            if not account_lines:
-                rec.sale_invoice_count=0
-                rec.sale_invoice_ids=False
-                continue
-            rec.sale_invoice_count=len(account_lines)
-            rec.sale_invoice_ids=account_lines.move_id.ids
+    # def _compute_sale_invoice_count(self):
+    #     for rec in self:
+    #         account_lines=self.env['account.move.line'].sudo().search([
+    #             ('work_order_id','=',rec.id),
+    #             ('sale_line_id','!=',False)
+    #         ])
+    #         if not account_lines:
+    #             rec.sale_invoice_count=0
+    #             rec.sale_invoice_ids=False
+    #             continue
+    #         rec.sale_invoice_count=len(account_lines)
+    #         rec.sale_invoice_ids=account_lines.move_id.ids
     
-    def _compute_purchase_invoice_count(self):
-        for rec in self:
-            account_lines=self.env['account.move.line'].sudo().search([
-                ('work_order_id','=',rec.id),
-                ('purchase_line_id','!=',False)
-            ])
-            if not account_lines:
-                rec.purchase_invoice_count=0
-                rec.purchase_invoice_ids=False
-                continue
-            rec.purchase_invoice_count=len(account_lines)
-            rec.purchase_invoice_ids=account_lines.move_id.ids
+    # def _compute_purchase_invoice_count(self):
+    #     for rec in self:
+    #         account_lines=self.env['account.move.line'].sudo().search([
+    #             ('work_order_id','=',rec.id),
+    #             ('purchase_line_id','!=',False)
+    #         ])
+    #         if not account_lines:
+    #             rec.purchase_invoice_count=0
+    #             rec.purchase_invoice_ids=False
+    #             continue
+    #         rec.purchase_invoice_count=len(account_lines)
+    #         rec.purchase_invoice_ids=account_lines.move_id.ids
     
     def action_open_order_picks(self):    
         pass
