@@ -27,22 +27,13 @@ class ProjectProject(models.Model):
     
     @api.model
     def create(self, vals):
-        actual_month = str(datetime.today().month)
-        date = str(datetime.today().year) + '-'
-        if len(actual_month) == 1:
-            # En caso el mes solo tenga un digito 
-            date += '0' + actual_month
-        elif len(actual_month) == 2:
-            # En caso el mes tenga dos digitos
-            date += actual_month
-        # date = year+month
         id_seq = self.env['ir.sequence'].sudo().search([
-            ('name','=','Correlativo OT SUMVEHICULOS'+date),
+            ('name','=','Correlativo PROYECTOS'),
             ('company_id','=',self.env.company.id)
         ], limit=1)
         if not id_seq:
             id_seq = self.env['ir.sequence'].sudo().create({
-                'name': 'Correlativo OT SUMVEHICULOS'+date,
+                'name': 'Correlativo PROYECTOS',
                 'company_id': self.env.company.id,
                 'implementation': 'no_gap',
                 'active': True,
