@@ -68,10 +68,10 @@
 			</field>
 		</record>
 
-		<menuitem id='sunat_table_data_action_030100_menu' 
+		<!--<menuitem id='sunat_table_data_action_030100_menu' 
 				  parent='account_base_sunat_balance_inventory_it.menu_tables_sunat' 
 				  action="sunat_table_data_action_030100"
-				  sequence="3"/>
+				  sequence="3"/>-->
 		
 		<record id="sunat_table_data_action_031800" model="ir.actions.act_window">
 			<field name="name">ESTADO DE FLUJOS DE EFECTIVO - MÉTODO DIRECTO</field>
@@ -87,10 +87,10 @@
 			</field>
 		</record>
 		
-		<menuitem id='sunat_table_data_action_031800_menu' 
+		<!--<menuitem id='sunat_table_data_action_031800_menu' 
 				  parent='account_base_sunat_balance_inventory_it.menu_tables_sunat' 
 				  action="sunat_table_data_action_031800"
-				  sequence="6"/>
+				  sequence="6"/>-->
 
 		<record id="sunat_table_data_action_031900" model="ir.actions.act_window">
 			<field name="name">ESTADO DE CAMBIOS EN EL PATRIMONIO NETO</field>
@@ -106,10 +106,10 @@
 			</field>
 		</record>
 		
-		<menuitem id='sunat_table_data_action_031900_menu' 
+		<!--<menuitem id='sunat_table_data_action_031900_menu' 
 				  parent='account_base_sunat_balance_inventory_it.menu_tables_sunat' 
 				  action="sunat_table_data_action_031900"
-				  sequence="9"/>
+				  sequence="9"/>-->
 
 		<record id="sunat_table_data_action_032000" model="ir.actions.act_window">
 			<field name="name">ESTADO DE RESULTADOS</field>
@@ -125,10 +125,10 @@
 			</field>
 		</record>
 		
-		<menuitem id='sunat_table_data_action_032000_menu' 
+		<!--<menuitem id='sunat_table_data_action_032000_menu' 
 				  parent='account_base_sunat_balance_inventory_it.menu_tables_sunat' 
 				  action="sunat_table_data_action_032000"
-				  sequence="12"/>
+				  sequence="12"/>-->
 
 
 		<record id="sunat_table_data_action_032400" model="ir.actions.act_window">

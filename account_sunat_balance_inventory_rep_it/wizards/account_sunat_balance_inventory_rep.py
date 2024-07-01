@@ -211,6 +211,34 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			GROUP BY at.code
 			ORDER BY at.code
 			"""
+		elif libro=="032400":
+			sql = """
+			SELECT 
+			'{period_code}' as campo1,
+			'09'as campo2,	
+			ati.code as campo3, 
+			sum(main.debit-main.credit) as campo4, 		
+			'1'::varchar as campo5,
+			NULL as campo6
+			FROM (
+				SELECT aa.account_integrated_result_id as id , 
+					sum(debit)as debit, 
+					sum(credit) as credit  
+				FROM account_move_line aml 
+				LEFT JOIN account_account aa ON aa.id = aml.account_id 
+				WHERE aml.parent_state = 'posted' 
+				AND aml.date::date BETWEEN '{date_start}' AND '{date_end}'
+				AND aml.company_id = {company}
+				AND aa.account_integrated_result_id is not null
+				GROUP BY aa.account_integrated_result_id) main
+			LEFT JOIN account_integrated_results_catalog ati ON ati.id = main.id
+			GROUP BY ati.code		
+			""".format(
+				period_code = str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day))),
+				company = company_id,
+				date_start = fields.Date.to_string(datetime.today().replace(month=1, day=1)),
+				date_end = self.period.date_end.strftime('%Y-%m-%d'),
+			)
 		else:
 			sql = """
 				SELECT 
