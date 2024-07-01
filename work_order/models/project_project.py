@@ -28,13 +28,6 @@ class ProjectProject(models.Model):
         'Contador de Facturas de Compra', 
     )
     
-    # invoice_count = fields.Integer(
-    #     'Contador de Facturas', 
-    #     compute="_compute_invoice_count"
-    # )
-    
-    
-    
     @api.model
     def create(self, vals):
         actual_month = str(datetime.today().month)
@@ -96,78 +89,87 @@ class ProjectProject(models.Model):
                     lambda m: m.purchase_line_id != False
                 ).move_id.ids
             )
-            
             rec.invoice_ids= account_lines.move_id.ids
     
     
     def action_open_order_picks(self):
-        try:
-            tree_id = self.env.ref("prorratear_en.stock_picking_fec_tree").id
-            form_id = self.env.ref("stock.view_picking_form").id
-        except:
-            tree_id = False
-            form_id = False
-        return {
-            'name':'Transferencias',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'views': [(tree_id, 'tree'), (form_id, 'form')],
-            'res_model': 'stock.picking',
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-            'domain': [
-                ('id','in',self.pick_ids.ids)
-            ]
-        }
+        for rec in self: 
+            try:
+                tree_id = self.env.ref("prorratear_en.stock_picking_fec_tree").id
+                form_id = self.env.ref("stock.view_picking_form").id
+            except:
+                tree_id = False
+                form_id = False
+            return {
+                'name':'Transferencias',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'views': [(tree_id, 'tree'), (form_id, 'form')],
+                'res_model': 'stock.picking',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'domain': [
+                    ('id','in',rec.pick_ids.ids)
+                ]
+            }
 
     def action_open_order_sale_invoices(self):
-        try:
-            tree_id = self.env.ref("account.view_out_invoice_tree").id
-            form_id = self.env.ref("account.view_move_form").id
-        except:
-            tree_id = False
-            form_id = False
-        return {
-            'name':'Transferencias',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'views': [(tree_id, 'tree'), (form_id, 'form')],
-            'res_model': 'stock.picking',
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-            'domain': [
-                (
-                    'id', 
-                    'in', 
-                    self.account_lines.filtered(
-                        lambda m: m.sale_line_ids != False
-                    ).move_id.ids
-                )
-            ]
-        }
-    
+        for rec in self:
+            try:
+                tree_id = self.env.ref("account.view_out_invoice_tree").id
+                form_id = self.env.ref("account.view_move_form").id
+            except:
+                tree_id = False
+                form_id = False
+                
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id', '=', rec.id),
+                ('purchase_line_id', '!=', False)
+            ])
+            
+            return {
+                'name':'Facturas de Venta',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'views': [(tree_id, 'tree'), (form_id, 'form')],
+                'res_model': 'account.move',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'domain': [
+                    (
+                        'id', 
+                        'in', 
+                        account_lines.move_id.ids
+                    )
+                ]
+            }
+
     def action_open_order_purchase_invoices(self):
-        try:
-            tree_id = self.env.ref("account.view_out_invoice_tree").id
-            form_id = self.env.ref("account.view_move_form").id
-        except:
-            tree_id = False
-            form_id = False
-        return {
-            'name':'Transferencias',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'views': [(tree_id, 'tree'), (form_id, 'form')],
-            'res_model': 'stock.picking',
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-            'domain': [
-                (
-                    'id',
-                    'in',
-                    self.account_lines.filtered(
-                        lambda m: m.purchase_line_id != False
-                    ).move_id.ids
-                )
-            ]
-        }
+        for rec in self:
+            try:
+                tree_id = self.env.ref("account.view_out_invoice_tree").id
+                form_id = self.env.ref("account.view_move_form").id
+            except:
+                tree_id = False
+                form_id = False
+            
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id', '=', rec.id),
+                ('purchase_line_id', '!=', False)
+            ])
+            return {
+                'name':'Facturas de Compra',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'views': [(tree_id, 'tree'), (form_id, 'form')],
+                'res_model': 'stock.picking',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'domain': [
+                    (
+                        'id',
+                        'in',
+                        account_lines.move_id.ids
+                    )
+                ]
+            }
