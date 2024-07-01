@@ -14,11 +14,25 @@ class ProjectProject(models.Model):
     )
     pick_ids = fields.Many2many('stock.picking', string='Transferencias')
     
+    invoice_ids = fields.Many2many(
+        'account.move', 
+        string='Facturas Relacionadas',
+        compute="_compute_invoice_ids"
+    )
+    
+    sale_invoice_count = fields.Integer(
+        'Contador de Facturas de Venta', 
+    )
+    
+    purchase_invoice_count = fields.Integer(
+        'Contador de Facturas de Compra', 
+    )
+    
     # invoice_count = fields.Integer(
     #     'Contador de Facturas', 
     #     compute="_compute_invoice_count"
     # )
-    # invoice_ids = fields.Many2many('account.move', string='Facturas Relacionadas')
+    
     
     
     @api.model
@@ -62,6 +76,30 @@ class ProjectProject(models.Model):
             rec.pick_count=len(stock_moves)
             rec.pick_ids=stock_moves.picking_id.ids
     
+    def _compute_invoice_ids(self):
+        for rec in self:
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id','=',rec.id)
+            ])
+            if not account_lines:
+                rec.sale_invoice_count=0
+                rec.purchase_invoice_count=0
+                continue
+            
+            rec.sale_invoice_count=len(
+                account_lines.filtered(
+                    lambda m: m.sale_line_ids != False
+                ).move_id.ids
+            )
+            rec.purchase_invoice_count=len(
+                account_lines.filtered(
+                    lambda m: m.purchase_line_id != False
+                ).move_id.ids
+            )
+            
+            rec.invoice_ids= account_lines.move_id.ids
+    
+        
     # def _compute_sale_invoice_count(self):
     #     for rec in self:
     #         account_lines=self.env['account.move.line'].sudo().search([
