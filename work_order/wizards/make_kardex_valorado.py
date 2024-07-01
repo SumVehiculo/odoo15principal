@@ -156,7 +156,7 @@ class MakeKardexValorado(models.TransientModel):
             ws.append([""]*12 + [border(ws,"Ingreso"),border(ws,""),border(ws,"Salida"),border(ws,""),border(ws,"Saldo"),border(ws,"")] )
 
 
-            linea = [border(ws,u"Fecha"),border(ws,u"Hora"),border(ws,u"Tipo"),border(ws,u"Serie"),border(ws,u"Número"),border(ws,u"Doc. Almacen"),border(ws,u"RUC"),border(ws,u"Empresa"),border(ws,u"T. OP."), border(ws,u"T. OP. Nombre"), border(ws,u"Producto"),border(ws,u"Codigo Producto"),border(ws,u"Unidad"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border_sub(ws,u"Costo Adquisición"),border_sub(ws,u"Costo Promedio"),border(ws,u"Ubicacion Origen"),border(ws,u"Ubicacion Destino"),border(ws,u"Almacen"),border(ws,u"IDProducto"),border(ws,u"Pedido"),border(ws,u"OT")]
+            linea = [border(ws,u"Fecha"),border(ws,u"Hora"),border(ws,u"Tipo"),border(ws,u"Serie"),border(ws,u"Número"),border(ws,u"Doc. Almacen"),border(ws,u"RUC"),border(ws,u"Empresa"),border(ws,u"T. OP."), border(ws,u"T. OP. Nombre"), border(ws,u"Producto"),border(ws,u"Codigo Producto"),border(ws,u"Unidad"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border(ws,u"Cantidad"),border(ws,u"Costo"),border_sub(ws,u"Costo Adquisición"),border_sub(ws,u"Costo Promedio"),border(ws,u"Ubicacion Origen"),border(ws,u"Ubicacion Destino"),border(ws,u"Almacen"),border(ws,u"IDProducto"),border(ws,u"Pedido"),border(ws,u"Orden de Trabajo")]
 
 
 
