@@ -252,7 +252,7 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			SUM(CASE WHEN apt.code='006' THEN -a1.balance ELSE 0 END) AS campo15,
 			'1' as campo16,
 			NULL as campo17
-			FROM vst_diariog a1
+			FROM get_diariog a1
 			LEFT JOIN account_account a2 ON a2.id=a1.account_id
 			LEFT JOIN  account_patrimony_type apt ON apt.id = a2.patrimony_id
 			left join account_type_it at on at.id = a2.account_type_it_id
