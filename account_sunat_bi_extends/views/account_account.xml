@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_form_inherit_sunat" model="ir.ui.view">
+			<field name="name">account.form.inherit.sunat</field>
+			<field name="model">account.account</field>
+			<field name="inherit_id" ref="account_fields_it.view_account_form_inherit"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='clasification_sheet']" position="after">
+					<field name="account_integrated_result_id"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
