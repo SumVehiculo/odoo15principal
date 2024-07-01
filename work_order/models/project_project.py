@@ -104,7 +104,7 @@ class ProjectProject(models.Model):
             'type': 'ir.actions.act_window',
             'target': 'current',
             'domain': [
-                ('id','in',self.pick_ids)
+                ('id','in',self.pick_ids.ids)
             ]
         }
 
