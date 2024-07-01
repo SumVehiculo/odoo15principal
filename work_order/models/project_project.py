@@ -99,32 +99,6 @@ class ProjectProject(models.Model):
             
             rec.invoice_ids= account_lines.move_id.ids
     
-        
-    # def _compute_sale_invoice_count(self):
-    #     for rec in self:
-    #         account_lines=self.env['account.move.line'].sudo().search([
-    #             ('work_order_id','=',rec.id),
-    #             ('sale_line_id','!=',False)
-    #         ])
-    #         if not account_lines:
-    #             rec.sale_invoice_count=0
-    #             rec.sale_invoice_ids=False
-    #             continue
-    #         rec.sale_invoice_count=len(account_lines)
-    #         rec.sale_invoice_ids=account_lines.move_id.ids
-    
-    # def _compute_purchase_invoice_count(self):
-    #     for rec in self:
-    #         account_lines=self.env['account.move.line'].sudo().search([
-    #             ('work_order_id','=',rec.id),
-    #             ('purchase_line_id','!=',False)
-    #         ])
-    #         if not account_lines:
-    #             rec.purchase_invoice_count=0
-    #             rec.purchase_invoice_ids=False
-    #             continue
-    #         rec.purchase_invoice_count=len(account_lines)
-    #         rec.purchase_invoice_ids=account_lines.move_id.ids
     
     def action_open_order_picks(self):
         try:
@@ -147,7 +121,53 @@ class ProjectProject(models.Model):
         }
 
     def action_open_order_sale_invoices(self):
-        pass
+        try:
+            tree_id = self.env.ref("account.view_out_invoice_tree").id
+            form_id = self.env.ref("account.view_move_form").id
+        except:
+            tree_id = False
+            form_id = False
+        return {
+            'name':'Transferencias',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'views': [(tree_id, 'tree'), (form_id, 'form')],
+            'res_model': 'stock.picking',
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'domain': [
+                (
+                    'id', 
+                    'in', 
+                    self.account_lines.filtered(
+                        lambda m: m.sale_line_ids != False
+                    ).move_id.ids
+                )
+            ]
+        }
     
     def action_open_order_purchase_invoices(self):
-        pass
+        try:
+            tree_id = self.env.ref("account.view_out_invoice_tree").id
+            form_id = self.env.ref("account.view_move_form").id
+        except:
+            tree_id = False
+            form_id = False
+        return {
+            'name':'Transferencias',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'views': [(tree_id, 'tree'), (form_id, 'form')],
+            'res_model': 'stock.picking',
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'domain': [
+                (
+                    'id',
+                    'in',
+                    self.account_lines.filtered(
+                        lambda m: m.purchase_line_id != False
+                    ).move_id.ids
+                )
+            ]
+        }
