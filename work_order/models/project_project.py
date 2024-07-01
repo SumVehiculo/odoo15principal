@@ -72,7 +72,7 @@ class ProjectProject(models.Model):
                 ('work_order_id', '=', rec.id),
                 ('sale_line_ids', '!=', False)
             ])
-            rec.sale_invoice_count = account_lines.move_id.ids
+            rec.sale_invoice_count = len(account_lines.move_id.ids)
             
     def _compute_purchase_invoice_count(self):
         for rec in self:
@@ -80,7 +80,7 @@ class ProjectProject(models.Model):
                 ('work_order_id', '=', rec.id),
                 ('purchase_line_id', '!=', False)
             ])
-            rec.purchase_invoice_count = account_lines.move_id.ids
+            rec.purchase_invoice_count = len(account_lines.move_id.ids)
     
     def action_open_order_picks(self):
         for rec in self: 
@@ -152,7 +152,7 @@ class ProjectProject(models.Model):
                 'view_type': 'form',
                 'view_mode': 'tree,form',
                 'views': [(tree_id, 'tree'), (form_id, 'form')],
-                'res_model': 'stock.picking',
+                'res_model': 'account.move',
                 'type': 'ir.actions.act_window',
                 'target': 'current',
                 'domain': [
