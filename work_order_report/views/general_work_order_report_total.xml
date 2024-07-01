@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <record id="general_work_order_report_totals_view_tree" model="ir.ui.view">
-        <field name="name">general.work.order.report.totals.view.tree</field>
-        <field name="model">general.work.order.report.totals</field>
+    <record id="general_work_order_report_total_view_tree" model="ir.ui.view">
+        <field name="name">general.work.order.report.total.view.tree</field>
+        <field name="model">general.work.order.report.total</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="project_id" />
@@ -19,9 +19,9 @@
             </tree>
         </field>
     </record>
-    <record id="general_work_order_report_totals_action" model="ir.actions.act_window">
+    <record id="general_work_order_report_total_action" model="ir.actions.act_window">
         <field name="name">Action Name</field>
-        <field name="res_model">general.work.order.report.totals</field>
+        <field name="res_model">general.work.order.report.total</field>
         <field name="view_mode">tree</field>
     </record>
 </odoo>
