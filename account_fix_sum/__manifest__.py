@@ -2,7 +2,7 @@
 {
 	'name': 'Correcciones Contabilidad SUM',
 	'category': 'account',
-	'author': 'ITGRUPO,Glenda Julia Merma Mayhua',
+	'author': 'ITGRUPO,Glenda Julia Merma Mayhua, Sebastian Moises Loraico Lopez',
 	'depends': ['account_fields_it'],
 	'version': '1.0',
 	'description':"""

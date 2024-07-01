@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account.view_invoice_tree"/>
             <field name="arch" type="xml">
                 <field name="amount_residual_signed" position="after">
-                    <field name="amount_residual" optional="hide" string="Importe Adeudado en Divisa"/>
+                    <field name="amount_residual" optional="hide" string="Importe Adeudado en Divisa" sum="amount_residual"/>
                 </field>
             </field>
         </record>
