@@ -8,6 +8,23 @@ class ProjectProject(models.Model):
 
     project_name = fields.Char('Nombre del Proyecto')
     
+    pick_count = fields.Integer(
+        'Contador de Transferencias', 
+        compute="_compute_pick_count"
+    )
+    pick_ids = fields.Many2many('stock.picking', string='Transferencias')
+
+
+    sale_invoice_count = fields.Integer(
+        'Contador de Facturas de Venta', 
+        compute="_compute_sale_invoice_count"
+    )
+    
+    purchase_invoice_count = fields.Integer(
+        'Contador de Facturas de Compra', 
+        compute="_compute_purchase_invoice_count"
+    )
+    
     @api.model
     def create(self, vals):
         actual_month = str(datetime.today().month)
@@ -36,3 +53,113 @@ class ProjectProject(models.Model):
             })
         vals['name'] = id_seq._next()
         return super().create(vals)
+
+    def _compute_pick_count(self):
+        for rec in self:
+            stock_moves=self.env['stock.move'].sudo().search([
+                ('work_order_id','=',rec.id)
+            ])
+            if not stock_moves:
+                rec.pick_count=0
+                rec.pick_ids=False
+                continue
+            rec.pick_count=len(stock_moves)
+            rec.pick_ids=stock_moves.picking_id.ids
+    
+    def _compute_sale_invoice_count(self):
+        for rec in self:
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id', '=', rec.id),
+                ('sale_line_ids', '!=', False)
+            ])
+            rec.sale_invoice_count = len(account_lines.move_id.ids)
+            
+    def _compute_purchase_invoice_count(self):
+        for rec in self:
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id', '=', rec.id),
+                ('purchase_line_id', '!=', False)
+            ])
+            rec.purchase_invoice_count = len(account_lines.move_id.ids)
+    
+    def action_open_order_picks(self):
+        for rec in self: 
+            try:
+                tree_id = self.env.ref("prorratear_en.stock_picking_fec_tree").id
+                form_id = self.env.ref("stock.view_picking_form").id
+            except:
+                tree_id = False
+                form_id = False
+            return {
+                'name':'Transferencias',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'views': [(tree_id, 'tree'), (form_id, 'form')],
+                'res_model': 'stock.picking',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'domain': [
+                    ('id','in',rec.pick_ids.ids)
+                ]
+            }
+
+    def action_open_order_sale_invoices(self):
+        for rec in self:
+            try:
+                tree_id = self.env.ref("account.view_out_invoice_tree").id
+                form_id = self.env.ref("account.view_move_form").id
+            except:
+                tree_id = False
+                form_id = False
+                
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id', '=', rec.id),
+                ('sale_line_ids', '!=', False)
+            ])
+            
+            return {
+                'name':'Facturas de Venta',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'views': [(tree_id, 'tree'), (form_id, 'form')],
+                'res_model': 'account.move',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'domain': [
+                    (
+                        'id', 
+                        'in', 
+                        account_lines.move_id.ids
+                    )
+                ]
+            }
+
+    def action_open_order_purchase_invoices(self):
+        for rec in self:
+            try:
+                tree_id = self.env.ref("account.view_out_invoice_tree").id
+                form_id = self.env.ref("account.view_move_form").id
+            except:
+                tree_id = False
+                form_id = False
+            
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id', '=', rec.id),
+                ('purchase_line_id', '!=', False)
+            ])
+            return {
+                'name':'Facturas de Compra',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'views': [(tree_id, 'tree'), (form_id, 'form')],
+                'res_model': 'account.move',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'domain': [
+                    (
+                        'id',
+                        'in',
+                        account_lines.move_id.ids
+                    )
+                ]
+            }

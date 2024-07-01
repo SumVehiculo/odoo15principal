@@ -13,6 +13,18 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             
+            <xpath expr="//button[@name='action_open_project_purchase_orders']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_view_budget_lines']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+            <xpath expr="//button[@name='action_view_analytic_account_entries']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <xpath expr="//field[@name='analytic_account_id']" position="attributes">
                 <attribute name="required">1</attribute>
             </xpath>
@@ -30,6 +42,56 @@
                         <field name="project_name" placeholder="Nombre del Proyecto"/>
                     </h2>
                 </div>
+            </xpath>
+
+            <xpath expr="//button[@name='action_open_project_invoices']" position="after">
+                <button 
+                    name="action_open_order_sale_invoices" 
+                    type="object" 
+                    class="oe_stat_button" 
+                    icon="fa-pencil-square-o" 
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="sale_invoice_count" nolabel="1" modifiers="{'readonly': true}"/>
+                        </span>
+                        <span class="o_stat_text">
+                            Facturas de Venta
+                        </span>
+                    </div>
+                </button>
+
+                <button 
+                    name="action_open_order_purchase_invoices" 
+                    type="object" 
+                    class="oe_stat_button" 
+                    icon="fa-pencil-square" 
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="purchase_invoice_count" nolabel="1" modifiers="{'readonly': true}"/>
+                        </span>
+                        <span class="o_stat_text">
+                            Facturas de Compra
+                        </span>
+                    </div>
+                </button>
+
+                <button 
+                    name="action_open_order_picks" 
+                    type="object" 
+                    class="oe_stat_button" 
+                    icon="fa-truck" 
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="pick_count" nolabel="1" modifiers="{'readonly': true}"/>
+                        </span>
+                        <span class="o_stat_text">
+                            Transferencias
+                        </span>
+                    </div>
+                </button>
             </xpath>
         </field>
     </record>
