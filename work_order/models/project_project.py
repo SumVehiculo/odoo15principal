@@ -88,8 +88,25 @@ class ProjectProject(models.Model):
     #         rec.purchase_invoice_count=len(account_lines)
     #         rec.purchase_invoice_ids=account_lines.move_id.ids
     
-    def action_open_order_picks(self):    
-        pass
+    def action_open_order_picks(self):
+        try:
+            tree_id = self.env.ref("prorratear_en.stock_picking_fec_tree").id
+            form_id = self.env.ref("stock.view_picking_form").id
+        except:
+            tree_id = False
+            form_id = False
+        return {
+            'name':'Transferencias',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'views': [(tree_id, 'tree'), (form_id, 'form')],
+            'res_model': 'stock.picking',
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'domain': [
+                ('id','=',self.pick_ids)
+            ]
+        }
 
     def action_open_order_sale_invoices(self):
         pass
