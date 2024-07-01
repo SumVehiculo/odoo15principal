@@ -4,7 +4,7 @@
         <field name="name">general.work.order.report.total.view.tree</field>
         <field name="model">general.work.order.report.total</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree edit="false" create="false" delete="false">
                 <field name="project_id" />
                 <field name="client_id" />
                 <field name="create_date" />

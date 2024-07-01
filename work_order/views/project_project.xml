@@ -13,6 +13,10 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             
+            <xpath expr="//button[@name='action_open_project_purchase_orders']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <xpath expr="//button[@name='action_view_budget_lines']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
@@ -79,7 +83,6 @@
                     class="oe_stat_button" 
                     icon="fa-truck" 
                 >
-                <!--                     attrs="{'invisible': [('vendor_bill_count', '=', 0)]}" -->
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
                             <field name="pick_count" nolabel="1" modifiers="{'readonly': true}"/>
