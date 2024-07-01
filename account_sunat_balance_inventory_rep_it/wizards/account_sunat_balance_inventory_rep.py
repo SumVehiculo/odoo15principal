@@ -142,56 +142,152 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 																output_name_23,output_file_23)
 
 	def _get_sql_1(self,period,libro,company_id):
-		sql = """
-		SELECT 
-		'{period_code}' as campo1,
-		'01'as campo2,
-		l.code as campo3,
-		l.amount as campo4,
-		'1' as campo5,
-		NULL as campo6
-		FROM sunat_table_data_line l
-		LEFT JOIN sunat_table_data main on main.id = l.main_id
-		LEFT JOIN account_fiscal_year anio on anio.id = main.fiscal_year_id
-		WHERE anio.name = '{year}' and main.sunat = '{libro}' and main.company_id = {company}
-		""".format(
-			company = company_id,
-			libro = libro,
-			period_code = period.code + '00',
-			year = period.fiscal_year_id.name
-		)
+		if libro=="030100":
+			sql = """
+			SELECT 
+			'{period_code}' as campo1,
+			'09'as campo2,	
+			ati.code as campo3, 
+			sum(main.debit-main.credit) as campo4, 		
+			'1'::varchar as campo5,
+			NULL as campo6
+			FROM (
+				SELECT aa.account_type_it_id as id , 
+					sum(debit)as debit, 
+					sum(credit) as credit  
+				FROM account_move_line aml 
+				LEFT JOIN account_account aa ON aa.id = aml.account_id 
+				WHERE aml.parent_state = 'posted' 
+				AND aml.date::date BETWEEN '{date_start}' AND '{date_end}'
+				AND aml.company_id = {company}
+				AND aa.account_type_it_id is not null
+				GROUP BY aa.account_type_it_id) main
+			LEFT JOIN account_type_it ati ON ati.id = main.id
+			GROUP BY ati.code		
+			""".format(
+				period_code = str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day))),
+				company = company_id,
+				date_start = fields.Date.to_string(datetime.today().replace(month=1, day=1)),
+				date_end = self.period.date_end.strftime('%Y-%m-%d'),
+			)
+		elif libro=="031800":
+			sql = """
+				SELECT 
+				'{period_code}' as campo1,
+				'09'as campo2,	
+				gef.efective_group as campo3,
+				gef.total as campo4,
+				'1'::varchar as campo5,
+				NULL as campo6
+				FROM get_efective_flow('{date_start}','{date_end}','{code}',{company}) gef
+				""".format(
+					period_code = str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day))),
+					date_start = fields.Date.to_string(datetime.today().replace(month=1, day=1)),
+					date_end = self.period.date_end.strftime('%Y-%m-%d'),
+					company = company_id,
+					code = period.code[:4]+'00',
+				)
+		elif libro=="032000":
+			period_code = str(self.period.date_start.year) + \
+                  str('{:02d}'.format(self.period.date_start.month)) + \
+                  (str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day)))
+
+			period_start = self.env['account.period'].search([('code', '=', self.period.code[:4] + '00')], limit=1).code
+			period_end = self.period.code
+			company_id = self.company_id.id
+
+			sql = f"""
+			SELECT
+				'{period_code}'::varchar as campo1,
+				'09' as campo2,
+				at.code as campo3,
+				sum(bcr.debe) - sum(bcr.haber) as campo4,
+				'1'::varchar as campo5,
+				NULL as campo6
+			FROM get_bc_register('{period_start}','{period_end}', {company_id}) bcr
+			LEFT JOIN account_account aa ON aa.code = bcr.cuenta AND aa.company_id = {company_id}
+			LEFT JOIN account_type_it at ON at.id = aa.account_type_it_id
+			WHERE at.group_function IS NOT NULL
+			GROUP BY at.code
+			ORDER BY at.code
+			"""
+		else:
+			sql = """
+				SELECT 
+				'{period_code}' as campo1,
+				'01'as campo2,
+				l.code as campo3,
+				l.amount as campo4,
+				'1' as campo5,
+				NULL as campo6
+				FROM sunat_table_data_line l
+				LEFT JOIN sunat_table_data main on main.id = l.main_id
+				LEFT JOIN account_fiscal_year anio on anio.id = main.fiscal_year_id
+				WHERE anio.name = '{year}' and main.sunat = '{libro}' and main.company_id = {company}
+				""".format(
+					company = company_id,
+					libro = libro,
+					period_code = str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day))),
+					year = period.fiscal_year_id.name
+				)
 		return sql
 
 	def _get_sql_type_19(self,period,libro,company_id):
-		sql = """
-		SELECT 
-		'{period_code}' as campo1,
-		'01'as campo2,
-		l.code as campo3,
-		l.capital as campo4,
-		l.acc_inv as campo5,
-		l.cap_add as campo6,
-		l.res_no_real as campo7,
-		l.reserv_leg as campo8,
-		l.o_reverv as campo9,
-		l.res_acum as campo10,
-		l.dif_conv as campo11,
-		l.ajus_patr as campo12,
-		l.res_neto_ej as campo13,
-		l.exc_rev as campo14,
-		l.res_ejerc as campo15,
-		'1' as campo16,
-		NULL as campo17
-		FROM sunat_table_data_line l
-		LEFT JOIN sunat_table_data main on main.id = l.main_id
-		LEFT JOIN account_fiscal_year anio on anio.id = main.fiscal_year_id
-		WHERE anio.name = '{year}' and main.sunat = '{libro}' and main.company_id = {company}
+		sql ="""
+			SELECT 
+			'{period_code}' as campo1,
+			'01'as campo2,
+			at.code as campo3,
+			SUM(CASE WHEN apt.code='001' THEN -a1.balance ELSE 0 END) AS campo4,
+			SUM(CASE WHEN apt.code='002' THEN -a1.balance ELSE 0 END) AS campo5,
+			SUM(CASE WHEN apt.code='003' THEN -a1.balance ELSE 0 END) AS campo6,
+			SUM(CASE WHEN apt.code='004' THEN -a1.balance ELSE 0 END) AS campo7,
+			0 as campo8,
+			0 as campo9,
+			SUM(CASE WHEN apt.code='007' THEN -a1.balance ELSE 0 END) AS campo10,
+			0 as campo11,
+			0 as campo12,
+			0 as campo13,
+			SUM(CASE WHEN apt.code='005' THEN -a1.balance ELSE 0 END) AS campo14,
+			SUM(CASE WHEN apt.code='006' THEN -a1.balance ELSE 0 END) AS campo15,
+			'1' as campo16,
+			NULL as campo17
+			FROM vst_diariog a1
+			LEFT JOIN account_account a2 ON a2.id=a1.account_id
+			LEFT JOIN  account_patrimony_type apt ON apt.id = a2.patrimony_id
+			left join account_type_it at on at.id = a2.account_type_it_id
+			WHERE left(a1.cuenta,1)='5' AND (a1.fecha between '{date_start}' AND '{date_end}')
+			AND a2.company_id = {company}
+			GROUP BY at.code
 		""".format(
-			company = company_id,
-			libro = libro,
-			period_code = period.code + '00',
-			year = period.fiscal_year_id.name
-		)
+					period_code = str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day))),
+					date_start = fields.Date.to_string(datetime.today().replace(month=1, day=1)),
+					date_end = self.period.date_end.strftime('%Y-%m-%d'),
+					company = company_id,
+				)
+		#	sql = """
+		#	SELECT 
+		#	'{period_code}' as campo1,
+		#	'09'as campo2,	
+		#	l.code as campo3,
+		#	l.capital as campo4,
+		#	l.acc_inv as campo5,
+		#	l.cap_add as campo6,
+		#	l.res_no_real as campo7,
+		#	l.reserv_leg as campo8,
+		#	l.o_reverv as campo9,
+		#	l.res_acum as campo10,
+		#	l.dif_conv as campo11,
+		#	l.ajus_patr as campo12,
+		#	l.res_neto_ej as campo13,
+		#	l.exc_rev as campo14,
+		#	l.res_ejerc as campo15,
+		#	'1' as campo16,
+		#	NULL as campo17
+		#	FROM account_patrimony_book 
+		#	""".format(			
+		#		period_code = str(self.period.date_start.year)+str('{:02d}'.format(self.period.date_start.month))+(str('{:02d}'.format(self.period.date_end.day)) if self.cc not in ('05','06','07') else str('{:02d}'.format(self.date.day))),
+		#	)
 		return sql
 
 	def _get_sql_10(self,period,company_id):
