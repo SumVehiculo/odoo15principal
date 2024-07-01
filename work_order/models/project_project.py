@@ -8,6 +8,26 @@ class ProjectProject(models.Model):
 
     project_name = fields.Char('Nombre del Proyecto')
     
+    pick_count = fields.Integer(
+        'Contador de Transferencias', 
+        compute="_compute_pick_count"
+    )
+    pick_ids = fields.Many2many('stock.picking', string='Transferencias')
+    
+    sale_invoice_count = fields.Integer(
+        'Contador de Facturas de Venta', 
+        compute="_compute_sale_invoice_count"
+    )
+    sale_invoice_ids = fields.Many2many('account.move', string='Facturas de Venta')
+    
+    purchase_invoice_count = fields.Integer(
+        'Contador de Facturas de Compra',
+        compute="_compute_purchase_invoice_count"
+    )
+    purchase_invoice_ids = fields.Many2many('account.move', string='Facturas de Compra')
+    
+    
+    
     @api.model
     def create(self, vals):
         actual_month = str(datetime.today().month)
@@ -36,3 +56,50 @@ class ProjectProject(models.Model):
             })
         vals['name'] = id_seq._next()
         return super().create(vals)
+
+    def _compute_pick_count(self):
+        for rec in self:
+            stock_moves=self.env['stock.move'].sudo().search([
+                ('work_order_id','=',rec.id)
+            ])
+            if not stock_moves:
+                rec.pick_count=0
+                rec.pick_ids=False
+                continue
+            rec.pick_count=len(stock_moves)
+            rec.pick_ids=stock_moves.picking_id.ids
+    
+    def _compute_sale_invoice_count(self):
+        for rec in self:
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id','=',rec.id),
+                ('sale_line_id','!=',False)
+            ])
+            if not account_lines:
+                rec.sale_invoice_count=0
+                rec.sale_invoice_ids=False
+                continue
+            rec.sale_invoice_count=len(account_lines)
+            rec.sale_invoice_ids=account_lines.move_id.ids
+    
+    def _compute_purchase_invoice_count(self):
+        for rec in self:
+            account_lines=self.env['account.move.line'].sudo().search([
+                ('work_order_id','=',rec.id),
+                ('purchase_line_id','!=',False)
+            ])
+            if not account_lines:
+                rec.purchase_invoice_count=0
+                rec.purchase_invoice_ids=False
+                continue
+            rec.purchase_invoice_count=len(account_lines)
+            rec.purchase_invoice_ids=account_lines.move_id.ids
+    
+    def action_open_order_picks(self):    
+        pass
+
+    def action_open_order_sale_invoices(self):
+        pass
+    
+    def action_open_order_purchase_invoices(self):
+        pass
