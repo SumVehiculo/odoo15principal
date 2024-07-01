@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_integrated_results_catalog_tree" model="ir.ui.view">
+        <field name="name">view.account.integrated.results.catalog.tree</field>
+        <field name="model">account.integrated.results.catalog</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code" optional="show"/>
+                <field name="name" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_integrated_results_catalog_form" model="ir.ui.view">
+        <field name="name">view.account.integrated.results.catalog.form</field>
+        <field name="model">account.integrated.results.catalog</field>
+        <field name="arch" type="xml">
+            <form string="Resultados Integrales">
+				<sheet>
+					<group>
+						<group>
+							<field name="code" required="1"/>
+							<field name="name" required="1"/>
+						</group>
+					</group>
+				</sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_integrated_results_catalog_search" model="ir.ui.view">
+        <field name="name">view.account.integrated.results.catalog.search</field>
+        <field name="model">account.integrated.results.catalog</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_integrated_results_catalog" model="ir.actions.act_window">
+        <field name="name">Resultados Integrales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.integrated.results.catalog</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+			Crea tu primer registro de Resultados Integrales aqui
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_account_integrated_results_catalog"
+            id="menu_action_account_integrated_results_catalog" 
+            sequence="18"
+            parent="account_base_it.menu_account_base_it" />
+
+</odoo>
