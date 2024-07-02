@@ -111,10 +111,7 @@ class WorkOrderReportTotalWizard(models.TransientModel):
                     vst_kardex_sunat.operation_type IN ('01','10','20','91','92')
                 )Total	
             GROUP BY
-                total.work_order_id,
-                total.ingreso,
-                total.salida,
-                total.unit_price
+                total.work_order_id
             ;
         """
         self.env.cr.execute(query)
