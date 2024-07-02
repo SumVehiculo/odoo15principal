@@ -123,7 +123,7 @@ class WorkOrderReportTotalWizard(models.TransientModel):
     def get_hourly_cost_totals(self):
         query=f"""
         SELECT
-            SUM(aal.total_cost_per_hour) AS total_cost_per_hour,
+            SUM(aal.total_cost_per_hour) * -1 AS total_cost_per_hour,
             aal.project_id as work_order_id
         FROM 
             account_analytic_line AS aal
@@ -162,15 +162,23 @@ class WorkOrderReportTotalWizard(models.TransientModel):
         )
         
         projects = self.env['project.project'].search([
-            ('id','in',list(total_projects))
+            ('id','in',list(total_projects)),
+            ('active','!=',False),
+            ('company_id','=',self.company_id.id)
         ])
         
         
         for project in projects:
-            sale_data=next(filter(lambda s: s['work_order_id'] == project.id,sales))['sale_invoice_total'] if sales else 0
-            expenses_data=next(filter(lambda e: e['work_order_id'] == project.id,expenses))['expenses_total'] if expenses else 0
-            kardex_data=next(filter(lambda k: k['work_order_id'] == project.id,kardex))['kardex_total'] if kardex else 0
-            hourly_cost_data=next(filter(lambda h: h['work_order_id'] == project.id,hourly_cost))['total_cost_per_hour'] if hourly_cost else 0
+            sale_data=next(filter(lambda s: s['work_order_id'] == project.id,sales),0) 
+            expenses_data=next(filter(lambda e: e['work_order_id'] == project.id,expenses),0) 
+            kardex_data=next(filter(lambda k: k['work_order_id'] == project.id,kardex),0) 
+            hourly_cost_data=next(filter(lambda h: h['work_order_id'] == project.id,hourly_cost),0) 
+            
+            sale_data = sale_data['sale_invoice_total'] if sale_data else 0
+            expenses_data = expenses_data['expenses_total'] if expenses_data else 0
+            kardex_data = kardex_data['kardex_total'] if kardex_data else 0
+            hourly_cost_data = hourly_cost_data['total_cost_per_hour'] if hourly_cost_data else 0
+            
             
             result={}
             result['project_id']=project.id
