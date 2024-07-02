@@ -20,7 +20,7 @@
         </field>
     </record>
     <record id="general_work_order_report_total_action" model="ir.actions.act_window">
-        <field name="name">Action Name</field>
+        <field name="name">Reporte General OT</field>
         <field name="res_model">general.work.order.report.total</field>
         <field name="view_mode">tree</field>
     </record>

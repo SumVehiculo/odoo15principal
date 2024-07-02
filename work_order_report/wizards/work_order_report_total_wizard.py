@@ -86,11 +86,11 @@ class WorkOrderReportTotalWizard(models.TransientModel):
         """
         self.env.cr.execute(query)
         return self.env.cr.dictfetchall()
-   
+
     def get_kardex_totals(self):
         query= f"""
             SELECT 
-                (total.ingreso - total.salida) *  total.unit_price as kardex_total,
+                SUM((COALESCE(total.ingreso, 0) - COALESCE(total.salida, 0)) * COALESCE(total.unit_price, 0)) AS kardex_total,
                 total.work_order_id
             FROM (
                 SELECT 
@@ -111,31 +111,85 @@ class WorkOrderReportTotalWizard(models.TransientModel):
                     vst_kardex_sunat.operation_type IN ('01','10','20','91','92')
                 )Total	
             GROUP BY
-                total.work_order_id
+                total.work_order_id,
+                total.ingreso,
+                total.salida,
+                total.unit_price
             ;
         """
         self.env.cr.execute(query)
         return self.env.cr.dictfetchall()
         
+    def get_hourly_cost_totals(self):
+        query=f"""
+        SELECT
+            SUM(aal.total_cost_per_hour) AS total_cost_per_hour,
+            aal.project_id as work_order_id
+        FROM 
+            account_analytic_line AS aal
+            LEFT JOIN project_task AS pt ON pt.id = aal.task_id
+            LEFT JOIN hr_employee AS he ON he.id = aal.employee_id
+        WHERE
+            aal.project_id IS NOT NULL AND
+            (
+                aal.date 
+                BETWEEN 
+                    '{self.start_date.strftime('%Y/%m/%d')}' AND 
+                    '{self.end_date.strftime('%Y/%m/%d')}'
+            )
+        GROUP BY
+            aal.project_id
+        ;
+        
+        """
+        self.env.cr.execute(query)
+        return self.env.cr.dictfetchall()
+    
     def generate_data(self):
+        sales = self.get_sale_invoice_totals()
+        expenses = self.get_expenses_totals()
+        kardex = self.get_kardex_totals()
+        hourly_cost =self.get_hourly_cost_totals()
+        
+        sale_projects=set([s['work_order_id'] for s in sales])
+        expenses_projects=set([e['work_order_id'] for e in expenses])
+        kardex_projects=set([k['work_order_id'] for k in kardex])
+        hourly_cost_projects=set([h['work_order_id'] for h in hourly_cost])
+        total_projects =  sale_projects.union(
+            expenses_projects,
+            kardex_projects,
+            hourly_cost_projects
+        )
+        
         projects = self.env['project.project'].search([
-            ('create_date','>=',self.start_date),
-            ('create_date','<=',self.end_date),
+            ('id','in',list(total_projects))
         ])
+        
+        
         for project in projects:
+            sale_data=next(filter(lambda s: s['work_order_id'] == project.id,sales))['sale_invoice_total'] if sales else 0
+            expenses_data=next(filter(lambda e: e['work_order_id'] == project.id,expenses))['expenses_total'] if expenses else 0
+            kardex_data=next(filter(lambda k: k['work_order_id'] == project.id,kardex))['kardex_total'] if kardex else 0
+            hourly_cost_data=next(filter(lambda h: h['work_order_id'] == project.id,hourly_cost))['total_cost_per_hour'] if hourly_cost else 0
             
             result={}
             result['project_id']=project.id
-            result['client_id']=project.partner_id
+            result['client_id']=project.partner_id.id
             result['create_date']=project.create_date
             result['start_date']=project.date_start
             result['end_date']=project.date
             
+            result['sale_invoices_total']=sale_data
+            result['expenses_invoices_total']=expenses_data
+            result['kardex_total']=kardex_data
+            result['hourly_cost_total']=hourly_cost_data
             
-            # result['sale_invoices_total']=project
-            # result['expenses_invoices_total']=project
-            # result['kardex_total']=project
-            # result['hourly_cost_total']=project
-            # result['net_total']=project
-            # result['net_by_sale_total']=project
+            net_total=sum([
+                sale_data,
+                expenses_data,
+                kardex_data,
+                hourly_cost_data
+            ])
+            result['net_total']=net_total
+            result['net_by_sale_total']=round((abs(net_total)/(sale_data if sale_data else 1))*100,2)
             self.env['general.work.order.report.total'].create(result)
