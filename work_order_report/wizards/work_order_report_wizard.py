@@ -476,7 +476,7 @@ class WorkOrderReportWizard(models.TransientModel):
             quantity = (data['ingreso'] if data['ingreso'] else 0) - (data['salida'] if data['salida'] else 0)
             quantity *= -1
             worksheet.write(row, 7, quantity, formats.get('base'))
-            # Costo Promedio
+            # Costo albaran
             unit_price=data['unit_price'] if data['unit_price'] else 0
             worksheet.write(row, 8, unit_price, formats.get('base'))
             # Costo Total
@@ -501,7 +501,13 @@ class WorkOrderReportWizard(models.TransientModel):
             LEFT JOIN project_task AS pt ON pt.id = aal.task_id
             LEFT JOIN hr_employee AS he ON he.id = aal.employee_id
         WHERE
-            aal.project_id = {self.work_order_id.id}
+            aal.project_id = {self.work_order_id.id} AND
+            (
+                aal.date 
+                BETWEEN 
+                    '{self.start_date.strftime('%Y/%m/%d')}' AND 
+                    '{self.end_date.strftime('%Y/%m/%d')}'
+            )
         ;
         """
         worksheet.merge_range(row, 0, row, 4, "Costo parte de Horas" , formats.get('red_base'))
