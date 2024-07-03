@@ -201,6 +201,8 @@ class ImportInvoiceIt(models.Model):
 		if not product_uom:
 			raise UserError(_(' "%s" Product UOM category is not available.') % values.get('uom'))
 
+
+
 		tax_ids = []
 		if inv_id.move_type == 'out_invoice':
 			if values.get('tax'):
@@ -355,6 +357,10 @@ class ImportInvoiceIt(models.Model):
 		if values.get("analytic_account_id"):
 			analytic_account_id = self.find_analytic_account(values.get("analytic_account_id"))
 
+		work_order_id = False
+		if values.get("work_order_id"):
+			work_order_id = self.find_work_order(values.get("work_order_id"))
+   
 		vals = {
 			'product_id' : product_id.id if product_id else None,
 			'quantity' : float(values.get('quantity')),
@@ -365,7 +371,8 @@ class ImportInvoiceIt(models.Model):
 			'analytic_account_id': analytic_account_id.id if analytic_account_id else None,
 			'product_uom_id' : product_uom.id,
 			'company_id' : self.company_id.id,
-			'l10n_latam_document_type_id': inv_id.l10n_latam_document_type_id.id
+			'l10n_latam_document_type_id': inv_id.l10n_latam_document_type_id.id,
+			'work_order_id': work_order_id
 		}
 		if tax_ids:
 			vals.update({'tax_ids':([(6,0,tax_ids)])})
@@ -399,6 +406,15 @@ class ImportInvoiceIt(models.Model):
 		else:
 			raise UserError(_('Not Valid Salesperson Name "%s"') % name)
 	
+	def find_work_order(self, name):
+		work_order_id = self.env['project.project'].search([
+      		('name', '=', name)
+        ],limit=1)
+		if not work_order_id:
+			raise UserError(f'No se encontro la Orden de Trabajo "{name}".')
+		return work_order_id
+		
+			
 
 	def find_partner(self, name):
 		partner_obj = self.env['res.partner']
@@ -505,7 +521,7 @@ class ImportInvoiceIt(models.Model):
 			else:
 				line = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
 				if self.account_opt == 'default':
-					if len(line) == 31:
+					if len(line) == 32:
 						if line[11] == '':
 							raise UserError(_('Please assign a date'))
 						else:
@@ -533,6 +549,7 @@ class ImportInvoiceIt(models.Model):
 							a1_i = int(float(line[26]))
 							a1_as_datetime_i = datetime(*xlrd.xldate_as_tuple(a1_i, workbook.datemode))
 							fecha_detrac = a1_as_datetime_i.date().strftime('%Y-%m-%d')
+
 						values.update( {'invoice':line[0],
 										'customer': str(line[1]),
 										'currency': line[2],
@@ -564,14 +581,15 @@ class ImportInvoiceIt(models.Model):
 										'nro_comp_detrac': str(line[27]),
 										'monto_detrac': line[28],
 										'bien_servi': str(line[29]),
-										'tc': line[30]
+										'tc': line[30],
+										'work_order_id':str(line[31])
 										})
-					elif len(line) > 31:
+					elif len(line) > 32:
 						raise UserError(u'Tu archivo tiene más columnas que la plantilla de ejemplo.')
 					else:
 						raise UserError(u'Tu archivo tiene menos columnas que la plantilla de ejemplo.')
 				else:
-					if len(line) == 32:
+					if len(line) == 33:
 						if line[12] == '':
 							raise UserError(_('Please assign a date'))
 						else:
@@ -632,9 +650,10 @@ class ImportInvoiceIt(models.Model):
 										'nro_comp_detrac': str(line[28]),
 										'monto_detrac': line[29],
 										'bien_servi': str(line[30]),
-										'tc': line[31]
+										'tc': line[31],
+          								'work_order_id': str(line[32]),
 										})
-					elif len(line) > 32:
+					elif len(line) > 33:
 						raise UserError(u'Tu archivo tiene más columnas que la plantilla de ejemplo.')
 					else:
 						raise UserError(u'Tu archivo tiene menos columnas que la plantilla de ejemplo.')
