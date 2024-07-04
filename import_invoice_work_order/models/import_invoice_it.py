@@ -6,7 +6,6 @@ from datetime import  datetime
 from odoo import models, _
 from odoo.exceptions import UserError
 
-
 class ImportInvoiceIt(models.Model):
 	_inherit = "import.invoice.it"
 	
