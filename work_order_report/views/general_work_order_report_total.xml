@@ -19,6 +19,21 @@
             </tree>
         </field>
     </record>
+
+    <record id="general_work_order_report_total_view_search" model="ir.ui.view">
+        <field name="name">general.work.order.report.total.view.search</field>
+        <field name="model">general.work.order.report.total</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="project_id" />
+                <field name="client_id" />
+                <group expand="0" string="Agrupar por">
+                    <filter string="Fecha" name="group_by_date" context="{'group_by': 'create_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="general_work_order_report_total_action" model="ir.actions.act_window">
         <field name="name">Reporte General OT</field>
         <field name="res_model">general.work.order.report.total</field>
