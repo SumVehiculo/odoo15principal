@@ -201,14 +201,13 @@ class ImportInvoiceIt(models.Model):
 		
 		return inv_id
 
-	
 	def find_work_order(self, name):
 		work_order_id = self.env['project.project'].search([
       		('name', '=', name)
         ],limit=1)
 		if not work_order_id:
 			raise UserError(f'No se encontro la Orden de Trabajo "{name}".')
-		return work_order_id
+		return work_order_id.id
 	
 	def import_invoice(self):
 		if not self.type_import:
