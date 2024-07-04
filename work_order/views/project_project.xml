@@ -121,6 +121,17 @@
         </field>
     </record>
 
+    <record id="project_project_view_search_inherit" model="ir.ui.view">
+        <field name="name">project.project.view.search.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="project_name" string="Nombre del Proyecto"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="project.open_view_project_all" model="ir.actions.act_window">
         <field name="view_mode">tree,kanban,form</field>
         <field name="view_id" ref="work_order.project_project_view_tree_all"/>
