@@ -3,4 +3,8 @@
     <record id="create_analytic_tag_group" model="res.groups">
         <field name="name">Permiso Crear Etiqueta Analitica</field>
     </record>
+
+    <record id="create_analytic_account_group" model="res.groups">
+        <field name="name">Permiso Crear Cuenta Analitica</field>
+    </record>
 </odoo>
