@@ -867,4 +867,4 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 		# INDICADOR DE LIBRO ELECTRONICO GENERADO POR EL PLE (1)
 
 		name_doc += self.cc+"1"+("1" if len(res) > 0 and che else "0") + ("1" if mond == 'PEN' else "2") + "1.txt"
-		return name_doc,(res if res and che else base64.b64encode(b'').decode('utf-8'))
+		return name_doc,(res if res and che else base64.b64encode(b'==Sin Registros==').decode('utf-8'))
