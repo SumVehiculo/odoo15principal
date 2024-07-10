@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<menuitem id="menu_tables_sunat" 
+				name="Tablas" 
+				parent="account_sunat_rep_it.menu_sunat" 
+				sequence="2"/>
+
+		<record model="ir.ui.view" id="view_account_sunat_checking_balance_form">
+			<field name="name">account.sunat.checking.balance.form</field>
+			<field name="model">account.sunat.checking.balance</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button name="get_data" type="object" string="Traer Datos F2" class="oe_highlight"/>
+                    </header>
+					<group>
+						<group>
+							<field name="date" required="1"/>
+						</group>
+						<group>
+							<field name="company_id" groups="base.group_multi_company"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Detalle">
+							<field name="line_ids">
+								<tree editable="bottom" create="0" delete="0">
+									<field name="account_id" />
+									<field name="si_debe" optional="show"/>
+									<field name="si_haber" optional="show"/>
+									<field name="debe" optional="show"/>
+									<field name="haber" optional="show"/>
+									<field name="suma_debe" optional="show"/>
+									<field name="suma_haber" optional="show"/>
+									<field name="deudor" optional="show"/>
+									<field name="acreedor" optional="show"/>
+									<field name="t_debe" optional="show"/>
+									<field name="t_haber" optional="show"/>
+									<field name="n_deudor" optional="show"/>
+									<field name="n_acreedor" optional="show"/>
+									<field name="activo" optional="show"/>
+									<field name="pasivo" optional="show"/>
+									<field name="perdidas" optional="show"/>
+									<field name="ganancias" optional="show"/>
+									<field name="adiciones" optional="show"/>
+									<field name="deducciones" optional="show"/>
+									<field name="state" optional="show"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_sunat_checking_balance_tree">
+			<field name="name">account.sunat.checking.balance.tree</field>
+			<field name="model">account.sunat.checking.balance</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="date"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+				</tree>
+			</field>
+		</record>
+
+		<record id="account_sunat_checking_balance_action" model="ir.actions.act_window">
+			<field name="name">BALANCE COMPROBACION</field>
+			<field name="res_model">account.sunat.checking.balance</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_sunat_checking_balance_tree"/>
+			<field name="help" type="html">
+			  <p class="o_view_nocontent_smiling_face">
+				Crear nuevo registro de BALANCE COMPROBACION
+			  </p>
+			</field>
+		</record>
+
+		<menuitem id='account_sunat_checking_balance_action_menu' 
+				  parent='account_base_sunat_balance_inventory_it.menu_tables_sunat' 
+				  action="account_sunat_checking_balance_action"
+				  sequence="27"/>
+
+	</data>
+</odoo>

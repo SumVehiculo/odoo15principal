@@ -2,16 +2,6 @@
 
 from odoo import models, fields, api
 
-class SunatTableData031601(models.Model):
-	_inherit = 'sunat.table.data.031601'
-
-	line_ids = fields.One2many('sunat.table.data.031602','main_id',string=u'Detalle Capital')
-
-class SunatTableData031602(models.Model):
-	_inherit = 'sunat.table.data.031602'
-
-	main_id = fields.Many2one('sunat.table.data.031601',string=u'Capital')
-
 class SunatTableData38(models.Model):
 	_name = 'sunat.table.data.38'
 

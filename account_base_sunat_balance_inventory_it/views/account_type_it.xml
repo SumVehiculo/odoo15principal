@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_type_it_form_inherit_balance_inventory" model="ir.ui.view">
+		<field name="name">account.type.it.form.inherit.balance.inventory</field>
+		<field name="model">account.type.it</field>
+		<field name="inherit_id" ref="account_base_it.view_account_type_it_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='group_function']" position="after">
+				<field name="total_code_sunat"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

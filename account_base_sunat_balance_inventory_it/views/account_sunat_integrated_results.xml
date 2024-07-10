@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_sunat_integrated_results_catalog_tree" model="ir.ui.view">
+        <field name="name">view.account.sunat.integrated.results.tree</field>
+        <field name="model">account.sunat.integrated.results</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date" optional="show"/>
+                <field name="code" optional="show"/>
+                <field name="amount" optional="show"/>
+                <field name="state" optional="show"/>
+				<field name="company_id" groups="base.group_multi_company"/>  
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_sunat_integrated_results_catalog_form" model="ir.ui.view">
+        <field name="name">view.account.sunat.integrated.results.form</field>
+        <field name="model">account.sunat.integrated.results</field>
+        <field name="arch" type="xml">
+            <form string="Resultados Integrales">
+				<sheet>
+					<group>
+						<group>
+							<field name="date" required="1"/>
+							<field name="code" required="1"/>
+							<field name="amount"/>
+						</group>
+						<group>
+							<field name="state"/>
+							<field name="company_id" groups="base.group_multi_company"/>  
+						</group>
+					</group>
+				</sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_sunat_integrated_results_catalog" model="ir.actions.act_window">
+        <field name="name">ESTADO DE RESULTADOS INTEGRALES</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.sunat.integrated.results</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+			Crea tu primer registro de Resultados Integrales para SUNAT aqui
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_account_sunat_integrated_results_catalog"
+            id="menu_action_account_sunat_integrated_results_catalog" 
+            sequence="15"
+            parent="account_base_sunat_balance_inventory_it.menu_tables_sunat" />
+
+</odoo>

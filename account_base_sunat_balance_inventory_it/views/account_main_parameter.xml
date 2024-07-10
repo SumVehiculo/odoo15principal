@@ -10,6 +10,7 @@
 					<group>
 						<group>
 							<field name="use_balance_inventory_kardex"/>
+							<field name="catalog_fs_bi"/>
 						</group>
 					</group>
 				</page>

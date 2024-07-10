@@ -13,8 +13,16 @@
 	'data':	[
 		'security/security.xml',
 		'security/ir.model.access.csv',
+		'SQL.sql',
+		'views/account_type_it.xml',
+		'views/account_main_parameter.xml',
 		'views/menu_items.xml',
-		'views/sunat_table_data.xml',
+        'views/account_sunat_checking_balance.xml',
+        'views/account_sunat_shareholding.xml',
+        'views/account_sunat_capital.xml',
+        'views/account_sunat_state_patrimony.xml',
+        'views/account_sunat_integrated_results.xml',
+        'views/account_sunat_efective_flow.xml',
 		'views/account_register_values_it.xml'
 	],
 	'installable': True

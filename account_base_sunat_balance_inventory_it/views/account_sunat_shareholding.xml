@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_sunat_shareholding_tree" model="ir.ui.view">
+        <field name="name">view.account.sunat.shareholding.tree</field>
+        <field name="model">account.sunat.shareholding</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="partner_id"/>
+				<field name="type"/>
+                <field name="state"/>
+				<field name="company_id" groups="base.group_multi_company"/>  
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_sunat_shareholding_form" model="ir.ui.view">
+        <field name="name">view.account.sunat.shareholding.form</field>
+        <field name="model">account.sunat.shareholding</field>
+        <field name="arch" type="xml">
+            <form string="shareholding">
+				<sheet>
+					<group>
+						<group>
+							<field name="date" required="1"/>
+                            <field name="partner_id" required="1"/>
+                            <field name="type"/>
+                            <field name="num_acciones"/>
+							<field name="percentage" widget="percentage"/>
+						</group>
+						<group>
+							<field name="state"/>
+							<field name="company_id" groups="base.group_multi_company"/>  
+						</group>
+					</group>
+				</sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_sunat_shareholding" model="ir.actions.act_window">
+        <field name="name">PARTICIPACION ACCIONARIA O DE PARTICIPACIONES SOCIALES</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.sunat.shareholding</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+			Crea tu primer registro de Participacion Accionaria para SUNAT aqui
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_account_sunat_shareholding"
+            id="menu_action_account_sunat_shareholding" 
+            sequence="24"
+            parent="account_base_sunat_balance_inventory_it.menu_tables_sunat" />
+
+</odoo>

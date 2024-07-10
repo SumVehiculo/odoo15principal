@@ -21,7 +21,7 @@
 							</group>
 						</page>
 						<page string="Libros">
-							<field name="show_all" nolabel="1" style="transform: scale(1.5);"/><label for="show_all" style="color: #017e84 !important; font-size: 20px !important;"/><br />
+							<field name="show_all" nolabel="1" style="transform: scale(1.5);"/><label for="show_all" style="color: #00a09d !important; font-size: 20px !important;"/><br />
 							<br/>
 							<field name="show_1" nolabel="1" force_save="1"/><label for="show_1"/><br />
 							<field name="show_2" nolabel="1" force_save="1"/><label for="show_2"/><br />
@@ -43,9 +43,8 @@
 							<field name="show_18" nolabel="1" force_save="1"/><label for="show_18"/><br />
 							<field name="show_19" nolabel="1" force_save="1"/><label for="show_19"/><br />
 							<field name="show_20" nolabel="1" force_save="1"/><label for="show_20"/><br />
-							<!-- <field name="show_21" nolabel="1" force_save="1"/><label for="show_21"/><br /> -->
+							<field name="show_21" nolabel="1" force_save="1"/><label for="show_21"/><br />
 							<field name="show_22" nolabel="1" force_save="1"/><label for="show_22"/><br />
-							<field name="show_23" nolabel="1" force_save="1"/><label for="show_23"/><br />
 						</page>
 					</notebook>
 					<footer>
