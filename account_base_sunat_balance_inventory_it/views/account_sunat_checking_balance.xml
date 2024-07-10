@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	<data>
-		<menuitem id="menu_tables_sunat" 
-				name="Tablas" 
-				parent="account_sunat_rep_it.menu_sunat" 
-				sequence="2"/>
-
 		<record model="ir.ui.view" id="view_account_sunat_checking_balance_form">
 			<field name="name">account.sunat.checking.balance.form</field>
 			<field name="model">account.sunat.checking.balance</field>
