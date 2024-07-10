@@ -310,28 +310,28 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 	def _get_sql_10(self,period,company_id,cc,date):
 		sql = """
 		SELECT
-		'%s' as campo1,
+		'{period}' as campo1,
 		aa.code as campo2,
 		aa.code_bank as campo3,
 		aa.account_number as campo4,
-		CASE WHEN rc.name ='USD' THEN rc.name ELSE 'PEN' END AS campo5,
-		CASE WHEN T.saldo > 0 THEN T.saldo ELSE 0.00 END AS campo6,
-		CASE WHEN T.saldo < 0 THEN T.saldo ELSE 0.00 END AS campo7,
+		rc.name AS campo5,
+		T.debe as campo6,
+		T.haber as campo7,
 		'1' as campo8,
 		NULL AS campo9
 		FROM
-		(SELECT vst.account_id,SUM(vst.debe-vst.haber) AS saldo FROM vst_diariog vst
+		(SELECT vst.account_id,SUM(vst.debe) AS debe,SUM(vst.haber) AS haber FROM get_diariog('{date_start}','{date_end}',{company_id}) vst
 		LEFT JOIN account_account aa ON aa.id = vst.account_id
-		WHERE LEFT(vst.cuenta,2) = '10' AND (CAST(vst.periodo AS int) BETWEEN %s AND %s)
-		AND vst.company_id = %d
+		WHERE LEFT(vst.cuenta,2) = '10'
 		GROUP BY vst.account_id)T
 		LEFT JOIN account_account aa ON aa.id = T.account_id
 		LEFT JOIN res_currency rc ON rc.id = aa.currency_id
-		WHERE T.saldo <> 0
-		"""% (str(period.date_start.year)+str('{:02d}'.format(period.date_start.month))+(str('{:02d}'.format(period.date_end.day)) if cc not in ('05','06','07') else str('{:02d}'.format(date.day))),
-			period.code[:4]+'00',
-				period.code,
-				company_id)
+		""".format(
+				period = str(period.date_start.year)+str('{:02d}'.format(period.date_start.month))+(str('{:02d}'.format(period.date_end.day)) if cc not in ('05','06','07') else str('{:02d}'.format(date.day))),
+				date_start = period.fiscal_year_id.date_from.strftime('%Y/%m/%d'),
+				date_end = period.date_end.strftime('%Y/%m/%d'),
+				company_id = company_id
+			)
 		return sql
 
 	def _get_sql_account(self,period,company_id,left,cc,date):
@@ -520,9 +520,9 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 		GS.saldo_mn as campo7,
 		'1' as campo8,
 		NULL AS campo9
-		FROM get_saldos('%s','%s',%d,1) GS
+		FROM get_saldos_sin_cierre('%s','%s',%d) GS
 		LEFT JOIN account_move_line aml ON aml.id = GS.move_line_id
-		WHERE left(GS.cuenta,2) in ('47')
+		WHERE left(GS.cuenta,2) in ('37','49') and GS.saldo_mn <> 0
 		"""% (str(period.date_start.year)+str('{:02d}'.format(period.date_start.month))+(str('{:02d}'.format(period.date_end.day)) if cc not in ('05','06','07') else str('{:02d}'.format(date.day))),
 			period.date_start.strftime('%Y/%m/%d'),
 			period.date_end.strftime('%Y/%m/%d'),
@@ -533,13 +533,13 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 		sql = """
 			SELECT 
 			'{period_code}' as campo1,
-			'1' as campo2,
-			et.code as campo3,
+			PC.table_13_sunat as campo2,
+			sc05.code as campo3,
 			PP.default_code as campo4,
-			'1' as campo5,
-			ei25.code as campo6,
-			left(PT.name,80) as campo7,
-			ei13.code as campo8,
+			' ' as campo5,
+			' ' as campo6,
+			PT.name as campo7,
+			sc06.code as campo8,
 			'1' as campo9,
 			case when T2.saldo_fisico <> 0 then round(T2.saldo_fisico::numeric,8) else 0.00::numeric end as campo10,
 			case when T2.costo_prom <> 0 then round(T2.costo_prom::numeric,8) else 0.00::numeric end as campo11,
@@ -576,9 +576,8 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			LEFT JOIN product_template PT ON PT.id = PP.product_tmpl_id
 			LEFT JOIN product_category PC on PT.categ_id = PC.id
 			LEFT JOIN uom_uom UU on PT.uom_id = UU.id
-			LEFT JOIN existence_type et on et.id = PC.existence_type_id
-			LEFT JOIN einvoice_catalog_25 ei25 on ei25.id = PT.onu_code
-			LEFT JOIN einvoice_catalog_13 ei13 on ei13.id = UU.code_sunat
+			LEFT JOIN stock_catalog_05 sc05 on sc05.id = PC.stock_catalog_05_id
+			LEFT JOIN stock_catalog_06 sc06 on sc06.id = UU.stock_catalog_06_id
 			WHERE left(aa.code,2) in ('20','21')
 		""".format(
 			company = company_id,
@@ -596,8 +595,8 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			'{period_code}' as campo1,
 			aml.cuo as campo2,
 			CASE
-				WHEN right(vst_d.periodo,2) = '00' THEN 'A' || vst_d.voucher
-				WHEN right(vst_d.periodo,2) = '13' THEN 'C' || vst_d.voucher
+				WHEN right(vst_d.periodo::character varying,2) = '00' THEN 'A' || vst_d.voucher
+				WHEN right(vst_d.periodo::character varying,2) = '13' THEN 'C' || vst_d.voucher
 				ELSE 'M' || vst_d.voucher
 			END AS campo3,
 			lit.code_sunat as campo4,
@@ -610,13 +609,12 @@ class AccountSunatBalanceInventoryRep(models.TransientModel):
 			arv.provision as campo11,
 			'1' as campo12,
 			NULL AS campo13
-			FROM vst_diariog vst_d
+			FROM get_diariog('{date_start}','{date_end}',{company}) vst_d
 			LEFT JOIN account_move_line aml ON aml.id = vst_d.move_line_id
 			LEFT JOIN account_register_values_it arv ON arv.move_id = vst_d.move_id
 			LEFT JOIN res_partner rp ON rp.id = arv.partner_id
 			LEFT JOIN l10n_latam_identification_type lit ON lit.id = rp.l10n_latam_identification_type_id
-			WHERE (vst_d.fecha between '{date_start}' and '{date_end}') and 
-			vst_d.company_id = {company} and left(vst_d.cuenta,2) = '30'
+			WHERE left(vst_d.cuenta,2) = '30'
 		""".format(
 			company = company_id,
 			date_start = period.date_start.strftime('%Y/%m/%d'),
