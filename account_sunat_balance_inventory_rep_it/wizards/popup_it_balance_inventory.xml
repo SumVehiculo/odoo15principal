@@ -85,20 +85,18 @@
 				<div attrs="{'invisible':[('output_name_20', '=', False)]}">
 					<label for="output_file_20"/><field name="output_file_20" readonly="1" filename="output_name_20"/>
 				</div>
-				<!--field name="output_name_21" invisible="1"/-->
-				<!--div >
+				<field name="output_name_21" invisible="1"/>
+				<div attrs="{'invisible':[('output_name_21', '=', False)]}">
 					<label for="output_file_21"/><field name="output_file_21" readonly="1" filename="output_name_21"/>
-				</div-->
+				</div>
 				<field name="output_name_22" invisible="1"/>
 				<div attrs="{'invisible':[('output_name_22', '=', False)]}">
-					<label for="output_file_22"/><field name="output_file_22" readonly="1" widget="binary" filename="output_name_22"/>
+					<label for="output_file_22"/><field name="output_file_22" readonly="1" filename="output_name_22"/>
 				</div>
-				<field name="output_name_23" invisible="1"/>
-				<div attrs="{'invisible':[('output_name_23', '=', False)]}">
-					<label for="output_file_23"/><field name="output_file_23" readonly="1" widget="binary" filename="output_name_23"/>
-				</div>
-				<footer>
-				</footer>
+
+                <footer>
+                    <button string="Cerrar" class="btn-primary" special="cancel"/>
+                </footer>
 			</form>
 		</field>
 	</record>

@@ -13,7 +13,6 @@
 	'data':	[
 		'security/ir.model.access.csv',
 		'SQL.sql',
-		'views/account_main_parameter.xml',
 		'wizards/popup_it_balance_inventory.xml',
 		'wizards/account_sunat_balance_inventory_rep.xml'
 	],

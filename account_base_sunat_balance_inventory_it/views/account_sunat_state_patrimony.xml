@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_sunat_state_patrimony_tree" model="ir.ui.view">
+        <field name="name">view.account.sunat.state.patrimony.tree</field>
+        <field name="model">account.sunat.state.patrimony</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="code"/>
+                <field name="capital" optional="show"/>
+                <field name="acc_inv" optional="show"/>
+                <field name="cap_add" optional="show"/>
+                <field name="res_no_real" optional="show"/>
+                <field name="reserv_leg" optional="show"/>
+                <field name="o_reverv" optional="show"/>
+                <field name="res_acum" optional="show"/>
+                <field name="dif_conv" optional="show"/>
+                <field name="ajus_patr" optional="show"/>
+                <field name="res_neto_ej" optional="show"/>
+                <field name="exc_rev" optional="show"/>
+                <field name="res_ejerc" optional="show"/>
+                <field name="state"/>
+				<field name="company_id" groups="base.group_multi_company"/>  
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_sunat_state_patrimony_form" model="ir.ui.view">
+        <field name="name">view.account.sunat.state.patrimony.form</field>
+        <field name="model">account.sunat.state.patrimony</field>
+        <field name="arch" type="xml">
+            <form string="Estado de Cambios en el Patrimonio Neto">
+				<sheet>
+					<group>
+						<group>
+							<field name="date" required="1"/>
+							<field name="code" required="1"/>
+                            <field name="capital"/>
+                            <field name="acc_inv"/>
+                            <field name="cap_add"/>
+                            <field name="res_no_real"/>
+                            <field name="reserv_leg"/>
+                            <field name="o_reverv"/>
+						</group>
+						<group>
+                            <field name="res_acum"/>
+                            <field name="dif_conv"/>
+                            <field name="ajus_patr"/>
+                            <field name="res_neto_ej"/>
+                            <field name="exc_rev"/>
+                            <field name="res_ejerc"/>
+							<field name="state"/>
+							<field name="company_id" groups="base.group_multi_company"/>  
+						</group>
+					</group>
+				</sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_sunat_state_patrimony" model="ir.actions.act_window">
+        <field name="name">ESTADO DE CAMBIOS EN EL PATRIMONIO NETO</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.sunat.state.patrimony</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+			Crea tu primer registro de Estado de Cambios en el Patrimonio Neto para SUNAT aqui
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_account_sunat_state_patrimony"
+            id="menu_action_account_sunat_state_patrimony" 
+            sequence="3"
+            parent="account_base_sunat_balance_inventory_it.menu_tables_sunat" />
+
+</odoo>

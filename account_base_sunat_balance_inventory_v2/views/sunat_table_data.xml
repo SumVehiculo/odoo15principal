@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	<data>
-			
-		<record model="ir.ui.menu" id="account_base_sunat_balance_inventory_it.menu_tables_sunat">
-			<field name="sequence">6</field>
-		</record>
-
-		<record model="ir.ui.menu" id="account_base_sunat_balance_inventory_it.sunat_table_data_031602_action_menu">
-			<field name="groups_id" eval="[(6,0,[ref('account_base_sunat_balance_inventory_v2.make_invisible_sunat')])]"/>
-		</record>
-
-		
-		<record id="view_sunat_table_data_031601_form_inherit" model="ir.ui.view">
-			<field name="name">sunat.table.data.031601.form.inherit</field>
-			<field name="model">sunat.table.data.031601</field>
-			<field name="inherit_id" ref="account_base_sunat_balance_inventory_it.view_sunat_table_data_031601_form"/>
-			<field name="arch" type="xml">
-                <xpath expr="//form/group" position="after">
-					<notebook>
-						<page string="Detalle" id="deatil_tab">
-							<field name="line_ids" context="{'default_fiscal_year_id':fiscal_year_id}">
-								<tree editable="bottom">
-									<field name="fiscal_year_id" invisible="1"/>
-									<field name="partner_id"/>
-									<field name="tipo"/>
-									<field name="num_acciones"/>
-									<field name="percentage"/>
-									<field name="estado"/>
-								</tree>
-							</field>
-						</page>
-					</notebook>
-				</xpath>
-			</field>
-		</record>
 
 		<record model="ir.ui.view" id="view_sunat_table_data_38_form">
 			<field name="name">sunat.table.data.38.form</field>
