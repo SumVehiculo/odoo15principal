@@ -1942,7 +1942,7 @@ class AccountSunatRep(models.TransientModel):
 		worksheet = workbook.add_worksheet(u"Formato 3.16 Cuenta 50")
 		worksheet.set_tab_color('blue')
 		decimal_rounding = '%0.2f'
-		capital = self.env['sunat.table.data.031601'].search([('fiscal_year_id','=',self.fiscal_year_id.id)],limit=1)
+		capital = self.env['account.sunat.capital'].search([('date','>=',self.period.date_start),('date','<=',self.period.date_end),('company_id','=',self.company_id.id)],limit=1)
 		
 		worksheet.merge_range(2,0,2,8, 'FORMATO 3.16: "LIBRO DE INVENTARIOS Y BALANCES - DETALLE DEL SALDO DE LA CUENTA 50 - CAPITAL"', formats['especial5'] )
 		
@@ -1977,7 +1977,7 @@ class AccountSunatRep(models.TransientModel):
 		worksheet.merge_range(x,4,x,6,str(capital.nro_acc_pag),formats_custom['especial_2_custom'])
 		x+=1
 		worksheet.merge_range(x,1,x,3,"NÚMERO DE ACCIONISTAS O SOCIOS",formats_custom['especial_2_custom'])
-		worksheet.merge_range(x,4,x,6,str(len(capital.line_ids)),formats_custom['especial_2_custom'])
+		worksheet.merge_range(x,4,x,6,str(0),formats_custom['especial_2_custom'])
 		x+=2
 
 		worksheet.merge_range(x,1,x,2,u"DOCUMENTO DE IDENTIDAD",formats_custom['especial_2_custom'])
@@ -1990,14 +1990,14 @@ class AccountSunatRep(models.TransientModel):
 		worksheet.write(x,2,u"NÚMERO",formats_custom['especial_2_custom'])
 		x+1
 		num_acciones, percentage = 0, 0
-		for i in capital.line_ids:		
+		for i in self.env['account.sunat.shareholding'].search([('date','>=',self.period.date_start),('date','<=',self.period.date_end),('company_id','=',self.company_id.id)]):
 			worksheet.write(x,1,(i.partner_id.l10n_latam_identification_type_id.code_sunat or ''),formats['especial1'])
 
 			worksheet.write(x,2,(i.partner_id.vat or ''),formats['especial1'])
 
 			worksheet.write(x,3,(i.partner_id.name or ''),formats['especial1'])
 
-			worksheet.write(x,4, (i.tipo or ''),formats['especial1'])
+			worksheet.write(x,4, (i.type or ''),formats['especial1'])
 			
 			worksheet.write(x,5,(str(i.num_acciones) or ''),formats['especial1'])
 			num_acciones += (i.num_acciones or 0)
@@ -2531,7 +2531,7 @@ class AccountSunatRep(models.TransientModel):
 	  			[Paragraph("<font size=9><b>VALOR NOMINAL POR ACCIÓN O PARTICIPACIÓN SOCIAL</b></font>",style), Paragraph("<font size=9><b>%s</b></font>"%str(capital.valor_nominal),style)],
 				[Paragraph("<font size=9><b>NÚMERO DE ACCIONES O PARTICIPACIONES SOCIALES SUSCRITAS  </b></font>",style), Paragraph("<font size=9><b>%s</b></font>"%str(capital.nro_acc_sus),style)],
 				[Paragraph("<font size=9><b>NÚMERO DE ACCIONES O PARTICIPACIONES SOCIALES PAGADAS</b></font>",style), Paragraph("<font size=9><b>%s</b></font>"%str(capital.nro_acc_pag),style)],
-				[Paragraph("<font size=9><b>NÚMERO DE ACCIONISTAS O SOCIOS</b></font>",style), Paragraph("<font size=9><b>%s</b></font>"%str(len(capital.line_ids)),style)]]
+				[Paragraph("<font size=9><b>NÚMERO DE ACCIONISTAS O SOCIOS</b></font>",style), Paragraph("<font size=9><b>%s</b></font>"%str(0),style)]]
 			
 			t=Table(data,colWidths=[320,320], rowHeights=[18,18,18,18,18])
 			t.setStyle(TableStyle([
@@ -2596,7 +2596,7 @@ class AccountSunatRep(models.TransientModel):
 		pagina = 1
 
 		size_widths = [60,110,300,80,100,80] #770
-		capital = self.env['sunat.table.data.031601'].search([('fiscal_year_id','=',self.fiscal_year_id.id)],limit=1)
+		capital = self.env['account.sunat.capital'].search([('date','>=',self.period.date_start),('date','<=',self.period.date_end),('company_id','=',self.company_id.id)],limit=1)
 
 		pdf_header(self,c,wReal,hReal,size_widths,capital)
 
@@ -2604,7 +2604,7 @@ class AccountSunatRep(models.TransientModel):
 
 		num_acciones, percentage = 0, 0
 
-		for i in capital.line_ids:
+		for i in self.env['account.sunat.shareholding'].search([('date','>=',self.period.date_start),('date','<=',self.period.date_end),('company_id','=',self.company_id.id)]):
 			first_pos = 50
 
 			c.setFont("Helvetica", 7)
@@ -2617,7 +2617,7 @@ class AccountSunatRep(models.TransientModel):
 			c.drawString( first_pos+2 ,pos_inicial,particionar_text( (i.partner_id.name or ''),250) )
 			first_pos += size_widths[2]
 
-			c.drawString( first_pos+2 ,pos_inicial,particionar_text( (i.tipo or ''),50) )
+			c.drawString( first_pos+2 ,pos_inicial,particionar_text( (i.type or ''),50) )
 			first_pos += size_widths[3]
 
 			c.drawRightString( first_pos+size_widths[4] ,pos_inicial,particionar_text( (str(i.num_acciones) or ''),130) )
