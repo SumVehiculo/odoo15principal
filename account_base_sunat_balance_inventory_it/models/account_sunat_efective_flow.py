@@ -13,7 +13,7 @@ class AccountSunatEfectiveFlow(models.Model):
 
 	name = fields.Char(compute=_get_name,store=True)
 	date = fields.Date(string='Periodo',required=True)
-	code = fields.Char(string=u'Código',size=6)
+	code = fields.Char(string=u'Código',size=6,help='Tabla 34 SUNAT')
 	amount = fields.Float(string=u'Monto',digits=(64,2))
 	state = fields.Selection([('1',u'La operación corresponde al periodo.'),
 								('8',u'La operación corresponde a un periodo anterior y NO ha sido anotada en dicho periodo.'),

@@ -13,7 +13,7 @@ class AccountSunatStatePatrimony(models.Model):
 
 	name = fields.Char(compute=_get_name,store=True)
 	date = fields.Date(string='Periodo',required=True)
-	code = fields.Char(string=u'Código',size=6)
+	code = fields.Char(string=u'Código',size=6,help='Tabla 34 SUNAT')
 	capital = fields.Float(string=u'Capital',digits=(64,2))
 	acc_inv = fields.Float(string=u'Acciones de Inversión',digits=(64,2))
 	cap_add = fields.Float(string=u'Capital Adicional',digits=(64,2))

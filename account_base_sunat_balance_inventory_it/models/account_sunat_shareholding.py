@@ -17,7 +17,7 @@ class AccountSunatShareholding(models.Model):
 	type = fields.Selection([('01',u'ACCIONES CON DERECHO A VOTO'),
 								('02',u'ACCIONES SIN DERECHO A VOTO'),
 								('03',u'PARTICIPACIONES'),
-								('04',u'OTROS')],string='Tipo',default='01')
+								('04',u'OTROS')],string='Tipo',default='01',help='Tabla 16 SUNAT')
 	num_acciones = fields.Integer(string=u'Número de Acciones')
 	percentage = fields.Float(string=u'Porcentaje de Participación')
 	state = fields.Selection([('1',u'La operación corresponde al periodo.'),
