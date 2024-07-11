@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="import_invoice.sample_invoice_xls" model="ir.attachment">
+        <field name="datas" type="base64" file="import_invoice_work_order/data/invoice.xls"/>
+    </record>
+
+    <record id="import_invoice.sample_invoice_with_account_xls" model="ir.attachment">
+        <field name="datas" type="base64" file="import_invoice_work_order/data/invoice_with_account.xls"/>
+    </record>
+
+    <record id="import_invoice.sample_invoice_customer_xls" model="ir.attachment">
+        <field name="datas" type="base64" file="import_invoice_work_order/data/invoice_customer.xls"/>
+    </record>
+
+    <record id="import_invoice.sample_invoice_with_account_customer_xls" model="ir.attachment">
+        <field name="datas" type="base64" file="import_invoice_work_order/data/invoice_with_account_customer.xls"/>
+    </record>
+</odoo>

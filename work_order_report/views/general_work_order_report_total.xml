@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="general_work_order_report_total_view_tree" model="ir.ui.view">
+        <field name="name">general.work.order.report.total.view.tree</field>
+        <field name="model">general.work.order.report.total</field>
+        <field name="arch" type="xml">
+            <tree edit="false" create="false" delete="false">
+                <field name="project_id" />
+                <field name="client_id" />
+                <field name="create_date" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="sale_invoices_total" />
+                <field name="expenses_invoices_total" />
+                <field name="kardex_total" />
+                <field name="hourly_cost_total" />
+                <field name="net_total" />
+                <field name="net_by_sale_total" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="general_work_order_report_total_view_search" model="ir.ui.view">
+        <field name="name">general.work.order.report.total.view.search</field>
+        <field name="model">general.work.order.report.total</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="project_id" />
+                <field name="client_id" />
+                <group expand="0" string="Agrupar por">
+                    <filter string="Fecha" name="group_by_date" context="{'group_by': 'create_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="general_work_order_report_total_action" model="ir.actions.act_window">
+        <field name="name">Reporte General OT</field>
+        <field name="res_model">general.work.order.report.total</field>
+        <field name="view_mode">tree</field>
+    </record>
+</odoo>

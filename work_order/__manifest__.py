@@ -11,7 +11,8 @@
         'stock',
         'stock_move_picking_hook',
         'sale',
-        'sale_project_account'
+        'sale_project_account',
+        'kardex_valorizado_cuentas_contables_it_unidades_especificas'
     ],
     'data': [
         'views/project_project.xml',
