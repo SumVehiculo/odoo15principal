@@ -445,7 +445,43 @@
                                           </tr>
                                       </tbody>
                                   </table>
-
+                                  <table class="table table-sm" name="invoice_line_table" t-if="o.company_id.vat=='20477784331'">
+                                      <thead>
+                                          <tr>
+                                              <th colspan="5">CUENTAS BANCARIAS</th>
+                                          </tr>
+                                          <tr>
+                                              <th class="text-right">NRO</th>
+                                              <th class="text-right">CCI</th>
+                                              <th class="text-right">TIPO</th>
+                                              <th class="text-right">MONEDA</th>
+                                              <th class="text-right">BANCO</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td class="text-right">193-1763606-0-00</td>
+                                              <td class="text-right">002-193-001763606000-10</td>
+                                              <td class="text-right">Corriente</td>
+                                              <td class="text-right">PEN</td>
+                                              <td class="text-right">Banco de Crédito del Perú</td>
+                                          </tr>
+                                          <tr>
+                                              <td class="text-right">193-1750660-1-43</td>
+                                              <td class="text-right">002-193-001750660143-18</td>
+                                              <td class="text-right">Corriente</td>
+                                              <td class="text-right">USD</td>
+                                              <td class="text-right">Banco de Crédito del Perú</td>
+                                          </tr>
+                                          <tr>
+                                              <td class="text-right">00-005-181380</td>
+                                              <td class="text-right"></td>
+                                              <td class="text-right">Detracción</td>
+                                              <td class="text-right">PEN</td>
+                                              <td class="text-right">Banco de la Nación</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
                                   <table class="table table-sm" name="invoice_line_table" t-if="o.company_id.vat=='20100215293'">
                                       <thead>
                                           <tr>
@@ -475,7 +511,7 @@
                                               <td class="text-right">Banco de Crédito del Perú</td>
                                           </tr>
                                           <tr>
-                                              <td class="text-right">00-005-181380</td>
+                                              <td class="text-right">00-101-051196</td>
                                               <td class="text-right"></td>
                                               <td class="text-right">Detracción</td>
                                               <td class="text-right">PEN</td>
