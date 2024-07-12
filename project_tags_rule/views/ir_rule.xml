@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="project_tags_ir_rule" model="ir.rule">
+        <field name="name">Etiquetas de Proyecto</field>
+        <field name="model_id" ref="model_project_tags"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
