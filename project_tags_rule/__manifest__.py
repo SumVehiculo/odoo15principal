@@ -9,7 +9,8 @@
         'project'
     ],
     'data': [
-        'views/ir_rule.xml'
+        'views/ir_rule.xml',
+        'views/project_tag.xml'
     ],
     'auto_install': False,
     'application': False

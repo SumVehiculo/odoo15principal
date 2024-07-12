@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="project_tags_view_form_inherit_add_company" model="ir.ui.view">
+        <field name="name">project.tags.view.form.inherit.add.company</field>
+        <field name="model">project.tags</field>
+        <field name="inherit_id" ref="project.project_tags_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name=''name]" position="after">
+                <field name="company_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
