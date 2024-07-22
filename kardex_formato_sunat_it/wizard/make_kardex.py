@@ -232,7 +232,7 @@ class make_kardex_valorado_formato_sunat(models.TransientModel):
 					txt+= xserie + '|'
 					txt+= xnumero + '|'
 					txt+= '16|'
-					txt+= (productoobj.name_get()[0][1] or '') + '|'
+					txt+= (productoobj.name_get()[0][1] or '').replace('['+(productoobj.default_code or '')+']','') + '|'
 					txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
 					txt+= '1|'			
 					cantidadx =((linea[15] if linea[15] else 0) - (linea[11] if linea[11] else 0) +   (linea[13] if linea[13] else 0) )
@@ -277,6 +277,11 @@ class make_kardex_valorado_formato_sunat(models.TransientModel):
 				xtipo = '10'
 				xserie = ""
 				xnumero = move.raw_material_production_id.name.replace('/','').replace('-','')
+
+			if (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) in ('10','26','91','92'):
+				xtipo = '00'
+				xserie = "0"
+				xnumero = '0'
 		
 			txt+=str(linea[1])[0:4] +	str(linea[1])[5:7] + '00|'
 			llavemaster = move_obj.invoice_id.id or linea[25]
@@ -308,7 +313,7 @@ class make_kardex_valorado_formato_sunat(models.TransientModel):
 			txt+= xserie + '|'
 			txt+= xnumero + '|'
 			txt+= (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) + '|'
-			txt+= (productoobj.name_get()[0][1] or '') + '|'
+			txt+= (productoobj.name_get()[0][1] or '').replace('['+(productoobj.default_code or '')+']','') + '|'
 			txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
 			txt+= '1|'			
 			txt+=  "%.2f"%(linea[11])+ '|' #entrada
