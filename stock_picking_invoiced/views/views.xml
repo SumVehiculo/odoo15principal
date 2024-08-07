@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_picking_tree_inherti" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherti</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="prorratear_en.stock_picking_fec_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="invoice_id" optional="hide"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_stock_picking_search_inherti" model="ir.ui.view">
+        <field name="name">stock.picking.search.inherti</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="invoice_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>
