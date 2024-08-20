@@ -235,7 +235,7 @@ class KardexEntryIncomeWizard(models.TransientModel):
 																											when ST.usage = 'production' AND ST2.usage = 'internal' then '{ingreso_produccion}' end) end)
 				LEFT JOIN (select split_part(value_reference, ',', 2) as account_id,
 				 		          split_part(res_id, ',', 2) as id  
-							from ir_property }
+							from ir_property 
 							where company_id = {company} 
 							and res_id like 'type.operation.kardex,%') ipr ON ipr.id = ei12.id
 				LEFT JOIN product_product PP ON PP.id = GKV.product_id
