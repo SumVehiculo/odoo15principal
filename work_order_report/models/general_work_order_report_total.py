@@ -9,7 +9,9 @@ class GeneralWorkOrderReportTotal(models.Model):
     
     project_id = fields.Many2one('project.project', string='OT')
     client_id = fields.Many2one('res.partner', string='Cliente OT')
-    create_date = fields.Date('Fecha')
+    # ticket (#29433)
+    # create_date = fields.Date('Fecha')
+    tag_ids = fields.Many2many('project.tags', string='Etiquetas')
     start_date = fields.Date('Fecha Inicio del Proyecto')
     end_date = fields.Date('Fecha Fin del Proyecto')
     sale_invoices_total = fields.Float('Total de Lineas de Ventas Facturadas')
