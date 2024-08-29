@@ -12,12 +12,12 @@
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="start_date" />
                 <field name="end_date" />
-                <field name="sale_invoices_total" />
-                <field name="expenses_invoices_total" />
-                <field name="kardex_total" />
-                <field name="hourly_cost_total" />
-                <field name="net_total" />
-                <field name="net_by_sale_total" />
+                <field name="sale_invoices_total" sum="sale_invoices_total"/>
+                <field name="expenses_invoices_total" sum="expenses_invoices_total"/>
+                <field name="kardex_total" sum ="kardex_total"/>
+                <field name="hourly_cost_total" sum="hourly_cost_total"/>
+                <field name="net_total" sum="net_total"/>
+                <field name="net_by_sale_total" sum="net_by_sale_total"/>
             </tree>
         </field>
     </record>

@@ -160,8 +160,9 @@ class WorkOrderReportTotalWizard(models.TransientModel):
         
         projects = self.env['project.project'].search([
             ('id','in',list(total_projects)),
-            ('active','!=',False),
-            ('company_id','=',self.company_id.id)
+            ('active','=',True),
+            ('company_id','=',self.company_id.id),
+            ('is_internal_project', '=', False)
         ])
         
         
