@@ -15,7 +15,7 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 		self.env.cr.execute("""DELETE FROM kardex_entry_outcome_book""")
 		self.env.cr.execute("""
 		INSERT INTO kardex_entry_outcome_book (fecha,tipo,serie,numero,doc_almacen,ruc,empresa,tipo_op,tipo_name, producto, default_code, unidad, qty, amount, cta_debe, cta_haber, origen, destino, almacen, analytic_account_id,analytic_tag_id,work_order_id) 
-		("""+self._get_sql(self.period.date_start,self.period.date_end,self.company_id.id)+""")""")
+		("""+self._get_sql_report(self.period.date_start,self.period.date_end,self.company_id.id)+""")""")
 		if self.type_show == 'pantalla':
 			return {
 				'name': u'Detalle de Salidas',
@@ -29,7 +29,7 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 			return self.get_excel()
 
 
-	def _get_sql(self,date_ini,date_end,company_id):
+	def _get_sql_report(self,date_ini,date_end,company_id):
 		param = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1)
 		if not param.type_operation_outproduction:
 			raise UserError(u'Falta configurar Parámetro de "Consumo de Producción" en Parametros de Contabilidad de la Compañía.')
