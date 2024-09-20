@@ -8,8 +8,8 @@ import base64
 class AccountBaseSunat(models.Model):
 	_inherit = 'account.base.sunat'
 
-	def _get_sql(self,type,period_id,company_id):
-		sql,nomenclatura = super(AccountBaseSunat,self)._get_sql(type=type,period_id=period_id,company_id=company_id)
+	def _get_sql(self,type,period_id,company_id,x_sire=False,honorary_type_date='payment_date'):
+		sql, nomenclatura = super(AccountBaseSunat,self)._get_sql(type,period_id,company_id,x_sire=x_sire,honorary_type_date=honorary_type_date)
 		if type == 8:
 			param = self.env['account.main.parameter'].search([('company_id','=',company_id)],limit=1)
 			if not param.cash_account_prefix_ids:
