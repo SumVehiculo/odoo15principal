@@ -9,7 +9,7 @@ class AccountBaseSunat(models.Model):
 	_name = 'account.base.sunat'
 	_description = 'Account Base Sunat'
 
-	def _get_sql(self,type,period_id,company_id):
+	def _get_sql(self,type,period_id,company_id,x_sire=False,honorary_type_date='payment_date'):
 		sql = ""
 		nomenclatura = ""
 		before_date = period_id.date_start - timedelta(days=1)
@@ -773,6 +773,22 @@ class AccountBaseSunat(models.Model):
 
 			if len(res) > 0:
 				raise UserError("Debe generar primeros los CUOs en la fecha especificada. En la ruta SUNAT/SUNAT/PLES/Generar CUOs")
+			
+			sql_campo_20 = """CASE
+									WHEN aj.register_sunat = '1' and rp.is_not_home = FALSE THEN '080100'|| '&' || vst_d.periodo::character varying || '&' || aml.cuo|| '&' || 'M' || vst_d.voucher
+									WHEN aj.register_sunat = '1' and rp.is_not_home = TRUE THEN '080200'|| '&' || vst_d.periodo::character varying || '&' ||  aml.cuo|| '&' || 'M' || vst_d.voucher
+									WHEN aj.register_sunat = '2' THEN '140100' || '&' || vst_d.periodo::character varying|| '&' ||  aml.cuo || '&' || 'M' || vst_d.voucher
+									ELSE ' '
+								END AS campo20,"""
+			if x_sire:
+				sql_campo_20 = """CASE
+							WHEN aj.register_sunat in ('1','2') THEN LPAD(coalesce(vst_d.doc_partner,''), 11, '0') || coalesce(vst_d.td_sunat,'') || 
+							(CASE WHEN vst_d.nro_comprobante is not null and position('-' in vst_d.nro_comprobante::text) <> 0 THEN LPAD(split_part(coalesce(vst_d.nro_comprobante,''), '-', 1), 4, '0')
+							ELSE '0000' END) || (CASE WHEN vst_d.nro_comprobante is null OR vst_d.nro_comprobante = '' THEN 'SN'
+							WHEN vst_d.nro_comprobante is not null and position('-' in vst_d.nro_comprobante::text) <> 0 THEN LPAD(split_part(vst_d.nro_comprobante, '-', 2), 10, '0')
+							WHEN vst_d.nro_comprobante is not null and position('-' in vst_d.nro_comprobante::text) = 0 THEN LPAD(split_part(vst_d.nro_comprobante, '-', 1), 10, '0') ELSE '0000000000' END)
+							ELSE ' '
+							END AS campo20,"""
 
 			sql = """ SELECT T.* FROM (SELECT 
 					CASE
@@ -829,12 +845,7 @@ class AccountBaseSunat(models.Model):
 					' ' AS campo17,
 					vst_d.debe::numeric(64,2) AS campo18,
 					vst_d.haber::numeric(64,2) AS campo19,
-					CASE
-						WHEN aj.register_sunat = '1' and rp.is_not_home = FALSE THEN '080100'|| '&' || vst_d.periodo::character varying || '&' || aml.cuo|| '&' || 'M' || vst_d.voucher
-						WHEN aj.register_sunat = '1' and rp.is_not_home = TRUE THEN '080200'|| '&' || vst_d.periodo::character varying || '&' ||  aml.cuo|| '&' || 'M' || vst_d.voucher
-						WHEN aj.register_sunat = '2' THEN '140100' || '&' || vst_d.periodo::character varying|| '&' ||  aml.cuo || '&' || 'M' || vst_d.voucher
-						ELSE ' '
-					END AS campo20,
+					{sql_campo_20}
 					am.ple_state AS campo21,
 					case when left(vst_d.cuenta,2) = '10' then aa.code_bank else ' ' end as campo22,
 					case when left(vst_d.cuenta,2) = '10' then aa.account_number else ' ' end as campo23,
@@ -875,11 +886,7 @@ class AccountBaseSunat(models.Model):
 					' ' AS campo17,
 					vst_d.debe::numeric(64,2) AS campo18,
 					vst_d.haber::numeric(64,2) AS campo19,
-					CASE  
-					WHEN aj.register_sunat = '1' and rp.is_not_home = FALSE THEN '080100'|| '&' || vst_d.periodo::character varying || '&' || aml.cuo|| '&' || 'M' || vst_d.voucher
-					WHEN aj.register_sunat = '1' and rp.is_not_home = TRUE THEN '080200'|| '&' || vst_d.periodo::character varying || '&' ||  aml.cuo|| '&' || 'M' || vst_d.voucher 
-					WHEN aj.register_sunat = '2' THEN '140100' || '&' || vst_d.periodo::character varying|| '&' ||  aml.cuo || '&' || 'M' || vst_d.voucher
-					ELSE ' '  END AS campo20,
+					{sql_campo_20}
 					am.ple_state AS campo21,
 					aa.code_bank as campo22,
 					aa.account_number as campo23,
@@ -897,6 +904,7 @@ class AccountBaseSunat(models.Model):
 					and aml.cuo is not null)T
 					{sql_mayor}
 					""".format(
+						sql_campo_20 = sql_campo_20,
 						date_start = period_id.date_start.strftime('%Y/%m/%d'),
 						date_end = period_id.date_end.strftime('%Y/%m/%d'),
 						company_id = company_id,
@@ -962,12 +970,13 @@ class AccountBaseSunat(models.Model):
 				tt.periodo_p,
 				tt.is_not_home,
 				tt.c_d_imp
-				from get_recxhon_1_1('{date_start}','{date_end}',{company_id},'invoice_date_due') tt
+				from get_recxhon_1_1('{date_start}','{date_end}',{company_id},'{honorary_type_date}') tt
 				LEFT JOIN account_move am on am.id = tt.am_id
 			""".format(
 					date_start = period_id.date_start.strftime('%Y/%m/%d'),
 					date_end = period_id.date_end.strftime('%Y/%m/%d'),
-					company_id = company_id
+					company_id = company_id,
+					honorary_type_date = honorary_type_date
 				)
 
 		if type == 8:

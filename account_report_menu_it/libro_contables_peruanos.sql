@@ -1093,8 +1093,24 @@ CREATE OR REPLACE FUNCTION public.get_recxhon_1(
 	LEFT JOIN account_account_tag aat ON aat.id = rel.account_account_tag_id
 	LEFT JOIN account_move am on am.id = aml.move_id
 	LEFT JOIN account_journal aj ON aj.id = am.journal_id
+	LEFT JOIN (SELECT  aml.account_id,
+				aml.partner_id,
+				aml.type_document_id,
+				aml.nro_comp,
+				max(am.date) as fecha_pago 
+				FROM account_move_line aml
+				LEFT JOIN account_move am ON am.id = aml.move_id
+				LEFT JOIN account_account aa ON aa.id = aml.account_id
+				WHERE  
+					am.state='posted' 
+				AND aml.debit<>0
+				AND aa.internal_type='payable'
+				AND am.company_id=$3
+				AND am.state='posted'
+				GROUP BY aml.account_id,aml.partner_id,aml.type_document_id,aml.nro_comp
+			)pagos ON concat(am.l10n_latam_document_type_id,am.partner_id,am.ref)=concat(pagos.type_document_id,pagos.partner_id,pagos.nro_comp)
 	WHERE aj.register_sunat = '3' AND am.state::text = 'posted'::text AND aml.display_type IS NULL AND aml.account_id IS NOT NULL 
-	AND ((CASE WHEN $4 = 'date' THEN am.date WHEN $4 = 'invoice_date_due' THEN am.invoice_date_due END) BETWEEN $1 and $2) AND am.company_id = $3
+	AND ((CASE WHEN $4 = 'date' THEN am.date WHEN $4 = 'invoice_date_due' THEN am.invoice_date_due WHEN $4 = 'payment_date' THEN pagos.fecha_pago END) BETWEEN $1 and $2) AND am.company_id = $3
 	AND rel.account_account_tag_id IS NOT NULL
   GROUP BY am.id;
  END;
@@ -1126,7 +1142,7 @@ CREATE OR REPLACE FUNCTION public.get_recxhon_1_1(
 	am.name AS voucher,
 	am.date AS fecha_doc,
 	am.invoice_date AS fecha_e,
-	am.invoice_date_due AS fecha_p,
+	case when $4 = 'invoice_date_due' THEN am.invoice_date_due else pagos.fecha_pago end AS fecha_p,
 	ec1.code AS td,
 	CASE
 		WHEN split_part(am.ref::text, '-'::text, 2) <> ''::text THEN split_part(am.ref::text, '-'::text, 1)::character varying
@@ -1146,7 +1162,7 @@ CREATE OR REPLACE FUNCTION public.get_recxhon_1_1(
 	rh.renta,
 	rh.retencion,
 	rh.renta + rh.retencion AS neto_p,
-	to_char(am.invoice_date_due::timestamp with time zone, 'yyyymm'::text)::character varying AS periodo_p,
+	to_char((case when $4 = 'invoice_date_due' THEN am.invoice_date_due else pagos.fecha_pago end)::timestamp with time zone, 'yyyymm'::text)::character varying AS periodo_p,
 	CASE
 		WHEN rp.is_not_home IS NULL OR rp.is_not_home = false THEN '1'::character varying
 		ELSE '2'::character varying
@@ -1172,8 +1188,24 @@ CREATE OR REPLACE FUNCTION public.get_recxhon_1_1(
 	LEFT JOIN l10n_latam_document_type eic1 ON eic1.id = dr.type_document_id
 	LEFT JOIN get_recxhon_1($1,$2,$3,$4) rh ON rh.move_id = am.id
 	LEFT JOIN res_currency rc ON rc.id = am.currency_id
+	LEFT JOIN (SELECT  aml.account_id,
+				aml.partner_id,
+				aml.type_document_id,
+				aml.nro_comp,
+				max(am.date) as fecha_pago 
+				FROM account_move_line aml
+				LEFT JOIN account_move am ON am.id = aml.move_id
+				LEFT JOIN account_account aa ON aa.id = aml.account_id
+				WHERE  
+					am.state='posted' 
+				AND aml.debit<>0
+				AND aa.internal_type='payable'
+				AND am.company_id=$3
+				AND am.state='posted'
+				GROUP BY aml.account_id,aml.partner_id,aml.type_document_id,aml.nro_comp
+			)pagos ON concat(am.l10n_latam_document_type_id,am.partner_id,am.ref)=concat(pagos.type_document_id,pagos.partner_id,pagos.nro_comp)
 	WHERE aj.register_sunat = '3' AND am.state::text = 'posted'::text AND aj.type = 'purchase'
-	AND ((CASE WHEN $4 = 'date' THEN am.date WHEN $4 = 'invoice_date_due' THEN am.invoice_date_due END) BETWEEN $1 and $2) AND am.company_id = $3
+	AND ((CASE WHEN $4 = 'date' THEN am.date WHEN $4 = 'invoice_date_due' THEN am.invoice_date_due WHEN $4 = 'payment_date' THEN pagos.fecha_pago END) BETWEEN $1 and $2) AND am.company_id = $3
   ORDER BY to_char(am.date::timestamp with time zone, 'yyyymm'::text), aj.code, am.name;
  END;
 	$BODY$
