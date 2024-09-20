@@ -28,6 +28,8 @@ class AccountSunatWizard(models.TransientModel):
 	fiscal_year_id = fields.Many2one('account.fiscal.year',string=u'Ejercicio')
 	period_id = fields.Many2one('account.period',string='Periodo')
 	number = fields.Char(string=u'Número')
+	sire = fields.Boolean(default=False,string='En el periodo se uso SIRE')
+	type_date =  fields.Selection([('date','Fecha Contable'),('invoice_date_due','Fecha de Vencimiento'),('payment_date','Fecha de Pago')],string=u'Mostrar en base a',default='payment_date')
 	
 	@api.onchange('company_id')
 	def get_fiscal_year(self):
@@ -73,7 +75,7 @@ class AccountSunatWizard(models.TransientModel):
 
 		#LE + RUC + AÑO(YYYY) + MES(MM) + DIA(00) 
 		name_doc = "LE"+ruc+str(self.period_id.date_start.year)+str('{:02d}'.format(self.period_id.date_start.month))+"00"
-		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(type,self.period_id,self.company_id.id)
+		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(type,self.period_id,self.company_id.id,x_sire=self.sire)
 		ReportBase = self.env['report.base']
 		res = ReportBase.get_file_sql_export(sql_ple,'|')
 		
@@ -129,7 +131,7 @@ class AccountSunatWizard(models.TransientModel):
 		ctxt = ""
 		separator = "|"
 
-		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id)
+		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id,honorary_type_date=self.type_date)
 
 		self.env.cr.execute(sql_ple)
 		dicc = self.env.cr.dictfetchall()
@@ -509,7 +511,7 @@ class AccountSunatWizard(models.TransientModel):
 		import sys
 		importlib.reload(sys)
 
-		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id)
+		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id,honorary_type_date=self.type_date)
 
 		worksheet = workbook.add_worksheet("Servidores")
 		worksheet.set_tab_color('blue')
@@ -555,7 +557,7 @@ class AccountSunatWizard(models.TransientModel):
 		import sys
 		importlib.reload(sys)
 
-		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id)
+		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id,honorary_type_date=self.type_date)
 
 		worksheet = workbook.add_worksheet("Recibos")
 		worksheet.set_tab_color('blue')
