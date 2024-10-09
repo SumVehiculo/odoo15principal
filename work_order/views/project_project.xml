@@ -136,7 +136,7 @@
     <record id="project_project_view_tree_inherit_view_project" model="ir.ui.view">
         <field name="name">project.project.view.tree.inherit.view_project</field>
         <field name="model">project.project</field>
-        <field name="inherit_id" ref="	project.view_project"/>
+        <field name="inherit_id" ref="project.view_project"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="project_name" />
