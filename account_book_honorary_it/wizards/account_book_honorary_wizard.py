@@ -22,7 +22,7 @@ class AccountBookHonoraryWizard(models.TransientModel):
 	period_to_id = fields.Many2one('account.period',string='Periodo Final')
 	show_by = fields.Selection([('date','Fechas'),('period','Periodos')],string='Mostrar en base a',default='date')
 	type_show =  fields.Selection([('pantalla','Pantalla'),('excel','Excel')],string=u'Mostrar en',default='pantalla')
-	type_date =  fields.Selection([('date','Fecha Contable'),('invoice_date_due','Fecha de Vencimiento')],string=u'Mostrar en base a', required=True, default='date')
+	type_date =  fields.Selection([('date','Fecha Contable'),('invoice_date_due','Fecha de Vencimiento'),('payment_date','Fecha de Pago')],string=u'Mostrar en base a', required=True, default='date')
 	show_header = fields.Boolean(string='Mostrar cabecera',default=False)
 
 	@api.onchange('company_id')

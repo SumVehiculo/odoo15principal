@@ -160,8 +160,9 @@ class WorkOrderReportTotalWizard(models.TransientModel):
         
         projects = self.env['project.project'].search([
             ('id','in',list(total_projects)),
-            ('active','!=',False),
-            ('company_id','=',self.company_id.id)
+            ('active','=',True),
+            ('company_id','=',self.company_id.id),
+            ('is_internal_project', '=', False)
         ])
         
         
@@ -180,10 +181,11 @@ class WorkOrderReportTotalWizard(models.TransientModel):
             result={}
             result['project_id']=project.id
             result['client_id']=project.partner_id.id
-            result['create_date']=project.create_date
+            # ticket (#29433)
+            # result['create_date']=project.create_date
             result['start_date']=project.date_start
             result['end_date']=project.date
-            
+            result['tag_ids']=project.tag_ids.ids
             result['sale_invoices_total']=sale_data
             result['expenses_invoices_total']=expenses_data
             result['kardex_total']=kardex_data

@@ -217,7 +217,7 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 				CASE WHEN vst_output.account_id IS NOT NULL THEN vst_output.account_id 
 				WHEN vst_output.category_id IS NOT NULL AND vst_output.account_id IS NULL THEN NULL
 				ELSE (SELECT account_id FROM vst_property_stock_account_output WHERE company_id = {company} AND category_id IS NULL LIMIT 1) END
-				) ELSE ei12.account_id END as cta_debe,
+				) ELSE ipr.account_id::integer END as cta_debe,
 				CASE WHEN vst_valuation.account_id IS NOT NULL THEN vst_valuation.account_id 
 				ELSE (SELECT account_id FROM vst_property_stock_valuation_account WHERE company_id = {company} AND category_id IS NULL LIMIT 1)
 				END AS cta_haber,
@@ -234,6 +234,11 @@ class KardexEntryOutcomeWizard(models.TransientModel):
 				LEFT JOIN type_operation_kardex ei12 on ei12.code = (case when GKV.operation_type <> '00' then GKV.operation_type else (case when coalesce(GKV.origen,'') = '' then '{gv}'
 																											when ST.usage = 'internal' AND ST2.usage = 'production' then '{consumo_produccion}'
 																											when ST.usage = 'production' AND ST2.usage = 'internal' then '{ingreso_produccion}' end) end)
+				LEFT JOIN (select split_part(value_reference, ',', 2) as account_id,
+				 		          split_part(res_id, ',', 2) as id  
+							from ir_property 
+							where company_id = {company} 
+							and res_id like 'type.operation.kardex,%' and res_id is not null ) ipr ON ipr.id::integer = ei12.id
 				LEFT JOIN product_product PP ON PP.id = GKV.product_id
 				LEFT JOIN product_template PT ON PT.id = PP.product_tmpl_id
 				LEFT JOIN (SELECT category_id,account_id

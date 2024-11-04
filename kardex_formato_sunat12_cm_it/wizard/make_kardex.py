@@ -934,7 +934,7 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 					txt+= xserie + '|'
 					txt+= xnumero + '|'
 					txt+= '16|'
-					txt+= (productoobj.name_get()[0][1] or '') + '|'
+					txt+= (productoobj.name_get()[0][1] or '').replace('['+(productoobj.default_code or '')+']','') + '|'
 					txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
 					cantidadx =((linea[15] if linea[15] else 0) - (linea[11] if linea[11] else 0) +   (linea[13] if linea[13] else 0) )
 					montox = ((linea[16] if linea[16] else 0) - (linea[12] if linea[12] else 0) +   (linea[14] if linea[14] else 0) )					
@@ -997,11 +997,14 @@ class make_kardex_valorado_formato_sunat_v12(models.TransientModel):
 			#fecha_sf = str(move_obj.invoice_id.invoice_date if move_obj.invoice_id.id else ((move_obj.kardex_date - timedelta(hours=5) if move_obj.id and move_obj.kardex_date else str(linea[1]))  ) )[:10]
 			fecha_sf = str(( (move_obj.kardex_date - timedelta(hours=5) ) if move_obj.id and move_obj.kardex_date else str(linea[1]) ))[:10]
 			txt+= fecha_sf[8:10]+ "/" + fecha_sf[5:7] + "/" + fecha_sf[0:4] + '|'
-			txt+= xtipo + '|'
-			txt+= xserie + '|'
-			txt+= xnumero + '|'
+			if (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) in ('10','26','91','92'):
+				txt+= '00|0|0|'
+			else:
+				txt+= xtipo + '|'
+				txt+= xserie + '|'
+				txt+= xnumero + '|'
 			txt+= (str(move_obj.picking_id.type_operation_sunat_id.code) if move_obj.picking_id.type_operation_sunat_id.id else '' ) + '|'
-			txt+= (productoobj.name_get()[0][1] or '') + '|'
+			txt+= (productoobj.name_get()[0][1] or '').replace('['+(productoobj.default_code or '')+']','') + '|'
 			txt+= (productoobj.uom_id.code_sunat.code or '') + '|'
 			txt+=  "%.2f"%(linea[11])+ '|' #entrada
 			txt+= ("-" if linea[13]!= 0 else '') +( "%.2f"%(linea[13]) ) + '|' #salida

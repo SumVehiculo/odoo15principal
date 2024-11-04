@@ -12,6 +12,9 @@
 							<field name="fiscal_year_id" required="1"/>
 							<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
 						</group>
+						<group>
+							<field name="sire"/>
+						</group>
 					</group>
 					<footer>
 						<button string="Generar TXT" name="get_txt_diario" type="object" class="oe_highlight"/>
@@ -55,6 +58,9 @@
 								<field name="company_id"/>
 								<field name="fiscal_year_id" required="1"/>
 								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+							</group>
+							<group>
+								<field name="sire"/>
 							</group>
 						</group>
 						<footer>
@@ -208,6 +214,7 @@
 								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
 							</group>
 							<group>
+								<field name="type_date"/>
 							</group>
 						</group>
 						<footer>
@@ -232,6 +239,7 @@
 								<field name="period_id" required="1" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
 							</group>
 							<group>
+								<field name="type_date"/>
 							</group>
 						</group>
 						<footer>

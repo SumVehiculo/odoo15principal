@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_kardex_entry_outcome_book_tree_inherit" model="ir.ui.view">
+            <field name="name">kardex.entry.outcome.book.tree.inherit</field>
+            <field name="model">kardex.entry.outcome.book</field>
+            <field name="inherit_id" ref="kardex_account_journal_entry_advance.view_kardex_entry_outcome_book_tree"/>
+            <field name="arch" type="xml">
+                <field name="amount" position="after">
+                    <field name="work_order_id" optional="show"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

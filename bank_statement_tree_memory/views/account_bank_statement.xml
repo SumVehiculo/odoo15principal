@@ -6,6 +6,7 @@
         <field name="inherit_id" ref="account_treasury_it.view_bank_statement_surrender_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
+                <field name="employee_id" />
                 <field name="memory" />
             </xpath>
         </field>

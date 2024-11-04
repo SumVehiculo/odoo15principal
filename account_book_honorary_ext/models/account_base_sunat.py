@@ -8,8 +8,8 @@ import base64
 class AccountBaseSunat(models.Model):
 	_inherit = 'account.base.sunat'
 
-	def _get_sql(self,type,period_id,company_id):
-		sql, nomenclatura = super(AccountBaseSunat,self)._get_sql(type,period_id,company_id)
+	def _get_sql(self,type,period_id,company_id,x_sire=False,honorary_type_date='payment_date'):
+		sql, nomenclatura = super(AccountBaseSunat,self)._get_sql(type,period_id,company_id,x_sire=x_sire,honorary_type_date=honorary_type_date)
 		if type == 7:
 			#SQL Rec de Honorarios
 			sql = """select 
@@ -36,12 +36,13 @@ class AccountBaseSunat(models.Model):
 				tt.is_not_home,
 				tt.c_d_imp,
 				am.honorary_type
-				from get_recxhon_1_1('{date_start}','{date_end}',{company_id},'invoice_date_due') tt
+				from get_recxhon_1_1('{date_start}','{date_end}',{company_id},'{honorary_type_date}') tt
 				LEFT JOIN account_move am on am.id = tt.am_id
 			""".format(
 					date_start = period_id.date_start.strftime('%Y/%m/%d'),
 					date_end = period_id.date_end.strftime('%Y/%m/%d'),
-					company_id = company_id
+					company_id = company_id,
+					honorary_type_date = honorary_type_date
 				)
 
 		return sql, nomenclatura

@@ -226,7 +226,7 @@
                                         <td class="text-center"><span t-field="line.product_uom"/></td>
                                    
                                         <td class="text-center">
-                                            <span t-field="line.product_uom_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
+                                            <span t-field="line.product_qty" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/></td>
 
 
                                      

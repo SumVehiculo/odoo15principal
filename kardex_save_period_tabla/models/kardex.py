@@ -1122,7 +1122,7 @@ select
 						'cprom': 0,
 						'cprom_dolar': 0,
 					})
-			if round(line[2],6)<0:
+			if round(line[2],2)<0:
 				self.env['kardex.save.period'].create({
 					'save_bad_id':self.id,
 					'producto': line[0],

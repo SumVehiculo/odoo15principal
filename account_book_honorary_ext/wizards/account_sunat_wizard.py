@@ -38,7 +38,7 @@ class AccountSunatWizard(models.TransientModel):
 		ctxt = ""
 		separator = "|"
 
-		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id)
+		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id,honorary_type_date=self.type_date)
 
 		self.env.cr.execute(sql_ple)
 		dicc = self.env.cr.dictfetchall()
@@ -98,7 +98,7 @@ class AccountSunatWizard(models.TransientModel):
 		import sys
 		importlib.reload(sys)
 
-		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id)
+		sql_ple,nomenclatura = self.env['account.base.sunat']._get_sql(7,self.period_id,self.company_id.id,honorary_type_date=self.type_date)
 
 		worksheet = workbook.add_worksheet("Recibos")
 		worksheet.set_tab_color('blue')
