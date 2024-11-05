@@ -25,6 +25,7 @@ class AccountExchangeDocumentUsdRep(models.TransientModel):
 
 	def get_report(self):
 		self.env.cr.execute("""
+			DROP VIEW IF EXISTS account_exchange_document_book CASCADE;
 			CREATE OR REPLACE view account_exchange_document_book as ("""+self._get_sql_report(self.fiscal_year_id.name,self.period,self.company_id.id)+""")""")
 			
 		if self.type_show == 'pantalla':
@@ -62,8 +63,9 @@ class AccountExchangeDocumentUsdRep(models.TransientModel):
 		lineas = []
 		sum_credit = 0
 		sum_debit = 0
-		currency = self.env.ref('base.USD')
+		pen = self.env.ref('base.PEN')
 		for elemnt in obj:
+			acc_ob = self.env['account.account'].browse(elemnt[1])
 			vals = (0,0,{
 				'partner_id': elemnt[0],
 				'account_id': elemnt[1],
@@ -71,7 +73,7 @@ class AccountExchangeDocumentUsdRep(models.TransientModel):
 				'debit': 0 if elemnt[12] > 0 else abs(elemnt[12]),
 				'credit': 0 if elemnt[12] < 0 else abs(elemnt[12]),
 				'amount_currency': 0,
-				'currency_id': currency.id,
+				'currency_id': acc_ob.currency_id.id,
 				'type_document_id': elemnt[8],
 				'nro_comp': elemnt[3],
 				'tc':1,
@@ -88,7 +90,7 @@ class AccountExchangeDocumentUsdRep(models.TransientModel):
 					'debit': sum_credit,
 					'credit': 0,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'dif-'+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 					'tc':1,
@@ -103,7 +105,7 @@ class AccountExchangeDocumentUsdRep(models.TransientModel):
 					'debit': 0,
 					'credit': sum_debit,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'dif-'+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 					'tc':1,
@@ -201,6 +203,7 @@ class AccountExchangeDocumentUsdRep(models.TransientModel):
 				vst.diferencia,
 				aa2.code as cuenta_diferencia,
 				vst.account_id,
+				aa.currency_id,
 				vst.partner_id,
 				%d as period_id
 				FROM get_saldos_me_documento_final('%s','%s',%d) vst

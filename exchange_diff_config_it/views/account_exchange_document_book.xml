@@ -9,6 +9,7 @@
                 <tree string="Registro Diferencia ME Documento" create="false">
                     <field name="periodo"/>
                     <field name="cuenta"/>
+                    <field name="currency_id"/>
                     <field name="partner"/>
                     <field name="td_sunat"/>
                     <field name="nro_comprobante"/>

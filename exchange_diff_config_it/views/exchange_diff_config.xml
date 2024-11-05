@@ -19,12 +19,20 @@
 								<field name="line_ids">
 									<tree editable="bottom">
 										<field name="period_id" string="Periodo" required="1"/>
+										<field name="currency_id" string="Moneda" required="1"/>
 										<field name="compra" string="Tipo Compra" required="1"/>
 										<field name="venta" string="Tipo Venta" required="1"/>
-										<field name="move_id_global" readonly="1"/>
 										<field name="move_id_global" invisible="1"/>
-										<field name="move_id_document" readonly="1"/>
 										<field name="move_id_document" invisible="1"/>
+									</tree>
+								</field>
+							</page>
+							<page string="Asientos">
+								<field name="move_ids">
+									<tree editable="bottom">
+										<field name="period_id" string="Periodo" required="1"/>
+										<field name="move_id_global" readonly="1" force_save="1"/>
+										<field name="move_id_document" readonly="1" force_save="1"/>
 									</tree>
 								</field>
 							</page>

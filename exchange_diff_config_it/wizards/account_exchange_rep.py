@@ -41,18 +41,19 @@ class AccountExchangeRep(models.TransientModel):
 			return self.get_excel()
 
 	def do_invoice(self):
-		move_id_global = self.env['exchange.diff.config.line'].search([('period_id','=',self.period.id),('line_id.company_id','=',self.company_id.id)],limit=1).move_id_global
-		if move_id_global:
-			if move_id_global.state =='draft':
-				pass
-			else:
-				for mm in move_id_global.line_ids:
-					mm.remove_move_reconcile()
-				move_id_global.button_cancel()
-			move_id_global.line_ids.unlink()
-			move_id_global.name = "/"
-			move_id_global.unlink()
-
+		register = self.env['exchange.diff.config.line.move'].search([('period_id','=',self.period.id),('main_id.company_id','=',self.company_id.id)],limit=1)
+		if register:
+			if register.move_id_global:
+				if register.move_id_global.state != 'draft':
+					register.move_id_global.button_cancel()
+				register.move_id_global.line_ids.unlink()
+				register.move_id_global.name = "/"
+				register.move_id_global.unlink()
+			
+		else:
+			register = self.env['exchange.diff.config.line.move'].create({
+			'main_id': self.env['exchange.diff.config'].search([('company_id','=',self.company_id.id)],limit=1).id,
+			'period_id': self.period.id})
 
 		dt_perception = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).dt_perception
 		destination_journal = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).destination_journal
@@ -74,15 +75,16 @@ class AccountExchangeRep(models.TransientModel):
 		lineas = []
 		sum_credit = 0
 		sum_debit = 0
-		currency = self.env.ref('base.USD')
+		pen = self.env.ref('base.PEN')
 		for elemnt in obj:
+			acc_ob = self.env['account.account'].browse(elemnt[0])
 			vals = (0,0,{
 				'account_id': elemnt[0],
 				'name': 'DIFERENCIA DE CAMBIO '+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 				'debit': 0 if elemnt[8] > 0 else abs(elemnt[8]),
 				'credit': 0 if elemnt[8] < 0 else abs(elemnt[8]),
 				'amount_currency': 0,
-				'currency_id': currency.id,
+				'currency_id': acc_ob.currency_id.id,
 				'type_document_id': dt_perception.id,
 				'nro_comp': 'dif-'+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 				'tc':1,
@@ -99,7 +101,7 @@ class AccountExchangeRep(models.TransientModel):
 					'debit': sum_credit,
 					'credit': 0,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'dif-'+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 					'tc':1,
@@ -114,7 +116,7 @@ class AccountExchangeRep(models.TransientModel):
 					'debit': 0,
 					'credit': sum_debit,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'dif-'+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 					'tc':1,
@@ -132,19 +134,8 @@ class AccountExchangeRep(models.TransientModel):
 
 		if move_id.state == "draft":
 			move_id.post()
-
-		sql_update = """
-					UPDATE exchange_diff_config_line
-					SET move_id_global = %d
-					WHERE id = (
-						select e.id from exchange_diff_config_line e
-						left join exchange_diff_config edc on edc.id = e.line_id
-						where company_id = %d and period_id = %d
-						limit 1
-					)
-				""" % (move_id.id,self.company_id.id,self.period.id)
-
-		self.env.cr.execute(sql_update)
+			
+		register.move_id_global = move_id.id
 
 		return {
 			'view_mode': 'form',

@@ -25,6 +25,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 
 	def get_report(self):
 		self.env.cr.execute("""
+			DROP VIEW IF EXISTS account_exchange_document_book CASCADE;
 			CREATE OR REPLACE view account_exchange_document_book as ("""+self._get_sql_report(self.fiscal_year_id.name,self.period,self.company_id.id)+""")""")
 			
 		if self.type_show == 'pantalla':
@@ -41,17 +42,19 @@ class AccountExchangeDocumentRep(models.TransientModel):
 			return self.get_excel()
 
 	def do_invoice(self):
-		move_id_document = self.env['exchange.diff.config.line'].search([('period_id','=',self.period.id),('line_id.company_id','=',self.company_id.id)],limit=1).move_id_document
-		if move_id_document:
-			if move_id_document.state =='draft':
-				pass
-			else:
-				for mm in move_id_document.line_ids:
-					mm.remove_move_reconcile()
-				move_id_document.button_cancel()
-			move_id_document.line_ids.unlink()
-			move_id_document.name = "/"
-			move_id_document.unlink()
+		register = self.env['exchange.diff.config.line.move'].search([('period_id','=',self.period.id),('main_id.company_id','=',self.company_id.id)],limit=1)
+		if register:
+			if register.move_id_document:
+				if register.move_id_document.state != 'draft':
+					register.move_id_document.button_cancel()
+				register.move_id_document.line_ids.unlink()
+				register.move_id_document.name = "/"
+				register.move_id_document.unlink()
+			
+		else:
+			register = self.env['exchange.diff.config.line.move'].create({
+			'main_id': self.env['exchange.diff.config'].search([('company_id','=',self.company_id.id)],limit=1).id,
+			'period_id': self.period.id})
 
 		dt_perception = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).dt_perception
 		destination_journal = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).destination_journal
@@ -74,8 +77,9 @@ class AccountExchangeDocumentRep(models.TransientModel):
 		lineas = []
 		sum_credit = 0
 		sum_debit = 0
-		currency = self.env.ref('base.USD')
+		pen = self.env.ref('base.PEN')
 		for elemnt in obj:
+			acc_ob = self.env['account.account'].browse(elemnt[1])
 			vals = (0,0,{
 				'partner_id': elemnt[0],
 				'account_id': elemnt[1],
@@ -83,7 +87,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 				'debit': 0 if elemnt[12] > 0 else abs(elemnt[12]),
 				'credit': 0 if elemnt[12] < 0 else abs(elemnt[12]),
 				'amount_currency': 0,
-				'currency_id': currency.id,
+				'currency_id': acc_ob.currency_id.id,
 				'type_document_id': elemnt[8],
 				'nro_comp': elemnt[3],
 				'tc':1,
@@ -100,7 +104,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 					'debit': sum_credit,
 					'credit': 0,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'dif-'+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 					'tc':1,
@@ -115,7 +119,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 					'debit': 0,
 					'credit': sum_debit,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'dif-'+str('{:02d}'.format(self.period.date_start.month))+'-'+self.fiscal_year_id.name,
 					'tc':1,
@@ -134,18 +138,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 		if move_id.state == "draft":
 			move_id.post()
 
-		sql_update = """
-					UPDATE exchange_diff_config_line
-					SET move_id_document = %d
-					WHERE id = (
-						select e.id from exchange_diff_config_line e
-						left join exchange_diff_config edc on edc.id = e.line_id
-						where company_id = %d and period_id = %d
-						limit 1
-					)
-				""" % (move_id.id,self.company_id.id,self.period.id)
-
-		self.env.cr.execute(sql_update)
+		register.move_id_document = move_id.id
 
 		return {
 			'view_mode': 'form',
@@ -176,7 +169,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 		worksheet = workbook.add_worksheet("DIFERENCIA ME DOCUMENTO")
 		worksheet.set_tab_color('blue')
 
-		HEADERS = ['PERIODO','CUENTA','PARTNER','TD','NRO COMP.','DEBE','HABER','SALDO MN','SALDO ME','TC','SALDO ACT','DIFERENCIA','CTA DIFERENCIA']
+		HEADERS = ['PERIODO','CUENTA','PARTNER','TD','NRO COMP.','DEBE','HABER','SALDO MN','SALDO ME','MONEDA','TC','SALDO ACT','DIFERENCIA','CTA DIFERENCIA']
 		worksheet = ReportBase.get_headers(worksheet,HEADERS,0,0,formats['boldbord'])
 		x=1
 
@@ -190,13 +183,14 @@ class AccountExchangeDocumentRep(models.TransientModel):
 			worksheet.write(x,6,line.haber if line.haber else '0.00',formats['numberdos'])
 			worksheet.write(x,7,line.saldomn if line.saldomn else '0.00',formats['numberdos'])
 			worksheet.write(x,8,line.saldome if line.saldome else '0.00',formats['numberdos'])
-			worksheet.write(x,9,line.tc if line.tc else '0.0000',formats['numbercuatro'])
-			worksheet.write(x,10,line.saldo_act if line.saldo_act else '0.00',formats['numberdos'])
-			worksheet.write(x,11,line.diferencia if line.diferencia else '0.00',formats['numberdos'])
-			worksheet.write(x,12,line.cuenta_diferencia if line.cuenta_diferencia else '',formats['especial1'])
+			worksheet.write(x,9,line.currency_id.name if line.currency_id else '',formats['especial1'])
+			worksheet.write(x,10,line.tc if line.tc else '0.0000',formats['numbercuatro'])
+			worksheet.write(x,11,line.saldo_act if line.saldo_act else '0.00',formats['numberdos'])
+			worksheet.write(x,12,line.diferencia if line.diferencia else '0.00',formats['numberdos'])
+			worksheet.write(x,13,line.cuenta_diferencia if line.cuenta_diferencia else '',formats['especial1'])
 			x += 1
 
-		widths = [10,12,40,6,15,12,12,15,15,5,15,15,20]
+		widths = [10,12,40,6,15,12,12,15,15,20,5,15,15,20]
 		worksheet = ReportBase.resize_cells(worksheet,widths)
 		workbook.close()
 
@@ -226,6 +220,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 				vst.diferencia,
 				aa2.code as cuenta_diferencia,
 				vst.account_id,
+				aa.currency_id,
 				vst.partner_id,
 				%d as period_id
 				FROM get_saldos_me_documento_final('%s','%s',%d) vst
@@ -244,17 +239,19 @@ class AccountExchangeDocumentRep(models.TransientModel):
 		return sql
 
 	def do_invoice_resumen(self):
-		move_id_document = self.env['exchange.diff.config.line'].search([('period_id','=',self.period.id),('line_id.company_id','=',self.company_id.id)],limit=1).move_id_document
-		if move_id_document:
-			if move_id_document.state =='draft':
-				pass
-			else:
-				for mm in move_id_document.line_ids:
-					mm.remove_move_reconcile()
-				move_id_document.button_cancel()
-			move_id_document.line_ids.unlink()
-			move_id_document.name = "/"
-			move_id_document.unlink()
+		register = self.env['exchange.diff.config.line.move'].search([('period_id','=',self.period.id),('main_id.company_id','=',self.company_id.id)],limit=1)
+		if register:
+			if register.move_id_document:
+				if register.move_id_document.state != 'draft':
+					register.move_id_document.button_cancel()
+				register.move_id_document.line_ids.unlink()
+				register.move_id_document.name = "/"
+				register.move_id_document.unlink()
+			
+		else:
+			register = self.env['exchange.diff.config.line.move'].create({
+			'main_id': self.env['exchange.diff.config'].search([('company_id','=',self.company_id.id)],limit=1).id,
+			'period_id': self.period.id})
 
 		dt_perception = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).dt_perception
 		destination_journal = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).destination_journal
@@ -281,7 +278,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 		lineas = []
 		sum_credit = 0
 		sum_debit = 0
-		currency = self.env.ref('base.USD')
+		pen = self.env.ref('base.PEN')
 		for elemnt in obj:
 			sum_credit+= elemnt['diferencia'] if elemnt['diferencia'] > 0 else 0
 			sum_debit+= abs(elemnt['diferencia']) if elemnt['diferencia'] < 0 else 0
@@ -294,6 +291,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 		res =self.env.cr.dictfetchall()
 			
 		for lin in res:
+			acc_ob = self.env['account.account'].browse(lin['account_id'])
 			vals = (0,0,{
 				'partner_id': partner_adjustment_id.id,
 				'account_id': lin['account_id'],
@@ -301,7 +299,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 				'debit': abs(lin['diferencia']) if lin['diferencia'] < 0 else 0,
 				'credit': lin['diferencia'] if lin['diferencia'] > 0 else 0,
 				'amount_currency': 0,
-				'currency_id': currency.id,
+				'currency_id': acc_ob.currency_id.id,
 				'type_document_id': dt_perception.id,
 				'nro_comp': 'DIF'+str('{:02d}'.format(self.period.date_start.month))+self.fiscal_year_id.name,
 				'tc':1,
@@ -317,7 +315,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 					'debit': sum_credit,
 					'credit': 0,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'DIF'+str('{:02d}'.format(self.period.date_start.month))+self.fiscal_year_id.name,
 					'tc':1,
@@ -333,7 +331,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 					'debit': 0,
 					'credit': sum_debit,
 					'amount_currency': 0,
-					'currency_id': currency.id,
+					'currency_id': pen.id,
 					'type_document_id': dt_perception.id,
 					'nro_comp': 'DIF'+str('{:02d}'.format(self.period.date_start.month))+self.fiscal_year_id.name,
 					'tc':1,
@@ -352,18 +350,7 @@ class AccountExchangeDocumentRep(models.TransientModel):
 		if move_id.state == "draft":
 			move_id.post()
 
-		sql_update = """
-					UPDATE exchange_diff_config_line
-					SET move_id_document = %d
-					WHERE id = (
-						select e.id from exchange_diff_config_line e
-						left join exchange_diff_config edc on edc.id = e.line_id
-						where company_id = %d and period_id = %d
-						limit 1
-					)
-				""" % (move_id.id,self.company_id.id,self.period.id)
-
-		self.env.cr.execute(sql_update)
+		register.move_id_document = move_id.id
 
 		return {
 			'view_mode': 'form',

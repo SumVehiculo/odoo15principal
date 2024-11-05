@@ -20,5 +20,6 @@ class AccountExchangeDocumentBook(models.Model):
 	diferencia = fields.Float(string='Diferencia',digits=(12,2))
 	cuenta_diferencia = fields.Char(string='Cuenta Diferencia')
 	account_id = fields.Many2one('account.account',string='Cuenta ID')
+	currency_id = fields.Many2one('res.currency',string='Moneda')
 	partner_id = fields.Many2one('res.partner',string='Partner ID')
 	period_id = fields.Many2one('account.period',string='Periodo ID')
