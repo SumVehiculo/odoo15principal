@@ -17,12 +17,6 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_account_invoice_filter"/>
         <field name="arch" type="xml">
-            <xpath expr="//filter[@name='activities_overdue']" position="before">
-                <separator/>
-                    <filter name="sale_date_order" string="Fecha Pedido" date="sale_date_order"/>
-                <separator/>
-            </xpath>
-
             <xpath expr="//filter[@name='duedate']" position="after">
                 <separator/>
                     <filter string="Pedido Nro" name="sale_labels" context="{'group_by': 'sale_labels'}"/>
