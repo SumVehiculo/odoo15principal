@@ -42,4 +42,11 @@
         <field name="code">action=records.get_report()</field>
     </record>
 
+    <menuitem
+        id="work_order_report_total_wizard_menu"
+        name="Reporte General OT"
+        action="general_work_order_report_total_action_server"
+        parent="project.menu_project_report"
+        sequence="12"/>
+
 </odoo>
