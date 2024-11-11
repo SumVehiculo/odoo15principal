@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 class GeneralWorkOrderReportTotal(models.Model):
     _name="general.work.order.report.total"
     _description="Reporte General de Orden de Trabajo" 
-    _auto=False        
 
     project_id = fields.Many2one('project.project', string='OT')
     client_id = fields.Many2one('res.partner', string='Cliente OT')
