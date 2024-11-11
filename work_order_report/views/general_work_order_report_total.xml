@@ -27,9 +27,9 @@
             <search>
                 <field name="project_id" />
                 <field name="client_id" />
-                <group expand="0" string="Agrupar por">
+                <!-- <group expand="0" string="Agrupar por">
                     <filter string="Fecha" name="group_by_date" context="{'group_by': 'create_date'}"/>
-                </group>
+                </group> -->
             </search>
         </field>
     </record>
