@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="account_move_view_form_inherit_add_extra_fields" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit.add_extra_fields</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_pe_dte_status']" position="after">
+                <field name="sale_labels" optional="show"/>
+                <field name="sale_date_order" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
