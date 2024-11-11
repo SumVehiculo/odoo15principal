@@ -10,9 +10,9 @@ class AccountMove(models.Model):
     @api.depends('invoice_line_ids')
     def _compute_sale_labels(self):
         for invoice in self:            
-            invoice.sale_labels = '/n'.join([line.name for line in invoice.invoice_line_ids.sale_line_ids])
+            invoice.sale_labels = '/n'.join([line.name for line in invoice.invoice_line_ids.sale_line_ids.order_id])
 
     @api.depends('invoice_line_ids')
     def _compute_sale_date_order(self):
         for invoice in self:
-            invoice.sale_date_order = '/n'.join([line.date_order.strftime('%d/%m/%Y') for line in invoice.invoice_line_ids.sale_line_ids])
+            invoice.sale_date_order = '/n'.join([line.date_order.strftime('%d/%m/%Y') for line in invoice.invoice_line_ids.sale_line_ids.order_id])
