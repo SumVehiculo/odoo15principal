@@ -11,4 +11,18 @@
             </xpath>
         </field>
     </record>
+
+    <record id="account_move_view_search_inherit_add_extra_fields" model="ir.ui.view">
+        <field name="name">account.move.view.search.inherit.add_extra_fields</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='duedate']" position="after">
+                <separator/>
+                    <filter string="Pedido Nro" name="sale_labels" context="{'group_by': 'sale_labels'}"/>
+                    <filter string="Fecha Pedido" name="sale_date_order" context="{'group_by': 'sale_date_order'}"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
