@@ -5,9 +5,9 @@ class AccountMove(models.Model):
     _inherit="account.move"
 
     sale_labels = fields.Text('Pedido Nro',compute="_compute_sale_labels", store=True)
-    sale_date_order = fields.Datetime('Fecha Pedido',compute="_compute_sale_date_order", store=True)
+    sale_date_order = fields.Text('Fecha Pedido',compute="_compute_sale_date_order", store=True)
 
-    field_name = fields.Datetime('field_name')
+
 
     @api.depends('invoice_line_ids')
     def _compute_sale_labels(self):
