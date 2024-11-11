@@ -4,8 +4,8 @@ from odoo.exceptions import UserError
 class AccountMove(models.Model):
     _inherit="account.move"
 
-    sale_labels = fields.Text('Pedido Nro',compute="_compute_sale_labels")
-    sale_date_order = fields.Text('Fecha Pedido',compute="_compute_sale_date_order")
+    sale_labels = fields.Text('Pedido Nro',compute="_compute_sale_labels", store=True)
+    sale_date_order = fields.Text('Fecha Pedido',compute="_compute_sale_date_order", store=True)
 
     @api.depends('invoice_line_ids')
     def _compute_sale_labels(self):
