@@ -1,6 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
-
+from datetime import datetime, timedelta
 
 class WorkOrderReportTotalWizard(models.TransientModel):
     _name="work.order.report.total.wizard"
@@ -11,8 +11,8 @@ class WorkOrderReportTotalWizard(models.TransientModel):
         string='Compañia',
         default= lambda self: self.env.company.id
     )
-    start_date= fields.Date('Desde', required=True)
-    end_date = fields.Date('Hasta', required=True)
+    # start_date= fields.Date('Desde', required=True)
+    # end_date = fields.Date('Hasta', required=True)
     
     def get_report(self):
         self.env.cr.execute("DELETE FROM general_work_order_report_total")
@@ -28,8 +28,8 @@ class WorkOrderReportTotalWizard(models.TransientModel):
                 aml.work_order_id AS work_order_id
             FROM 
                 get_diariog(
-                    '{self.start_date.strftime('%Y/%m/%d')}',
-                    '{self.end_date.strftime('%Y/%m/%d')}',
+                    '2020/01/01',
+                    '{(datetime.now() - timedelta(hours=5)).strftime('%Y/%m/%d')}',
                     {self.env.company.id}
                 ) vst1
                 LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
@@ -58,8 +58,8 @@ class WorkOrderReportTotalWizard(models.TransientModel):
                 aml.work_order_id AS work_order_id
             FROM 
                 get_diariog(
-                    '{self.start_date.strftime('%Y/%m/%d')}',
-                    '{self.end_date.strftime('%Y/%m/%d')}',
+                    '2020/01/01',
+                    '{(datetime.now() - timedelta(hours=5)).strftime('%Y/%m/%d')}',
                     {self.env.company.id}
                 ) vst1
                 LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
@@ -103,8 +103,8 @@ class WorkOrderReportTotalWizard(models.TransientModel):
                     (
                         fecha_num((vst_kardex_sunat.fecha - interval '5' HOUR)::DATE) 
                         BETWEEN 
-                            {self.start_date.strftime('%Y%m%d')} AND 
-                            {self.end_date.strftime('%Y%m%d')}
+                            '2020/01/01' AND
+                            '{(datetime.now() - timedelta(hours=5)).strftime('%Y/%m/%d')}'
                     ) AND 
                     vst_kardex_sunat.company_id = {self.company_id.id} AND
                     sm.work_order_id  IS NOT NULL AND
@@ -131,8 +131,8 @@ class WorkOrderReportTotalWizard(models.TransientModel):
             (
                 aal.date 
                 BETWEEN 
-                    '{self.start_date.strftime('%Y/%m/%d')}' AND 
-                    '{self.end_date.strftime('%Y/%m/%d')}'
+                    '2020/01/01' AND
+                    '{(datetime.now() - timedelta(hours=5)).strftime('%Y/%m/%d')}'
             )
         GROUP BY
             aal.project_id
@@ -148,18 +148,7 @@ class WorkOrderReportTotalWizard(models.TransientModel):
         kardex = self.get_kardex_totals()
         hourly_cost =self.get_hourly_cost_totals()
         
-        sale_projects=set([s['work_order_id'] for s in sales])
-        expenses_projects=set([e['work_order_id'] for e in expenses])
-        kardex_projects=set([k['work_order_id'] for k in kardex])
-        hourly_cost_projects=set([h['work_order_id'] for h in hourly_cost])
-        total_projects =  sale_projects.union(
-            expenses_projects,
-            kardex_projects,
-            hourly_cost_projects
-        )
-        
         projects = self.env['project.project'].search([
-            ('id','in',list(total_projects)),
             ('active','=',True),
             ('company_id','=',self.company_id.id),
             ('is_internal_project', '=', False)
@@ -181,8 +170,6 @@ class WorkOrderReportTotalWizard(models.TransientModel):
             result={}
             result['project_id']=project.id
             result['client_id']=project.partner_id.id
-            # ticket (#29433)
-            # result['create_date']=project.create_date
             result['start_date']=project.date_start
             result['end_date']=project.date
             result['tag_ids']=project.tag_ids.ids

@@ -15,7 +15,7 @@
         'wizards/work_order_report_total_wizard.xml',
         'views/account_analytic_line.xml',
         'views/general_work_order_report.xml',
-        'views/general_work_order_report_total.xml'
+        # 'views/general_work_order_report_total.xml'
     ],
     'auto_install': False,
     'application': False
