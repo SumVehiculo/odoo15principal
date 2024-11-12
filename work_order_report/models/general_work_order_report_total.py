@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 class GeneralWorkOrderReportTotal(models.Model):
     _name="general.work.order.report.total"
     _description="Reporte General de Orden de Trabajo" 
+    _auto=False
 
     project_id = fields.Many2one('project.project', string='OT')
     client_id = fields.Many2one('res.partner', string='Cliente OT')
@@ -18,22 +19,27 @@ class GeneralWorkOrderReportTotal(models.Model):
     net_by_sale_total = fields.Float('% Neto/Ventas')
     
     def get_report(self):
-        self.env.cr.execute("DELETE FROM general_work_order_report_total")
-        self.env.cr.execute("ALTER SEQUENCE public.general_work_order_report_total_id_seq RESTART WITH 1")
-        self.generate_data()
+        self.env.cr.execute(f"""
+            CREATE OR REPLACE view sale_commercial_report as (
+				SELECT row_number() OVER () AS id, data.* FROM(
+                    {self.get_with_sql()}
+                    {self.get_select_sql()}
+                    {self.get_from_sql()}
+                    {self.get_where_sql()}
+                ) AS data
+            )
+        """)
         return {
-            'name': 'Reporte General OT',
-			'type': 'ir.actions.act_window',
-			'res_model': 'general.work.order.report.total',
-			'view_mode': 'tree',
-			'view_type': 'form',
-			'views': [(self.env.ref('work_oredr_report.general_work_order_report_total_view_tree').id, 'tree')],
-			'target': 'current',
+            'name': 'Reporte Comercial',
+            'type': 'ir.actions.act_window',
+            'res_model': 'general.work.order.report.total',
+            'view_mode': 'tree',
+            'view_type': 'form',
         }
         
-        
-    def get_sale_invoice_totals(self):
-        query= f"""
+    
+    def sql_sale_totals(self):
+        return f"""
             SELECT 
                 SUM(vst1.balance) * - 1  AS sale_invoice_total,
                 aml.work_order_id AS work_order_id
@@ -57,13 +63,10 @@ class GeneralWorkOrderReportTotal(models.Model):
                 am.state = 'posted'
             GROUP BY
                 aml.work_order_id
-            ;
         """
-        self.env.cr.execute(query)
-        return self.env.cr.dictfetchall()
     
-    def get_expenses_totals(self):
-        query= f"""
+    def sql_purchase_totals(self):
+        return f"""
             SELECT 
                 SUM(vst1.balance) * - 1  AS expenses_total,
                 aml.work_order_id AS work_order_id
@@ -93,13 +96,10 @@ class GeneralWorkOrderReportTotal(models.Model):
                 am.state = 'posted'
             GROUP BY
                 aml.work_order_id
-            ;
         """
-        self.env.cr.execute(query)
-        return self.env.cr.dictfetchall()
 
     def get_kardex_totals(self):
-        query= f"""
+        return f"""
             SELECT 
                 SUM((COALESCE(total.ingreso, 0) - COALESCE(total.salida, 0)) * COALESCE(total.unit_price, 0)) AS kardex_total,
                 total.work_order_id
@@ -123,13 +123,10 @@ class GeneralWorkOrderReportTotal(models.Model):
                 )Total	
             GROUP BY
                 total.work_order_id
-            ;
         """
-        self.env.cr.execute(query)
-        return self.env.cr.dictfetchall()
         
     def get_hourly_cost_totals(self):
-        query=f"""
+        return f"""
         SELECT
             SUM(aal.total_cost_per_hour) * -1 AS total_cost_per_hour,
             aal.project_id as work_order_id
@@ -147,56 +144,59 @@ class GeneralWorkOrderReportTotal(models.Model):
             )
         GROUP BY
             aal.project_id
-        ;
-        
         """
-        self.env.cr.execute(query)
-        return self.env.cr.dictfetchall()
     
-    def generate_data(self):
-        sales = self.get_sale_invoice_totals()
-        expenses = self.get_expenses_totals()
-        kardex = self.get_kardex_totals()
-        hourly_cost =self.get_hourly_cost_totals()
-        
-        projects = self.env['project.project'].search([
-            ('active','=',True),
-            ('company_id','=',self.company_id.id),
-            ('is_internal_project', '=', False)
-        ])
-        
-        
-        for project in projects:
-            sale_data=next(filter(lambda s: s['work_order_id'] == project.id,sales),0) 
-            expenses_data=next(filter(lambda e: e['work_order_id'] == project.id,expenses),0) 
-            kardex_data=next(filter(lambda k: k['work_order_id'] == project.id,kardex),0) 
-            hourly_cost_data=next(filter(lambda h: h['work_order_id'] == project.id,hourly_cost),0) 
-            
-            sale_data = sale_data['sale_invoice_total'] if sale_data else 0
-            expenses_data = expenses_data['expenses_total'] if expenses_data else 0
-            kardex_data = kardex_data['kardex_total'] if kardex_data else 0
-            hourly_cost_data = hourly_cost_data['total_cost_per_hour'] if hourly_cost_data else 0
-            
-            
-            result={}
-            result['project_id']=project.id
-            result['client_id']=project.partner_id.id
-            result['start_date']=project.date_start
-            result['end_date']=project.date
-            result['tag_ids']=project.tag_ids.ids
-            result['sale_invoices_total']=sale_data
-            result['expenses_invoices_total']=expenses_data
-            result['kardex_total']=kardex_data
-            result['hourly_cost_total']=hourly_cost_data
-            
-            net_total=sum([
-                sale_data,
-                expenses_data,
-                kardex_data,
-                hourly_cost_data
-            ])
-            result['net_total']=net_total
-            result['net_by_sale_total']=round((abs(net_total)/(sale_data if sale_data else 1))*100,2)
-            self.env['general.work.order.report.total'].create(result)
+    def get_with_sql(self):
+        return f"""
+            WITH 
+                invoice_totals AS({self.sql_sale_totals()}),
+                expenses_totals AS({self.sql_purchase_totals()}),
+                kardex_totals AS({self.get_kardex_totals()}), 
+                hourly_cost_totals AS ({self.get_hourly_cost_totals()})
+        """
     
+    def get_select_sql(self):
+        return """
+            SELECT
+                pp.id AS project_id,
+                pp.partner_id AS client_id,
+                pp.date_start AS start_date,
+                pp.date AS end_date,
+                COALESCE(it.total,0) AS sale_invoices_total,
+                COALESCE(et.total,0) AS expenses_invoices_total,
+                COALESCE(kt.total,0) AS kardex_total,
+                COALESCE(hct.total,0) AS hourly_cost_total,
+                (
+                    COALESCE(it.total,0) +
+                    COALESCE(et.total,0) +
+                    COALESCE(kt.total,0) +
+                    COALESCE(hct.total,0) 
+                ) AS net_total,
+                ROUND(
+                    CAST(
+                        (ABS(
+                            COALESCE(it.total, 0) +
+                            COALESCE(et.total, 0) +
+                            COALESCE(kt.total, 0) +
+                            COALESCE(hct.total, 0)
+                        ) / NULLIF(it.total, 0)) * 100 AS numeric
+                    ), 2
+                ) AS net_by_sale_total
+        """
+
+    def  get_from_sql(self):
+        return """
+        FROM
+            project_project AS pp 
+            LEFT JOIN invoice_totals AS it ON it.work_order_id = pp.id
+            LEFT JOIN expenses_totals AS et ON et.work_order_id = pp.id
+            LEFT JOIN kardex_totals AS kt ON kt.work_order_id = pp.id
+            LEFT JOIN hourly_cost_totals AS hct ON hct.work_order_id = pp.id
+        """
     
+    def get_where_sql(self):
+        return """
+        WHERE
+            pp.active AND
+            pp.company_id = 1
+        """
