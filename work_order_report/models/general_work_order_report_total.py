@@ -20,7 +20,7 @@ class GeneralWorkOrderReportTotal(models.Model):
     
     def get_report(self):
         self.env.cr.execute(f"""
-            CREATE OR REPLACE view sale_commercial_report as (
+            CREATE OR REPLACE view general_work_order_report_total as (
 				SELECT row_number() OVER () AS id, data.* FROM(
                     {self.get_sql()}
                 ) AS data
