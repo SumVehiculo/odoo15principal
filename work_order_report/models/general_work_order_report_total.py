@@ -118,7 +118,7 @@ class GeneralWorkOrderReportTotal(models.Model):
                     LEFT JOIN stock_move sm ON sm.id = vst_kardex_sunat.stock_moveid
                 WHERE 
                     (
-                        fecha_num((vst_kardex_sunat.fecha - interval '5' HOUR)::DATE) 
+                        (vst_kardex_sunat.fecha - interval '5' HOUR)::DATE
                         BETWEEN 
                             '2020/01/01' AND
                             '{(datetime.now() - timedelta(hours=5)).strftime('%Y/%m/%d')}'
