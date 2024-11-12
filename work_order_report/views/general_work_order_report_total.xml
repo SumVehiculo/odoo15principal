@@ -7,7 +7,7 @@
             <tree edit="false" create="false" delete="false">
                 <field name="project_id" />
                 <field name="client_id" />
-                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="tag_names"/>
                 <field name="start_date" />
                 <field name="end_date" />
                 <field name="sale_invoices_total" sum="sale_invoices_total"/>
