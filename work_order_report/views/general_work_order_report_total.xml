@@ -27,9 +27,6 @@
             <search>
                 <field name="project_id" />
                 <field name="client_id" />
-                <!-- <group expand="0" string="Agrupar por">
-                    <filter string="Fecha" name="group_by_date" context="{'group_by': 'create_date'}"/>
-                </group> -->
             </search>
         </field>
     </record>
@@ -39,7 +36,7 @@
         <field name="model_id" ref="model_general_work_order_report_total"/>
         <field name="binding_model_id" ref="model_general_work_order_report_total"/>
         <field name="state">code</field>
-        <field name="code">action=records.get_report()</field>
+        <field name="code">action=model.get_report()</field>
     </record>
 
     <menuitem
