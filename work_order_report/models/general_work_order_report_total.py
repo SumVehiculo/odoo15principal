@@ -123,7 +123,7 @@ class GeneralWorkOrderReportTotal(models.Model):
                             '2020/01/01' AND
                             '{(datetime.now() - timedelta(hours=5)).strftime('%Y/%m/%d')}'
                     ) AND 
-                    vst_kardex_sunat.company_id = {self.company_id.id} AND
+                    vst_kardex_sunat.company_id = {self.env.company.id} AND
                     sm.work_order_id  IS NOT NULL AND
                     vst_kardex_sunat.operation_type IN ('01','10','20','91','92')
                 )Total	
