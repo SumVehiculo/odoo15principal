@@ -7,9 +7,7 @@
             <tree edit="false" create="false" delete="false">
                 <field name="project_id" />
                 <field name="client_id" />
-                <!-- # ticket (#29433) -->
-                <!-- <field name="create_date" /> -->
-                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="tag_names"/>
                 <field name="start_date" />
                 <field name="end_date" />
                 <field name="sale_invoices_total" sum="sale_invoices_total"/>
@@ -29,16 +27,23 @@
             <search>
                 <field name="project_id" />
                 <field name="client_id" />
-                <group expand="0" string="Agrupar por">
-                    <filter string="Fecha" name="group_by_date" context="{'group_by': 'create_date'}"/>
-                </group>
             </search>
         </field>
     </record>
 
-    <record id="general_work_order_report_total_action" model="ir.actions.act_window">
+    <record id="general_work_order_report_total_action_server" model="ir.actions.server">
         <field name="name">Reporte General OT</field>
-        <field name="res_model">general.work.order.report.total</field>
-        <field name="view_mode">tree</field>
+        <field name="model_id" ref="model_general_work_order_report_total"/>
+        <field name="binding_model_id" ref="model_general_work_order_report_total"/>
+        <field name="state">code</field>
+        <field name="code">action=model.get_report()</field>
     </record>
+
+    <menuitem
+        id="work_order_report_total_wizard_menu"
+        name="Reporte General OT"
+        action="general_work_order_report_total_action_server"
+        parent="project.menu_project_report"
+        sequence="12"/>
+
 </odoo>
