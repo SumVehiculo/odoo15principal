@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 from datetime import datetime, timedelta
 
 class GeneralWorkOrderReportTotal(models.Model):
@@ -19,6 +20,7 @@ class GeneralWorkOrderReportTotal(models.Model):
     net_by_sale_total = fields.Float('% Neto/Ventas')
     
     def get_report(self):
+
         self.env.cr.execute(f"""
             CREATE OR REPLACE view general_work_order_report_total as (
 				SELECT row_number() OVER () AS id, data.* FROM(
@@ -142,6 +144,7 @@ class GeneralWorkOrderReportTotal(models.Model):
             LEFT JOIN hr_employee AS he ON he.id = aal.employee_id
         WHERE
             aal.project_id IS NOT NULL AND
+            aal.company_id = {self.env.company.id} AND
             (
                 aal.date 
                 BETWEEN 
@@ -153,13 +156,15 @@ class GeneralWorkOrderReportTotal(models.Model):
         """
 
     def get_project_tag(self):
-        return """
+        return f"""
         SELECT 
             string_agg(pt.name, ', ') AS tags,
             pp_pt_rel.project_project_id AS project_id
         FROM 
             project_project_project_tags_rel AS pp_pt_rel
             LEFT JOIN project_tags AS pt ON pt.id = pp_pt_rel.project_tags_id
+        WHERE
+            pt.company_id = {self.env.company.id}
         GROUP BY
             pp_pt_rel.project_project_id
         """
@@ -217,8 +222,8 @@ class GeneralWorkOrderReportTotal(models.Model):
         """
     
     def get_where_sql(self):
-        return """
+        return f"""
         WHERE
             pp.active AND
-            pp.company_id = 1
+            pp.company_id = {self.env.company.id}
         """
