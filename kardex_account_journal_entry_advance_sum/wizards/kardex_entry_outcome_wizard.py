@@ -3,6 +3,7 @@ import logging
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
+import base64
 
 _logger = logging.getLogger(__name__)
 
@@ -10,7 +11,70 @@ _logger = logging.getLogger(__name__)
 class KardexEntryOutcomeWizard(models.TransientModel):
 	_inherit = 'kardex.entry.outcome.wizard'
 
+	def get_excel(self):
+		import io
+		from xlsxwriter.workbook import Workbook
+		ReportBase = self.env['report.base']
 
+		direccion = self.env['account.main.parameter'].search([('company_id','=',self.company_id.id)],limit=1).dir_create_file
+
+		if not direccion:
+			raise UserError(u'No existe un Directorio Exportadores configurado en Parametros Principales de Contabilidad para su Compañía')
+
+		namefile = 'Detalle_ingreso.xlsx'
+		
+		workbook = Workbook(direccion + namefile)
+		workbook, formats = ReportBase.get_formats(workbook)
+
+		import importlib
+		import sys
+		importlib.reload(sys)
+
+		##########DETALLE INGRESO############
+		worksheet = workbook.add_worksheet("DETALLE INGRESO")
+
+		worksheet.set_tab_color('blue')
+
+		HEADERS = [u'FECHA','TIPO','SERIE',u'NÚMERO',u'DOC. ALMACÉN',u'RUC',u'EMPRESA',u'T. OP.',u'PRODUCTO',u'CODIGO PRODUCTO',u'UNIDAD','CANTIDAD','COSTO',
+		'CTA DEBE','CTA HABER',u'UBICACIÓN ORIGEN',u'UBICACIÓN DESTINO',u'ALMACÉN',u'CTA ANALÍTICA','ETIQUETA ANALITICA','OT']
+
+		worksheet = ReportBase.get_headers(worksheet,HEADERS,0,0,formats['boldbord'])
+		x=1
+
+		dic = self.env['kardex.entry.outcome.book'].search([])
+
+		for line in dic:
+			worksheet.write(x,0,line.fecha if line.fecha else '',formats['dateformat'])
+			worksheet.write(x,1,line.tipo if line.tipo else '',formats['especial1'])
+			worksheet.write(x,2,line.serie if line.serie else '',formats['especial1'])
+			worksheet.write(x,3,line.numero if line.numero else '',formats['especial1'])
+			worksheet.write(x,4,line.doc_almacen if line.doc_almacen else '',formats['especial1'])
+			worksheet.write(x,5,line.ruc if line.ruc else '',formats['especial1'])
+			worksheet.write(x,6,line.empresa if line.empresa else '',formats['especial1'])
+			worksheet.write(x,7,line.tipo_op if line.tipo_op else '',formats['especial1'])
+			worksheet.write(x,8,line.producto if line.producto else '',formats['especial1'])
+			worksheet.write(x,9,line.default_code if line.default_code else '',formats['especial1'])
+			worksheet.write(x,10,line.unidad if line.unidad else '',formats['especial1'])
+			worksheet.write(x,11,line.qty if line.qty else 0,formats['numberdos'])
+			worksheet.write(x,12,line.amount if line.amount else '0.00',formats['numberocho'])
+			worksheet.write(x,13,line.cta_debe.code if line.cta_debe else '',formats['especial1'])
+			worksheet.write(x,14,line.cta_haber.code if line.cta_haber else '',formats['especial1'])
+			worksheet.write(x,15,line.origen if line.origen else '',formats['especial1'])
+			worksheet.write(x,16,line.destino if line.destino else '',formats['especial1'])
+			worksheet.write(x,17,line.almacen if line.almacen else '',formats['especial1'])
+			worksheet.write(x,18,line.analytic_account_id.name if line.analytic_account_id else '',formats['especial1'])
+			worksheet.write(x,19,line.analytic_tag_id.name if line.analytic_tag_id else '',formats['especial1'])
+			worksheet.write(x,20,line.work_order_id.name if line.work_order_id else '',formats['especial1'])
+			x += 1
+
+		widths = [10,6,7,9,16,12,48,8,41,20,9,11,14,15,15,33,33,11,22,20,15]
+
+		worksheet = ReportBase.resize_cells(worksheet,widths)
+		workbook.close()
+
+		f = open(direccion + namefile, 'rb')
+		return self.env['popup.it'].get_file(u'Detalle Salidas.xlsx',base64.encodestring(b''.join(f.readlines())))
+	
 	def get_report(self):		
 		self.env.cr.execute("""DELETE FROM kardex_entry_outcome_book""")
 		self.env.cr.execute("""
