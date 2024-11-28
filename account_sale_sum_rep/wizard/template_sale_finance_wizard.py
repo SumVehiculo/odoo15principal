@@ -164,7 +164,7 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 			AND aml.account_id is not null
 			AND am.company_id = %d
 			AND (am.date between '%s' and '%s') 
-			GROUP BY aa.code, rc.name, rp.vat, ec1.code, aml.nro_comp, am.invoice_date, so.date_order, ana.name, aat_rel.analytic_tags, aml.tc
+			GROUP BY aa.code, rc.name, rp.vat, ec1.code, aml.nro_comp, am.date, so.date_order, ana.name, aat_rel.analytic_tags, aml.tc
 			"""%(
 				self.company_id.id,
 				self.date_start.strftime('%Y/%m/%d'),
