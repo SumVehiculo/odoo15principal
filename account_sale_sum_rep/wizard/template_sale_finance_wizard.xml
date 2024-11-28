@@ -33,12 +33,17 @@
 
     <!-- Action template.sale.finance.wizard -->
     <record id="action_template_sale_finance_wizard" model="ir.actions.act_window">
-        <field name="name">Template Sale Finance Wizard</field>
+        <field name="name">Plantilla Ventas Financiadas</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">template.sale.finance.wizard</field>
         <field name="view_mode">form</field>
-        <field name="binding_model_id" ref="addon.model_model_name"/>
         <field name="target">new</field>
     </record>
+
+    <menuitem 
+        id="menu_action_template_sale_finance_wizard" 
+        parent="account_balance_doc_rep_it.menu_account_account_report" 
+        action="action_template_sale_finance_wizard" 
+        sequence="99"/>
 
 </odoo>
