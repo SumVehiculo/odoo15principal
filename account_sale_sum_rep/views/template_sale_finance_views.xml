@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View template.sale.finance View Tree -->
+    <record id="view_template_sale_finance_tree" model="ir.ui.view">
+        <field name="name">view.template.sale.finance.tree</field>
+        <field name="model">template.sale.finance</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0">
+                <field name="account"/>
+                <field name="debit" sum="debit"/>
+                <field name="credit" sum="credit"/>
+                <field name="currency"/>
+                <field name="amount_currency" sum="amount_currency"/>
+                <field name="tc"/>
+                <field name="partner"/>
+                <field name="td"/>
+                <field name="nro_comp"/>
+                <field name="date"/>
+                <field name="sale_date"/>
+                <field name="cta_analytic"/>
+                <field name="analytic_tags"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

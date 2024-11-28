@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View template.sale.finance.wizard form -->
+    <record id="view_template_sale_finance_wizard_form" model="ir.ui.view">
+        <field name="name">view.template.sale.finance.wizard.form</field>
+        <field name="model">template.sale.finance.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Template Sale Finance Wizard">
+                <div class="oe_title">
+                    <label for="name"/>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </group>
+                    <group>
+                        <field name="type_show"/>
+                        <field name="company_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" type="object" string="Mostrar" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action template.sale.finance.wizard -->
+    <record id="action_template_sale_finance_wizard" model="ir.actions.act_window">
+        <field name="name">Template Sale Finance Wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">template.sale.finance.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="addon.model_model_name"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
