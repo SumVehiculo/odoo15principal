@@ -101,9 +101,9 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 		x+=1
 		for line in res:
 			worksheet.write(x,0,line['account'] if line['account'] else '',formats['especial1'])
-			worksheet.write(x,1,line['debit'] if line['debit'] else '',formats['numberdos'])
-			worksheet.write(x,2,line['credit'] if line['credit'] else '',formats['numberdos'])
-			worksheet.write(x,3,line['currency'] if line['currency'] else '',formats['especial1'])
+			worksheet.write(x,1,line['debit'] if line['debit'] else 0.00,formats['numberdos'])
+			worksheet.write(x,2,line['credit'] if line['credit'] else 0.00,formats['numberdos'])
+			worksheet.write(x,3,line['currency'] if line['currency'] else 0.00,formats['especial1'])
 			worksheet.write(x,4,line['amount_currency'] if line['amount_currency'] else '',formats['numberdos'])
 			worksheet.write(x,5,line['tc'] if line['tc'] else '',formats['numberdos'])
 			worksheet.write(x,6,line['partner'] if line['partner'] else '',formats['especial1'])
