@@ -110,7 +110,7 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 			worksheet.write(x,7,line['td'] if line['td'] else '',formats['especial1'])
 			worksheet.write(x,8,line['nro_comp'] if line['nro_comp'] else '',formats['especial1'])
 			worksheet.write(x,9,line['date'] if line['date'] else '',formats['dateformat'])
-			worksheet.write(x,10,line['date_sale'] if line['date_sale'] else '',formats['dateformat'])
+			worksheet.write(x,10,line['sale_date'] if line['sale_date'] else '',formats['dateformat'])
 			worksheet.write(x,11,line['cta_analytic'] if line['cta_analytic'] else '',formats['especial1'])
 			worksheet.write(x,12,line['analytic_tags'] if line['analytic_tags'] else '0.0000',formats['especial1'])
 			x += 1
