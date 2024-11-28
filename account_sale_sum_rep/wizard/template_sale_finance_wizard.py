@@ -82,18 +82,18 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 		worksheet.set_tab_color('blue')
 
 		x=0
-		if self.show_header:
-			worksheet.merge_range(x,0,x,12, "PLANTILLA DE VENTAS FINANCIADAS", formats['especial5'] )
-			x+=2
-			worksheet.write(x,0,u"Compañía:",formats['especial2'])
-			worksheet.merge_range(x,1,x,12,self.company_id.name,formats['especial2'])
-			x+=1
-			worksheet.write(x,0,"Fecha Inicial:",formats['especial2'])
-			worksheet.merge_range(x,1,x,2,str(self.date_start.strftime('%Y/%m/%d')),formats['especial2'])
-			x+=1
-			worksheet.write(x,0,"Fecha Final:",formats['especial2'])
-			worksheet.merge_range(x,1,x,2,str(self.date_end.strftime('%Y/%m/%d')),formats['especial2'])
-			x+=2
+		
+		worksheet.merge_range(x,0,x,12, "PLANTILLA DE VENTAS FINANCIADAS", formats['especial5'] )
+		x+=2
+		worksheet.write(x,0,u"Compañía:",formats['especial2'])
+		worksheet.merge_range(x,1,x,12,self.company_id.name,formats['especial2'])
+		x+=1
+		worksheet.write(x,0,"Fecha Inicial:",formats['especial2'])
+		worksheet.merge_range(x,1,x,2,str(self.date_start.strftime('%Y/%m/%d')),formats['especial2'])
+		x+=1
+		worksheet.write(x,0,"Fecha Final:",formats['especial2'])
+		worksheet.merge_range(x,1,x,2,str(self.date_end.strftime('%Y/%m/%d')),formats['especial2'])
+		x+=2
 		
 		worksheet = ReportBase.get_headers(worksheet,self.get_header(),x,0,formats['boldbord'])
 		self.env.cr.execute(self._get_sql())
