@@ -103,8 +103,8 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 			worksheet.write(x,0,line['account'] if line['account'] else '',formats['especial1'])
 			worksheet.write(x,1,line['debit'] if line['debit'] else 0.00,formats['numberdos'])
 			worksheet.write(x,2,line['credit'] if line['credit'] else 0.00,formats['numberdos'])
-			worksheet.write(x,3,line['currency'] if line['currency'] else 0.00,formats['especial1'])
-			worksheet.write(x,4,line['amount_currency'] if line['amount_currency'] else '',formats['numberdos'])
+			worksheet.write(x,3,line['currency'] if line['currency'] else '',formats['especial1'])
+			worksheet.write(x,4,line['amount_currency'] if line['amount_currency'] else 0.00,formats['numberdos'])
 			worksheet.write(x,5,line['tc'] if line['tc'] else '',formats['numberdos'])
 			worksheet.write(x,6,line['partner'] if line['partner'] else '',formats['especial1'])
 			worksheet.write(x,7,line['td'] if line['td'] else '',formats['especial1'])
@@ -112,7 +112,7 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 			worksheet.write(x,9,line['date'] if line['date'] else '',formats['dateformat'])
 			worksheet.write(x,10,line['sale_date'] if line['sale_date'] else '',formats['dateformat'])
 			worksheet.write(x,11,line['cta_analytic'] if line['cta_analytic'] else '',formats['especial1'])
-			worksheet.write(x,12,line['analytic_tags'] if line['analytic_tags'] else '0.0000',formats['especial1'])
+			worksheet.write(x,12,line['analytic_tags'] if line['analytic_tags'] else '',formats['especial1'])
 			x += 1
 		
 
