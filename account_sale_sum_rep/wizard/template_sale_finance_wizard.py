@@ -162,6 +162,7 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 			GROUP BY aml.id) AS aat_rel ON aat_rel.id = aml.id
 			WHERE am.state='posted'
 			AND aml.account_id is not null
+			AND aml.amount_currency <> 0
 			AND am.company_id = %d
 			AND (am.date between '%s' and '%s') 
 			GROUP BY aa.code, rc.name, rp.vat, ec1.code, aml.nro_comp, am.date, so.date_order, ana.name, aat_rel.analytic_tags, aml.tc
