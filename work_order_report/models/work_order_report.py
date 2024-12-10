@@ -3,11 +3,12 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from  xlsxwriter.workbook import Workbook
 from xlsxwriter.utility import xl_col_to_name
+from datetime import datetime
 
 
-class WorkOrderReportWizard(models.TransientModel):
-    _name="work.order.report.wizard"
-    _description="Wizard Reporte Orden de Trabajo"
+class WorkOrderReport(models.Model):
+    _name="work.order.report"
+    _description="Reporte Por Orden de Trabajo"
     
     company_id = fields.Many2one(
         'res.company', 
@@ -15,8 +16,8 @@ class WorkOrderReportWizard(models.TransientModel):
         default= lambda self: self.env.company.id
     )
     work_order_id = fields.Many2one('project.project', string='OT', required=True)
-    start_date= fields.Date('Desde', required=True)
-    end_date = fields.Date('Hasta', required=True)
+    # start_date= fields.Date('Desde', required=True)
+    # end_date = fields.Date('Hasta', required=True)
    
     def get_report(self):
         filename = f"Reporte Por OT-{self.work_order_id.name}.xlsx"
@@ -103,16 +104,8 @@ class WorkOrderReportWizard(models.TransientModel):
         row=0
         worksheet.merge_range(row, 0, row, 9, "REPORTE POR OT", formats['title'])
         row+=1
-        header_details=[
-            f"ORDEN DE TRABAJO : {self.work_order_id.name}",
-            f"DEL {self.start_date.strftime('%d/%m/%Y')} - {self.end_date.strftime('%d/%m/%Y')}"
-        ]
-        for detail in header_details:
-            worksheet.merge_range(row, 0, row, 4, detail, formats['detail'])
-            row+=1
-        header_details=None
-        row+=9
-        
+        worksheet.merge_range(row, 0, row, 4, f"ORDEN DE TRABAJO : {self.work_order_id.name}", formats['detail'])
+        row+=10        
         row,sale_invoice_total=self.sale_invoiced_data(row,worksheet,formats)
         worksheet.merge_range(row, 4, row, 6, "Total Lineas de Ventas Facturadas", formats.get('detail'))
         worksheet.write(row, 9, sale_invoice_total, formats.get('detail'))        
@@ -184,8 +177,8 @@ class WorkOrderReportWizard(models.TransientModel):
                 vst1.importe_me as dollars
             FROM 
                 get_diariog(
-                    '{self.start_date.strftime('%Y/%m/%d')}',
-                    '{self.end_date.strftime('%Y/%m/%d')}',
+                    '1999/02/13',
+                    '{datetime.now().strftime('%Y/%m/%d')}',
                     {self.company_id.id}
                 ) vst1
                 LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
@@ -258,8 +251,8 @@ class WorkOrderReportWizard(models.TransientModel):
                 vst1.importe_me as dollars
             FROM 
                 get_diariog(
-                    '{self.start_date.strftime('%Y/%m/%d')}',
-                    '{self.end_date.strftime('%Y/%m/%d')}',
+                    '1999/02/13',
+                    '{datetime.now().strftime('%Y/%m/%d')}',
                     {self.company_id.id}
                 ) vst1
                 LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
@@ -382,10 +375,10 @@ class WorkOrderReportWizard(models.TransientModel):
                     ) np ON np.id = vst_kardex_sunat.product_id	
                 WHERE 
                     (
-                        fecha_num((vst_kardex_sunat.fecha - interval '5' HOUR)::DATE) 
+                        vst_kardex_sunat.fecha
                         BETWEEN 
-                            {self.start_date.strftime('%Y%m%d')} AND 
-                            {self.end_date.strftime('%Y%m%d')}
+                            '1999/02/13' AND
+                            '{datetime.now().strftime('%Y/%m/%d')}'
                     ) AND 
                     vst_kardex_sunat.company_id = {self.company_id.id} AND
                     sm.work_order_id  = {self.work_order_id.id} AND
@@ -417,47 +410,7 @@ class WorkOrderReportWizard(models.TransientModel):
         self.env.cr.execute(query)
         data_list = self.env.cr.dictfetchall()
         cprom_data={}
-        for data in data_list:
-            # CALCULO DE COSTO PROMEDIO
-            
-            llave = (data['product_id'],data['location_id'])
-            cprom_acum = [0,0]
-            
-            if llave in cprom_data:
-                cprom_acum = cprom_data[llave]
-            else:
-                cprom_data[llave] = cprom_acum
-                
-            cprom_act_antes = cprom_data[llave][1] / cprom_data[llave][0] if cprom_data[llave][0] != 0 else 0
-            
-            data_temp = {'origen':data['origen_usage'] or '','destino':data['destino_usage'] or ''}
-            
-            if data['ingreso'] or data['debit']:
-                if (data_temp['origen'] == 'internal' and data_temp['destino'] == 'internal') or (data_temp['origen'] == 'transit' and data_temp['destino'] == 'internal'):
-                    cprom_acum[0] = cprom_acum[0] + (data['ingreso'] if data['ingreso'] else 0) -  (data['salida'] if data['salida'] else 0)
-                    cprom_acum[1] = cprom_acum[1] + (data['debit'] if data['debit'] else 0) -  (data['credit'] if data['credit'] else 0)
-                else:	
-                    cprom_acum[0] = cprom_acum[0] + (data['ingreso'] if data['ingreso'] else 0) -  (data['salida'] if data['salida'] else 0)
-                    cprom_acum[1] = cprom_acum[1] + (data['debit'] if data['debit'] else 0) -  (data['credit'] if data['credit'] else 0)
-            else:
-                if (data_temp['origen'] == 'internal' and data_temp['destino'] == 'supplier'):
-                    cprom_acum[0] = cprom_acum[0] -  (data['salida'] if data['salida'] else 0)
-                    cprom_acum[1] = cprom_acum[1] - (data['debit'] if data['debit'] else 0) - ( (data['credit'] if data['credit'] else 0) * (data['salida'] if data['salida'] else 0) )
-                else:
-                    if data['salida']:
-                        cprom_acum[0] = cprom_acum[0] + (data['ingreso'] if data['ingreso'] else 0) -  (data['salida'] if data['salida'] else 0)
-                        cprom_acum[1] = cprom_acum[1] - (data['salida'] if data['salida'] else 0)*(cprom_act_antes if cprom_act_antes else 0)
-                    else:
-                        cprom_acum[0] = cprom_acum[0] + (data['ingreso'] if data['ingreso'] else 0) -  (data['salida'] if data['salida'] else 0)
-                        cprom_acum[1] = cprom_acum[1] - (data['credit'] if data['credit'] else 0)
-            cprom_acum[1] = cprom_acum[1] if cprom_acum[0] > 0 else 0
-            cprom_act = cprom_acum[1] / cprom_acum[0] if cprom_acum[0] != 0 else 0
-            
-            
-            
-            
-            
-            
+        for data in data_list:          
             # Fecha
             worksheet.write(row, 0, data['kardex_date'].strftime("%d/%m/%Y") if data['kardex_date'] else '', formats.get('base'))
             # T. OP.
@@ -484,7 +437,6 @@ class WorkOrderReportWizard(models.TransientModel):
             worksheet.write(row, 9, total_cost, formats.get('base_number'))
             warehouse_item_total += total_cost
             row+=1
-            
         return row,warehouse_item_total
     
     def employees_hourly_cost(self, row, worksheet, formats):
@@ -505,8 +457,8 @@ class WorkOrderReportWizard(models.TransientModel):
             (
                 aal.date 
                 BETWEEN 
-                    '{self.start_date.strftime('%Y/%m/%d')}' AND 
-                    '{self.end_date.strftime('%Y/%m/%d')}'
+                    '1999/02/13' AND
+                    '{datetime.now().strftime('%Y/%m/%d')}'
             )
         ;
         """
