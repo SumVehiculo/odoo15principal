@@ -3,7 +3,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from  xlsxwriter.workbook import Workbook
 from xlsxwriter.utility import xl_col_to_name
-
+from datetime import datetime
 
 class WorkOrderReportWizard(models.TransientModel):
     _name="work.order.report.wizard"
@@ -15,8 +15,8 @@ class WorkOrderReportWizard(models.TransientModel):
         default= lambda self: self.env.company.id
     )
     work_order_id = fields.Many2one('project.project', string='OT', required=True)
-    start_date= fields.Date('Desde', required=True)
-    end_date = fields.Date('Hasta', required=True)
+    # start_date= fields.Date('Desde', required=True)
+    # end_date = fields.Date('Hasta', required=True)
    
     def get_report(self):
         filename = f"Reporte Por OT-{self.work_order_id.name}.xlsx"
@@ -103,16 +103,8 @@ class WorkOrderReportWizard(models.TransientModel):
         row=0
         worksheet.merge_range(row, 0, row, 9, "REPORTE POR OT", formats['title'])
         row+=1
-        header_details=[
-            f"ORDEN DE TRABAJO : {self.work_order_id.name}",
-            f"DEL {self.start_date.strftime('%d/%m/%Y')} - {self.end_date.strftime('%d/%m/%Y')}"
-        ]
-        for detail in header_details:
-            worksheet.merge_range(row, 0, row, 4, detail, formats['detail'])
-            row+=1
-        header_details=None
-        row+=9
-        
+        worksheet.merge_range(row, 0, row, 4, f"ORDEN DE TRABAJO : {self.work_order_id.name}", formats['detail'])
+        row+=10
         row,sale_invoice_total=self.sale_invoiced_data(row,worksheet,formats)
         worksheet.merge_range(row, 4, row, 6, "Total Lineas de Ventas Facturadas", formats.get('detail'))
         worksheet.write(row, 9, sale_invoice_total, formats.get('detail'))        
@@ -184,9 +176,9 @@ class WorkOrderReportWizard(models.TransientModel):
                 vst1.importe_me as dollars
             FROM 
                 get_diariog(
-                    '{self.start_date.strftime('%Y/%m/%d')}',
-                    '{self.end_date.strftime('%Y/%m/%d')}',
-                    {self.company_id.id}
+                    '1999/02/13'::DATE,
+                    '{(datetime.now()).strftime('%Y/%m/%d')}'::DATE,
+                    {self.company_id.id}::INTEGER
                 ) vst1
                 LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
                 LEFT JOIN account_move am on am.id = aml.move_id
@@ -258,9 +250,9 @@ class WorkOrderReportWizard(models.TransientModel):
                 vst1.importe_me as dollars
             FROM 
                 get_diariog(
-                    '{self.start_date.strftime('%Y/%m/%d')}',
-                    '{self.end_date.strftime('%Y/%m/%d')}',
-                    {self.company_id.id}
+                    '1999/02/13'::DATE,
+                    '{(datetime.now()).strftime('%Y/%m/%d')}'::DATE,
+                    {self.company_id.id}::INTEGER
                 ) vst1
                 LEFT JOIN account_move_line aml on aml.id = vst1.move_line_id
                 LEFT JOIN account_move am on am.id = aml.move_id
@@ -382,10 +374,10 @@ class WorkOrderReportWizard(models.TransientModel):
                     ) np ON np.id = vst_kardex_sunat.product_id	
                 WHERE 
                     (
-                        fecha_num((vst_kardex_sunat.fecha - interval '5' HOUR)::DATE) 
+                        (vst_kardex_sunat.fecha - interval '5' HOUR)::DATE
                         BETWEEN 
-                            {self.start_date.strftime('%Y%m%d')} AND 
-                            {self.end_date.strftime('%Y%m%d')}
+                            '1999/02/13'::DATE AND
+                            '{(datetime.now()).strftime('%Y/%m/%d')}'::DATE
                     ) AND 
                     vst_kardex_sunat.company_id = {self.company_id.id} AND
                     sm.work_order_id  = {self.work_order_id.id} AND
@@ -505,8 +497,8 @@ class WorkOrderReportWizard(models.TransientModel):
             (
                 aal.date 
                 BETWEEN 
-                    '{self.start_date.strftime('%Y/%m/%d')}' AND 
-                    '{self.end_date.strftime('%Y/%m/%d')}'
+                    '1999/02/13'::DATE AND
+                    '{(datetime.now()).strftime('%Y/%m/%d')}'::DATE
             )
         ;
         """
