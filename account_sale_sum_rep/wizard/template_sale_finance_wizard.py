@@ -41,6 +41,16 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 		default='screen',
 		required=True
 	)
+
+	type_date = fields.Selection(
+		string=_('Filtrar por'),
+		selection=[
+			('date', 'Fecha Factura'),
+			('date_order', 'Fecha Pedido'),
+		],
+		default='date',
+		required=True
+	)
 	
 	def get_report(self):
 		for record in self:
@@ -129,6 +139,10 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 		return HEADERS
 	
 	def _get_sql(self):
+		if self.type_date == 'date_order':
+			sql_where = """AND (so.date_order between '%s' and '%s') """%(self.date_start.strftime('%Y/%m/%d'),self.date_end.strftime('%Y/%m/%d'))
+		else:
+			sql_where = """AND (am.date between '%s' and '%s') """%(self.date_start.strftime('%Y/%m/%d'),self.date_end.strftime('%Y/%m/%d'))
 		sql = """
 			SELECT aa.code AS account,
 				sum(aml.debit) as debit,
@@ -164,11 +178,10 @@ class TemplateSaleFinanceWizard(models.TransientModel):
 			AND aml.account_id is not null
 			AND aml.amount_currency <> 0
 			AND am.company_id = %d
-			AND (am.date between '%s' and '%s') 
+			%s
 			GROUP BY aa.code, rc.name, rp.vat, ec1.code, aml.nro_comp, am.date, so.date_order, ana.name, aat_rel.analytic_tags, aml.tc
 			"""%(
 				self.company_id.id,
-				self.date_start.strftime('%Y/%m/%d'),
-				self.date_end.strftime('%Y/%m/%d'),
+				sql_where
 				)
 		return sql
