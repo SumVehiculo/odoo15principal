@@ -60,7 +60,7 @@
                                 </tr>
                                 <tr>
                                     <td style=" font-size: 14pt; width: 20%"><b>FECHA</b></td>
-                                    <td style=" font-size: 14pt; width: 80% ;"><b>: </b> <span t-esc="doc.date_approve.strftime('%d/%m/%Y') if doc.date_approve else ''"/></td>
+                                    <td style=" font-size: 14pt; width: 80% ;"><b>: </b> <span t-esc="doc.create_date.strftime('%d/%m/%Y') if doc.create_date else ''"/></td>
                                 </tr>
                             </tbody>
                         </table>
