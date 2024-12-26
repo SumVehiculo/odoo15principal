@@ -12,8 +12,9 @@ class AccountMoveLine(models.Model):
 
     category_ids = fields.Many2many(
         string=_('Categorías'),
-        comodel_name='res.partner.category',
-        related='partner_id.category_id',
         relation='move_line_category_partner',
+        related='partner_id.category_id',
+        column1='aml_id',
+        column2='category_id',
         store = True
     )
