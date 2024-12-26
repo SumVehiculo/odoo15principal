@@ -5,8 +5,8 @@
     'author': 'ITGRUPO, Sebastian Moises Loraico Lopez',
     'category': 'account',
     'depends': ['account_fields_it', ],
-    'data': [
-        
+    "data": [
+        "views/account_move_line_views.xml"
     ],
     'application': True,
     'installable': True,
