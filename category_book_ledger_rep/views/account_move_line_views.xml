@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View account.move.line search -->
+    <record id="view_account_move_line_search_inherit" model="ir.ui.view">
+        <field name="name">view.account.move.line.search.inherit</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/filter[@name='groupby_date']" position="after">
+                <filter string="Categoria" name="groupby_category_ids" domain="[]" context="{'group_by': 'category_ids'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
