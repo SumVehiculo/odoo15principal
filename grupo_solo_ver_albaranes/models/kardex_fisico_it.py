@@ -2,7 +2,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 class KardexFisicoIt(models.Model):
-    _inherit = 'kardex.fisico.it'
+    _inherit = 'stock.picking'
 
     invoice_id = fields.Many2one(
         'account.move',
