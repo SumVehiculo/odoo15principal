@@ -48,7 +48,9 @@
                 <attribute name="style">display:none;</attribute>
             </xpath>
             
-
+            <xpath expr="//field[@name='invoice_id']" position="attributes">
+                <attribute name="tracking">1</attribute>
+            </xpath>
 
 		</field>
 	</record>

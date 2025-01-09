@@ -7,7 +7,8 @@
     'license': 'LGPL-3',
     'depends': [
         'stock',
-        'prorratear_en'
+        'prorratear_en',
+        'kardex_fisico_it'
     ],
     'data': [
         'security/grupo.xml',
