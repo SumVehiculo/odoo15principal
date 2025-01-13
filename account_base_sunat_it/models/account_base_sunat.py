@@ -775,9 +775,9 @@ class AccountBaseSunat(models.Model):
 				raise UserError("Debe generar primeros los CUOs en la fecha especificada. En la ruta SUNAT/SUNAT/PLES/Generar CUOs")
 			
 			sql_campo_20 = """CASE
-									WHEN aj.register_sunat = '1' and rp.is_not_home = FALSE THEN '080100'|| '&' || vst_d.periodo::character varying || '&' || aml.cuo|| '&' || 'M' || vst_d.voucher
-									WHEN aj.register_sunat = '1' and rp.is_not_home = TRUE THEN '080200'|| '&' || vst_d.periodo::character varying || '&' ||  aml.cuo|| '&' || 'M' || vst_d.voucher
-									WHEN aj.register_sunat = '2' THEN '140100' || '&' || vst_d.periodo::character varying|| '&' ||  aml.cuo || '&' || 'M' || vst_d.voucher
+									WHEN aj.register_sunat = '1' and rp.is_not_home = FALSE THEN '080100'|| '&' || vst_d.periodo::character varying || '&' || vst_d.periodo || vst_d.libro || vst_d.voucher || '&' || 'M' || vst_d.voucher
+									WHEN aj.register_sunat = '1' and rp.is_not_home = TRUE THEN '080200'|| '&' || vst_d.periodo::character varying || '&' || vst_d.periodo || vst_d.libro || vst_d.voucher || '&' || 'M' || vst_d.voucher
+									WHEN aj.register_sunat = '2' THEN '140100' || '&' || vst_d.periodo::character varying|| '&' || vst_d.periodo || vst_d.libro || vst_d.voucher || '&' || 'M' || vst_d.voucher
 									ELSE ' '
 								END AS campo20,"""
 			if x_sire:
