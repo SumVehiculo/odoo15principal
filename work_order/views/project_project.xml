@@ -44,6 +44,10 @@
                 </div>
             </xpath>
 
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="estimated_usd_billings" />
+            </xpath>
+
             <xpath expr="//button[@name='action_open_project_invoices']" position="after">
                 <button 
                     name="action_open_order_sale_invoices" 

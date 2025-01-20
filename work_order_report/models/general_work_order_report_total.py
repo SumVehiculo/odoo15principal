@@ -18,6 +18,7 @@ class GeneralWorkOrderReportTotal(models.Model):
     hourly_cost_total = fields.Float('Total Costo Horas')
     net_total = fields.Float('Neto ')
     net_by_sale_total = fields.Float('% Neto/Ventas')
+    estimated_usd_billings = fields.Float('Facturación Estimada USD')
     
     def get_report(self):
 
@@ -207,7 +208,8 @@ class GeneralWorkOrderReportTotal(models.Model):
                             COALESCE(hct.total, 0)
                         ) / NULLIF(it.total, 0)) * 100 AS numeric
                     ), 2
-                ) AS net_by_sale_total
+                ) AS net_by_sale_total,
+                pp.estimated_usd_billings AS estimated_usd_billings
         """
 
     def  get_from_sql(self):

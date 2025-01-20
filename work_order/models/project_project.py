@@ -25,6 +25,8 @@ class ProjectProject(models.Model):
         compute="_compute_purchase_invoice_count"
     )
     
+    estimated_usd_billings = fields.Float('Facturación Estimada USD')
+
     @api.model
     def create(self, vals):
         id_seq = self.env['ir.sequence'].sudo().search([

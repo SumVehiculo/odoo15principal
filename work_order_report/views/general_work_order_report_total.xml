@@ -16,6 +16,7 @@
                 <field name="hourly_cost_total" sum="hourly_cost_total"/>
                 <field name="net_total" sum="net_total"/>
                 <field name="net_by_sale_total" sum="net_by_sale_total"/>
+                <field name="estimated_usd_billings" sum="estimated_usd_billings"/>
             </tree>
         </field>
     </record>
