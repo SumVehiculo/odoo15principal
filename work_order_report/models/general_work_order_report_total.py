@@ -209,7 +209,7 @@ class GeneralWorkOrderReportTotal(models.Model):
                         ) / NULLIF(it.total, 0)) * 100 AS numeric
                     ), 2
                 ) AS net_by_sale_total,
-                pp.estimated_usd_billings AS 
+                pp.estimated_usd_billings AS estimated_usd_billings
         """
 
     def  get_from_sql(self):
