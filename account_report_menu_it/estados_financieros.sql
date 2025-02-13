@@ -22,6 +22,7 @@ and a1.display_type is null
 and a1.account_id is not null
 and a2.state='posted'
 and a2.company_id=$3
+and (right(periodo_de_fecha(a2.date,a2.is_opening_close)::character varying,2)::integer between '00'::integer and '12'::integer)
 group by a3.account_type_it_id
 order by a3.account_type_it_id;
   END;
@@ -81,7 +82,7 @@ select a4.id as account_id,sum(a1.debit) as debe,sum(a1.credit) as haber
 from account_move_line a1
 left join account_move a2 on a2.id=a1.move_id
 left join account_account a3 on a3.id=a1.account_id
-left join account_group a4 on a4.id=a3.group_id
+left join (select ag.* from account_group ag where ag.company_id=$3) a4 on a4.code_prefix_start=left(a3.code,2)
 where 
 (a2.date between $1 and $2) 
 and a1.display_type is null 
@@ -148,8 +149,8 @@ where (a2.date between  (EXTRACT (YEAR FROM $1)::character varying ||'/01/01')::
 and a1.display_type is null 
 and a1.account_id is not null
 and a2.state='posted'
-and (case when $4 = TRUE then (a2.is_opening_close<>TRUE or (a2.is_opening_close = TRUE AND to_char(a2.date::timestamp with time zone, 'mmdd'::text) = '1231'::text))
-else a2.is_opening_close<>TRUE end)
+and (case when $4 = TRUE THEN (right(periodo_de_fecha(a2.date,a2.is_opening_close)::character varying,2)::integer between '01'::integer and '13'::integer)
+else (right(periodo_de_fecha(a2.date,a2.is_opening_close)::character varying,2)::integer between '01'::integer and '12'::integer) end)
 and a2.company_id=$3
 group by a1.account_id
 )b3 on b3.account_id=b1.account_id;
@@ -220,8 +221,8 @@ where (a2.date between  (EXTRACT (YEAR FROM $1)::character varying ||'/01/01')::
 and a1.display_type is null 
 and a1.account_id is not null
 and a2.state='posted'
-and (case when $4 = TRUE then (a2.is_opening_close<>TRUE or (a2.is_opening_close = TRUE AND to_char(a2.date::timestamp with time zone, 'mmdd'::text) = '1231'::text))
-else a2.is_opening_close<>TRUE end)
+and (case when $4 = TRUE THEN (right(periodo_de_fecha(a2.date,a2.is_opening_close)::character varying,2)::integer between '01'::integer and '13'::integer)
+else (right(periodo_de_fecha(a2.date,a2.is_opening_close)::character varying,2)::integer between '01'::integer and '12'::integer) end)
 and a2.company_id=$3
 group by a4.id
 )b3 on b3.account_id=b1.account_id;

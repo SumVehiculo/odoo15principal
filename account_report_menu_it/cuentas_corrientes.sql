@@ -1,17 +1,54 @@
-DROP FUNCTION IF EXISTS public.get_saldos(date,date,integer) CASCADE;
------AL ACTUALIZAR GET_SALDOS TAMBIEN ACTUALIZAR GET_SALDOS_SIN_CIERRE
-CREATE OR REPLACE FUNCTION public.get_saldos(
-	date_from date,
-	date_to date,
+DROP FUNCTION IF EXISTS public.ctas_ctes(integer) CASCADE;
+
+CREATE OR REPLACE FUNCTION public.ctas_ctes(
 	id_company integer)
-    RETURNS TABLE(id bigint, periodo text, fecha_con text, libro character varying, voucher character varying, td_partner character varying, 
-	doc_partner character varying, partner character varying, td_sunat character varying, nro_comprobante character varying, fecha_doc date, 
-	fecha_ven date, cuenta character varying, moneda character varying, monto_ini_mn numeric, monto_ini_me numeric, debe numeric, haber numeric, saldo_mn numeric, saldo_me numeric,
-	aml_ids integer[], journal_id integer, account_id integer, partner_id integer, move_id integer, move_line_id integer, company_id integer) 
+	RETURNS TABLE(move_line_id integer, move_id integer, account_id integer, partner_id integer, type_document_id integer, nro_comp character varying,
+	fecha_emision date, fecha_vencimiento date) 
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE 
     ROWS 1000
+AS $BODY$
+BEGIN
+	RETURN QUERY 
+SELECT min(a1.id) AS move_line_id,
+       a2.id AS move_id,
+       a1.account_id,
+       a1.partner_id,
+       a1.type_document_id,
+       TRIM(a1.nro_comp)::character varying AS nro_comp,
+       min(a1.invoice_date_it) AS fecha_emision,
+       max(a1.date_maturity) AS fecha_vencimiento
+FROM account_move_line a1
+LEFT JOIN account_move a2 ON a2.id = a1.move_id
+LEFT JOIN account_account a3 ON a3.id = a1.account_id
+WHERE a3.is_document_an = TRUE
+  AND a2.state = 'posted'
+  AND a1.company_id = $1
+  AND a1.cta_cte_origen = TRUE
+GROUP BY a1.account_id,
+         a1.partner_id,
+         a1.type_document_id,
+         TRIM(a1.nro_comp),
+         a2.id
+ORDER BY a2.date;
+END;
+$BODY$;
+----------------------------------------------------------------------------------------------------------------------------------------------
+DROP FUNCTION IF EXISTS public.get_saldos(date,date,integer) CASCADE;
+
+CREATE OR REPLACE FUNCTION public.get_saldos(
+	date_from date,
+	date_to date,
+	id_company integer)
+	RETURNS TABLE(id bigint, periodo text, fecha_con date, libro character varying, voucher character varying, td_partner character varying, 
+	doc_partner character varying, partner character varying, td_sunat character varying, nro_comprobante character varying, fecha_doc date, 
+	fecha_ven date, cuenta character varying, moneda character varying, monto_ini_mn numeric, monto_ini_me numeric, debe numeric, haber numeric, saldo_mn numeric, saldo_me numeric,
+	aml_ids integer[], journal_id integer, account_id integer, partner_id integer, move_id integer, move_line_id integer, company_id integer) 
+	LANGUAGE 'plpgsql'
+	COST 100
+	VOLATILE 
+	ROWS 1000
 AS $BODY$
 BEGIN
 	RETURN QUERY 
@@ -22,16 +59,16 @@ CASE
 		WHEN am.is_opening_close = true AND to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'mmdd'::text) = '1231'::text THEN to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'yyyy'::text) || '13'::text
 		ELSE to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'yyyymm'::text)
 END AS periodo,
-to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'yyyy/mm/dd'::text) AS fecha_con,
+(case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::date AS fecha_con,
 aj.code as libro,
 am.name as voucher,
 lit.code_sunat as td_partner,
 rp.vat as doc_partner,
 rp.name as partner,
 ec1.code as td_sunat,
-b1.nro_comp as nro_comprobante,
-case when b2.fecha_emision is null then aml.date else b2.fecha_emision end as fecha_doc,
-case when b2.fecha_vencimiento is null then aml.date_maturity else b2.fecha_vencimiento end as fecha_ven,
+TRIM(b1.nro_comp)::character varying as nro_comprobante,
+b3.fecha_emision::date as fecha_doc,
+b3.fecha_vencimiento::date as fecha_ven,
 aa.code as cuenta,
 case when rc.name is null then 'PEN' else rc.name end as moneda,
 b2.monto_ini_mn,
@@ -44,8 +81,8 @@ b1.aml_ids,
 am.journal_id,
 b1.account_id,
 b1.partner_id,
-b1.move_id,
-b1.move_line_id,
+b3.move_id,
+b3.move_line_id,
 aml.company_id
 from 
 (
@@ -65,20 +102,20 @@ group by a1.partner_id,a1.account_id,a1.type_document_id,a1.nro_comp)b1
 
 left join
 (
-select a2.id as move_id,a1.id as move_line_id,a1.account_id,a1.partner_id,a1.type_document_id,a1.nro_comp,
-a2.date as fecha_contable,
-a2.invoice_date as fecha_emision,
-a1.date_maturity as fecha_vencimiento,
-a2.glosa as glosa,
-a1.debit-a1.credit as monto_ini_mn,case when rc.name = 'PEN' then 0 else a1.amount_currency end as monto_ini_me,
-a2.currency_id
+select a1.account_id,a1.partner_id,a1.type_document_id,a1.nro_comp,
+min(a2.date) as fecha_contable,
+sum(a1.debit-a1.credit) as monto_ini_mn,
+sum(case when rc.name = 'PEN' then 0 else a1.amount_currency end) as monto_ini_me
 from account_move_line a1
 left join account_move a2 on a2.id=a1.move_id
 left join account_account a3 on a3.id=a1.account_id
 left join res_currency rc on rc.id = a1.currency_id
 where a2.move_type in ('out_receipt','in_receipt','out_invoice','in_invoice','out_refund','in_refund') and
 a3.internal_type in ('payable','receivable') and a2.state='posted' and a1.company_id=$3
-)b2 on (b2.account_id=b1.account_id and b2.partner_id=b1.partner_id and b2.type_document_id=b1.type_document_id and b2.nro_comp=b1.nro_comp)
+group by a1.account_id,a1.partner_id,a1.type_document_id,a1.nro_comp
+)b2 on (b2.account_id=b1.account_id and b2.partner_id=b1.partner_id and b2.type_document_id=b1.type_document_id and TRIM(b2.nro_comp)=TRIM(b1.nro_comp))
+
+left join ctas_ctes($3) b3 on (b3.account_id=b1.account_id and b3.partner_id=b1.partner_id and b3.type_document_id=b1.type_document_id and TRIM(b3.nro_comp)=TRIM(b1.nro_comp))
 left join account_move_line aml on aml.id=b1.move_line_id
 left join account_move am on am.id=b1.move_id
 left join res_partner rp on rp.id=b1.partner_id
@@ -115,14 +152,14 @@ CASE
 		WHEN am.is_opening_close = true AND to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'mmdd'::text) = '1231'::text THEN to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'yyyy'::text) || '13'::text
 		ELSE to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'yyyymm'::text)
 END AS periodo,
-to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'yyyy/mm/dd'::text) AS fecha_con,
+to_char((case when b2.fecha_contable is null then am.date else b2.fecha_contable end)::timestamp with time zone, 'yyyy-mm-dd'::text) AS fecha_con,
 aj.code as libro,
 am.name as voucher,
 lit.code_sunat as td_partner,
 rp.vat as doc_partner,
 rp.name as partner,
 ec1.code as td_sunat,
-b1.nro_comp as nro_comprobante,
+TRIM(b1.nro_comp)::character varying as nro_comprobante,
 case when b2.fecha_emision is null then aml.date else b2.fecha_emision end as fecha_doc,
 case when b2.fecha_vencimiento is null then aml.date_maturity else b2.fecha_vencimiento end as fecha_ven,
 aa.code as cuenta,
@@ -172,7 +209,7 @@ left join account_account a3 on a3.id=a1.account_id
 left join res_currency rc on rc.id = a1.currency_id
 where a2.move_type in ('out_receipt','in_receipt','out_invoice','in_invoice','out_refund','in_refund') and
 a3.internal_type in ('payable','receivable') and a2.state='posted' and a1.company_id=$3
-)b2 on (b2.account_id=b1.account_id and b2.partner_id=b1.partner_id and b2.type_document_id=b1.type_document_id and b2.nro_comp=b1.nro_comp)
+)b2 on (b2.account_id=b1.account_id and b2.partner_id=b1.partner_id and b2.type_document_id=b1.type_document_id and TRIM(b2.nro_comp)=TRIM(b1.nro_comp))
 left join account_move_line aml on aml.id=b1.move_line_id
 left join account_move am on am.id=b1.move_id
 left join res_partner rp on rp.id=b1.partner_id
@@ -202,53 +239,78 @@ CASE
 	WHEN am.is_opening_close = true AND to_char(am.date::timestamp with time zone, 'mmdd'::text) = '1231'::text THEN (to_char(am.date::timestamp with time zone, 'yyyy'::text) || '13')::character varying
 	ELSE to_char(am.date::timestamp with time zone, 'yyyymm'::text)::character varying
 END AS periodo,
-T.fecha,
+b1.date as fecha,
 aj.code as libro,
 am.name AS voucher,
 llit.code_sunat as td_partner,
 rp.vat as doc_partner,
 rp.name as partner,
 lldt.code as td_sunat,
-aml.nro_comp as nro_comprobante,
-am.invoice_date AS fecha_doc,
-aml.date_maturity AS fecha_ven,
+TRIM(b1.nro_comp)::character varying as nro_comprobante,
+b3.fecha_emision AS fecha_doc,
+b3.fecha_vencimiento AS fecha_ven,
 aa.code as cuenta,
 rc.name as moneda,
-T.debit as debe,
-T.credit as haber,
-T.balance,
-T.balance_me as importe_me,
-sum(coalesce(T.balance,0)) OVER (partition by aml.partner_id, T.account_id,lldt.code, aml.nro_comp order by aml.partner_id, T.account_id,lldt.code, aml.nro_comp, T.fecha) as saldo,
-sum(coalesce(T.balance_me,0)) OVER (partition by aml.partner_id, T.account_id,lldt.code, aml.nro_comp order by aml.partner_id, T.account_id,lldt.code, aml.nro_comp, T.fecha) as saldo_me,
+b1.debit as debe,
+b1.credit as haber,
+b1.balance,
+b1.importe_me,
+b1.saldo,
+b1.saldo_me,
 aml.partner_id,
-T.account_id from (
-select 
-am.id as move_id,
-aml.id as move_line_id,
-am.date as fecha,
-aml.account_id,
-aml.debit,
-aml.credit,
-coalesce(aml.balance,0) as balance,
-aml.amount_currency as balance_me
-from account_move_line aml
-left join account_move am on am.id=aml.move_id
-LEFT JOIN account_account aa ON aa.id = aml.account_id
-where (am.date between date_from and date_to)
-and  am.state='posted'
-and aml.display_type is NULL
-and aa.is_document_an = True
-and am.company_id=$3
-)T
-LEFT JOIN account_move_line aml ON T.move_line_id = aml.id
-LEFT JOIN account_move am ON T.move_id = am.id
+b1.account_id from (
+	WITH base_query AS (
+    SELECT a2.date,
+	       a1.id as move_line_id,
+           a1.account_id,
+           a1.partner_id,
+           a1.type_document_id,
+           TRIM(a1.nro_comp)::character varying AS nro_comp,
+           a1.debit,
+           a1.credit,
+		   SUM(coalesce(a1.amount_currency,0)) OVER (PARTITION BY a1.account_id, a1.partner_id, a1.type_document_id, TRIM(a1.nro_comp))  AS saldo_me,
+	       (coalesce(a1.debit,0) - coalesce(a1.credit,0)) as balance,
+		   (coalesce(a1.amount_currency,0)) as importe_me,
+           SUM(a1.debit) OVER (PARTITION BY a1.account_id, a1.partner_id, a1.type_document_id, TRIM(a1.nro_comp)) AS total_debit,
+           SUM(a1.credit) OVER (PARTITION BY a1.account_id, a1.partner_id, a1.type_document_id, TRIM(a1.nro_comp)) AS total_credit
+    FROM account_move_line a1
+    LEFT JOIN account_move a2 ON a2.id = a1.move_id
+    LEFT JOIN account_account a3 ON a3.id = a1.account_id
+    LEFT JOIN account_account_type a4 ON a4.id = a3.user_type_id
+    WHERE (a2.date BETWEEN date_from AND date_to)
+      AND a2.state = 'posted'
+      AND a3.is_document_an = TRUE
+      AND a3.company_id = $3
+	)
+	SELECT date,
+		bq.account_id,
+		bq.partner_id,
+		bq.type_document_id,
+		bq.nro_comp,
+		bq.debit,
+		bq.credit,
+		bq.balance,
+		bq.importe_me,
+		(bq.total_debit - bq.total_credit) AS saldo,
+		bq.saldo_me,
+		bq.move_line_id
+	FROM base_query bq
+	ORDER BY bq.account_id,
+			bq.partner_id,
+			bq.type_document_id,
+			bq.nro_comp,
+			bq.date
+)b1
+LEFT JOIN ctas_ctes($3) b3 on (b3.account_id=b1.account_id and b3.partner_id=b1.partner_id and b3.type_document_id=b1.type_document_id and TRIM(b3.nro_comp)=TRIM(b1.nro_comp))
+LEFT JOIN account_move_line aml ON aml.id = b1.move_line_id
+LEFT JOIN account_move am ON am.id = aml.move_id
 LEFT JOIN account_journal aj ON aj.id = am.journal_id
-LEFT JOIN account_account aa ON aa.id = T.account_id
+LEFT JOIN account_account aa ON aa.id = b1.account_id
 LEFT JOIN res_currency rc ON rc.id = aml.currency_id
-LEFT JOIN res_partner rp ON rp.id = aml.partner_id
+LEFT JOIN res_partner rp ON rp.id = b1.partner_id
 LEFT JOIN l10n_latam_identification_type llit ON llit.id = rp.l10n_latam_identification_type_id
-LEFT JOIN l10n_latam_document_type lldt ON lldt.id = aml.type_document_id
-order by aml.partner_id, T.account_id,lldt.code, aml.nro_comp, T.fecha;
+LEFT JOIN l10n_latam_document_type lldt ON lldt.id = b1.type_document_id
+order by aml.create_date desc,b1.partner_id, b1.account_id,lldt.code, b1.nro_comp;
 END;
 	$BODY$
 	LANGUAGE plpgsql VOLATILE
@@ -278,8 +340,8 @@ BEGIN
         sum(coalesce(a1.importe_me,0)) AS saldome
         FROM get_diariog((select date_start from account_period where code = $1::character varying limit 1),(select date_end from account_period where code = $2::character varying  limit 1),$3) a1
         LEFT JOIN account_account a2 ON a2.id = a1.account_id
-        LEFT JOIN res_currency a4 on a4.id = a2.currency_id
-        WHERE a4.name = 'USD' AND
+        --LEFT JOIN res_currency a4 on a4.id = a2.currency_id
+        WHERE a2.currency_id is not null AND
         a2.dif_cambio_type = 'global' AND (a1.periodo::integer between $1::integer and $2::integer)
         GROUP BY a1.account_id;
 END;
@@ -312,12 +374,12 @@ BEGIN
                FROM exchange_diff_config_line edcl
                  LEFT JOIN exchange_diff_config edc ON edc.id = edcl.line_id
                  LEFT JOIN account_period ap ON ap.id = edcl.period_id
-              WHERE edc.company_id = $3 AND ap.code::text = $2::text)
+              WHERE edc.company_id = $3 AND ap.code::text = $2::text and edcl.currency_id = b2.currency_id)
             ELSE ( SELECT edcl.venta
                FROM exchange_diff_config_line edcl
                  LEFT JOIN exchange_diff_config edc ON edc.id = edcl.line_id
                  LEFT JOIN account_period ap ON ap.id = edcl.period_id
-              WHERE edc.company_id = $3 AND ap.code::text = $2::text)
+              WHERE edc.company_id = $3 AND ap.code::text = $2::text and edcl.currency_id = b2.currency_id)
         END AS tc
    FROM get_saldos_me_global($1,$2,$3) b1
      LEFT JOIN account_account b2 ON b2.id = b1.account_id
@@ -381,11 +443,11 @@ BEGIN
 	from get_diariog((select date_start from account_period where code = $1::character varying limit 1),(select date_end from account_period where code = $2::character varying  limit 1),$3) a1
 	left join account_account a2 on a2.id=a1.account_id
 	left join account_type_it a3 on a3.id=a2.account_type_it_id
-	left join res_currency a4 on a4.id = a2.currency_id
+	--left join res_currency a4 on a4.id = a2.currency_id
 	left join account_move_line aml on aml.id = a1.move_line_id
 	where 
 	a2.dif_cambio_type = 'doc' and
-	a4.name = 'USD' and
+	a2.currency_id is not null and
 	(a1.periodo::int between $1::int and $2::int)
 	group by a1.partner_id,a1.account_id,a1.td_sunat,a1.nro_comprobante, aml.type_document_id
 	having (sum(a1.balance)+sum(a1.importe_me)) <> 0;
@@ -419,17 +481,17 @@ b1.saldome,
 b1.type_document_id,
 b3.group_balance,
 CASE
-		WHEN b3.group_balance::text = ANY (ARRAY['B1'::character varying, 'B2'::character varying]::text[]) THEN ( SELECT edcl.compra
-		   FROM exchange_diff_config_line edcl
-			 LEFT JOIN exchange_diff_config edc ON edc.id = edcl.line_id
-			 LEFT JOIN account_period ap ON ap.id = edcl.period_id
-		  WHERE edc.company_id = $3 AND ap.code::text = $2::text)
-		ELSE ( SELECT edcl.venta
-		   FROM exchange_diff_config_line edcl
-			 LEFT JOIN exchange_diff_config edc ON edc.id = edcl.line_id
-			 LEFT JOIN account_period ap ON ap.id = edcl.period_id
-		  WHERE edc.company_id = $3 AND ap.code::text = $2::text)
-	END AS tc
+	WHEN b3.group_balance::text = ANY (ARRAY['B1'::character varying, 'B2'::character varying]::text[]) THEN ( SELECT edcl.compra
+		FROM exchange_diff_config_line edcl
+			LEFT JOIN exchange_diff_config edc ON edc.id = edcl.line_id
+			LEFT JOIN account_period ap ON ap.id = edcl.period_id
+		WHERE edc.company_id = $3 AND ap.code::text = $2::text and edcl.currency_id = b2.currency_id)
+	ELSE ( SELECT edcl.venta
+		FROM exchange_diff_config_line edcl
+			LEFT JOIN exchange_diff_config edc ON edc.id = edcl.line_id
+			LEFT JOIN account_period ap ON ap.id = edcl.period_id
+		WHERE edc.company_id = $3 AND ap.code::text = $2::text and edcl.currency_id = b2.currency_id)
+END AS tc
 from get_saldos_me_documento($1,$2,$3) b1
 LEFT JOIN account_account b2 ON b2.id = b1.account_id
 LEFT JOIN account_type_it b3 ON b3.id = b2.account_type_it_id;
