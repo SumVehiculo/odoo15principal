@@ -34,7 +34,7 @@ BEGIN
 	left join account_account ac_de on cat.account_depreciation_id = ac_de.id
 	left join account_analytic_tag_account_asset_asset_rel rel_ana on rel_ana.account_asset_asset_id = line.asset_id
 	left join account_analytic_tag aat on aat.id = rel_ana.account_analytic_tag_id
-	where (line.depreciation_date::date between $1::date and $2::date) and ass.company_id = $3 and ass.state != 'draft';
+	where (line.depreciation_date::date between $1::date and $2::date) and ass.company_id = $3 and ass.state <> 'draft' and ass.active = True;
 	--and (ass.f_baja is null or ass.f_baja > $1::date); POR ENCARGO DEL SR edward
 END;
 $BODY$

@@ -753,7 +753,7 @@ class AccountAsset71Rep(models.TransientModel):
 				where (depreciation_date between '%s' and '%s')
 				group by asset_id)t2 on t2.asset_id = asset.id
 				where asset.company_id = %d and (asset.only_format_74 = False or asset.only_format_74 is null) and asset.state <> 'draft'
-				and asset.date <= '%s')T
+				and asset.date <= '%s' and (asset.f_baja is null or asset.f_baja >= '%s'))T
 		""" % (date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_period_end.strftime('%Y/%m/%d'),
@@ -763,7 +763,8 @@ class AccountAsset71Rep(models.TransientModel):
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_period_end.strftime('%Y/%m/%d'),
 		company_id,
-		date_period_end.strftime('%Y/%m/%d'))
+		date_period_end.strftime('%Y/%m/%d'),
+		date_fiscal_year_start.strftime('%Y/%m/%d'))
 
 		return sql
 
@@ -859,7 +860,7 @@ class AccountAsset71Rep(models.TransientModel):
 				left join account_move_line aml on aml.id = asset.cuo::integer
 				left join account_move am on am.id = aml.move_id
 				where asset.company_id = %d and (asset.only_format_74 = False or asset.only_format_74 is null) and asset.state <> 'draft'
-				and asset.date <= '%s' and (asset.f_baja is null or asset.f_baja > '%s'))T
+				and asset.date <= '%s' and (asset.f_baja is null or asset.f_baja >= '%s'))T
 		""" % (period_code+'00',
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
@@ -868,6 +869,6 @@ class AccountAsset71Rep(models.TransientModel):
 		date_period_end.strftime('%Y/%m/%d'),
 		company_id,
 		date_period_end.strftime('%Y/%m/%d'),
-		date_period_start.strftime('%Y/%m/%d'))
+		date_fiscal_year_start.strftime('%Y/%m/%d'))
 
 		return sql
