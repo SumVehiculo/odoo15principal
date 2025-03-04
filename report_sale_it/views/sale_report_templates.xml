@@ -145,10 +145,10 @@
                     </div>
                     <br/>
                     <br/>
-                    <b>
+                    <!-- <b>
                             Los Precios No Incluyen Impuestos de Ley<br/>
                             <t t-esc="doc.pricelist_id.currency_id.full_name" />
-                    </b>
+                    </b> -->
                     <br/>
                     <br/>
                     <br/>
