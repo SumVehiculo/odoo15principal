@@ -12,6 +12,6 @@ class AccountMove(models.Model):
 										  ('03','Deposito'),
 										  ('04','Transferencia'),
 										  ('05','Otros'),
-										  ],string='N° de operacion', tracking=True)
+										  ],string='Metodo de pago', tracking=True)
 	operation_number_it = fields.Text(string='N° de operacion', tracking=True)
 	payment_date_it = fields.Date(string='Fecha de pago', tracking=True)
