@@ -7,24 +7,36 @@ class ProjectProject(models.Model):
     
 
     project_name = fields.Char('Nombre del Proyecto')
+    requested_month = fields.Selection([
+        ('jan', 'Enero'),
+        ('feb', 'Febrero'),
+        ('mar', 'Marzo'),
+        ('apr', 'Abril'),
+        ('may', 'Mayo'),
+        ('jun', 'Junio'),
+        ('jul', 'Julio'),
+        ('aug', 'Agosto'),
+        ('set', 'Septiembre'),
+        ('oct', 'Octubre'),
+        ('nov', 'Noviembre'),
+        ('dec', 'Diciembre'),
+    ], string='Solicitado para mes de')
+    schedule_date = fields.Date('Fecha de Programación')
+    report_delivery_date = fields.Date('Fecha de Entrega de Informes')
     
     pick_count = fields.Integer(
         'Contador de Transferencias', 
         compute="_compute_pick_count"
     )
     pick_ids = fields.Many2many('stock.picking', string='Transferencias')
-
-
     sale_invoice_count = fields.Integer(
         'Contador de Facturas de Venta', 
         compute="_compute_sale_invoice_count"
     )
-    
     purchase_invoice_count = fields.Integer(
         'Contador de Facturas de Compra', 
         compute="_compute_purchase_invoice_count"
     )
-    
     estimated_usd_billings = fields.Float('Facturación Estimada USD')
 
     @api.model
