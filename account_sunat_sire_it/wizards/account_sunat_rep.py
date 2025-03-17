@@ -890,10 +890,7 @@ class AccountSunatRep(models.TransientModel):
 			vst_c.periodo as campo3,
 			NULL as campo4,
 			TO_CHAR(vst_c.fecha_e :: DATE, 'dd/mm/yyyy') as campo5,
-			CASE
-				WHEN vst_c.fecha_v <= '{date_to}'::date THEN TO_CHAR(vst_c.fecha_v :: DATE, 'dd/mm/yyyy')
-				ELSE NULL
-			END AS campo6,
+			vst_c.fecha_v AS campo6,
 			vst_c.td as campo7,
 			CASE
 				WHEN coalesce(vst_c.serie,'') <> ''  THEN vst_c.serie
