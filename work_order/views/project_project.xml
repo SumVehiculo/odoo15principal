@@ -103,11 +103,21 @@
                 <label for="requested_month"/>
                 <div class="o_row">
                     <field name="requested_month" />
-                    <span>
-                        Fecha
-                    </span>
+                    <label for="schedule_date"/>
                     <field name="schedule_date" />
                 </div>
+            </xpath>
+
+            <xpath expr="//label[@for='date_start']" position="attributes">
+                <attribute name="string">Fecha de Inicio</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='dates']" position="replace">
+                <div name="dates" class="o_row">
+                    <field name="date_start" widget="daterange" options="{'related_end_date': 'date'}"/>
+                    <label for="date" string="Fecha Final"/>
+                    <field name="date" widget="daterange" options="{'related_start_date': 'date_start'}"/>
+                </div>    
             </xpath>
 
         </field>
