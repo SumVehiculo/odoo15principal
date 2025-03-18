@@ -7,20 +7,7 @@ class ProjectProject(models.Model):
     
 
     project_name = fields.Char('Nombre del Proyecto')
-    requested_month = fields.Selection([
-        ('jan', 'Enero'),
-        ('feb', 'Febrero'),
-        ('mar', 'Marzo'),
-        ('apr', 'Abril'),
-        ('may', 'Mayo'),
-        ('jun', 'Junio'),
-        ('jul', 'Julio'),
-        ('aug', 'Agosto'),
-        ('set', 'Septiembre'),
-        ('oct', 'Octubre'),
-        ('nov', 'Noviembre'),
-        ('dec', 'Diciembre'),
-    ], string='Solicitado para mes de')
+    requested_period_id = fields.Many2one('account.period', string='Solicitado para mes de')
     schedule_date = fields.Date('Fecha de Programación')
     report_delivery_date = fields.Date('Fecha de Entrega de Informes')
     

@@ -100,9 +100,9 @@
             </xpath>
 
             <xpath expr="//field[@name='tag_ids']" position="after">
-                <label for="requested_month"/>
+                <label for="requested_period_id"/>
                 <div class="o_row">
-                    <field name="requested_month" />
+                    <field name="requested_period_id" />
                     <label for="schedule_date"/>
                     <field name="schedule_date" />
                 </div>
