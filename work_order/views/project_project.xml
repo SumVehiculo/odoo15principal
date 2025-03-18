@@ -138,7 +138,7 @@
                 <field name="company_id" optional="show" groups="base.group_multi_company" options="{'no_create': True, 'no_create_edit': True}"/>
                 <field name="analytic_account_id" optional="hide" groups="analytic.group_analytic_accounting"/>
 
-                <field name="requested_month"  optional="show"/>
+                <field name="requested_period_id"  optional="show"/>
                 <field name="schedule_date"  optional="show"/>
                 <field name="date_start" string="Fecha de Inicio" widget="daterange" options="{'related_end_date': 'date'}" optional="show"/>
                 <field name="date" string="Fecha Final" widget="daterange" options="{'related_start_date': 'date_start'}" optional="show"/>
