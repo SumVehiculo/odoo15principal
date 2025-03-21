@@ -16,6 +16,8 @@ class ProjectProject(models.Model):
         compute="_compute_pick_count"
     )
     pick_ids = fields.Many2many('stock.picking', string='Transferencias')
+    date = fields.Date(string='Fecha Final', index=True, tracking=True)
+
     sale_invoice_count = fields.Integer(
         'Contador de Facturas de Venta', 
         compute="_compute_sale_invoice_count"
