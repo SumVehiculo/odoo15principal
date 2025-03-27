@@ -114,9 +114,9 @@
 
             <xpath expr="//div[@name='dates']" position="replace">
                 <div name="dates" class="o_row">
-                    <field name="date_start" widget="daterange" options="{'related_end_date': 'date'}"/>
+                    <field name="date_start" />
                     <label for="date" string="Fecha Final"/>
-                    <field name="date" widget="daterange" options="{'related_start_date': 'date_start'}"/>
+                    <field name="date" />
                 </div>    
             </xpath>
 
