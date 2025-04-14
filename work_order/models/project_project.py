@@ -26,6 +26,21 @@ class ProjectProject(models.Model):
     )
     estimated_usd_billings = fields.Float('Facturación Estimada USD')
 
+    invoice_date = fields.Date('Fecha de Facturación', compute="_compute_invoice_date",store=True)
+    
+    @api.depends('sale_invoice_count')
+    def _compute_invoice_date(self):
+        for project in self:
+            account_line=self.env['account.move.line'].sudo().search([
+                ('work_order_id', '=', project.id),
+                ('sale_line_ids', '!=', False)
+            ])
+            if not account_line:
+                project.invoice_date = False
+                continue
+            project.invoice_date = min(account_line.move_id,key=lambda move:move.invoice_date)
+
+
     @api.model
     def create(self, vals):
         id_seq = self.env['ir.sequence'].sudo().search([
