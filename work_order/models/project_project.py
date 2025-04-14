@@ -38,7 +38,8 @@ class ProjectProject(models.Model):
             if not account_line:
                 project.invoice_date = False
                 continue
-            project.invoice_date = min(account_line.move_id,key=lambda move:move.invoice_date)
+            first_account_move = min(account_line.move_id,key=lambda move:move.invoice_date)
+            project.invoice_date = first_account_move.invoice_date
 
 
     @api.model
