@@ -12,6 +12,7 @@ class GeneralWorkOrderReportTotal(models.Model):
     tag_names = fields.Text(string='Etiquetas')
     start_date = fields.Date('Fecha Inicio del Proyecto')
     end_date = fields.Date('Fecha Fin del Proyecto')
+    invoice_date = fields.Date('Fecha de Facturación')
     sale_invoices_total = fields.Float('Total de Lineas de Ventas Facturadas')
     expenses_invoices_total = fields.Float('Total de Lineas de Gastos Facturados')
     kardex_total = fields.Float('Total Lineas de Kardex')
@@ -189,6 +190,7 @@ class GeneralWorkOrderReportTotal(models.Model):
                 fpt.tags AS tag_names,
                 pp.date_start AS start_date,
                 pp.date AS end_date,
+                pp.invoice_date AS invoice_date,
                 COALESCE(it.total,0) AS sale_invoices_total,
                 COALESCE(et.total,0) AS expenses_invoices_total,
                 COALESCE(kt.total,0) AS kardex_total,

@@ -10,6 +10,7 @@
                 <field name="tag_names"/>
                 <field name="start_date" />
                 <field name="end_date" />
+                <field name="invoice_date" />
                 <field name="sale_invoices_total" sum="sale_invoices_total"/>
                 <field name="expenses_invoices_total" sum="expenses_invoices_total"/>
                 <field name="kardex_total" sum ="kardex_total"/>
@@ -46,5 +47,4 @@
         action="general_work_order_report_total_action_server"
         parent="project.menu_project_report"
         sequence="12"/>
-
 </odoo>
