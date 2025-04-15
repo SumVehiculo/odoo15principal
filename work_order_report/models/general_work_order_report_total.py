@@ -10,8 +10,11 @@ class GeneralWorkOrderReportTotal(models.Model):
     project_id = fields.Many2one('project.project', string='OT')
     client_id = fields.Many2one('res.partner', string='Cliente OT')
     tag_names = fields.Text(string='Etiquetas')
+    requested_period_id = fields.Many2one('account.period', string='Solicitado para mes de')
+    schedule_date = fields.Date('Fecha de Programación')
     start_date = fields.Date('Fecha Inicio del Proyecto')
     end_date = fields.Date('Fecha Fin del Proyecto')
+    report_delivery_date = fields.Date('Fecha de Entrega de Informes')
     invoice_date = fields.Date('Fecha de Facturación')
     sale_invoices_total = fields.Float('Total de Lineas de Ventas Facturadas')
     expenses_invoices_total = fields.Float('Total de Lineas de Gastos Facturados')
@@ -181,15 +184,18 @@ class GeneralWorkOrderReportTotal(models.Model):
                 hourly_cost_totals AS ({self.get_hourly_cost_totals()}),
                 fixed_project_tags AS ({self.get_project_tag()})
         """
-    
+
     def get_select_sql(self):
         return """
             SELECT
                 pp.id AS project_id,
                 pp.partner_id AS client_id,
                 fpt.tags AS tag_names,
+                pp.requested_period_id AS requested_period_id,
+                pp.schedule_date AS schedule_date,
                 pp.date_start AS start_date,
                 pp.date AS end_date,
+                pp.report_delivery_date AS report_delivery_date,
                 pp.invoice_date AS invoice_date,
                 COALESCE(it.total,0) AS sale_invoices_total,
                 COALESCE(et.total,0) AS expenses_invoices_total,
