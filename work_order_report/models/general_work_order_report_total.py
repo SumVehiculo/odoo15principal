@@ -34,7 +34,7 @@ class GeneralWorkOrderReportTotal(models.Model):
             )
         """)
         return {
-            'name': 'Reporte Comercial',
+            'name': 'Reporte General OT',
             'type': 'ir.actions.act_window',
             'res_model': 'general.work.order.report.total',
             'view_mode': 'tree',
@@ -209,12 +209,14 @@ class GeneralWorkOrderReportTotal(models.Model):
                 ) AS net_total,
                 ROUND(
                     CAST(
-                        (ABS(
-                            COALESCE(it.total, 0) +
-                            COALESCE(et.total, 0) +
-                            COALESCE(kt.total, 0) +
-                            COALESCE(hct.total, 0)
-                        ) / NULLIF(it.total, 0)) * 100 AS numeric
+                        (
+                            (
+                                COALESCE(it.total, 0) +
+                                COALESCE(et.total, 0) +
+                                COALESCE(kt.total, 0) +
+                                COALESCE(hct.total, 0)
+                            )
+                         / NULLIF(it.total, 0)) * 100 AS numeric
                     ), 2
                 ) AS net_by_sale_total,
                 pp.estimated_usd_billings AS estimated_usd_billings
