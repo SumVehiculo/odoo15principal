@@ -23,6 +23,14 @@
             <field name="code">action = records.send_contract_email()</field>
         </record>
 
+	<record id="imprimir_export_contract" model="ir.actions.server">
+            <field name="name">Imprimir Contratos</field>
+            <field name="model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="state">code</field>
+            <field name="code">action = records.export_contract()</field>
+        </record>
+
         <record id="view_hr_contract_type_form" model="ir.ui.view">
             <field name="name">hr.contract.type.form</field>
             <field name="model">hr.contract.type</field>
