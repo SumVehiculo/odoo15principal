@@ -6,40 +6,40 @@
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="doc">
                     <t t-call="web.basic_layout">
-                        <div class="header">
-                            <div class="row">
-                                <div class="col-2">
-                                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"  alt="Logo" style="max-height: 125px; max-width: 150px; vertical-align: baseline; " />
-                                </div>
-                                <div class="col-10">
-                                    <div style="margin-left: 60px;">
-                                        <strong ><span style="font-size: 16px;" t-field="res_company.name"/></strong><br/>
-                                        <div style="text-align:left; color: #555555; font-size: 16px;"><span t-field="res_company.street"/></div>
-                                        <div style="text-align:left; color: #555555; font-size: 16px;">RUC: <span t-field="res_company.vat"/></div>
-                                        <br/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" style="background-color: #20B2AA; font-size: 1px;">
-                                .
-                            </div><br/>
-                        </div>
-                        <div class="footer" align="center" style="font-size: 12px;">
-                            <br/><div class="col-xs-12" style="background-color: #20B2AA; font-size: 1px;">
-                                .
-                            </div>
-                            <div class="col-xs-12">
-                                Telef.: <span t-field="res_company.partner_id.phone"/> -
-                                RUC: <span t-field="res_company.vat"/> -
-                                Correo: <span t-field="res_company.email"/><br/>
-                            </div>
-                            <div class = "text-center" style = "border-top: 1px negro sólido;">
-                                <ul class = "list-inline">
-                                    <li> Página: <span class = "page"/>
-                                        /<span class = "topage" /> </li>
-                                </ul>
-                            </div>
-                        </div>
+<!--                        <div class="header">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-2">-->
+<!--                                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"  alt="Logo" style="max-height: 125px; max-width: 150px; vertical-align: baseline; " />-->
+<!--                                </div>-->
+<!--                                <div class="col-10">-->
+<!--                                    <div style="margin-left: 60px;">-->
+<!--                                        <strong ><span style="font-size: 16px;" t-field="res_company.name"/></strong><br/>-->
+<!--                                        <div style="text-align:left; color: #555555; font-size: 16px;"><span t-field="res_company.street"/></div>-->
+<!--                                        <div style="text-align:left; color: #555555; font-size: 16px;">RUC: <span t-field="res_company.vat"/></div>-->
+<!--                                        <br/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-xs-12" style="background-color: #20B2AA; font-size: 1px;">-->
+<!--                                .-->
+<!--                            </div><br/>-->
+<!--                        </div>-->
+<!--                        <div class="footer" align="center" style="font-size: 12px;">-->
+<!--                            <br/><div class="col-xs-12" style="background-color: #20B2AA; font-size: 1px;">-->
+<!--                                .-->
+<!--                            </div>-->
+<!--                            <div class="col-xs-12">-->
+<!--                                Telef.: <span t-field="res_company.partner_id.phone"/> - -->
+<!--                                RUC: <span t-field="res_company.vat"/> - -->
+<!--                                Correo: <span t-field="res_company.email"/><br/>-->
+<!--                            </div>-->
+<!--                            <div class = "text-center" style = "border-top: 1px negro sólido;">-->
+<!--                                <ul class = "list-inline">-->
+<!--                                    <li> Página: <span class = "page"/>-->
+<!--                                        /<span class = "topage" /> </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="page">
 <!--                            <span t-raw="doc.contract_type_id.contract_html2"/>-->
                             <span t-raw="conversion(doc.contract_type_id.contract_html, doc.id)"/>
