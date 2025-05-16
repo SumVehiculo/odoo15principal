@@ -15,6 +15,18 @@
             </field>
         </record>
 
+        <record id="view_hr_contract_custom_contract_tree" model="ir.ui.view">
+            <field name="name">hr.contract.custom.contract.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="job_id" position="after">
+                    <field name="department_id" optional="show"/>
+                    <field name="contract_type_id" optional="show"/>
+                </field>
+            </field>
+        </record>
+
         <record id="send_contract_email" model="ir.actions.server">
             <field name="name">Enviar Contratos por Correo</field>
             <field name="model_id" ref="hr_contract.model_hr_contract"/>
