@@ -437,11 +437,23 @@
                                               <td class="text-right">Banco de la Nación</td>
                                           </tr>
                                           <tr>
-                                              <td class="text-right">000-9091742</td>
+                                              <td class="text-right">2003006882976</td>
+                                              <td class="text-right">00320000300688297638</td>
+                                              <td class="text-right">Corriente</td>
+                                              <td class="text-right">PEN</td>
+                                              <td class="text-right">Interbank</td>
+                                              <!-- <td class="text-right">000-9091742</td>
                                               <td class="text-right">009-170-000009091742-28</td>
                                               <td class="text-right">Corriente</td>
                                               <td class="text-right">PEN</td>
-                                              <td class="text-right">Scotiabank</td>
+                                              <td class="text-right">Scotiabank</td> -->
+                                          </tr>
+                                          <tr>
+                                              <td class="text-right">2003006884153</td>
+                                              <td class="text-right">00320000300688415332</td>
+                                              <td class="text-right">Corriente</td>
+                                              <td class="text-right">USD</td>
+                                              <td class="text-right">Interbank </td>
                                           </tr>
                                       </tbody>
                                   </table>
