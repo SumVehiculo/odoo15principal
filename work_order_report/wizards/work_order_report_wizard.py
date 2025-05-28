@@ -500,6 +500,9 @@ class WorkOrderReportWizard(models.TransientModel):
                     '1999/02/13'::DATE AND
                     '{(datetime.now()).strftime('%Y/%m/%d')}'::DATE
             )
+        ORDER BY
+            aal.date ASC,
+            he.name ASC
         ;
         """
         worksheet.merge_range(row, 0, row, 4, "Costo parte de Horas" , formats.get('red_base'))
