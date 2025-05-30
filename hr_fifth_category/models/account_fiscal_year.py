@@ -12,7 +12,7 @@ class AccountFiscalYear(models.Model):
 class HrPayslipRun(models.Model):
     _inherit = 'hr.payslip.run'
 
-    name = fields.Many2one(default=lambda self:self.get_period().id)
+    #name = fields.Many2one(default=lambda self:self.get_period().id)
 
     def get_period(self):
         fiscal_year = self.env['hr.main.parameter'].search([('company_id','=',self.env.company.id)],limit=1).fiscal_year_id
