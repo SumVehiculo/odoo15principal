@@ -8,6 +8,7 @@ class hr_contract(models.Model):
 	_inherit = 'hr.contract'
 
 	trial_date_end = fields.Date(compute='_get_periodo_prueba', store=True)
+	date_first_contract = fields.Date(string='Fecha Contrato Original')
 
 	@api.depends('date_start')
 	def _get_periodo_prueba(self):

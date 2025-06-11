@@ -11,6 +11,7 @@
                 </xpath>
                 <xpath expr="//group[@name='duration_group']" position="inside">
                     <field name="trial_date_end" readonly="0" force_save="1"/>
+                    <field name="date_first_contract" force_save="1"/>
                 </xpath>
             </field>
         </record>
