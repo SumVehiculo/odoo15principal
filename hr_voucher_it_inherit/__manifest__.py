@@ -11,7 +11,9 @@
 	'auto_install': False,
 	'demo': [],
 	'data':	[
-		# 'views/hr_payslip.xml',
+		'security/security.xml',
+		'security/ir.model.access.csv',
+		'views/hr_employee.xml',
 	],
 	'installable': True,
 	'license': 'LGPL-3',
