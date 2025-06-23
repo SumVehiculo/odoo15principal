@@ -37,12 +37,19 @@ class HrPayslip(models.Model):
 		#### WORKED DAYS ####
 		DNLAB = self.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_dnlab.mapped('code'))
 		DSUB = self.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_dsub.mapped('code'))
-		EXT = self.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_ext.mapped('code'))
+		# EXT = self.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_ext.mapped('code'))
 		DVAC = self.worked_days_line_ids.filtered(lambda wd: wd.code in MainParameter.wd_dvac.mapped('code'))
 		DLAB = self.get_dlabs()
+
+		HE25 = self.worked_days_line_ids.filtered(lambda wd: wd.code in ('HE25'))
+		HE35 = self.worked_days_line_ids.filtered(lambda wd: wd.code in ('HE35'))
+		HE100 = self.worked_days_line_ids.filtered(lambda wd: wd.code in ('HE100'))
+		HE25 = sum(HE25.mapped('number_of_hours'))
+		HE35 = sum(HE35.mapped('number_of_hours'))
+		HE100 = sum(HE100.mapped('number_of_hours'))
 		# print("DLAB",DLAB)
-		DLAB_DEC_INT = modf(DLAB * Contract.resource_calendar_id.hours_per_day)
-		EXT_DEC_INT = modf(sum(EXT.mapped('number_of_hours')))
+		DLAB_DEC_INT = DLAB * Contract.resource_calendar_id.hours_per_day
+		# EXT_DEC_INT = modf(sum(EXT.mapped('number_of_hours')))
 		DLAB = DLAB + self.holidays
 		DIAS_FAL = sum(DNLAB.mapped('number_of_days'))
 		DIA_VAC = sum(DVAC.mapped('number_of_days'))
@@ -161,21 +168,24 @@ class HrPayslip(models.Model):
 				 Paragraph('<strong>Dias Vac</strong>', style_left),Paragraph(': %d' % dias_vaca or '0', style_left)],
 				[Paragraph('<strong>Centro de Costos</strong>', style_left),Paragraph(': %s' % self.distribution_id.description.capitalize() if self.distribution_id.description else self.distribution_id.name, style_left),
 				 Paragraph('<strong>&nbsp; &nbsp;&nbsp; &nbsp; Fin Vac</strong>', style_left),Paragraph(': %s' % datetime.strftime((fecha_fin_vac),'%d-%m-%Y') if fecha_fin_vac != '' else '', style_left),
-				 Paragraph('<strong>N° Horas Ord</strong>', style_left),Paragraph(': %s' %str(ReportBase.custom_round(DLAB_DEC_INT[1])) or '0', style_left)],
+				 Paragraph('<strong>N° Horas Ord</strong>', style_left),Paragraph(': %s' %str(f"{int(DLAB_DEC_INT):02d}:{(int((DLAB_DEC_INT- int(DLAB_DEC_INT)) * 60)):02d}") or '0', style_left)],
 				[Paragraph('<strong>Tipo de Docum</strong>', style_left),Paragraph(': %s <strong>Nro.</strong> %s' % (Employee.type_document_id.name or '',Employee.identification_id or ''), style_left),
 				 Paragraph('<strong>Reg Pensionario</strong>', style_left),Paragraph(': %s' % self.membership_id.name.title() if self.membership_id.name else Contract.membership_id.name, style_left),
-				 Paragraph('<strong>N° Horas Ext</strong>', style_left),Paragraph(': %s' %str(ReportBase.custom_round(EXT_DEC_INT[1])) or '', style_left)],
+				 Paragraph('<strong>N° Hor Ext 25%</strong>', style_left),Paragraph(': %s' %str(f"{int(HE25):02d}:{(int((HE25- int(HE25)) * 60)):02d}") or '', style_left)],
 				[Paragraph('<strong>Regimen Laboral</strong>', style_left),Paragraph(': %s' % dict(self._fields['labor_regime'].selection).get(self.labor_regime) or '', style_left),
 				 Paragraph('<strong>C.U.S.P.P.</strong>', style_left),Paragraph(': %s' % Contract.cuspp if Contract.cuspp else '', style_left),
-				 Paragraph('<strong>Rem Basica</strong>', style_left),Paragraph(': {:,.2f}'.format(self.wage) or '0.00', style_left)],
+				 Paragraph('<strong>N° Hor Ext 35%</strong>', style_left),Paragraph(': %s' %str(f"{int(HE35):02d}:{(int((HE35- int(HE35)) * 60)):02d}") or '', style_left)],
 				[Paragraph('<strong>Cuenta Bancaria</strong>', style_left),Paragraph(': %s' % Employee.wage_bank_account_id.acc_number if Employee.wage_bank_account_id else '', style_left),
+				 '','',
+				 Paragraph('<strong>N° Hor Ext 100%</strong>', style_left),Paragraph(': %s' %str(f"{int(HE100):02d}:{(int((HE100- int(HE100)) * 60)):02d}") or '', style_left)],
+				[Paragraph('<strong>Calificacion Trab</strong>', style_left),Paragraph(': %s' % Contract.situation_special_id.name.capitalize() if Contract.situation_special_id.name else '', style_left),
 				 Paragraph('<strong>Banco</strong>', style_left),Paragraph(': %s' % Employee.bank_export_paymet.name if Employee.bank_export_paymet else '', style_left),
-				 '',''],
+				 Paragraph('<strong>Rem Basica</strong>', style_left),Paragraph(': {:,.2f}'.format(self.wage) or '0.00', style_left)],
 
 		]
 		t = Table(data, [3 * cm, 6 * cm , 3 * cm, 3 * cm, 3 * cm, 2 * cm], len(data) * [0.42 * cm])
 		t.setStyle(TableStyle([
-			('SPAN', (3, 7), (-1, 7)),
+			# ('SPAN', (3, 7), (-1, 7)),
 			('ALIGN', (0, 0), (0, 0), 'CENTER'),
 			('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
 		]))
@@ -292,7 +302,7 @@ class HrPayslip(models.Model):
 		t.wrapOn(objeto_canvas, 18, 500)
 		t.drawOn(objeto_canvas, 18, hReal - 425)
 
-		I = ReportBase.create_image(MainParameter.signature, MainParameter.dir_create_file + 'signature.jpg', 160.0, 35.0)
+		I = ReportBase.create_image(MainParameter.signature, MainParameter.dir_create_file + 'signature.jpg', 150.0, 50.0)
 		data = [
 				[I if I else '',''],
 				[Paragraph('<strong>__________________________</strong>', style_title),
@@ -300,13 +310,13 @@ class HrPayslip(models.Model):
 				[Paragraph('<strong>EMPLEADOR</strong>', style_title),
 				 Paragraph('<strong>RECIBI CONFORME <br/> TRABAJADOR</strong>', style_title)]
 			]
-		t = Table(data, [10 * cm, 10 * cm], 3 * [0.5 * cm])
+		t = Table(data, [10 * cm, 10 * cm], 3 * [0.7 * cm])
 		t.setStyle(TableStyle([
 			('ALIGN', (0, 0), (0, 0), 'CENTER'),
 			('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
 		]))
 		t.wrapOn(objeto_canvas, 18, 500)
-		t.drawOn(objeto_canvas, 18, hReal - 490)
+		t.drawOn(objeto_canvas, 18, hReal - 520)
 
 
 		objeto_canvas.showPage()

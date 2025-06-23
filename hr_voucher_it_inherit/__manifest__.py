@@ -13,7 +13,10 @@
 	'data':	[
 		'security/security.xml',
 		'security/ir.model.access.csv',
+		'data/hr_situation_special.xml',
 		'views/hr_employee.xml',
+		'views/hr_situation_special.xml',
+		'views/hr_contract.xml',
 	],
 	'installable': True,
 	'license': 'LGPL-3',
