@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    Creating a cron job-->
+    <record id="employee_data_asignacion" model="ir.cron">
+        <field name="name">Asignacion familiar</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">model.asignacion_familiar()</field>
+    </record>
+</odoo>
