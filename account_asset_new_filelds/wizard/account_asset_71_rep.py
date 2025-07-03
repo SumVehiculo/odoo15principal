@@ -82,6 +82,7 @@ class account_asset_71_rep(models.TransientModel):
 				and coalesce(asset.date_at,asset.date) <= '%s' and (asset.f_baja is null or asset.f_baja >= '%s'))T
 		""" % (date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
+		period_code[4:],date_period_end.strftime('%Y/%m/%d'),
 		period_code[4:],
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
