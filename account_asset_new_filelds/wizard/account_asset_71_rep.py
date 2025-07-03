@@ -65,7 +65,10 @@ class account_asset_71_rep(models.TransientModel):
 				end
 				as campo20,
 				case when '%s' = '00' then 0::numeric else coalesce(t2.campo21,0) end as campo21,
-				0::numeric as campo22,
+				case when asset.f_baja <= '%s' then ((case 
+				when t1.campo20 is not null then t1.campo20
+				else 0::numeric
+				end) + (case when '%s' = '00' then 0::numeric else coalesce(t2.campo21,0) end))*-1 end as campo22,
 				0::numeric as campo23,
 				0::numeric as campo25,
 				asset.id as asset_id
@@ -82,6 +85,8 @@ class account_asset_71_rep(models.TransientModel):
 				and coalesce(asset.date_at,asset.date) <= '%s' and (asset.f_baja is null or asset.f_baja >= '%s'))T
 		""" % (date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
+		date_period_end.strftime('%Y/%m/%d'),
+		period_code[4:],
 		date_period_end.strftime('%Y/%m/%d'),
 		period_code[4:],
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
