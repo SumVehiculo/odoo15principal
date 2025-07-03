@@ -51,7 +51,7 @@ class account_asset_71_rep(models.TransientModel):
 				end
 				as campo8,
 				0::numeric as campo9,
-				case when asset.f_baja::date <= '%s'::date then (asset.value)*-1 else 0::numeric end as campo10,
+				case when asset.f_baja <= '%s' then (asset.value)*-1 else 0::numeric end as campo10,
 				0::numeric as campo11,
 				0::numeric as campo13,
 				coalesce(asset.date_at,asset.date) as campo15,
@@ -84,7 +84,6 @@ class account_asset_71_rep(models.TransientModel):
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		period_code[4:],
 		period_code[4:],
-		date_period_end.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_period_end.strftime('%Y/%m/%d'),
