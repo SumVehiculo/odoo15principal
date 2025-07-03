@@ -78,12 +78,13 @@ class account_asset_71_rep(models.TransientModel):
 				left join (select asset_id, sum(amount) as campo21 from account_asset_depreciation_line 
 				where (depreciation_date between '%s' and '%s')
 				group by asset_id)t2 on t2.asset_id = asset.id
-				where asset.company_id = %s and (asset.only_format_74 = False or asset.only_format_74 is null) and asset.state <> 'draft'
+				where asset.company_id = %d and (asset.only_format_74 = False or asset.only_format_74 is null) and asset.state <> 'draft'
 				and coalesce(asset.date_at,asset.date) <= '%s' and (asset.f_baja is null or asset.f_baja >= '%s'))T
 		""" % (date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
-		period_code[4:],date_period_end.strftime('%Y/%m/%d'),
 		period_code[4:],
+		period_code[4:],
+		date_period_end.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_period_end.strftime('%Y/%m/%d'),
