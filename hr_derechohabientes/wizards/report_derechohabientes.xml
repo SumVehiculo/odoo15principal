@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_report_derechohabientes_wizard" model="ir.ui.view">
+            <field name="name">report.derechohabientes.wizard</field>
+            <field name="model">report.derechohabientes</field>
+            <field name="arch" type="xml">
+                <form string="Reporte Derechohabientes" >
+                    <group>
+						<group>
+<!--							<field name="payslip_run_id" options="{'no_create': True, 'no_create_edit':True}"/>-->
+							<field name="allemployees"/>
+						</group>
+						<group>
+							<field name="company_id"/>
+<!--							<field name="type_show"/>-->
+						</group>
+					</group>
+					<notebook>
+                        <page string="Empleados" attrs="{'invisible':[('allemployees', '=', True)]}">
+                            <field name="employees_ids" nolabel="True" />
+                        </page>
+                    </notebook>
+					<footer>
+						<button string="Mostrar" name="get_journals" type="object" class="oe_highlight" attrs="{'invisible':[('allemployees', '=', True)]}" />
+                        <button string="Mostrar Todo" name="get_all" type="object" class="oe_highlight" attrs="{'invisible':[('allemployees', '=', False)]}"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+					</footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_report_derechohabientes" model="ir.actions.act_window">
+            <field name="name">Reporte Derechohabientes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report.derechohabientes</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_report_derechohabientes"
+                  id="menu_report_derechohabientes"
+                  parent="hr_payroll.menu_hr_payroll_report"
+                  sequence="50"
+                  groups="hr_payroll.group_hr_payroll_manager"/>
+
+    </data>
+</odoo>

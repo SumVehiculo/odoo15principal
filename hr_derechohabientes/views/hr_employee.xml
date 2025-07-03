@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_employee_form_inherit_derechohabientes" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.derechohabientes</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_fields_it.hr_employee_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='bank_accounts']" position="after">
+                    <page string="Registro Derechohabientes">
+<!--                        <field name="derechohabientes_lines" attrs="{'readonly': [('state', 'in', ['submit', 'approve'])]}">-->
+                        <field name="derechohabientes_lines">
+                            <tree editable="bottom">
+                                <field name="name" readonly="0"/>
+                                <field name="l10n_latam_identification_type_id"/>
+                                <field name="vat" required="1"/>
+                                
+                                <field name="parents" optional="show"/>
+                                <field name="birthday" required="1" optional="show"/>
+                                <field name="age" optional="show"/>
+                                <field name="study" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

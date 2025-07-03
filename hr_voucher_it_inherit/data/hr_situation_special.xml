@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.situation.special' id="situation_special_0">
+			<field name='code'>0</field>
+			<field name='description'>NINGUNA</field>
+			<field name='name'>NINGUNA</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_1">
+			<field name='code'>1</field>
+			<field name='description'>TRABAJADOR DE DIRECCIÓN – PRESENCIAL</field>
+			<field name='name'>DIRECCIÓN - PRESENCIAL</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_2">
+			<field name='code'>2</field>
+			<field name='description'>TRABAJADOR DE CONFIANZA - PRESENCIAL</field>
+			<field name='name'>CONFIANZA - PRESENCIAL</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_3">
+			<field name='code'>3</field>
+			<field name='description'>TRABAJADOR DE DIRECCIÓN - TELETRABAJO MIXTO</field>
+			<field name='name'>DIRECCIÓN - TELETRABAJO MIXTO</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_4">
+			<field name='code'>4</field>
+			<field name='description'>TRABAJADOR DE CONFIANZA - TELETRABAJO MIXTO</field>
+			<field name='name'>CONFIANZA - TELETRABAJO MIXTO</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_5">
+			<field name='code'>5</field>
+			<field name='description'>TRABAJADOR DE DIRECCIÓN - TELETRABAJO COMPLETO</field>
+			<field name='name'>DIRECCIÓN - TELETRABAJO COMPLETO</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_6">
+			<field name='code'>6</field>
+			<field name='description'>TRABAJADOR DE CONFIANZA - TELETRABAJO COMPLETO</field>
+			<field name='name'>CONFIANZA - TELETRABAJO COMPLETO</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_7">
+			<field name='code'>7</field>
+			<field name='description'>TELETRABAJO MIXTO</field>
+			<field name='name'>TELETRABAJO MIXTO</field>
+		</record>
+		<record model='hr.situation.special' id="situation_special_8">
+			<field name='code'>8</field>
+			<field name='description'>TELETRABAJO COMPLETO</field>
+			<field name='name'>TELETRABAJO COMPLETO</field>
+		</record>
+	</data>
+</odoo>

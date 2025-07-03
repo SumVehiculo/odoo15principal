@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_hr_payslip_run_move_tree_inherit" model="ir.ui.view">
+			<field name="name">hr.payslip.run.move.tree.inherit</field>
+			<field name="model">hr.payslip.run.move</field>
+			<field name="inherit_id" ref="hr_payslip_run_move_it.view_hr_payslip_run_move_tree"/>
+			<field name="arch" type="xml">
+				<field name="analytic_account_id" position="after">
+					<field name="analytic_tag_id" />
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

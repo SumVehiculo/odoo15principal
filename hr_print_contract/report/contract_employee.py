@@ -86,6 +86,15 @@ class report_contract_employee(models.AbstractModel):
         else:
             date_end = ''
 
+        if row.date_first_contract:
+            date_first_contract = '{0} de {1} del {2}'.format(
+                row.date_first_contract.day,
+                MainParameter.get_month_name(row.date_first_contract.month),
+                row.date_first_contract.year,
+            )
+        else:
+            date_first_contract = ''
+
         if row.date_start and row.date_end:
             months = (row.date_end.year - row.date_start.year) * 12 + row.date_end.month - row.date_start.month
             days = row.date_end.day - row.date_start.day + 1
@@ -136,6 +145,7 @@ class report_contract_employee(models.AbstractModel):
             'horas_jornada': row.resource_calendar_id.hours_per_day if row.resource_calendar_id.hours_per_day else "",
             'lugar_contrato': row.company_id.partner_id.state_id.name if row.company_id.partner_id.state_id.name else "",
             'fecha_firma': date_now,
+            'fecha_contrato_original': date_first_contract,
             # 'plazo_meses': self.get_num_month(datetime.strptime(row.date_start, '%Y-%m-%d'), datetime.strptime(row.date_end, '%Y-%m-%d')),
         }
         # print("fields",fields)
