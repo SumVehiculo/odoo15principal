@@ -51,7 +51,7 @@ class account_asset_71_rep(models.TransientModel):
 				end
 				as campo8,
 				0::numeric as campo9,
-				0::numeric as campo10,
+				case when asset.f_baja <= '%s' then (asset.value)*-1 else 0::numeric end as campo10,
 				0::numeric as campo11,
 				0::numeric as campo13,
 				coalesce(asset.date_at,asset.date) as campo15,
@@ -79,7 +79,7 @@ class account_asset_71_rep(models.TransientModel):
 				where (depreciation_date between '%s' and '%s')
 				group by asset_id)t2 on t2.asset_id = asset.id
 				where asset.company_id = %d and (asset.only_format_74 = False or asset.only_format_74 is null) and asset.state <> 'draft'
-				and coalesce(asset.date_at,asset.date) <= '%s' and (asset.f_baja is null or asset.f_baja > '%s'))T
+				and coalesce(asset.date_at,asset.date) <= '%s' and (asset.f_baja is null or asset.f_baja >= '%s'))T
 		""" % (date_fiscal_year_start.strftime('%Y/%m/%d'),
 		date_fiscal_year_start.strftime('%Y/%m/%d'),
 		period_code[4:],
