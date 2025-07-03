@@ -51,7 +51,7 @@ class account_asset_71_rep(models.TransientModel):
 				end
 				as campo8,
 				0::numeric as campo9,
-				case when asset.f_baja <= '%s' then (asset.value)*-1 else 0::numeric end as campo10,
+				case when asset.f_baja::date <= '%s'::date then (asset.value)*-1 else 0::numeric end as campo10,
 				0::numeric as campo11,
 				0::numeric as campo13,
 				coalesce(asset.date_at,asset.date) as campo15,
