@@ -176,14 +176,14 @@ class HrPayslip(models.Model):
 				 Paragraph('<strong>C.U.S.P.P.</strong>', style_left),Paragraph(': %s' % Contract.cuspp if Contract.cuspp else '', style_left),
 				 Paragraph('<strong>N° Hor Ext 35%</strong>', style_left),Paragraph(': %s' %str(f"{int(HE35):02d}:{(int((HE35- int(HE35)) * 60)):02d}") or '', style_left)],
 				[Paragraph('<strong>Cuenta Bancaria</strong>', style_left),Paragraph(': %s' % Employee.wage_bank_account_id.acc_number if Employee.wage_bank_account_id else '', style_left),
-				 '','',
+				 Paragraph('<strong>Banco</strong>', style_left),Paragraph(': %s' % Employee.bank_export_paymet.name if Employee.bank_export_paymet else '', style_left),
 				 Paragraph('<strong>N° Hor Ext 100%</strong>', style_left),Paragraph(': %s' %str(f"{int(HE100):02d}:{(int((HE100- int(HE100)) * 60)):02d}") or '', style_left)],
 				[Paragraph('<strong>Calificacion Trab</strong>', style_left),Paragraph(': %s' % Contract.situation_special_id.name.capitalize() if Contract.situation_special_id.name else '', style_left),
-				 Paragraph('<strong>Banco</strong>', style_left),Paragraph(': %s' % Employee.bank_export_paymet.name if Employee.bank_export_paymet else '', style_left),
+				 '','',
 				 Paragraph('<strong>Rem Basica</strong>', style_left),Paragraph(': {:,.2f}'.format(self.wage) or '0.00', style_left)],
 
 		]
-		t = Table(data, [3 * cm, 6 * cm , 3 * cm, 3 * cm, 3 * cm, 2 * cm], len(data) * [0.42 * cm])
+		t = Table(data, [3 * cm, 5.8 * cm , 2.9 * cm, 3.4 * cm, 3 * cm, 1.9 * cm], len(data) * [0.42 * cm])
 		t.setStyle(TableStyle([
 			# ('SPAN', (3, 7), (-1, 7)),
 			('ALIGN', (0, 0), (0, 0), 'CENTER'),
