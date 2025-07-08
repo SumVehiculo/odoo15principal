@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_picking_type_view_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.type.view.form.inherit</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page name="reports" string="Reportes">
+                        <group name="uniform_delivery" string="Entrega Uniformes/EPPs">
+                            <field name="uniform_delivery_report" />
+                            <field name="uniform_delivery_content" colspan="2"/>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
