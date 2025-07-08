@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_delivery_document_inherit" name="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table[@name='stock_move_line_table']" position="attributes">
+            <attribute name="style">height:450px; min-height:450px;</attribute>
+        </xpath>
+        <xpath expr="//table[@name='stock_move_line_table']" position="after">
+            <t t-if="o.picking_type_id.uniform_delivery_report">
+                <div style="border:1px black solid;">
+                    REGISTRO DE ENTREGA DE UNIFORMES Y EPPs
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <strong>
+                            NOMBRE DEL TRABAJADOR 
+                        </strong>
+
+                    </div>
+                    <div class="col-6">
+                        <strong>
+                            DNI/CE/PASAPORTE
+                        </strong>
+
+                    </div>
+                </div>
+                <div>
+                    <strong>
+                        PUESTO DE TRABAJO
+                    </strong>
+                </div>
+                <t t-raw="o.picking_type_id.uniform_delivery_content"/>
+                <div class="row">
+                    <div class="col-8 d-flex align-items-center">
+                        NOMBRE DEL RESPONSABLE DE LA ENTREGA: <br/>
+                        CORREO RESP. DE LA ENTREGA: <br/>
+                    </div>
+                    <div class="col-4">
+                        <div style="border:1px black solid; height:100px;width:200px;">
+
+                        </div>
+                        <strong>
+                            FIRMA DEL TRABAJOR
+                        </strong>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

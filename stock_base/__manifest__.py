@@ -8,7 +8,8 @@
         'stock'
     ],
     'data': [
-        'views/stock_picking.xml'
+        'reports/report_delivery_document.xml',
+        'views/stock_picking.xml',
     ],
     'auto_install': False,
     'application': False,

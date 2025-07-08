@@ -11,7 +11,8 @@
                     <page name="reports" string="Reportes">
                         <group name="uniform_delivery" string="Entrega Uniformes/EPPs">
                             <field name="uniform_delivery_report" />
-                            <field name="uniform_delivery_content" colspan="2"/>
+                            <label for="uniform_delivery_content" string="Texto a Mostrar"/>
+                            <field name="uniform_delivery_content" nolabel="1" colspan="2" attrs="{'invisible':[('uniform_delivery_report','=',False)]}"/>
                         </group>
                     </page>
                 </notebook>
