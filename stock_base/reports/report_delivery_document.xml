@@ -3,7 +3,7 @@
 
     <template id="report_delivery_document_inherit" name="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
         <xpath expr="//table[@name='stock_move_line_table']" position="replace">
-            <div style="height:350px;min-height:350px;">
+            <div style="height:350px !important; min-height:350px !important;">
                 <table class="table table-sm mt48" t-if="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
                     <t t-set="has_serial_number" t-value="False"/>
                     <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" groups="stock.group_lot_on_delivery_slip"/>
@@ -76,8 +76,6 @@
                     </tbody>
                 </table>
             </div>
-        </xpath>
-        <xpath expr="//table[@name='stock_move_line_table']" position="after">
             <t t-if="o.picking_type_id.uniform_delivery_report">
                 <div class="text-center" style="border:2px black solid;">
                     <strong style="font-size:10px !important;">
@@ -121,5 +119,4 @@
             </t>
         </xpath>
     </template>
-
 </odoo>
