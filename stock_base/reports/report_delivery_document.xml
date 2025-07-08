@@ -2,48 +2,122 @@
 <odoo>
 
     <template id="report_delivery_document_inherit" name="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
-        <xpath expr="//table[@name='stock_move_line_table']" position="attributes">
-            <attribute name="style">height:450px; min-height:450px;</attribute>
+        <xpath expr="//table[@name='stock_move_line_table']" position="replace">
+            <div style="height:350px;min-height:350px;">
+                <table class="table table-sm mt48" t-if="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
+                    <t t-set="has_serial_number" t-value="False"/>
+                    <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" groups="stock.group_lot_on_delivery_slip"/>
+                    <thead>
+                        <tr>
+                            <th name="th_sml_product"><strong>Product</strong></th>
+                            <t name="lot_serial" t-if="has_serial_number">
+                                <th>
+                                    Lot/Serial Number
+                                </th>
+                            </t>
+                            <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
+                                <strong>Ordered</strong>
+                            </th>
+                            <th name="th_sml_quantity" class="text-center"><strong>Delivered</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <!-- This part gets complicated with different use cases (additional use cases in extensions of this report):
+                            1. If serial numbers are used and set to print on delivery slip => print lines as is, otherwise group them by overlapping
+                                product + description + uom combinations
+                            2. If any packages are assigned => split products up by package (or non-package) and then apply use case 1 -->
+                        <!-- If has destination packages => create sections of corresponding products -->
+                        <t t-if="o.has_packages" name="has_packages">
+                            <t t-set="packages" t-value="o.move_line_ids.mapped('result_package_id')"/>
+                            <t t-foreach="packages" t-as="package">
+                                <t t-call="stock.stock_report_delivery_package_section_line"/>
+                                <t t-set="package_move_lines" t-value="o.move_line_ids.filtered(lambda l: l.result_package_id == package)"/>
+                                <!-- If printing lots/serial numbers => keep products in original lines -->
+                                <t t-if="has_serial_number">
+                                    <tr t-foreach="package_move_lines" t-as="move_line">
+                                        <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                                    </tr>
+                                </t>
+                                <!-- If not printing lots/serial numbers => merge lines with same product+description+uom -->
+                                <t t-else="">
+                                    <t t-set="aggregated_lines" t-value="package_move_lines._get_aggregated_product_quantities(strict=True)"/>
+                                    <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                                </t>
+                            </t>
+                            <!-- Make sure we do another section for package-less products if they exist -->
+                            <t t-set="move_lines" t-value="o.move_line_ids.filtered(lambda l: not l.result_package_id)"/>
+                            <t t-set="aggregated_lines" t-value="o.move_line_ids._get_aggregated_product_quantities(except_package=True)"/>
+                            <t t-if="move_lines or aggregated_lines" name="no_package_move_lines">
+                                <t t-call="stock.stock_report_delivery_no_package_section_line" name="no_package_section"/>
+                                <t t-if="has_serial_number">
+                                    <tr t-foreach="move_lines" t-as="move_line">
+                                        <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                                    </tr>
+                                </t>
+                                <t t-elif="aggregated_lines">
+                                    <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                                </t>
+                            </t>
+                        </t>
+                        <!-- No destination packages -->
+                        <t t-else="">
+                            <!-- If printing lots/serial numbers => keep products in original lines -->
+                            <t t-if="has_serial_number">
+                                <tr t-foreach="o.move_line_ids" t-as="move_line">
+                                    <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                                </tr>
+                            </t>
+                            <!-- If not printing lots/serial numbers => merge lines with same product -->
+                            <t t-else="" name="aggregated_move_lines">
+                                <t t-set="aggregated_lines" t-value="o.move_line_ids._get_aggregated_product_quantities()"/>
+                                <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
         </xpath>
         <xpath expr="//table[@name='stock_move_line_table']" position="after">
             <t t-if="o.picking_type_id.uniform_delivery_report">
-                <div style="border:1px black solid;">
-                    REGISTRO DE ENTREGA DE UNIFORMES Y EPPs
+                <div class="text-center" style="border:2px black solid;">
+                    <strong style="font-size:10px !important;">
+                        REGISTRO DE ENTREGA DE UNIFORMES Y EPPs
+                    </strong>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <strong>
+                        <strong  style="font-size:10px !important;">
                             NOMBRE DEL TRABAJADOR 
                         </strong>
 
                     </div>
                     <div class="col-6">
-                        <strong>
+                        <strong  style="font-size:10px !important;">
                             DNI/CE/PASAPORTE
                         </strong>
 
                     </div>
                 </div>
                 <div>
-                    <strong>
+                    <strong style="font-size:10px !important;">
                         PUESTO DE TRABAJO
                     </strong>
                 </div>
                 <t t-raw="o.picking_type_id.uniform_delivery_content"/>
-                <div class="row">
-                    <div class="col-8 d-flex align-items-center">
-                        NOMBRE DEL RESPONSABLE DE LA ENTREGA: <br/>
-                        CORREO RESP. DE LA ENTREGA: <br/>
-                    </div>
-                    <div class="col-4">
-                        <div style="border:1px black solid; height:100px;width:200px;">
-
-                        </div>
-                        <strong>
-                            FIRMA DEL TRABAJOR
-                        </strong>
-                    </div>
-                </div>
+                <table style="width: 100%; border:none;">
+                    <tr>
+                        <td style="width: 60%; vertical-align: middle; border:none; font-size:10px !important;">
+                            NOMBRE DEL RESPONSABLE DE LA ENTREGA:<br/>
+                            CORREO RESP. DE LA ENTREGA:
+                        </td>
+                        <td style="width: 40%; text-align: center; background-color:white; border:none;">
+                            <div style="border: 2px solid black; height:70px; width:200px; margin:auto;"></div>
+                            <strong style="font-size:10px !important;">
+                                FIRMA DEL TRABAJADOR
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
             </t>
         </xpath>
     </template>

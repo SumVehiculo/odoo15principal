@@ -9,7 +9,7 @@ class StockPickingType(models.Model):
         string='Reporte de Entrega EPP',
         default= lambda self:
         f"""
-        <p>
+        <p style="font-size:10px !important;">
             Quien suscribe declara recibir a su entera conformidad el(los) Elemento(s) de Protección Personal (EPP) y/o uniformes que arriba se detalla, cuyo sentido no es más que su protección y cumplimiento de la normativa de seguridad vigente.<br/>
             <br/>
             Asimismo, doy cuenta que conozco la manera de utilizarlo correctamente y que he sido instruido en su uso, y me comprometo a utilizarlo en todo momento durante mi jornada de trabajo, a cuidarlos y hacer entrega de los mismos una vez terminada la relación con la Empresa, toda vez que me han sido otorgados en forma gratuita, pero siguen siendo propiedad de {self.env.company.name}.<br/>
